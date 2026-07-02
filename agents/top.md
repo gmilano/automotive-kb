@@ -1,16 +1,17 @@
-# 🚗 Agentes AI — Automotive
+# 🎯 Agentes AI — automotive
 
-> Agentes open source. Foco: MIT / Apache 2.0 / licencias permisivas.
+> Agentes y herramientas AI open source para la industria. Foco: MIT / Apache 2.0.
+> Última actualización: 2026-07-02
 
-## Criterios
+## Agentes y herramientas destacadas
 
-- Licencia MIT / Apache 2.0 / BSD
-- >500 stars en GitHub
-- Último commit <6 meses
-- Relevancia directa para Automotive
+| Nombre | Licencia | Descripción | Stars |
+|--------|----------|-------------|-------|
+| [agentic-factory-hack](https://github.com/microsoft/agentic-factory-hack) | MIT | Build AI-powered predictive maintenance orchestration with Microsoft F | 60 |
+| [TaxiSimulatorOnGraph](https://github.com/juhyeonkim95/TaxiSimulatorOnGraph) | MIT | This is the official implementation of "Optimizing Large-Scale Fleet M | 38 |
+| [BottleNetes](https://github.com/oslabs-beta/BottleNetes) | MIT | A web-based Kubernetes dashboard that streamlines resource allocation, | 34 |
+| [ev-charging-optimization](https://github.com/philippnormann/ev-charging-optimization) | MIT | ⚡ A simulation of finding the shortest charging routes for electric ve | 20 |
+| [REVOL-E-TION](https://github.com/TUMFTM/REVOL-E-TION) | Apache-2.0 | Site level energy system optimization model toolbox for investigations | 16 |
 
-## Agentes destacados
-
-| Nombre | Repo | Licencia | Descripción | Stars |
-|--------|------|----------|-------------|-------|
-| — | — | — | Por completar via ingest | — |
+---
+*Actualizado automáticamente por el pipeline de ingest.*
