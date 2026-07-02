@@ -1,0 +1,13 @@
+{
+  "topics": ["autonomous-vehicles", "automotive-ai", "connected-vehicles", "adas", "electric-vehicles"],
+  "agentKeywords": "AI automotive vehicle predictive maintenance fleet agent open source",
+  "repoKeywords": "autonomous driving ADAS connected vehicle AI open source",
+  "verticalKeywords": "fleet management vehicle tracking automotive platform open source",
+  "minStars": 200,
+  "licenses": ["MIT", "Apache-2.0"],
+  "keywords": {
+    "agents": ["predictive maintenance AI", "fleet optimizer", "EV range agent", "driver assistance"],
+    "repos": ["CARLA simulator", "ApolloAuto", "OpenPilot", "Autoware", "fleet tracking"],
+    "verticals": ["OpenPilot", "CARLA", "Fleetbase", "Traccar"]
+  }
+}
