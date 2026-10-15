@@ -1,4 +1,52 @@
-# 📈 Repos trending
+---
+industry: automotive
+region: Global
+updated: 2026-10-15
+---
+
+# 📈 Trending repos — Automotive
+
+> **APPEND-ONLY.** Newest dated section on top; history preserved below. Never rewrite earlier sections.
+
+## 2026-10-15
+
+**Method note first, because it changes how this file should be read:** `github.com/trending` has **no
+automotive topic filter**, and the relevant topic pages (`automotive-ai`, `automotive`,
+`autonomous-vehicles`, `automotive-data`) surface mostly 0–5 star projects. There is no reliable trending
+feed for this industry. The entries below are therefore movements in *verified foundational repos* and
+vendor releases, which is the only signal available — not a scraped trending list.
+
+### Movement this period
+
+| Repo | Licence | Stars | Movement |
+|---|---|---|---|
+| [NVlabs/alpasim](https://github.com/NVlabs/alpasim) | Apache-2.0 | 1.3k | New in 2026; open AV simulation platform for end-to-end policies. Now rivals CARLA in mindshare for policy evaluation. |
+| [NVlabs/alpamayo](https://github.com/NVlabs/alpamayo) | Apache-2.0 | 2.0k | Reached 2.0k★ then was **deprecated** in favour of Alpamayo Recipes / 1.5. |
+| [OpenDriveLab/WorldEngine](https://github.com/OpenDriveLab/WorldEngine) | Apache-2.0 | 520 | Stable checkpoints published Sep 2026. |
+| [eclipse-kuksa/kuksa-databroker](https://github.com/eclipse-kuksa/kuksa-databroker) | Apache-2.0 | 80 | Release 0.6.1 (Apr 2026) + completed Quarkslab security audit — meaningful maturity signal despite low stars. |
+| [traccar/traccar](https://github.com/traccar/traccar) | Apache-2.0 | 7.9k | Actively maintained (updated Oct 2026); 200+ device protocols. Steady, not spiking. |
+| [autowarefoundation/autoware](https://github.com/autowarefoundation/autoware) | Apache-2.0 | 12.2k | Stable; remains the leading vendor-neutral AV stack. |
+
+### Stable anchors (no significant movement, listed for reference)
+
+[commaai/openpilot](https://github.com/commaai/openpilot) MIT 63.9k★ ·
+[ApolloAuto/apollo](https://github.com/ApolloAuto/apollo) Apache-2.0 26.9k★ ·
+[carla-simulator/carla](https://github.com/carla-simulator/carla) MIT 14.5k★ ·
+[open-mmlab/mmdetection3d](https://github.com/open-mmlab/mmdetection3d) Apache-2.0 6.6k★ ·
+[open-mmlab/OpenPCDet](https://github.com/open-mmlab/OpenPCDet) Apache-2.0 5.7k★ ·
+[OpenDriveLab/UniAD](https://github.com/OpenDriveLab/UniAD) Apache-2.0 4.8k★ ·
+[eclipse-sumo/sumo](https://github.com/eclipse-sumo/sumo) EPL-2.0 4.2k★ ·
+[commaai/opendbc](https://github.com/commaai/opendbc) MIT 3.5k★
+
+---
+
+## History — snapshots before 2026-10-15
+
+> ⚠️ **Accuracy note added 2026-10-15:** the snapshot below was byte-identical to `agents/trending.md` —
+> the same scrape written to both files, so it recorded no distinct repo trend. Several entries are not
+> automotive software and several have `?` / `NOASSERTION` licences (no verified grant). Preserved verbatim
+> for continuity, **not** as recommendations.
+
 
 > Última actualización: 2026-07-02
 
@@ -17,3 +65,4 @@
 
 ---
 *Pipeline automático — se actualiza cada hora.*
+

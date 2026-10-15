@@ -1,4 +1,45 @@
-# 📈 Repos trending
+---
+industry: automotive
+region: Global
+updated: 2026-10-15
+---
+
+# 📈 Trending AI agents & models — Automotive
+
+> **APPEND-ONLY.** Newest dated section on top; history preserved below. Never rewrite earlier sections.
+
+## 2026-10-15
+
+**What moved:** the Alpamayo line. Nothing else in automotive AI changed comparably this period.
+
+| Agent / model | Repo | Licence | Stars | Why it is trending |
+|---|---|---|---|---|
+| Alpamayo 1.5 | [NVlabs/alpamayo1.5](https://github.com/NVlabs/alpamayo1.5) | Apache-2.0 | 368 | Current head of NVIDIA's open reasoning-VLA line (Mar 2026). RL-enhanced reasoning + navigation guidance + VQA. |
+| AlpaSim | [NVlabs/alpasim](https://github.com/NVlabs/alpasim) | Apache-2.0 | 1.3k | Open AV simulator released with Alpamayo; fastest-growing of the new NVIDIA automotive repos. |
+| Alpamayo Recipes | [NVlabs/alpamayo-recipes](https://github.com/NVlabs/alpamayo-recipes) | Apache-2.0 | 205 | New developer hub; absorbed the SFT/RL scripts from the deprecated `NVlabs/alpamayo`. The place work actually happens now. |
+| AlpaGym | [NVlabs/alpagym](https://github.com/NVlabs/alpagym) | Apache-2.0 | 157 | Closed-loop RL framework on AlpaSim — completes the open post-training loop. |
+| WorldEngine | [OpenDriveLab/WorldEngine](https://github.com/OpenDriveLab/WorldEngine) | Apache-2.0 | 520 | Updated Sep 2026 with stable checkpoints. Post-training via 3DGS scene reconstruction + RL. |
+
+**Status change to note:** [NVlabs/alpamayo](https://github.com/NVlabs/alpamayo) (Apache-2.0, 2.0k★) now
+carries a banner — *"no longer under active development ... limited maintenance updates"* — and redirects
+to Alpamayo Recipes. Anyone who started from Alpamayo 1 Nano should migrate.
+
+**Negative result, recorded deliberately:** no automotive-specific *agent framework* trended this period.
+Searches (`top open source AI agents automotive 2026 github MIT`, `github trending automotive AI 2026`)
+returned general-purpose frameworks (CrewAI, LangGraph, OpenHands, browser-use) with no automotive content,
+plus 0-star unlicensed hobby projects. `github.com/trending` offers no automotive filter. See
+`agents/top.md` → "Verified but NOT usable".
+
+---
+
+## History — snapshots before 2026-10-15
+
+> ⚠️ **Accuracy note added 2026-10-15:** the snapshot below was produced by an unfiltered keyword scrape.
+> Several entries are **not automotive software** — `MotionBastard` (After Effects motion design),
+> `git-lanes` (generic git tooling for coding agents), `AirForce-API-Auto-Register-System` (unrelated API
+> registration), `video2robot` (general robotics). Several carry `?` or `NOASSERTION` licences, meaning no
+> verified grant. Preserved verbatim for trend continuity, **not** as recommendations.
+
 
 > Última actualización: 2026-07-02
 
@@ -17,3 +58,4 @@
 
 ---
 *Pipeline automático — se actualiza cada hora.*
+
