@@ -1,12 +1,47 @@
 ---
 industry: automotive
 region: Global
-updated: 2026-10-15
+updated: 2026-10-26
 ---
 
 # 📈 Trending AI agents & models — Automotive
 
 > **APPEND-ONLY.** Newest dated section on top; history preserved below. Never rewrite earlier sections.
+
+## 2026-10-26
+
+**What moved:** two additions that were missing rather than new — **Alpamayo 2 Super now has a verified
+repository row**, and **a second open VLA line (OpenDriveVLA) exists** and had never been recorded here.
+Plus one licence correction that matters more than either.
+
+| Agent / model | Repo | Licence | Stars | Why it is trending |
+|---|---|---|---|---|
+| 🆕 Alpamayo 2 Super | [NVlabs/alpamayo2](https://github.com/NVlabs/alpamayo2) | Apache-2.0 | 287 | Open **34B** multi-task AV foundation model — 32B VLM backbone + 2B diffusion expert. The previous pass named it in prose; this is its first verified row. Largest open AV model in this KB. |
+| 🆕 OpenDriveVLA | [DriveVLA/OpenDriveVLA](https://github.com/DriveVLA/OpenDriveVLA) | Apache-2.0 | 824 | **[AAAI 2026]** end-to-end VLA from an academic group, with a **0.5B checkpoint on Hugging Face** (2025/11/14). First credible open VLA line in this KB that is *not* NVIDIA's, and by far the smallest — which makes on-target work possible. |
+| Alpamayo 1.5 | [NVlabs/alpamayo1.5](https://github.com/NVlabs/alpamayo1.5) | Apache-2.0 (code) · ⚠️ **OpenMDW-1.1 (weights)** | 370 | ↑ from 368. Still the practical entry point and the one the recipes target. **Licence split recorded for the first time — see below.** |
+| Alpamayo Recipes | [NVlabs/alpamayo-recipes](https://github.com/NVlabs/alpamayo-recipes) | Apache-2.0 | 217 | ↑ from 205. Recipe set verified: 1 SFT, 1.5 SFT (HF Trainer + DeepSpeed), 1.x RL (Cosmos-RL + GRPO), 1.5 quantization (FP8, NVFP4+FP8). |
+| AlpaGym | [NVlabs/alpagym](https://github.com/NVlabs/alpagym) | Apache-2.0 | 163 | ↑ from 157. Closed-loop RL on AlpaSim. |
+| AlpaSim | [NVlabs/alpasim](https://github.com/NVlabs/alpasim) | Apache-2.0 | 1.3k | Flat at 1.3k (rounded). Open AV simulator released with Alpamayo. |
+| WorldEngine | [OpenDriveLab/WorldEngine](https://github.com/OpenDriveLab/WorldEngine) | Apache-2.0 | 528 | ↑ from 520. Stable checkpoints 2026/09/15; post-training via 3DGS reconstruction + RL. |
+| openpilot | [commaai/openpilot](https://github.com/commaai/openpilot) | MIT | 64.0k | ↑ from 63.9k — **crossed 64k**. Largest permissive automotive codebase. |
+| Alpamayo 1 Nano | [NVlabs/alpamayo](https://github.com/NVlabs/alpamayo) | Apache-2.0 | 2.1k | ↑ from 2.0k **while deprecated** — stars still accruing to the repository people should no longer start from. Banner: *"no longer under active development … limited maintenance updates."* |
+
+🔴 **Licence correction, carried into `agents/top.md` and `compose/patterns.md` P6:** the Alpamayo 1.5
+repository is Apache-2.0, **but its README states the model weights are under `OpenMDW-1.1`.** Every
+earlier section of this file recorded Alpamayo 1.5 as plain Apache-2.0. Code licence ≠ weight licence;
+read OpenMDW-1.1 before distributing fine-tuned derivatives.
+
+**Negative result, recorded deliberately (sixth consecutive pass):** no automotive-specific *agent
+framework* trended. `top open source AI agents automotive 2026 github MIT` and
+`github trending automotive AI 2026` returned general-purpose frameworks with no automotive content
+(OpenClaw, OpenCode, OpenHands, CrewAI, AutoGPT) plus 0-star unlicensed hobby projects.
+`github.com/trending` still offers no automotive filter. See `agents/top.md` → "Verified but NOT usable".
+
+**Method note:** `api.github.com` returns **HTTP 403** for repositories not attached to this session, so
+every licence and star figure above was read from the rendered repository page on 2026-10-26, and every
+URL was probed with `git ls-remote --symref` the same day.
+
+---
 
 ## 2026-10-15
 
