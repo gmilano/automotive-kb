@@ -1,15 +1,72 @@
 ---
 industry: automotive
 region: Global
-updated: 2026-10-26
+updated: 2026-10-31
 ---
 
 # 📡 Trends — Automotive
 
-> Current trends, updated 2026-10-26. Project and vendor self-reported performance figures are labelled
+> Current trends, updated 2026-10-31. Project and vendor self-reported performance figures are labelled
 > as such. Dates name their instrument.
 
-## T0 🆕 — The open SDV *core* arrived, and it is the story this pass
+## 🆕 New on 2026-10-31 — two trends that sit above the numbered list below
+
+The numbered T0–T8 sections that follow are kept as written on 2026-10-26 and are **not renumbered**, so
+the record stays comparable pass to pass. These two are new.
+
+### N1 — The open end-to-end driving model became a three-supplier commodity, and NVIDIA is no longer top of the table
+
+For three passes this KB has described **one** open AV reference line: NVIDIA's Alpamayo. As of this pass
+there are **three independent Apache-2.0 suppliers**, and on the only published multi-model comparison the
+NVIDIA model is **third**:
+
+| Model | Supplier | Params | Licence | ★ | ADE @ 3 s | FDE @ 3 s |
+|---|---|---|---|--:|--:|--:|
+| **Qwen Drive 1.0** | Alibaba | 4B | Apache-2.0 | 537 | **0.565 m** | **1.397 m** |
+| **AutoE2E v1.0** | Autoware Foundation | **79.9M** | Apache-2.0 | 184 | 0.744 m | 1.980 m |
+| **Alpamayo 1.5** | NVIDIA | 10B | Apache-2.0 code · **OpenMDW-1.1 weights** | 370 | behind AutoE2E | — |
+
+Source: AutoE2E's own README, read 2026-10-31, on **KITScenes-Multimodal** validation, open-loop, 3 s
+horizon, eight open-weights models compared (SimForge and METEOR also behind AutoE2E).
+
+🔴 **It is not a clean ranking and must not be sold as one.** The README states that **inputs differ by
+model** — AutoE2E itself receives an HD map and the route — and the Qwen Drive row uses a **different
+evaluation setting** (first-of-6-trajectories checkpoint, 202 keyframes). What it *is*: the **first
+vendor-neutral multi-model comparison in open AV**, published by a foundation that sells no model, and
+**reproducible** (issue **#210** coordinates the community benchmark; PRs **#220** and **#229** added the
+Qwen Drive and Alpamayo evaluation scripts).
+
+**Three commercial reads:**
+1. **Parameter count is not the axis.** AutoE2E beats a 10B model with **79.9M parameters** and runs at
+   **~76 FPS on an RTX 5080** (project figure). For a client who must ship on automotive silicon rather
+   than a datacentre GPU, that is the more important number than any benchmark row.
+2. **Vendor neutrality is now purchasable.** An OEM that does not want to look captured by NVIDIA has a
+   foundation-governed option with the same licence. Expect this to come up in procurement before it comes
+   up in engineering.
+3. **"Model-agnostic" stops being a slide and becomes a deliverable.** With three free suppliers whose
+   relative quality is contested, the defensible architecture puts the policy behind an interface and
+   swaps it — which is what the revised P6 and the new P9 below do.
+
+### N2 — The automotive agent layer finally appeared, as MCP servers, at 0–8 stars
+
+Three passes recorded *"no permissively-licensed automotive AI agents exist."* That is **no longer true**,
+and the correction has to carry its own scale: `Vehicle-Diagnostic-Assistant` (MIT, **8★**), `obd2-mcp`
+(MIT, **2★**), `automotive-ai-skills` (MIT), `j2534-mcp-server` (**0★**, and **no LICENSE file**),
+`carvector-mcp` (MIT client, **1★**, keyed proprietary API). The one real-traction project in the space is
+a **protocol, not an agent**: **Auto Agent Protocol** (Apache-2.0, **110★**, v3.1).
+
+**The signal is the convergence, not the stars.** Every project is an **MCP server**. The physical layer
+has settled: **ELM327/OBD-II** for consumer-grade access, **J2534 PassThru** for professional-grade
+(UDS, KWP2000, DTC lookup, PID decoding). Independently, two of these projects arrived at the **human
+approval gate before any vehicle action** that this KB has recommended since July.
+
+**Why this is the favourable shape of a market for a services firm:** the integration contracts are
+standardised and free, and **the differentiated product does not exist yet**. Compare the LMS-agent cluster
+in the education KB — same MCP-first shape, same small star counts, same conclusion. 🟡 **Caveat worth
+stating internally:** a 0–8★ category is a *watch* item. It justifies a demo and a point of view; it does
+not yet justify a practice. Re-measure next pass — these numbers are the baseline.
+
+## T0 — The open SDV *core* arrived (recorded 2026-10-26)
 
 The previous pass tracked the SDV **data layer** (VSS, Kuksa, Ankaios) and missed the **platform core**.
 **Eclipse S-CORE** (*Safe Open Vehicle Core*, Apache-2.0) is the first open-source-based SDV platform
@@ -193,5 +250,36 @@ Recording these because an unstated gap is indistinguishable from coverage.
    MLIT/METI sources directly.
 
 ---
-*Updated 2026-10-26. ⚠️ marks a claim this pass could not verify against a primary source; 🔴 an open gap;
-🟢 a gap closed since the previous pass.*
+*Updated 2026-10-31 (previous pass 2026-10-26). N1–N2 are new this pass; T0–T8 are preserved as written on
+2026-10-26 and deliberately not renumbered. ⚠️ marks a claim this pass could not verify against a primary
+source; 🔴 an open gap; 🟢 a gap closed since the previous pass.*
+
+## 🆕 Gaps opened or closed on 2026-10-31
+
+- 🟢 **Closed — China's mandatory standards have numbers.** **GB 44721-2026** (L3/L4, effective
+  **1 July 2027**, MIIT, Class M and N, one-year transition) and **GB 47955-2026** (combined driver
+  assistance, effective **1 January 2027**). The 2026-10-26 pass carried this as "⚠️ unverified".
+- 🟢 **Closed — the AutoE2E licence conflict.** Secondary sources said OpenMDW-1.1; the repository's
+  `LICENSE`, fetched raw, is **verbatim Apache-2.0**. Settled by reading the file.
+- 🟢 **Partially closed — Japan, previously "the thinnest major market in this KB".** Now dated and named:
+  **Phase II AI Basic Plan** (non-binding national strategy) and **AI Business Guidelines v1.2**, which
+  cover **AI agents and physical AI** specifically. Level 4 remains **ODD-bounded**. MLIT/METI primary
+  sources still not read directly.
+- 🟢 **Partially closed — Brazil's AV instrument.** **PL 1317/2023** would add licensing, reporting and AI
+  governance duties to the **Código de Trânsito** — distinct from PL 2338/2023 and previously missed here.
+  Still no CONTRAN resolution; still no regulation of AV testing or circulation on any Brazilian road.
+- 🔴 **Opened — model weights cannot be verified from this session.** `huggingface.co` **does not resolve**
+  (DNS failure, consistent with the proxy's allowed-domain policy). Given the Alpamayo code/weights split
+  this KB already caught, the weights licences for **AutoE2E** and **Qwen-Drive-1.0** are **unresolved**.
+  Next pass: request `huggingface.co` in the session's allowed domains before relying on either.
+- 🔴 **Opened — EU AI Act automotive date may have moved to 2 August 2028** via the **Digital Omnibus**
+  (reported adopted June 2026, Annex I type-approval route). Two independent sources agree; **neither is the
+  Official Journal.** Article 50 transparency reported as applying since **2 August 2026**.
+- 🔴 **Open — Auto Agent Protocol adoption is unverified.** The spec, licence split and version are
+  verified; **how many dealerships serve the endpoints is not.** Highest-value question for the next pass.
+- 🔴 **Open, and now with a US instrument attached — LATAM.** The **Connected Vehicle Security Act of
+  2026** advanced unanimously from Senate committee in July 2026 and is expected to reach EV imports
+  **assembled in Brazil**. No LATAM-origin automotive repository has been found in any pass.
+- 🟡 **Watch — North America AV transparency is narrowing.** One analysis notes 2025's reporting changes
+  imply **decreasing public visibility of AV failure modes as fleets grow**, which shrinks the public
+  corpus a scenario-mining offering can draw on and raises the value of a client's own logs.

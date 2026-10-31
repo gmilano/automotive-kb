@@ -1,7 +1,7 @@
 ---
 industry: automotive
 region: Global
-updated: 2026-10-26
+updated: 2026-10-31
 ---
 
 # 🧩 Composition patterns — Automotive
@@ -213,7 +213,12 @@ in Brazil or Mexico yet, and a client can check that in an afternoon. Sell LGPD/
 
 ---
 
-## P6 — Teacher→student distillation from an open VLA *(revised)*
+## P6 — Teacher→student distillation from an open VLA *(revised; see **P9** before choosing the teacher)*
+
+> 🆕 **2026-10-31 — read P9 first.** This pattern assumes a chosen teacher model. As of this pass there are
+> **three Apache-2.0 suppliers** and the NVIDIA line is **third** on the only published open comparison.
+> Choose the teacher with the P9 bench on the client's own logs rather than inheriting it.
+
 
 **Region fit:** Global.
 **Problem:** NVIDIA publishes Alpamayo Apache-2.0 but positions it as a **teacher model, not in-car
@@ -341,6 +346,109 @@ from this pass's sources. Scope phase 1 as traceability infrastructure that is u
 **Estimate:** 8–10 weeks for provenance modelling + evidence pipeline on one vehicle line; the second line
 is ~2 weeks once the supplier-declaration connectors exist.
 
+## P9 🆕 — Model-agnostic E2E policy bench (pick a driving model instead of inheriting one)
+
+**Region fit:** Global; strongest in **North America** (validation buyers) and **APAC** (three of the four
+candidate models are APAC-origin or APAC-benchmarked).
+**Problem:** a client is about to standardise on one open driving model — almost always Alpamayo, because
+it is the one with marketing behind it. As of 2026-10-31 that is a measurably questionable default:
+**Qwen-Drive-1.0** and **AutoE2E** both sit ahead of **Alpamayo 1.5** on AutoE2E's published eight-model
+comparison, and the comparison is **not like-for-like**. Nobody — including this KB — can tell the client
+which model is best *for their data*. The deliverable is the apparatus that answers that, on their logs.
+
+**Wiring:**
+1. **Interface first, models second.** Define one adapter contract — `(surround frames, ego history,
+   optional map raster, route) → (trajectory | acceleration + curvature)`. Every candidate implements it.
+   This is the whole point of the pattern: the client ends up owning a bench, not a model choice.
+2. **Load four candidates, all Apache-2.0 code:**
+   - [autowarefoundation/auto_e2e](https://github.com/autowarefoundation/auto_e2e) — 79.9M params,
+     camera-first, no HD map required, **~76 FPS on an RTX 5080**. The on-target realist.
+   - [QwenLM/Qwen-Drive-1.0](https://github.com/QwenLM/Qwen-Drive-1.0) — 4B, BEV perception head +
+     flow-matching planner. Tops the published table.
+   - [NVlabs/alpamayo1.5](https://github.com/NVlabs/alpamayo1.5) — 10B, the recipe-supported incumbent.
+   - [DriveVLA/OpenDriveVLA](https://github.com/DriveVLA/OpenDriveVLA) — 0.5B, the floor case for
+     cost-per-inference and teaching.
+3. **Reproduce the published numbers before trusting your own.** AutoE2E ships the evaluation scripts:
+   PRs **#220** and **#229** added Qwen Drive 1.0 and Alpamayo 1.5 evaluation, and issue **#210**
+   coordinates the community benchmark. Reproduce the KITScenes-Multimodal ADE/FDE figures first — if the
+   bench cannot reproduce a published row, the bench is wrong, not the paper.
+4. **Then re-score on the client's logs, open-loop, and normalise the inputs.** This is where the published
+   table's weakness becomes your value: AutoE2E receives an HD map and the route while others do not.
+   **Hold inputs constant across candidates** and the ranking may invert. Say so in the report.
+5. **Close the loop for the shortlist only.** Promote the top two into
+   [NVlabs/alpasim](https://github.com/NVlabs/alpasim) + [NVlabs/alpagym](https://github.com/NVlabs/alpagym),
+   or CARLA + [scenario_runner](https://github.com/carla-simulator/scenario_runner), and score on the
+   client's own failure scenarios mined per **P1**. Open-loop ADE/FDE is a screening metric, not a
+   driving-quality metric.
+6. **Report cost-per-inference alongside accuracy.** 79.9M vs 4B vs 10B is a silicon-budget decision as much
+   as an accuracy one, and it is the number the client's hardware team will actually act on.
+
+**🔴 Licence gate before any deliverable ships.** All four repositories are Apache-2.0 **for code**.
+**Weights are a separate grant and could not be verified this pass** — `huggingface.co` does not resolve
+from the research session, Alpamayo 1.5's weights are **OpenMDW-1.1** while its code is Apache-2.0, and a
+secondary source makes the same claim about AutoE2E. **Read every model card before distributing a
+fine-tuned derivative.** Put this step in the statement of work as a named task, not an assumption.
+
+**Estimate:** 3–4 weeks for the adapter contract plus two models reproducing published numbers; +2 weeks per
+additional model; +3–4 weeks to re-score on client logs with normalised inputs. The bench is reusable across
+engagements, which is what makes it worth building once properly.
+
+## P10 🆕 — Aftersales diagnostic copilot on a published contract (MCP all the way down)
+
+**Region fit:** **North America** first (43% dealer AI adoption, a further 47% planning to; NHTSA vPIC VIN
+API is free and US-scoped), then **EMEA**; the reference implementation is EMEA-origin.
+**Problem:** a dealer group or independent-workshop chain wants AI help with diagnosis and customer
+communication. The instinct is to build a bespoke stack. As of this pass, **both ends are already
+specified** — the vehicle end by the MCP diagnostics cluster, the business end by Auto Agent Protocol — so
+the budget should go to the domain and the gate, not to re-inventing two interfaces.
+
+**Wiring, bottom to top:**
+1. **Vehicle access layer — pick by access depth, and mind the licence:**
+   - Consumer / fast demo: [shoka-jp/obd2-mcp](https://github.com/shoka-jp/obd2-mcp) (**MIT**, 2★) — DTCs,
+     live data, freeze frame, VIN over ELM327, and it **bundles a mock vehicle so it runs with no
+     hardware**. This is how you demo in a workshop before anyone buys a dongle.
+   - Professional depth: J2534 PassThru (UDS, KWP2000, DTC lookup, PID decoding).
+     ⚠️ **[cyrusdavirusss/j2534-mcp-server](https://github.com/cyrusdavirusss/j2534-mcp-server) is the
+     reference design and is NOT usable** — its README says "MIT" but the repository has **no LICENSE file**
+     (404 on `LICENSE`, `LICENSE.md`, `LICENSE.txt` across `main` and `master`). **Read it, do not vendor
+     it.** Either ask the maintainer to add the file, or implement the J2534 tool surface yourself against
+     the SAE spec.
+2. **Agent orchestration — copy the one that exists.**
+   [castlebbs/Vehicle-Diagnostic-Assistant](https://github.com/castlebbs/Vehicle-Diagnostic-Assistant)
+   (**MIT**, 8★) is the most complete open design: LangGraph with `InMemorySaver` checkpointing and UUID
+   sessions, MCP over streamable HTTP / JSON-RPC 2.0, a **sandboxed** OBD-II formula evaluator, VIN decode
+   against the **NHTSA vPIC** API, repair-tutorial retrieval. Its hardware path (W600-B800 MCU → UART
+   38400 → ELM327 → CAN) is a working answer to "what dongle".
+3. **Ground the reasoning in the client's own documents, not the open web.** RAG over *their* service
+   manuals, TSBs and historical repair orders. This is the differentiator — the open projects all stop at
+   generic knowledge, and two of them run on **simulated data catalogues**.
+4. **Speak VSS upward.** Name every vehicle signal with
+   [COVESA VSS](https://github.com/COVESA/vehicle_signal_specification) (MPL-2.0) so the model's vocabulary
+   matches the industry's and the same tools serve a connected-vehicle programme later.
+5. **Business end — implement Auto Agent Protocol, do not invent a schema.**
+   [auto-agent-protocol/auto-agent-protocol](https://github.com/auto-agent-protocol/auto-agent-protocol)
+   (**Apache-2.0** spec/schemas/code, docs **CC BY 4.0**, 110★, v3.1): publish the dealer's **Agent Card**,
+   **Poppy document** and **`llms.txt`**, serve the MCP tool catalogue and A2A OpenAPI from versioned
+   `/v3.0/` paths, and use its **consented-inquiry** flow for lead capture. 🔴 **Do not tell the client the
+   industry has standardised on this** — the spec is verified, its deployment is not. The accurate pitch is
+   "an open contract exists and we implement both sides".
+6. **Service-order back office, licence-led:** [apache/ofbiz-framework](https://github.com/apache/ofbiz-framework)
+   (Apache-2.0) or [krayin/laravel-crm](https://github.com/krayin/laravel-crm) (MIT) if the deliverable is a
+   hosted proprietary product. **Avoid** Odoo (LGPL-3.0), Dolibarr (**GPL-3.0**) and
+   `navariltd/Fleet-Management-System` (**GPL-3.0**) for that case.
+7. **Human gate on everything that actuates, commits money, or tells a customer their car is safe.**
+   A diagnosis is advice; a technician signs it. Notably **two independent projects found this pass arrived
+   at the same gate on their own**, which is the strongest available evidence that it is the correct
+   architecture rather than this KB's preference.
+
+**Why this pattern is cheap to start and hard to copy:** steps 1–2 and 5 are free and specified, step 3 is
+the client's proprietary corpus, and step 7 is the thing that makes it deployable. The moat is 3 and 7.
+
+**Estimate:** 2 weeks for a mock-vehicle demo (step 1 + step 2 off the shelf, no hardware); 6–8 weeks for a
+grounded pilot on one workshop's manuals with the technician gate; +3–4 weeks to expose the AAP surface.
+
 ---
-*Eight patterns, 2026-10-26. Effort estimates are planning figures for a studio team, not quotes.
-P7 and P8 are new this pass; P3, P4, P5 and P6 were revised against findings dated after 2026-10-15.*
+*Ten patterns, 2026-10-31. Effort estimates are planning figures for a studio team, not quotes.
+P9 and P10 are new this pass (previous pass 2026-10-26 added P7 and P8). Every repository named above was
+verified live on its stated date; where a licence is flagged ⚠️ or 🔴, the flag is the finding.*
+

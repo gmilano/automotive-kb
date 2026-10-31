@@ -1,12 +1,110 @@
 ---
 industry: automotive
 region: Global
-updated: 2026-10-26
+updated: 2026-10-31
 ---
 
 # 📈 Trending AI agents & models — Automotive
 
 > **APPEND-ONLY.** Newest dated section on top; history preserved below. Never rewrite earlier sections.
+
+## 2026-10-31
+
+**What moved:** the open end-to-end driving-model field turned into a **race with a published scoreboard**,
+and a **vehicle-diagnostics agent layer appeared** where three previous passes recorded an empty category.
+
+### 1. 🆕 AutoE2E v1.0 — released **29 October 2026**, two days before this snapshot
+
+[`autowarefoundation/auto_e2e`](https://github.com/autowarefoundation/auto_e2e) · **Apache-2.0** · **184★** ·
+38 forks · region **Global** (Autoware Foundation; Robotaxi working group, TIER IV-linked contributors)
+
+First tagged release of a **camera-first** E2E driving model: **79.9M parameters**, six surround cameras at
+10 Hz lifted into a BEV grid, optional map raster, GRU planner emitting **6.4 s of acceleration and
+curvature**. Architecturally three cooperating models — the **Reactive** model drives today; the 1 Hz
+**World Action** and **Reasoning** models are in development. Project's own speed figure: **~76 FPS**
+(SwinV2-Tiny, feature-concat fusion, RTX 5080, batch 1). Positioned for two uses: fused with LiDAR/radar
+safety layers for driverless robotaxis, or **camera-only for L2++ hands-free ADAS**.
+
+🟢 **Licence settled by reading the file.** A TIER IV executive's LinkedIn posts describe the release as
+**OpenMDW-1.1**; the repository's `LICENSE`, fetched raw today, is **verbatim Apache-2.0**, and the README
+badge agrees. Recorded as Apache-2.0 for the code. **Weights unresolved** — see the channel gap below.
+
+### 2. 🆕 Qwen-Drive-1.0 — Alibaba enters, and tops AutoE2E's own benchmark
+
+[`QwenLM/Qwen-Drive-1.0`](https://github.com/QwenLM/Qwen-Drive-1.0) · **Apache-2.0** · **537★** · 56 forks ·
+region **APAC**
+
+*"An Initial Step towards a Vision-Language Foundation Model for Autonomous Driving."* A **Qwen3.5-4B** VLM
+plus a **BEV perception head** (3D detection, occupancy, map segmentation) and a **flow-matching Planning
+Expert**. At 4B it fills the gap between OpenDriveVLA (0.5B) and Alpamayo 1.5 (10B). Weights advertised on
+Hugging Face and ModelScope as `Qwen/Qwen-Drive-1.0-4B`.
+
+### 3. 🔴 The scoreboard — and why it is not a ranking
+
+AutoE2E publishes an eight-model open-weights comparison on **KITScenes-Multimodal** validation, open-loop,
+3 s horizon (read from the README today):
+
+| Model | ADE @ 3 s | FDE @ 3 s |
+|---|--:|--:|
+| **Qwen Drive 1.0** | **0.565 m** | **1.397 m** |
+| **AutoE2E** (fine-tuned) | 0.744 m | 1.980 m |
+| Alpamayo 1.5 · SimForge · METEOR | all behind AutoE2E | — |
+
+**The headline for this KB is uncomfortable and should be said plainly: the NVIDIA Alpamayo line this KB has
+recommended as the reference stack since July is mid-table on a competitor's benchmark.** But the table is
+**not like-for-like** — the README states inputs differ by model (AutoE2E receives an HD map and the route),
+and the Qwen Drive row uses a different checkpoint and keyframe set. Treat it as the **first vendor-neutral
+multi-model comparison in open AV**, not as a leaderboard. Reproducible: issue **#210** coordinates the
+community benchmark, PRs **#220** and **#229** added the Qwen Drive and Alpamayo 1.5 evaluation scripts.
+
+### 4. 🆕 A vehicle-diagnostics agent category now exists — at 0–8 stars
+
+The category three passes called empty is no longer empty. Its scale is stated alongside it on purpose:
+
+| Agent | Repo | Licence | ★ | Region |
+|---|---|---|--:|---|
+| Vehicle Diagnostic Assistant | [castlebbs/Vehicle-Diagnostic-Assistant](https://github.com/castlebbs/Vehicle-Diagnostic-Assistant) | MIT | 8 | EMEA |
+| obd2-mcp | [shoka-jp/obd2-mcp](https://github.com/shoka-jp/obd2-mcp) | MIT | 2 | APAC |
+| automotive-ai-skills | [shoka-jp/automotive-ai-skills](https://github.com/shoka-jp/automotive-ai-skills) | MIT | — | APAC |
+| j2534-mcp-server | [cyrusdavirusss/j2534-mcp-server](https://github.com/cyrusdavirusss/j2534-mcp-server) | ⚠️ README "MIT", **no LICENSE file** (404 on both branches) | 0 | — |
+| carvector-mcp | [carvectorio/carvector-mcp](https://github.com/carvectorio/carvector-mcp) | MIT **client for a keyed proprietary API** | 1 | — |
+
+**The signal is not the stars, it is the convergence:** every one of these is an **MCP server**, and the
+physical layer has settled on ELM327/OBD-II for consumer work and **J2534 for professional** work. The
+plumbing standardised before anyone built the winning agent.
+
+### 5. 🆕 Auto Agent Protocol — the dealership contract, 110★
+
+[`auto-agent-protocol/auto-agent-protocol`](https://github.com/auto-agent-protocol/auto-agent-protocol) ·
+**Apache-2.0** (spec/schemas/code) · docs **CC BY 4.0** · **110★** · region **Global**
+
+*"The open automotive contract for MCP, A2A and Personal Agent Protocol: dealer discovery, inventory,
+evidence, pricing and consented inquiries."* README describes **v3.1** as additive over the published 3.0
+contract. Discovery pattern: the dealer domain publishes an **Agent Card**, a **Poppy document** and
+**`llms.txt`** pointing at live MCP/A2A/PAP endpoints, with the MCP tool catalogue and A2A OpenAPI at
+versioned `/v3.0/` paths. Independent of Google's A2A, which it builds on.
+
+### 6. ⏸ Non-movement worth recording
+
+**openpilot re-read today: MIT, 64.0k★ — unchanged** from 2026-10-26. After three passes of steady growth,
+a flat reading is a data point rather than a gap.
+
+### 🔴 Channel gap this snapshot
+
+**`huggingface.co` does not resolve from this session** (DNS failure, consistent with the proxy's
+allowed-domain policy), so **no model-weight licence was verified first-hand**. Given that this KB already
+caught the Alpamayo 1.5 code/weights split (repo Apache-2.0, weights **OpenMDW-1.1**) and that a secondary
+source makes the same claim for AutoE2E, the weights licences for **AutoE2E** and **Qwen-Drive-1.0** are
+**explicitly unresolved**. Separately, `curl -sI` on `github.com` returns **HTTP 403** through this proxy, so
+existence was proved with `git ls-remote` and figures read from rendered pages — the same constraint the
+2026-10-26 and 2026-10-15 passes recorded.
+
+### Regions represented this snapshot
+
+**APAC** (Qwen-Drive-1.0, obd2-mcp, automotive-ai-skills) · **EMEA** (Vehicle Diagnostic Assistant) ·
+**Global** (AutoE2E, Auto Agent Protocol). 🔴 **No LATAM-origin automotive AI agent or model appeared in
+this snapshot** — consistent with every previous pass; the regional detail is in
+[`../intel/market.md`](../intel/market.md).
 
 ## 2026-10-26
 

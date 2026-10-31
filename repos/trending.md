@@ -1,12 +1,49 @@
 ---
 industry: automotive
 region: Global
-updated: 2026-10-26
+updated: 2026-10-31
 ---
 
 # 📈 Trending repos — Automotive
 
 > **APPEND-ONLY.** Newest dated section on top; history preserved below. Never rewrite earlier sections.
+
+## 2026-10-31
+
+**Method note unchanged and still binding:** `github.com/trending` has **no automotive topic filter**, and
+`curl -sI` against `github.com` returns **HTTP 403** through this session's proxy. So this file is not a
+scrape of a trending page — it is a dated record of repositories located by targeted search and then
+verified with `git ls-remote` plus a rendered-page read. 🔴 **`huggingface.co` does not resolve from this
+session**, so weight repositories could not be inspected.
+
+### New this snapshot
+
+| Repo | Licence | ★ | Region | Why it is here |
+|---|---|--:|---|---|
+| [autowarefoundation/auto_e2e](https://github.com/autowarefoundation/auto_e2e) | **Apache-2.0** (`LICENSE` read raw) | 184 | Global | **AutoE2E v1.0 tagged 29 Oct 2026** — the freshest significant release in this KB. Camera-first E2E driving model, 79.9M params, 6 cameras @10 Hz, 6.4 s plan horizon, ~76 FPS on an RTX 5080. 38 forks. Autoware Foundation Robotaxi working group. |
+| [QwenLM/Qwen-Drive-1.0](https://github.com/QwenLM/Qwen-Drive-1.0) | Apache-2.0 | 537 | APAC | Alibaba's open AV VLA: Qwen3.5-4B + BEV perception head + flow-matching planner. **Tops AutoE2E's published eight-model comparison.** 56 forks. |
+| [auto-agent-protocol/auto-agent-protocol](https://github.com/auto-agent-protocol/auto-agent-protocol) | Apache-2.0 spec/schemas/code · docs CC BY 4.0 | 110 | Global | The open dealership contract over MCP + A2A + PAP. **The only thing found in the retail layer with real governance** after three passes concluding the layer is closed. |
+| [castlebbs/Vehicle-Diagnostic-Assistant](https://github.com/castlebbs/Vehicle-Diagnostic-Assistant) | MIT (`LICENSE` read raw) | 8 | EMEA | Most complete open diagnostics agent design: LangGraph + MCP over streamable HTTP, sandboxed OBD-II formula evaluator, NHTSA vPIC VIN decode, ELM327→CAN hardware path. |
+| [shoka-jp/obd2-mcp](https://github.com/shoka-jp/obd2-mcp) | MIT (`LICENSE` read raw) | 2 | APAC | ELM327 MCP server with a **bundled mock vehicle** — runs with no hardware, which is what makes it demo-able. |
+| [shoka-jp/automotive-ai-skills](https://github.com/shoka-jp/automotive-ai-skills) | MIT (`LICENSE` read raw) | — | APAC | Companion skill pack to `obd2-mcp`: diagnostics, maintenance, repair, EV. |
+
+### Verified and deliberately excluded
+
+| Repo | Licence state | Why excluded |
+|---|---|---|
+| [cyrusdavirusss/j2534-mcp-server](https://github.com/cyrusdavirusss/j2534-mcp-server) | ⚠️ README says "MIT"; **no `LICENSE` file** — `LICENSE`, `LICENSE.md`, `LICENSE.txt` all **404 on `main` and `master`**; sidebar names no licence | Deepest vehicle access of anything found this pass (J2534 PassThru: CAN channels, UDS/OBD-II/KWP2000, DTC lookup, PID decoding, tested on Toyota/Lexus) and **the one that cannot be built on**. 0★. |
+| [carvectorio/carvector-mcp](https://github.com/carvectorio/carvector-mcp) | MIT, client only | README: bundles **no data**, every call forwards to the **keyed CarVector API**, exits without `CARVECTOR_API_KEY`. Open client, proprietary service. 1★. |
+| [navariltd/Fleet-Management-System](https://github.com/navariltd/Fleet-Management-System) | ⚠️ **GPL-3.0** (README + badge; sidebar does not name it) | Frappe-framework fleet solution, default branch `develop`, 12★/18 forks. Copyleft — unusable as a base for a proprietary client deliverable. Recorded so it is not rediscovered as a candidate. |
+| [Dolibarr/dolibarr](https://github.com/Dolibarr/dolibarr) | ⚠️ **GPL-3.0** (sidebar) | 7.8k★ PHP ERP/CRM, default branch `develop`. Came up as an ERP base for aftersales; **GPL-3.0 rules it out** where Odoo (LGPL-3.0) and OFBiz (Apache-2.0) are already recorded. Negative result, now settled. |
+| [rgy2291929165-boop/vehicle-diagnosis-agent](https://github.com/rgy2291929165-boop/vehicle-diagnosis-agent) | not read | EV fault analysis, RAG + LangGraph + MCP **with a human-approval gate**. Snapshot 2026-10-19; README says learning project on **simulated data catalogues**. |
+
+### Declared negatives for this snapshot
+
+- 🔴 **No LATAM-origin automotive repository found**, in this or any previous pass.
+- 🔴 **No open-source Dealership Management System still exists.** Searched again; the finding is unchanged.
+  What changed is that an **open contract** to reach dealerships now exists (Auto Agent Protocol above) —
+  see [`../verticals/solutions.md`](../verticals/solutions.md).
+- ⏸ **openpilot: MIT, 64.0k★ — unchanged** from 2026-10-26.
 
 ## 2026-10-26
 

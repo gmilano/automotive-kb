@@ -1,14 +1,67 @@
 ---
 industry: automotive
 region: Global
-updated: 2026-10-26
+updated: 2026-10-31
 ---
 
 # 🗺️ Market map — Automotive
 
-> Key players, market map and opportunities **by region**. Updated 2026-10-26.
+> Key players, market map and opportunities **by region**. Updated 2026-10-31.
 > Every regulatory date below names its instrument. Where sources conflict, the conflict is shown rather
 > than resolved — and where a date comes from a vendor page rather than a primary register, it says so.
+
+## What changed on 2026-10-31
+
+**Two items the previous pass flagged as unverified are now resolved with named instruments, and one
+regulatory date moved by nine months.**
+
+1. 🟢 **RESOLVED — China's mandatory AV standards have numbers.** The 2026-10-26 pass recorded *"one source
+   puts a mandatory L3/L4 standard referencing the UN GTR in effect 1 July 2027 — ⚠️ unverified."* It is
+   **GB 44721-2026**, issued by **MIIT** for **Class M and Class N** vehicles, **effective 1 July 2027**
+   with a reported one-year transition. A **second** mandatory standard, **GB 47955-2026**, covers
+   **combined driver-assistance systems** and is **effective 1 January 2027** — earlier than anything this
+   KB had, and the one that bites first.
+2. 🔴 **CHANGED — the EU AI Act's automotive deadline appears to have moved to 2 August 2028.** The
+   **Digital Omnibus**, reported adopted **June 2026**, is described as deferring the high-risk obligations
+   that reach automotive through the **Annex I type-approval route** to **2 August 2028**. The previous pass
+   recorded August 2027 (with a conflicting 2 December 2027 note). ⚠️ **Still not verified against the
+   Official Journal** and the sources are law-firm and vendor commentary — but the direction is consistent
+   across two independent ones. **Do not re-plan a client roadmap on this until it is confirmed.**
+   Meanwhile **Article 50 transparency obligations are reported as already applying since 2 August 2026.**
+3. 🆕 **North America: NHTSA proposes removing the manual brake pedal requirement** for vehicles designed to
+   operate exclusively without a human driver — the rule that currently blocks pedal-less designs such as
+   Tesla's Cybercab. The national standard work now has a name: **A2SCEND**, the three-year, $5M SAE
+   consortium, with Administrator **Jonathan Morrison** stating the aim of replacing the state patchwork
+   with a single national AV competency standard and one source putting the comprehensive rulebook at a
+   **2028** target.
+4. 🆕 **North America: enforcement is now individualised.** NHTSA issued a **Special Order on 10 September
+   2026 requiring Tesla to answer questions under oath**, due **30 October 2026** — i.e. yesterday relative
+   to this pass. A probe into **Avride** opened May 2026. And the **31 July 2026 deadline for AV
+   first-responder remediation plans has passed with no operator submission made public and no NHTSA
+   outcome announced** — which answers the previous pass's open "if the introduced legislation lands"
+   question with: the administrative route moved first.
+5. 🆕 **LATAM: Brazil has an AV-specific bill, which this KB had missed.** **PL 1317/2023** would add
+   licensing, reporting and **AI governance duties to the Código de Trânsito**. It is distinct from
+   **PL 2338/2023** (the general AI framework) that this file already tracks, and it is the instrument a
+   CONTRAN-level rule would most likely follow. Still before Congress; **there is still no regulation
+   governing the testing or circulation of autonomous vehicles on any Brazilian road.**
+6. 🆕 **LATAM: a US instrument is the region's nearest-term automotive AI risk.** The **Connected Vehicle
+   Security Act of 2026** was **unanimously approved and advanced by a Senate committee in July 2026**, and
+   analysis expects US connected-vehicle rules to reach EV imports **assembled in Brazil**, Turkey, the EU
+   and Thailand. For a Brazilian or Mexican plant, the binding AI-and-data rule arrives from Washington
+   before it arrives from Brasília or Mexico City.
+7. 🆕 **APAC: Japan's agent-relevant guidance is explicit.** Japan's **AI Business Guidelines v1.2** cover
+   governance for **AI agents and physical AI** specifically, under a **Phase II AI Basic Plan** adopted as
+   a **non-binding** national strategy. Japan's Level 4 deployments remain tightly bounded by **operating
+   design domain**.
+8. 🆕 **The open model layer stopped being single-vendor** — Apache-2.0 models from the **Autoware
+   Foundation** (AutoE2E, tagged 29 Oct 2026) and **Alibaba** (Qwen-Drive-1.0) now both sit ahead of
+   Alpamayo 1.5 on AutoE2E's published comparison. This changes the "do not compete on models" posture
+   below from a one-vendor observation into a structural one. Detail in
+   [`../agents/top.md`](../agents/top.md).
+9. 🆕 **An open dealership contract exists** — **Auto Agent Protocol** (Apache-2.0, 110★, v3.1), covering
+   dealer discovery, inventory, evidence, pricing and consented inquiries over MCP/A2A/PAP. See the new
+   **Global** subsection and [`../verticals/solutions.md`](../verticals/solutions.md).
 
 ## What changed since 2026-10-15
 
@@ -102,6 +155,27 @@ adoption figures instead — they are more consistent and more useful in a sales
     enforceable performance standards for AV operators.
   - 🆕 ⏳ **The surface transportation law funding these programmes expires 30 September 2026** — a hard
     deadline sitting in the middle of this quarter. Check its status before quoting programme continuity.
+  - 🆕 **Brake-pedal NPRM:** NHTSA has **proposed removing the manual brake pedal requirement** for
+    vehicles designed to operate exclusively without a human driver — the rule that blocks pedal-less
+    designs (Tesla's Cybercab has no steering wheel or pedals). If finalised, purpose-built robotaxis stop
+    being exemption-dependent, which is what turns Zoox's one-off into a category.
+  - 🆕 **The national standard has a name: A2SCEND** — the three-year, **$5M** cooperative agreement with
+    **SAE International**, whose data is intended to inform the **first federal performance standard for
+    automated driving systems**. Administrator **Jonathan Morrison** frames the goal as replacing the
+    patchwork of inconsistent state and local requirements with a **single national AV competency
+    standard**; one source puts the comprehensive rulebook at a **2028** target.
+  - 🆕 **Enforcement has gone individual, not just rule-making.** A **Special Order of 10 September 2026
+    requires Tesla to answer NHTSA's questions under oath**, due **30 October 2026**. NHTSA **opened a probe
+    into Avride in May 2026**. And the **31 July 2026 deadline for AV first-responder remediation plans has
+    passed with no public submission and no announced outcome** — so the emergency-services issue advanced
+    administratively rather than through the introduced legislation above.
+  - 🆕 **Players:** Waymo, Tesla, **Zoox** (Amazon-owned) and 🆕 **Avride**, which launched a robotaxi
+    service with **Uber** in December 2025. States permitting commercial L4 under geofenced,
+    reporting-based frameworks: **California, Arizona, Texas, Florida**.
+  - 🆕 ⚠️ **Transparency is moving the wrong way for anyone selling validation.** One analysis notes that
+    2025's changes to reporting requirements imply **decreasing public visibility of AV failure modes as
+    fleets grow**. That shrinks the public corpus a scenario-mining offering can draw on — and raises the
+    value of a client's own logs, which is where P1 points anyway.
   - **FMVSS No. 127** (automatic emergency braking) remains a live compliance driver. California permitted
     AVs logged **over 9 million test miles** Dec 2024 – Nov 2025.
 - **Opportunity — AV validation and scenario engineering.** Heavy testing volume + per-state reporting +
@@ -114,7 +188,13 @@ adoption figures instead — they are more consistent and more useful in a sales
 - **Opportunity — dealership and aftersales agents.** 43% dealer adoption plus a closed DMS oligopoly
   (CDK, Reynolds & Reynolds, Tekion, DealerSocket) means integration against proprietary APIs —
   defensible, recurring, not commoditised by open source. Warranty-claim validation against repair orders
-  is the highest-volume entry point. See P2.
+  is the highest-volume entry point. See P2. 🆕 **Now with a published contract on the outward-facing side:**
+  implement **Auto Agent Protocol v3.x** for dealer discovery, inventory, evidence and consented inquiries
+  instead of inventing a schema — the DMS integration stays bespoke, the agent interface does not.
+- 🆕 **Opportunity — pedal-less-vehicle homologation support.** If the brake-pedal NPRM finalises, every
+  purpose-built robotaxi programme needs an FMVSS-delta argument for a vehicle with no manual controls.
+  That is the P3 evidence pipeline aimed at an FMVSS exemption/compliance file, and the deadline pressure
+  is the client's product launch rather than a regulator's calendar.
 
 ### EMEA
 
@@ -135,6 +215,25 @@ adoption figures instead — they are more consistent and more useful in a sales
     Distraction Warning mandatory **7 Jul 2026** — driving in-cabin monitoring demand now.
   - 🆕 **UK**: the **Automated Vehicles (Permits for Automated Passenger Services) Regulations 2026** have
     been in force since **15 May 2026** — a live permitting regime, not a consultation.
+  - 🔴 🆕 **The automotive date may now be 2 August 2028.** The **Digital Omnibus** (reported adopted
+    **June 2026**) is described as deferring the high-risk obligations that reach automotive via the
+    **Annex I type-approval route** to **2 August 2028**; a second source independently says automotive
+    reaches the Act "mainly through the Annex I type-approval route at 2 August 2028". This **supersedes
+    the August 2027 / 2 December 2027 readings above if confirmed.** ⚠️ **Not verified against the Official
+    Journal; sources are law-firm and vendor commentary.** Treat as likely-but-unconfirmed and **do not
+    re-baseline a client roadmap on it yet.**
+  - 🆕 **Article 50 transparency obligations are reported as already in application since 2 August 2026** —
+    the part of the Act that is live today for in-cabin generative/assistant features.
+  - 🆕 **Framing that wins the compliance conversation:** *a type-approved vehicle is not automatically AI
+    Act compliant*, and **UNECE compliance is supporting evidence, not a discharge.** Practically,
+    existing **UN R151** documentation can be extended to satisfy **AI Act Article 11** technical-file
+    duties — which makes the offering "extend what you already filed", not "start a new filing".
+  - 🆕 **Extraterritorial reach, and a live UK exposure:** UK automotive businesses placing AI systems **or
+    their outputs** on the EU market may still be in scope post-Brexit. A UK Tier-1 selling into the EU is
+    a qualified lead for the same conformity offering.
+  - ⚠️ 🆕 **One widely-repeated claim to avoid:** a low-authority German site asserts that **no OEM is fully
+    AI Act compliant in 2026** (naming Tesla, BMW, VW, Mercedes). It cites nothing. **Do not use it in a
+    deliverable** — it is the kind of line that is easy for a client to challenge.
   - **ISO/PAS 8800** (AI safety for road vehicles) complements ISO 26262 and ISO 21448/SOTIF.
 - **Opportunity — AI Act + ISO/PAS 8800 conformity tooling.** Each high-risk AI system needs a technical
   file, a post-market monitoring plan and a serious-incident pipeline: a documentation and evidence
@@ -160,8 +259,27 @@ adoption figures instead — they are more consistent and more useful in a sales
     April 2026 analysis found **no nationwide mandatory AV safety rule** and noted **some municipalities,
     including Beijing, had pulled back** from unfettered autonomous operation: the direction of travel is
     centralisation, and it is mid-flight. **L2 penetration >70% of new passenger vehicles (MIIT).**
+  - 🟢 🆕 **China — the standards now have numbers, resolving this file's previous "unverified" note.**
+    **GB 44721-2026** covers safety for **Level 3 and Level 4** automated driving systems, issued by
+    **MIIT** for **Class M and Class N** vehicles, **effective 1 July 2027** with a reported one-year
+    transition period. **GB 47955-2026** covers **combined driver-assistance systems** and is **effective
+    1 January 2027** — the earlier and therefore more urgent of the two. China's domestic L3/L4 rules are
+    reported as **stricter than the UN GTR baseline**, which reads as Beijing trying to set the
+    international benchmark rather than follow it.
+  - 🆕 **China adoption, refined:** MIIT reports **L2 assisted-driving penetration above 70%** of new
+    passenger vehicles and **urban navigation-assisted driving above 20%** — the second figure is new here
+    and is the one that indicates real L2+ city capability rather than highway-only.
   - **Japan:** among the first to legally permit **Level 3** on public roads (Honda Legend); 🆕 **remote
-    monitoring is required for all Level 4** vehicles.
+    monitoring is required for all Level 4** vehicles. 🆕 **Level 4 deployments remain tightly bounded by
+    operating design domain** — Japan's posture is narrow-and-permitted rather than broad-and-restricted.
+  - 🆕 **Japan's AI rules are deliberately non-binding, and they name agents.** The **Phase II AI Basic
+    Plan** was adopted as a **non-binding** national AI strategy, and the **AI Business Guidelines v1.2**
+    cover governance for **AI agents and physical AI** specifically. For an automotive-agent engagement in
+    Japan this is the most directly relevant instrument in the region — and because it is guidance rather
+    than law, **conformance is an argument you construct**, which is billable in exactly the way EMEA's is.
+  - 🆕 **Rest of APAC, sized honestly:** market analysis positions **Japan** as the automotive-grade safety
+    and Tier-1 integration market, **Australia** as import-led (software and features, not platform), and
+    **India and South Korea** as higher-percentage growth from smaller bases.
   - 🆕 **South Korea:** the **AI Basic Act took effect 22 January 2026** — transparency duties for
     generative/high-impact AI, safety requirements for frontier models, governance duties for high-impact
     systems in sensitive sectors. Presidential decree and ministry guidelines clarify scope but are
@@ -209,6 +327,27 @@ adoption figures instead — they are more consistent and more useful in a sales
   to give Congress the power to legislate on AI at all. A September 2026 piece says Congress is moving
   toward a general law **late 2026**; an Universidad Anáhuac analysis counts **85 initiatives since April
   2023, 67 still pending**.
+- 🟢 🆕 **Brazil has an AV-specific bill this KB had missed: PL 1317/2023.** It would add **licensing,
+  reporting and AI governance duties to the Código de Trânsito** (Traffic Code). It is a *different*
+  instrument from **PL 2338/2023** (the general AI framework tracked above), it is still before Congress,
+  and it is the most likely vehicle for the CONTRAN-level rule this file has been looking for. Meanwhile the
+  operative position is unchanged and worth stating to a client in exactly these words: **there is currently
+  no specific regulation in Brazil governing the testing or circulation of autonomous vehicles on any type
+  of road.** Data duties come from **LGPD** plus **ANPD** normative acts.
+- 🆕 **Mexico, with more precision than the previous pass:** there is no specific AI law, and the
+  **LFPDPPP does not define AI** at all. Autonomous vehicles fall under **general traffic and consumer
+  law**, and **Mexico City's mobility regulations covering car-service platforms make no reference to AI or
+  automation.** Regionally, a law-firm review puts **Brazil and Chile furthest along** with regulation still
+  at the institutional-study stage.
+- 🔴 🆕 **The nearest-term binding rule for a LATAM plant comes from the United States.** The **Connected
+  Vehicle Security Act of 2026** was **unanimously approved and advanced by a Senate committee in July
+  2026**, and analysis expects US connected-vehicle restrictions to apply to EV imports **assembled in
+  Brazil**, Turkey, the EU and Thailand. Mexico's exposure runs through the **USMCA review**, which is
+  expected to focus heavily on **China's expanding market presence in Mexico**. **Sell connected-vehicle
+  supply-chain and data-provenance compliance in LATAM before AI compliance** — the former has a dated US
+  instrument behind it; the latter still has no local legal hook.
+- ⚠️ 🆕 **São Paulo has run Level 3 autonomous taxi trials**, with fully self-driving vehicles not yet
+  permitted — **source dated 2024**, so treat as historical and re-check before use.
 - 🔴 **Still not found, stated explicitly:** no **CONTRAN** resolution on autonomous vehicles in Brazil; no
   **NOM** for autonomous vehicles in Mexico; no AMIA position; **no AI-adoption data for Mexican or
   Brazilian auto plants**. A blog claim of an INAI AI registry from June 2026 could not be verified and
@@ -236,6 +375,39 @@ adoption figures instead — they are more consistent and more useful in a sales
 - **Opportunity — LGPD-compliant fleet telematics.** Anatel + LGPD give a concrete compliance hook that
   proprietary vendors handle poorly; Traccar self-hosted answers both. See P5.
 
+### Global
+
+Cross-region facts that belong to no single market, and are the reason this file now has a Global
+subsection at all.
+
+- 🆕 **An open contract for the dealership layer exists: Auto Agent Protocol** (Apache-2.0 for
+  specification, schemas and code; documentation **CC BY 4.0**; **110★**; **v3.1** per README). It covers
+  dealer discovery, inventory search, vehicle-fact verification and **consented** customer inquiries over
+  **MCP**, **A2A** and **Personal Agent Protocol**, discovered through an **Agent Card**, a **Poppy
+  document** and **`llms.txt`** on the dealer domain. Built on — and independent of — Google's A2A
+  (Apache-2.0, Linux Foundation). 🔴 **Deployment is unverified:** nothing found this pass establishes how
+  many dealerships serve these endpoints. The opportunity is implementing both sides of a published
+  contract, not riding an established standard.
+- **The UN GTR sits above every regional regime.** Adopted **24 June 2026**, endorsed by **Canada, China,
+  the EU, Japan, the UK and the US**. Multi-region work is therefore "map one global baseline onto national
+  implementations", and **the national deltas are the billable surface** — with China's GB standards now
+  the clearest, and reportedly stricter, delta.
+- 🆕 **The open end-to-end model layer is no longer single-vendor.** Apache-2.0 models from the **Autoware
+  Foundation** (**AutoE2E v1.0**, tagged 29 Oct 2026, 79.9M params, 184★) and **Alibaba**
+  (**Qwen-Drive-1.0**, 4B, 537★) both sit **ahead of Alpamayo 1.5** on AutoE2E's published eight-model
+  comparison — which is **not like-for-like** (inputs differ by model). Two consequences: the "teacher
+  model" commodity layer now has **three independent suppliers**, so betting a client's architecture on one
+  vendor's line is an avoidable risk; and the **vendor-neutral** option (Autoware Foundation, which sells no
+  model) is the better reference base for teaching and for a client who must not look captured.
+- 🆕 **A vehicle-diagnostics agent category appeared, at 0–8 stars.** Every project is an **MCP server**;
+  the physical layer has settled on **ELM327/OBD-II** for consumer work and **J2534** for professional.
+  **The plumbing standardised before anyone built the winning agent** — which is the favourable shape of a
+  market for a services firm. Detail and licence traps in [`../agents/top.md`](../agents/top.md).
+- **Adoption figures, which travel better than market-size figures:** **PwC** 47% → **72% by 2030** for
+  advanced technologies across the value chain; **Perforce** 71% implementing AI in vehicles, 57% working
+  on SDV architectures, 70% using AI for SDV optimisation (vendor survey); **43% of dealers** already
+  deploying AI with a further **47% planning to**.
+
 ## Globant positioning
 
 - **Lead with compliance in EMEA, validation in North America, jurisdictional complexity in APAC, and
@@ -245,15 +417,22 @@ adoption figures instead — they are more consistent and more useful in a sales
 - 🆕 **Own the SDV core, not just the data layer.** Eclipse S-CORE is Apache-2.0, ASIL-B-targeted, shipping
   monthly, VDA-backed with 32 companies, has a commercial distribution behind it — and 111 stars. Near-zero
   consultant mindshare on the thing German OEMs are standardising on is the clearest arbitrage in this KB.
-- **Do not compete on models.** NVIDIA gives Alpamayo away Apache-2.0 and calls it a teacher model. The
-  margin is in fine-tuning, closed-loop validation, the compliance evidence trail and the human gate.
+- **Do not compete on models — and 🆕 do not marry one either.** NVIDIA gives Alpamayo away Apache-2.0 and
+  calls it a teacher model; as of this pass the **Autoware Foundation** and **Alibaba** also give away
+  Apache-2.0 models that **beat Alpamayo 1.5 on the one published open comparison**. Three independent
+  suppliers of a free commodity is a stronger argument for Globant's position than one was: the margin is
+  in fine-tuning, closed-loop validation, the compliance evidence trail and the human gate — and in being
+  **model-agnostic by design**, which is now demonstrable rather than rhetorical.
 - **Be the firm that reads licences.** Three of the most attractive vertical bases here are AGPL or LGPL,
   the only live open shop-management tool is GPL-3.0, the leading automotive VQA dataset is non-commercial,
   and 🆕 **Alpamayo's weights are OpenMDW-1.1 while its code is Apache-2.0.** Getting this wrong late is
-  expensive; getting it right early is a differentiator a client can verify.
+  expensive; getting it right early is a differentiator a client can verify. 🆕 This pass added three more
+  specimens: a J2534 diagnostics server claiming **MIT in prose with no LICENSE file in the repository**, an
+  **MIT client for a keyed proprietary data API**, and a protocol whose **documentation is CC BY 4.0 while
+  its code is Apache-2.0**. The pattern is consistent enough to be a service line, not an anecdote.
 
 ---
-*Updated 2026-10-26. Figures attributed to their source; conflicts shown rather than resolved. Market-size
+*Updated 2026-10-31 (previous pass 2026-10-26). Figures attributed to their source; conflicts shown rather than resolved. Market-size
 numbers come from commercial research marketing pages and are estimates. Regulatory dates should be
 confirmed against primary sources (Official Journal, UNECE, Federal Register, Diário Oficial, DOF) before
 client use — the ⚠️ markers above flag the ones this pass could not verify.*

@@ -1,15 +1,31 @@
 ---
 industry: automotive
 region: Global
-updated: 2026-10-26
+updated: 2026-10-31
 ---
 
 # 🏗️ Foundational repos — Automotive
 
 > The bases to build on. Open licence, active community. Grouped by layer, because "automotive open source"
 > is four unrelated stacks that are routinely confused.
-> **Verification:** every URL probed with `git ls-remote` on 2026-10-26 — all live. 🔄 = licence and stars
-> re-read from the repository page today. ⏸ = URL re-probed today, figures carried from 2026-10-15.
+> **Verification (2026-10-31):** `curl -sI` on `github.com` returns **HTTP 403** through this session's
+> proxy, so existence is proved with `git ls-remote` and figures are read from rendered repository pages.
+> Where the licence was the point, the `LICENSE` file was fetched raw from `raw.githubusercontent.com`.
+> 🔴 **`huggingface.co` does not resolve from this session**, so no model-weight licence was verified.
+> 🆕 = added 2026-10-31. 🔄 = licence/stars re-read. ⏸ = URL re-probed, figures carried forward.
+
+## 🆕 Added 2026-10-31 — the open E2E model layer doubled
+
+Two Apache-2.0 end-to-end driving models that this file had no row for are now verified and added to
+Layer 2 below: **AutoE2E** (Autoware Foundation, tagged **29 Oct 2026**) and **Qwen-Drive-1.0** (Alibaba).
+On AutoE2E's own published eight-model comparison **both sit ahead of Alpamayo 1.5**, which is the stack
+this KB has recommended as the reference since July — stated here because a foundations file that only
+tracks one vendor's line stops being a foundations file. The comparison is **not like-for-like** (inputs
+differ by model); the full table and caveats are in
+[`../agents/top.md`](../agents/top.md).
+
+A third addition sits outside every existing layer and gets its own one below: **Auto Agent Protocol**, the
+open contract for reaching a dealership over MCP/A2A/PAP.
 
 ## 🆕 The biggest addition this pass: Eclipse S-CORE
 
@@ -62,6 +78,8 @@ presentation separately says a complete solution is on track for **2028**. Do no
 | ⏸ [nutonomy/nuscenes-devkit](https://github.com/nutonomy/nuscenes-devkit) | Apache-2.0 | 2.8k | Devkit for the nuScenes dataset. ⚠️ GitHub's sidebar shows no licence name; `LICENSE.txt` was read directly (2026-10-15) and is **Apache-2.0, © 2021 Motional**, no non-commercial clause. The *dataset* carries separate terms. |
 | 🔄 [OpenDriveLab/UniAD](https://github.com/OpenDriveLab/UniAD) | Apache-2.0 | 4.8k | Planning-oriented end-to-end AD (CVPR 2023 Best Paper). |
 | 🆕🔄 [DriveVLA/OpenDriveVLA](https://github.com/DriveVLA/OpenDriveVLA) | Apache-2.0 | 824 | AAAI 2026 end-to-end VLA, **0.5B checkpoint on Hugging Face** — the small-model option. |
+| 🆕 [autowarefoundation/auto_e2e](https://github.com/autowarefoundation/auto_e2e) | **Apache-2.0** (`LICENSE` fetched raw and read 2026-10-31) | 184 | **AutoE2E v1.0, tagged 29 Oct 2026.** Camera-first E2E driving model, **no HD maps required**: 79.9M params, six surround cameras @10 Hz → BEV grid → GRU planner → **6.4 s of acceleration and curvature**. 1 Hz World Action and Reasoning models still in development. ~76 FPS (SwinV2-Tiny, RTX 5080, batch 1 — project figure). 38 forks. **Vendor-neutral governance** (Autoware Foundation Robotaxi WG) is the reason to prefer it as a teaching/reference base over a vendor line. ⚠️ Secondary source (TIER IV exec LinkedIn) claims **OpenMDW-1.1** for the weights; the repo `LICENSE` is Apache-2.0 and the **weights licence is unresolved** — see the channel gap. |
+| 🆕 [QwenLM/Qwen-Drive-1.0](https://github.com/QwenLM/Qwen-Drive-1.0) | Apache-2.0 | 537 | Alibaba's open AV vision-language foundation model: **Qwen3.5-4B** VLM + **BEV perception head** (3D detection, occupancy, map segmentation) + **flow-matching Planning Expert**. **4B fills the gap between OpenDriveVLA (0.5B) and Alpamayo 1.5 (10B)** — the practical size for a single-GPU client experiment. 56 forks. Weights advertised as `Qwen/Qwen-Drive-1.0-4B` on Hugging Face and ModelScope; repo states Apache-2.0 without separately naming the weights. |
 
 ## Layer 3 — Software-defined vehicle (SDV) in-vehicle platform
 
@@ -86,11 +104,30 @@ section above first** — it sits above this stack rather than beside it.
 | ⏸ [cantools/cantools](https://github.com/cantools/cantools) | MIT | 2.3k | CAN bus tools: DBC/KCD parsing, encode/decode, diagnostics. |
 | ⏸ [hardbyte/python-can](https://github.com/hardbyte/python-can) | **LGPL-3.0** | 1.6k | CAN support for Python. ⚠️ LGPL — dynamic linking is fine, but flag it in any shipped client deliverable. |
 
+## 🆕 Layer 5 — The agent-facing contract layer (new 2026-10-31)
+
+New layer, because it belongs to none of the four above: it is neither simulation, perception, in-vehicle
+platform nor vehicle bus. It is how an **external** agent is supposed to talk to an automotive *business*.
+
+| Repo | Licence | Stars | Description |
+|---|---|---|---|
+| 🆕 [auto-agent-protocol/auto-agent-protocol](https://github.com/auto-agent-protocol/auto-agent-protocol) | **Apache-2.0** (specification, schemas, code) · documentation **CC BY 4.0** | 110 | *"The open automotive contract for MCP, A2A and Personal Agent Protocol: dealer discovery, inventory, evidence, pricing and consented inquiries."* README describes **v3.1** as an additive minor release that preserves the published **3.0** contract's meanings; AAP **2.x implementations must complete the 3.0 migration first**. Discovery works by the dealer domain publishing an **Agent Card**, a **Poppy document** and **`llms.txt`** that link live MCP, A2A and PAP endpoints, with the MCP tool catalogue and A2A OpenAPI served from versioned **`/v3.0/`** paths. Independent of — and built on — Google's A2A, which is Apache-2.0 under the Linux Foundation. No release tag shown on the repo page. |
+
+**Why this earns a layer rather than a footnote.** Three passes of this KB concluded the automotive *retail*
+layer is a closed oligopoly with nothing to fork, and that remains true of the **systems of record**
+(CDK, Reynolds & Reynolds, Tekion, DealerSocket). But the **interface** to that layer is now specified in
+the open, versioned, and separately licensed for docs. For an engagement that means a dealer-group client
+can be given an agent-reachable surface **without** replacing their DMS — the integration target is a
+published contract instead of a bespoke negotiation per vendor. 🔴 **Unknown, and worth saying to a client:
+how many dealerships actually serve these endpoints today.** The spec's existence is verified; its
+deployment is not.
+
 ## Licence flags for this industry
 
 - **Permissive, safe to build on:** CARLA, openpilot, Autoware, Apollo, Alpamayo code / Alpamayo 2 /
   AlpaSim / AlpaGym, OpenDriveVLA, WorldEngine, OpenPCDet, mmdetection3d, opendbc, cantools,
-  nuscenes-devkit, Kuksa, Ankaios, **Eclipse S-CORE**, the SDV fleet-management blueprint.
+  nuscenes-devkit, Kuksa, Ankaios, **Eclipse S-CORE**, the SDV fleet-management blueprint,
+  🆕 **AutoE2E**, 🆕 **Qwen-Drive-1.0** and 🆕 **Auto Agent Protocol** (all Apache-2.0).
 - **Weak-copyleft / file-level — usable with care:** VSS and esmini (MPL-2.0), SUMO (EPL-2.0),
   python-can (LGPL-3.0).
 - **Strong copyleft — do not put client proprietary code on top without legal sign-off:** Fleetbase and
@@ -99,9 +136,28 @@ section above first** — it sits above this stack rather than beside it.
   OpenMDW-1.1**. Never infer the checkpoint's terms from the repository badge.
 - **Non-commercial data traps:** DriveLM's language data (CC BY-NC-SA 4.0) and most AV *datasets*.
 
+## 🆕 Negative results settled 2026-10-31 — do not re-search these
+
+- **`Dolibarr/dolibarr`** (7.8k★, PHP, default branch `develop`) — **GPL-3.0**, read from the sidebar.
+  Surfaced as an ERP/CRM base for aftersales. Ruled out on licence; **Odoo (LGPL-3.0) and Apache OFBiz
+  (Apache-2.0) already cover this slot** and OFBiz is the permissive one.
+- **`navariltd/Fleet-Management-System`** (12★, 18 forks, default branch `develop`) — **GPL-3.0** per README
+  and badge; the GitHub sidebar shows a License link but **does not name the licence**, so the README is the
+  source. Frappe-framework fleet solution. Copyleft, so not a base for a proprietary deliverable.
+- **No open-source Dealership Management System exists.** Re-searched; unchanged across four passes.
+- **No LATAM-origin automotive repository found**, in this or any previous pass.
+
 ## Declared channel gap
 
-🔴 **`eclipsesdv.org` could not be fetched this pass** (DNS resolution failure through the available
+🔴 **New this pass: `huggingface.co` does not resolve from this session** (DNS failure, consistent with the
+proxy's allowed-domain policy). Every model-weight repository referenced in this file — AutoE2E's
+`AutowareFoundation/auto_e2e` checkpoints, `Qwen/Qwen-Drive-1.0-4B`, OpenDriveVLA's 0.5B checkpoint — is
+therefore **unverified as to its licence**. This is not a cosmetic gap: this KB has already caught
+**Alpamayo 1.5 shipping Apache-2.0 code with OpenMDW-1.1 weights**, and a secondary source makes the same
+claim about AutoE2E. **Do not ship a fine-tuned derivative of any of these to a client until the model card
+is read.** Next pass: request `huggingface.co` in the session's allowed domains.
+
+🔴 **`eclipsesdv.org` could not be fetched on 2026-10-26** (DNS resolution failure through the available
 fetch channel), so S-CORE release notes were read from the **GitHub releases page** plus trade press
 instead of the project's own announcements. The GitHub dates above are primary and reliable; the module
 contents attributed to 0.6.0 are press-sourced and should be confirmed against the project site when it
@@ -110,6 +166,6 @@ why licences and stars are read from rendered repository pages rather than the A
 the 2026-10-15 pass recorded.
 
 ---
-*Verified 2026-10-26. Every URL in this file probed live via `git ls-remote`. 🔄 figures read today; ⏸ carried from
+*Verified 2026-10-31 (previous pass 2026-10-26). Every URL in this file probed live via `git ls-remote`. 🔄 figures read today; ⏸ carried from
 2026-10-15; ⚪ URL confirmed live but licence/stars deliberately left blank rather than guessed.
 See `verticals/solutions.md` for full customisable platforms.*
