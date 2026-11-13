@@ -1,12 +1,128 @@
 ---
 industry: automotive
 region: Global
-updated: 2026-10-31
+updated: 2026-11-13
 ---
 
 # 📈 Trending repos — Automotive
 
 > **APPEND-ONLY.** Newest dated section on top; history preserved below. Never rewrite earlier sections.
+
+## 2026-11-13
+
+**Window:** foundational and trending automotive repos, 10–13 Nov 2026. Verified from the rendered
+repository page (GitHub licence field + star count), with licences settled by fetching the file raw.
+`curl` and `api.github.com` are both **HTTP 403** in this session. **The whole trend this window comes
+from one organisation.**
+
+### There is no "GitHub Trending for automotive", and that is a finding
+
+`github trending automotive AI 2026` does **not** return a trending page filtered to automotive — no such
+view exists. It returns topic pages (`/topics/automotive`, `/topics/automotive-ai`), a daily-refreshed
+research feed, and general AI-agent roundups with no automotive content. **Three passes have now confirmed
+this.** The usable substitutes, in order:
+
+1. **An organisation's "recently pushed" listing.** `github.com/orgs/autowarefoundation/repositories?sort=updated`
+   is where this entire window's trend was found. For an industry whose open source concentrates in one or
+   two foundations, **watching the org beats watching trending.**
+2. [DatariusAI/AI-in-Automotive](https://github.com/DatariusAI/AI-in-Automotive) — a daily-refreshed hub of
+   automotive AI research and code from arXiv and GitHub. 🔴 **No licence**, so it is a *reading feed*, not
+   a dependency. It earned its keep this pass by surfacing `hustvl/Senna`.
+3. **Topic pages**, which are low-signal but did surface the VLA-for-AD survey lists.
+
+### The trend: Autoware Foundation published a vertical ADAS slice in three days
+
+Eight repositories pushed 10–12 Nov 2026, all verified individually:
+
+| Repo | Licence | ★ | Commits | Layer |
+|---|---|--:|--:|---|
+| [vision_pilot](https://github.com/autowarefoundation/vision_pilot) | Apache-2.0 | **927** | 4,282 | **Production L2 ADAS stack** |
+| [agnocast](https://github.com/autowarefoundation/agnocast) | Apache-2.0 | 212 | 1,258 | ROS 2 zero-copy IPC middleware |
+| [alpamayo-autoware](https://github.com/autowarefoundation/alpamayo-autoware) | Apache-2.0 | 161 | 42 | Fork of NVlabs/alpamayo (`alpamayo2.0-edge`) |
+| [autoware_latent_drive](https://github.com/autowarefoundation/autoware_latent_drive) | 🔴 **NONE** | 42 | 64 | Latent-space planner — **unusable** |
+| [autoware-safety-island](https://github.com/autowarefoundation/autoware-safety-island) | Apache-2.0 (`license.rst`) | 8 | 608 | ARM-SoC safety island |
+| [scene_3d](https://github.com/autowarefoundation/scene_3d) | Apache-2.0 | 2 | 3 | Monocular depth (AutoSeg FM) |
+| [autoware.trucks](https://github.com/autowarefoundation/autoware.trucks) | Apache-2.0 | 2 | 9 | Trucking autonomy charter |
+| [ego_lanes](https://github.com/autowarefoundation/ego_lanes) | Apache-2.0 | 1 | 30 | Lane-boundary segmentation |
+
+**Read the star distribution, not just the names.** One repo at 927★, two in the low hundreds, and four in
+single digits. This is **not** an ecosystem of eight healthy projects — it is **one real stack plus its
+freshly published components**. The right engagement posture is to build on `vision_pilot` and `agnocast`,
+and to treat `scene_3d`, `ego_lanes` and `autoware.trucks` as **components whose APIs will churn**.
+
+**The structural signal:** the Autoware Foundation is moving from *"the vendor-neutral AV research stack"*
+to *"a vendor-neutral ADAS product stack with silicon support and a safety story"* — `vision_pilot` (L2
+features), `autoware-safety-island` (ARM SoC safety element), `openadkit-rcar-x5h` (Renesas R-Car X5H
+board support) and an ISO 26262 / ISO 8800 roadmap are the same move seen from four angles. For a Tier-1
+or OEM engagement, that is the first open stack that answers "how would we ever certify this" with
+something other than silence.
+
+### Movement on existing rows
+
+| Repo | Previous | Now | Note |
+|---|---|---|---|
+| [commaai/openpilot](https://github.com/commaai/openpilot) | 64.0k | **64.1k** | Description now reads **300+** supported cars |
+| [autowarefoundation/autoware](https://github.com/autowarefoundation/autoware) | 12.2k | **12.2k** | Unchanged — second pass running, worth recording |
+| [autowarefoundation/auto_e2e](https://github.com/autowarefoundation/auto_e2e) | 184 | 184 ⏸ | Org listing shows it pushed **10 Nov 2026**, so it is part of this wave |
+
+### New non-Autoware repos admitted
+
+- [sunnypilot/sunnypilot](https://github.com/sunnypilot/sunnypilot) — **MIT, 2.2k★, 19,012 commits.** The
+  significant openpilot fork, **350+ car makes and models vs upstream's 300+**. A fork with broader
+  hardware coverage than upstream, under the same grant.
+- [hustvl/Senna](https://github.com/hustvl/Senna) — **Apache-2.0, 559★.** IJCV 2026 VLM↔E2E bridge.
+- [JohnsonJiang1996/Awesome-VLA4AD](https://github.com/JohnsonJiang1996/Awesome-VLA4AD) — Apache-2.0, 631★.
+- [worldbench/awesome-vla-for-ad](https://github.com/worldbench/awesome-vla-for-ad) — MIT, 524★, 103
+  commits. ⚠️ **Five near-identical forks exist** (`776styjsu`, `tongnie`, `ruiguoz`,
+  `mengmengliu1998`, `worldbench`); `worldbench` is the apparent upstream and links
+  `worldbench.github.io/vla4ad`. **Cite upstream only** — five rows for one artefact is a data defect.
+
+### ERP/CRM candidates probed for the aftersales slot — and three secondary-source licence claims broken
+
+Searched `open source platform automotive ERP CRM dealership MIT Apache`. **No dealership-specific open
+platform exists** (fifth consecutive pass). General ERP/CRM probed instead; see
+`verticals/solutions.md` for the full reasoning.
+
+| Repo | Claimed by search | **Actually (page read today)** | Verdict |
+|---|---|---|---|
+| [aureuserp/aureuserp](https://github.com/aureuserp/aureuserp) | MIT | **MIT**, 12.2k★ | ✅ Claim held. Admitted |
+| [open-mercato/open-mercato](https://github.com/open-mercato/open-mercato) | "MIT core" | **MIT**, 1.9k★ — **but `packages/enterprise` is under a separate commercial licence** | ⚠️ Admitted with the carve-out recorded |
+| [idurar/idurar-erp-crm](https://github.com/idurar/idurar-erp-crm) | *"fully open-source under the MIT license"* | 🔴 **AGPL-3.0**, 9.0k★ | ❌ **Claim false.** Strong copyleft — excluded |
+| [hcengineering/platform](https://github.com/hcengineering/platform) (Huly) | *"Apache License 2.0"* | 🔴 **EPL-2.0**, 28.1k★, **and the page states the repo is "frozen and is no longer actively maintained"** | ❌ **Claim false twice** — wrong licence *and* dead. Excluded |
+
+**Three of four licence claims from search summaries were wrong or incomplete, in a single batch.** Two
+would have put strong-copyleft or abandoned code onto a buildable shelf. This is the strongest evidence
+yet for the pipeline's own rule: **the repository page is the source; a search summary is a lead.**
+
+### 🟢 Data-integrity check on this file's own history (no history was altered)
+
+Checked for the placeholder-row defect the run contract warns about (a header row compiled into an entity
+named *"nombre"*). **Not present as data.** The `2026-07-02` snapshot below carries one Spanish header,
+`| Nombre | Licencia | Descripción | Stars |`, followed by **ten real data rows with live links** — a
+genuine header, not a placeholder. The 2026-10-15 pass already recorded that this snapshot was
+**byte-identical to `agents/trending.md`**, i.e. the same scrape written to both files, so it recorded no
+distinct *repo* trend at all.
+
+**Nothing was deleted or rewritten** (this file is append-only). Recorded for the compiler instead: the
+header-skip guard needs the **Spanish** vocabulary (`Nombre`, `Licencia`, `Descripción`, `Plataforma`,
+`Componente`) as well as the English, and the snapshot's `?` / `NOASSERTION` licence rows carry **no
+verified grant** and stay excluded from every shelf.
+
+### Declared gaps this window
+
+- 🟢 **Measured before close** (all Apache-2.0, read from their own pages): `autoware-index` **1★**
+  (*"Federated registry of community Autoware packages (distribution.yaml + sweep-driven validation
+  history)"*), `openadkit-rcar-x5h` **0★** (*"AutoSD image, kernel, CR52 dual boot and demos"* for the
+  Renesas R-Car X5H), `autoware_carla_scenario` **0★** (pushed today, no description set).
+  ⚪ **Still unmeasured:** `autoware_system_designer`.
+- 🔴 **`huggingface.co` unreachable** — no model weights verified, fourth pass running.
+- 🔴 **`www.manilatimes.net` unreachable** — the TIER IV announcement of this release wave could not be
+  read; repositories used as the primary source instead.
+- 🔴 **No LATAM-origin automotive repository found. Fifth pass, zero.** Durable finding, not a miss.
+- 🔴 **No open-source DMS. Fifth pass.** The search explicitly confirms general ERP/CRM candidates lack
+  **inventory-by-VIN, deal jacket and DMS integration**.
+
+---
 
 ## 2026-10-31
 

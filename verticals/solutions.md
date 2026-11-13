@@ -1,15 +1,44 @@
 ---
 industry: automotive
 region: Global
-updated: 2026-10-31
+updated: 2026-11-13
 ---
 
 # 🏭 Vertical platforms — Automotive
 
 > Real, running open-source systems that can be customised with an AI layer on top.
 > Model: start from something that already works, add the agentic layer above it.
-> Verified 2026-10-31 (URLs proved with `git ls-remote` — `curl -sI` on `github.com` returns **HTTP 403**
-> through this session's proxy; 🆕 = new this pass, 🔄 = licence/stars re-read, ⏸ = carried forward).
+> Verified 2026-11-13 (`curl -sI` on `github.com` and `api.github.com` both return **HTTP 403** through
+> this session's proxy, re-tested today, so licences and stars are read from the rendered repository page;
+> 🆕 = new this pass, 🔄 = licence/stars re-read today, ⏸ = carried forward and labelled).
+
+## 🆕 2026-11-13 — a new customisable base appeared, and it is not an ERP: an open L2 ADAS stack
+
+The premise of this file is *"start from something that already works, add the agentic layer above it."*
+Until today every base here was a **business** system — fleet, ERP, CRM, telematics. This pass adds the
+first credible base that is a **vehicle** system.
+
+| Platform | Repo | Licence | ★ | What you customise |
+|---|---|---|--:|---|
+| 🆕 **Vision Pilot** | [autowarefoundation/vision_pilot](https://github.com/autowarefoundation/vision_pilot) | **Apache-2.0** | **927** | *"Free and fully open-source L2 ADAS stack powered by End-to-End AI technology"*; README: *"a productionizable and safety certifiable implementation."* Ships **ACC, FCW, AEB, LKAS, LDW, ISA and single-lane hands-free highway Autopilot**, **mapless**, from **one front monocular camera (52–55° HFOV, 1–2 MP)** on **ONNX Runtime, GPU or CPU**, with Docker, an optional ROS 2 interface and CARLA 0.9.16 closed-loop simulation. Three swappable models — **AutoSpeed**, **AutoSteer**, **AutoDrive**. 196 forks, 4,282 commits. Roadmap: radar fusion, 8 MP/120° camera, **ISO 26262 + ISO 8800**. |
+
+**Why this belongs in *verticals* and not only in `repos/foundations.md`.** It is the "Odoo for ADAS" shape
+this KB has never had: a running system a client already recognises, which you extend rather than invent.
+The customisation surface is concrete — swap or retrain **AutoSpeed/AutoSteer/AutoDrive**, add the client's
+own sensor set, retarget the hardware, keep the feature set. And because the camera requirement is a
+**single 1–2 MP monocular camera on CPU-capable inference**, a proof of concept is affordable in a way an
+Alpamayo-class engagement is not.
+
+⚠️ **Two honest limits to state before a client hears "certifiable".** Certification is a **roadmap item,
+not a status** — "safety certifiable" is the project's own aspirational wording. And the current input is
+**one narrow-FOV camera**: no radar, no surround view, until the roadmap lands. It is a genuine L2 base,
+not an L3 shortcut.
+
+**Pair it with** [autoware-safety-island](https://github.com/autowarefoundation/autoware-safety-island)
+(Apache-2.0 — licence read from `license.rst` after GitHub mislabelled it "Other"; 608 commits) and
+**Eclipse S-CORE** below. Those three are the first open answer to *"how would we ever certify this"*.
+
+---
 
 ## 🆕 2026-10-31 — the DMS gap now has an open *contract*, though still no open DMS
 
@@ -78,6 +107,23 @@ Two consequences for pricing an engagement:
 | ⏸ **Apache OFBiz** | [apache/ofbiz-framework](https://github.com/apache/ofbiz-framework) | Apache-2.0 | 1.1k | Java | ERP + CRM + e-commerce + supply-chain and manufacturing resource planning in one Apache-2.0 framework. **The most permissive full ERP base**; strongest fit for parts distribution and manufacturing-side work. Heavier to learn than Odoo. |
 | 🆕 **Dolibarr** | [Dolibarr/dolibarr](https://github.com/Dolibarr/dolibarr) | ⚠️ **GPL-3.0** | 7.8k | PHP | *"Dolibarr ERP CRM is a modern software package to manage your company or foundation's activity."* Surfaced this pass as an ERP/CRM base for aftersales. **GPL-3.0 read from the sidebar — ruled out**, and recorded so it is not rediscovered: Odoo (LGPL-3.0) is the softer-copyleft option and **OFBiz (Apache-2.0) is the permissive one**. Default branch `develop`. |
 | ⏸ **Krayin CRM** | [krayin/laravel-crm](https://github.com/krayin/laravel-crm) | MIT | 24.0k | PHP/Laravel | Open-source CRM for customer, lead and sales management. MIT — cleanest licence of any CRM here. Good base for a dealer-lead / test-drive-booking front end. ⚠️ Some advanced features (e.g. multi-tenancy) are paywalled. |
+| 🆕 **AureusERP** | [aureuserp/aureuserp](https://github.com/aureuserp/aureuserp) | **MIT** | 12.2k | PHP/Laravel + **FilamentPHP** | *"Free and Open Source ERP software."* **The cleanest-licensed full ERP in this file** — MIT, where Odoo is LGPL-3.0 and OFBiz is Apache-2.0 but heavy. Modules for accounting, inventory, HR and CRM. For an aftersales/parts back office that must ship as a proprietary client deliverable, this is now the **first** base to evaluate: Laravel+Filament is fast to extend and the grant has no carve-out. 12.2k★ means real adoption, unlike most MIT ERP claims. |
+| 🆕 **Open Mercato** | [open-mercato/open-mercato](https://github.com/open-mercato/open-mercato) | ⚠️ **MIT core + separate commercial licence for `packages/enterprise`** | 1.9k | TypeScript / Next.js / PostgreSQL | *"The AI-Engineering Foundation Framework for business apps."* Ships CRM and ERP modules with multi-tenancy, RBAC, events and domain modules decided as conventions — explicitly designed so coding agents extend it rather than re-deciding architecture, which is an unusual and genuinely useful fit for a Globant engagement. ⚠️ **Read the carve-out before scoping:** the repo badge says MIT, but `packages/enterprise` is **not** MIT. Verify which modules a client needs fall inside the MIT boundary. |
+
+### 🔴 Rejected this pass — two "open source" ERP/CRM claims that failed verification
+
+Both were returned by `open source platform automotive ERP CRM dealership MIT Apache` as permissively
+licensed. **Neither is.** Recorded so no future pass re-admits them.
+
+| Repo | Search summary claimed | **Repository page says (read 2026-11-13)** | Why excluded |
+|---|---|---|---|
+| [idurar/idurar-erp-crm](https://github.com/idurar/idurar-erp-crm) | *"fully open-source under the MIT license"* | 🔴 **AGPL-3.0**, 9.0k★ | **Strong network copyleft.** A hosted client deliverable triggers source obligations. The claim was simply false. |
+| [hcengineering/platform](https://github.com/hcengineering/platform) (**Huly**) | *"licensed under Apache License 2.0"* | 🔴 **EPL-2.0**, 28.1k★ — **and the page states it is "frozen and is no longer actively maintained"** | **Wrong on two counts**, and the second is worse: a 28.1k-star project that looks alive in every search result is **dead upstream**. Never base an engagement on it. |
+
+**The lesson, stated plainly because it keeps recurring.** Four ERP/CRM licence claims were probed this
+pass and **three were wrong or incomplete** — one false MIT, one false Apache-2.0 on an abandoned repo, one
+MIT with an undisclosed commercial carve-out. Only AureusERP's claim held exactly as stated. **For this
+layer in particular, a search summary is a lead and the repository page is the source.**
 
 ## In-vehicle platform — the base for OEM/Tier-1 SDV engagements
 
@@ -103,8 +149,11 @@ a paid-support path, so "unsupported open source" is not a valid objection.
 ## How to add the AI layer
 
 1. **Pick the base by licence constraint first**, not by features. If the client needs a proprietary hosted
-   product, Traccar (Apache-2.0) / OFBiz (Apache-2.0) / Krayin (MIT) / the SDV blueprint (Apache-2.0) are
-   the only clean bases here. Odoo, Fleetbase, OpenRemote and OpenAutoCore all carry copyleft obligations.
+   product, the clean bases here are Traccar (Apache-2.0), OFBiz (Apache-2.0), Krayin (MIT),
+   the SDV blueprint (Apache-2.0), 🆕 **AureusERP (MIT)** and 🆕 **Vision Pilot (Apache-2.0)** — with
+   🆕 **Open Mercato (MIT)** usable only outside `packages/enterprise`. Odoo, Fleetbase, OpenRemote and
+   OpenAutoCore all carry copyleft obligations, and 🆕 **idurar-erp-crm (AGPL-3.0)** and 🆕 **Huly
+   (EPL-2.0, frozen)** are excluded outright.
 2. **Expose the domain over MCP or a typed tool API** — vehicle, VIN, repair order, parts, telemetry signal.
    Use **VSS names** for anything vehicle-signal-shaped so the model's vocabulary matches the industry's.
    🆕 **And do not invent the outward-facing contract either:** for anything dealer-facing (discovery,
@@ -120,6 +169,6 @@ a paid-support path, so "unsupported open source" is not a valid objection.
 5. **Conversational UI / API last.** The value is in the domain model and the gate, not the chat box.
 
 ---
-*Verified 2026-10-31 (previous pass 2026-10-26). 🆕 = new this pass. 🔄 = licence/stars read today. ⏸ = URL re-probed today, figures
-carried from 2026-10-15. Where a licence is listed as "not read", the URL is confirmed live and the licence
-was deliberately left blank rather than guessed.*
+*Verified 2026-11-13 (previous passes 2026-10-31, 2026-10-26). 🆕 = new this pass. 🔄 = licence/stars read today. ⏸ = carried forward and
+labelled. Where a licence is listed as "not read", the URL is confirmed live and the licence was deliberately left blank rather than guessed.
+`curl` and `api.github.com` are both HTTP 403 in this session, so the rendered repository page is the verification channel.*

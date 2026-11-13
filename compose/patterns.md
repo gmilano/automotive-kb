@@ -1,7 +1,7 @@
 ---
 industry: automotive
 region: Global
-updated: 2026-10-31
+updated: 2026-11-13
 ---
 
 # 🧩 Composition patterns — Automotive
@@ -447,8 +447,160 @@ the client's proprietary corpus, and step 7 is the thing that makes it deployabl
 **Estimate:** 2 weeks for a mock-vehicle demo (step 1 + step 2 off the shelf, no hardware); 6–8 weeks for a
 grounded pilot on one workshop's manuals with the technician gate; +3–4 weeks to expose the AAP surface.
 
+
 ---
-*Ten patterns, 2026-10-31. Effort estimates are planning figures for a studio team, not quotes.
-P9 and P10 are new this pass (previous pass 2026-10-26 added P7 and P8). Every repository named above was
-verified live on its stated date; where a licence is flagged ⚠️ or 🔴, the flag is the finding.*
+
+## P11 🆕 — Productionise an open L2 ADAS stack with a homologation evidence pipeline
+
+**Region fit:** **EMEA** first — this region's budget line is compliance, and a stack with a certification
+roadmap is the first credible answer to *"we cannot certify community code."* Then **APAC** (the upstream
+is there) and **North America** (FMVSS No. 127 makes AEB federal).
+**Problem:** a Tier-1 or a vehicle integrator wants L2 ADAS features — AEB, ACC, LKAS, LDW, ISA — without
+licensing a black-box stack per unit, and must be able to show a homologation story.
+
+**The stack, all named and all verified 2026-11-13:**
+
+1. **Base — [autowarefoundation/vision_pilot](https://github.com/autowarefoundation/vision_pilot)**
+   (Apache-2.0, 927★, 196 forks, 4,282 commits). You get ACC, FCW, AEB, LKAS, LDW, ISA and single-lane
+   hands-free highway Autopilot, **mapless**, from **one front monocular camera (52–55° HFOV, 1–2 MP)** on
+   **ONNX Runtime**, GPU **or CPU**. Docker images, optional ROS 2 interface, **CARLA 0.9.16** closed loop.
+2. **Swap the three models for the client's sensor and ODD.** The architecture is explicitly three models —
+   **AutoSpeed** (closest in-path object), **AutoSteer** (ego-path waypoints), **AutoDrive** (E2E distance +
+   in-path presence + curvature). These are the retraining targets; the feature logic above them stays.
+3. **Perception inputs from the same org, so vocabulary matches:**
+   [`scene_3d`](https://github.com/autowarefoundation/scene_3d) (Apache-2.0) for monocular depth — deploy
+   **Scene3DLite**, the DepthAnythingV2-distilled variant, not the full model — and
+   [`ego_lanes`](https://github.com/autowarefoundation/ego_lanes) (Apache-2.0) as the **lane-segmentation
+   baseline to beat** (its maintainers call it *"legacy"*; treat it as the floor).
+4. **Latency — [`agnocast`](https://github.com/autowarefoundation/agnocast)** (Apache-2.0, 212★, 1,258
+   commits). **True zero-copy IPC that keeps the rclcpp API**, including unsized message types, via a
+   kernel module plus heaphook, on ROS 2 Humble/Jazzy. This is the piece that makes a multi-process
+   perception graph meet a cycle budget without rewriting it.
+5. **Safety element — [`autoware-safety-island`](https://github.com/autowarefoundation/autoware-safety-island)**
+   (**Apache-2.0**, read from `license.rst` after GitHub mislabelled it "Other"; 608 commits) on ARM SoCs,
+   sitting beside **Eclipse S-CORE** (Apache-2.0, ASIL-B **target**, ~monthly releases, dual C++/Rust with
+   Ferrocene) and **[`eclipse-score/itf`](https://github.com/eclipse-score/itf)** as the integration-test
+   framework the evidence comes out of.
+6. **Hardware reality check — [`openadkit-rcar-x5h`](https://github.com/autowarefoundation/openadkit-rcar-x5h)**
+   (Apache-2.0 per org listing). Renesas R-Car X5H board support; this is what makes "runs on automotive
+   silicon" checkable rather than asserted.
+7. **Evidence pipeline:** every CARLA scenario run emits a signed artefact — scenario ID, model hashes,
+   metrics, pass/fail — into the same store P3 uses for AI Act evidence. **The deliverable is the evidence
+   as much as the code.**
+
+**Why it holds together:** one licence family (Apache-2.0 end to end, no copyleft anywhere in the chain),
+one org's vocabulary, one ROS 2 runtime, and a published safety element rather than a hand-drawn one.
+
+🔴 **Say these three things out loud before the client does.** (a) *"Safety certifiable"* is **the
+project's own aspiration** — there is no certification, and nothing published shows progress against
+ISO 26262 or ISO 8800. (b) The sensor set today is **one narrow-FOV camera** — no radar, no surround view,
+until the roadmap lands. (c) **No benchmark is published** for `vision_pilot`; the only multi-model open
+comparison in this field is AutoE2E's ADE/FDE table from Oct 2026, which was never like-for-like and now
+covers a minority of models. **This is an L2 base, never an L3 shortcut.**
+
+**Estimate:** 3–4 weeks to a CARLA-based demo on the client's ODD with the stock models; **10–14 weeks**
+to retrained AutoSpeed/AutoSteer/AutoDrive on the client's sensor set with the evidence pipeline wired;
+**+8–12 weeks** for the safety-island integration and an S-CORE-conforming module. Homologation itself is
+the client's programme, not this engagement.
+
+---
+
+## P12 🆕 — Freight diagnostics copilot on J1939, with a technician gate
+
+**Region fit:** **North America** — freight is where the region's autonomy capital is visibly moving
+(**Kodiak AI** demonstrations in **Indiana and Ohio**; **California DMV's 28 April 2026 AV rules now cover
+heavy-duty vehicles**). Secondarily **EMEA**, where the rFMS blueprint and the agent are both EMEA-origin.
+**Problem:** a carrier or fleet operator wants faster fault triage across a mixed truck fleet, where the
+bus is **SAE J1939**, not the passenger-car OBD-II that every demo assumes.
+
+**The stack:**
+
+1. **Diagnostics agent — [farzadnadiri/Peykan](https://github.com/farzadnadiri/Peykan)** (**MIT, 26★**).
+   The only project in this KB covering **J1939** alongside CAN, OBD-II and UDS, and it ships a
+   **simulator, a Docker setup and a live dashboard** — so the pilot runs before a truck is instrumented.
+   🔴 **Addressing note: every search result points at `farzadnadiri/mcp-can`, which is a rename of this
+   repo.** Pin the new name and the commit; do not hard-code the old URL.
+2. **Harden the tool surface with the better design — [ayhammouda/obd-mcp-server](https://github.com/ayhammouda/obd-mcp-server)**
+   (**dual Apache-2.0 + MIT**, 1★, 19 commits). Do not depend on it at 1 star — **copy its three design
+   decisions**: read-only by construction, a **deterministic simulator as the default backend**, and
+   **seven typed MCP tools** instead of a free-form command passthrough. That is the shape that survives a
+   safety review.
+3. **Fleet telemetry — [traccar/traccar](https://github.com/traccar/traccar)** (Apache-2.0, 7.9k★, 200+
+   device protocols, multi-tenant) for the aftermarket path, **or** the
+   **[Eclipse SDV fleet-management blueprint](https://github.com/eclipse-sdv-blueprints/fleet-management)**
+   (Apache-2.0) when the client is an OEM/truck maker with its own SDV stack — Kuksa CSV Provider → Kuksa
+   Databroker → FMS Forwarder → uProtocol → FMS Consumer → InfluxDB → Grafana, with an **rFMS API** server.
+4. **Signal vocabulary — [COVESA VSS](https://github.com/COVESA/vehicle_signal_specification)** (MPL-2.0)
+   for everything signal-shaped, so the model's vocabulary is the industry's.
+5. **Back office — [aureuserp/aureuserp](https://github.com/aureuserp/aureuserp)** (**MIT**, 12.2k★,
+   Laravel + FilamentPHP) for work orders, parts and inventory. **MIT matters here**: this is the first full
+   ERP in this KB that can ship inside a proprietary client deliverable with no copyleft and no carve-out —
+   unlike Odoo (LGPL-3.0), Dolibarr (GPL-3.0) or `open-mercato` (MIT core, commercial `packages/enterprise`).
+6. **The gate.** The agent proposes a fault hypothesis, the parts list and the labour estimate; **a
+   technician signs off before any work order is committed or any actuation occurs.** Every credible
+   automotive agent reviewed across five passes of this KB has independently arrived at this gate.
+7. **Watch, do not build on yet — [`autoware.trucks`](https://github.com/autowarefoundation/autoware.trucks)**
+   (Apache-2.0, 9 commits). A charter for L2+ → L4 highway trucking. Track it; the autonomy layer is not
+   there, while the diagnostics layer above is shippable today.
+
+**Estimate:** 2–3 weeks to a simulator-only demo (Peykan's simulator + the typed tool surface, no
+hardware); **8–10 weeks** for a grounded pilot on one depot with the technician gate and Traccar
+integration; **+4 weeks** to wire the AureusERP work-order path.
+
+---
+
+## P13 🆕 — Licence and provenance diligence as a delivered artefact
+
+**Region fit:** **Global**, with the sharpest commercial edge in **EMEA** (AI Act technical documentation
+duties make provenance an obligation, not hygiene) and **LATAM** (LGPD plus Brazilian ANPD instruments).
+**Problem:** a client has assembled open-source AI components and cannot evidence what they are permitted
+to ship. This pattern exists because of a measured rate, not a hunch: **of 19 repositories probed on
+2026-11-13, six carried a licence defect — and of four ERP/CRM licence claims, exactly one held as stated.**
+
+**The pipeline, built from this KB's own method:**
+
+1. **Enumerate** every repository, model checkpoint and dataset in the client's dependency closure —
+   including transitive ones, since `python-can` (**LGPL-3.0**) is a transitive dependency of half the
+   diagnostics stack.
+2. **Fetch the licence file, never the badge.** Probe `LICENSE`, `LICENSE.md`, `LICENSE.txt` **and
+   `license.rst`** on **every** default branch, raw. Both failure directions are real and both are
+   expensive:
+   - **False positive:** `autoware_latent_drive` — no field, no README statement, all four filenames
+     **404**, published **inside the Autoware Foundation's own org**. `petrpatek/obd2-mcp-server` and
+     `j2534-mcp-server` — README says MIT, no file.
+   - **False negative:** `autoware-safety-island` reads **"Other"** only because its file is
+     `license.rst`; it is **verbatim Apache-2.0**, 608 commits, and a label-trusting pipeline **silently
+     discards** it.
+3. **Separate code from weights from data from docs.** Four distinct grants, routinely different:
+   Alpamayo 1.5 (**Apache-2.0 code, OpenMDW-1.1 weights**), DriveLM (**Apache-2.0 code, CC BY-NC-SA 4.0
+   language data** — non-commercial), Auto Agent Protocol (**Apache-2.0 spec/code, CC BY 4.0 docs**).
+4. **Flag directory-level carve-outs.** `open-mercato` is MIT with `packages/enterprise` under a separate
+   **commercial** licence. The repo badge is MIT; the tree is not.
+5. **Check liveness, not just licence.** Huly (`hcengineering/platform`) is **28.1k★** and its page states
+   it is **"frozen and is no longer actively maintained."** A healthy star count is not a maintained
+   project. Likewise `NVlabs/alpamayo` carries a *"no longer under active development"* banner, and
+   `ChanMeng666/Automotive-Repair-Management-System` was **archived 2026-07-08**.
+6. **Re-verify claimed URLs — renames rot silently.** `farzadnadiri/mcp-can` → **`Peykan`**;
+   `openedx/edx-platform` → `openedx/openedx-platform` (recorded by this pipeline in the education KB).
+7. **Deduplicate near-identical forks before they become separate entities.** `awesome-vla-for-ad` exists
+   as **at least five** forks (`776styjsu`, `tongnie`, `ruiguoz`, `mengmengliu1998`, `worldbench`);
+   `worldbench` is the apparent upstream. Five rows for one artefact is a data defect.
+8. **Deliver** a signed SBOM-plus-grant matrix: component → licence → *evidence channel and date* →
+   permitted use → obligations on distribution. The **evidence channel** column is what makes it auditable
+   rather than asserted — this KB records, for instance, that `curl` and `api.github.com` return **HTTP
+   403** here and that `huggingface.co` does not resolve, so **no model-weight licence has been verified
+   in four passes.** A gap that is named is defensible; a gap that is silent is a liability.
+
+**Why a client buys it:** it is cheap, it is verifiable, it blocks a category of expensive late surprise,
+and it is the natural door-opener into P3's AI Act evidence pipeline and P11's homologation evidence.
+
+**Estimate:** 2–3 weeks for a one-off audit of a 50–150 component closure; **5–7 weeks** to deliver it as a
+re-runnable CI gate that fails a build on a new unlicensed or copyleft dependency.
+
+---
+*Thirteen patterns, 2026-11-13. Effort estimates are planning figures for a studio team, not quotes.
+**P11, P12 and P13 are new this pass** (2026-10-31 added P9 and P10; 2026-10-26 added P7 and P8). Every
+repository named above was verified live on its stated date — for this pass, from the rendered repository
+page or a raw licence file, since `curl` and `api.github.com` both return HTTP 403 in this session. Where a
+licence is flagged ⚠️ or 🔴, the flag is the finding.*
 

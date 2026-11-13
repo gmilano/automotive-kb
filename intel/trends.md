@@ -1,13 +1,88 @@
 ---
 industry: automotive
 region: Global
-updated: 2026-10-31
+updated: 2026-11-13
 ---
 
 # 📡 Trends — Automotive
 
 > Current trends, updated 2026-10-31. Project and vendor self-reported performance figures are labelled
 > as such. Dates name their instrument.
+
+## 🆕 New on 2026-11-13 — three trends, and the first one supersedes a standing conclusion
+
+### N3 — Open automotive AI crossed from "research models" to "a shippable product stack"
+
+**The evidence.** In three days (10–12 Nov 2026) the Autoware Foundation published
+[`vision_pilot`](https://github.com/autowarefoundation/vision_pilot) — **Apache-2.0, 927★, 196 forks,
+4,282 commits** — described in its own README as *"a productionizable and safety certifiable
+implementation of an open-source L2 ADAS system."* It ships **ACC, FCW, AEB, LKAS, LDW, ISA and
+single-lane hands-free highway Autopilot**, **mapless**, from **a single 1–2 MP monocular camera** on
+**ONNX Runtime, GPU or CPU**. Around it: `agnocast` (zero-copy ROS 2 IPC, 212★, 1,258 commits),
+`autoware-safety-island` (ARM SoC, 608 commits), `scene_3d` and `ego_lanes` (perception),
+`autoware.trucks` (freight charter), `alpamayo-autoware` (foundation-owned Alpamayo fork).
+
+**What it supersedes.** Four passes of this KB concluded that *"the buildable open assets in automotive are
+driving policies and SDV infrastructure"* — i.e. **research models and middleware, with the product layer
+closed.** That conclusion is now obsolete at the L2 tier. There is an open product layer.
+
+**Why it is a trend and not a release.** Three signals distinguish them: a **feature list expressed in
+regulatory vocabulary** (AEB, ISA, LDW are homologation terms, not research terms); a **certification
+roadmap** naming **ISO 26262 and ISO 8800**; and **silicon board support** (`openadkit-rcar-x5h`, Renesas
+R-Car X5H). Research projects do not publish board support for mainstream automotive SoCs.
+
+**Implication for an engagement.** The answer to *"can we build ADAS on open source?"* changes from "only
+the research scaffolding" to "there is a stack with the features, and the gap is integration,
+homologation evidence and your sensor set." ⚠️ **"Certifiable" is aspiration, not status** — and the
+current input is one narrow-FOV camera with no radar until the roadmap lands. Pitch an **L2 base**, never
+an L3 shortcut.
+
+### N4 — The open automotive AI supply chain is APAC-led, which reframes every region's engagement
+
+Every pass of this KB has placed **APAC as the largest automotive AI market**. This pass places it as the
+**producer of the open supply**: the entire release wave above comes from the **Autoware Foundation**,
+anchored by **TIER IV (Japan)**; **Qwen-Drive-1.0** is Alibaba's; **Senna (IJCV 2026)** is HUST's. Against
+that, NVIDIA's Alpamayo line is now **forked into the foundation** (`alpamayo-autoware`) rather than
+consumed from the vendor.
+
+**Why Japan specifically.** Three things coincide: a **light-touch domestic regime** (the AI Promotion Act,
+in force since June 2025, is a framework law **with no penalties**), a national industrial strength in
+**safety-critical engineering and Tier-1 integration**, and a vendor-neutral foundation with OEM
+membership. `autoware-safety-island` plus an ISO 26262/8800 roadmap is that combination expressed as code.
+
+**Implication.** Upstream partnership and contribution strategy belongs in APAC **regardless of where the
+client sits**. A North American or EMEA ADAS engagement now has an APAC dependency in its supply chain —
+which is a governance fact to put in front of a client before they discover it, and an argument for
+contributing upstream rather than forking privately.
+
+### N5 — The licence-defect rate in this industry is high enough to be a service line, and it fails in both directions
+
+This pass probed 19 repositories and **six carried a licence defect** — roughly a third:
+
+| Defect | Specimen | Shape |
+|---|---|---|
+| **No licence at all, inside a major foundation** | `autoware_latent_drive` (42★) | No field, no README statement, `LICENSE`/`.md`/`.txt`/`license.rst` **all 404** |
+| **README claims MIT, no file** | `petrpatek/obd2-mcp-server` (12★) | Third instance of this exact defect in this KB |
+| **No licence + gated on proprietary software** | `tars-car-mcp` (0★) | Needs the closed TARS desktop app |
+| **Secondary source claims MIT; repo is AGPL-3.0** | `idurar/idurar-erp-crm` (9.0k★) | Strong copyleft presented as permissive |
+| **Secondary source claims Apache-2.0; repo is EPL-2.0 *and frozen*** | Huly / `hcengineering/platform` (28.1k★) | Wrong licence **and** abandoned |
+| **MIT badge with an undisclosed commercial carve-out** | `open-mercato` (1.9k★) | `packages/enterprise` is not MIT |
+
+**And the inverse defect, which is new and just as expensive.**
+[`autoware-safety-island`](https://github.com/autowarefoundation/autoware-safety-island) shows as
+**"Other"** in GitHub's org listing purely because its licence file is named **`license.rst`**. Read raw,
+it is **verbatim Apache-2.0**. A pipeline that trusts the label **silently discards** a usable, 608-commit
+safety repository — and silent loss is harder to catch than a false positive, because nothing looks wrong.
+
+**The operational rule this hardens into:** *fetch the file; the README is not a grant, the search summary
+is not a grant, the org's reputation is not a grant, and GitHub's label is not a verdict in either
+direction.* **Of four ERP/CRM licence claims probed this pass, exactly one held as stated.**
+
+**Commercially:** three of four ERP/CRM bases and one in three repos overall carrying a licence defect is
+not a curiosity, it is a diligence service a client can verify and a reason to be the firm that reads
+licences.
+
+---
 
 ## 🆕 New on 2026-10-31 — two trends that sit above the numbered list below
 
@@ -283,3 +358,35 @@ source; 🔴 an open gap; 🟢 a gap closed since the previous pass.*
 - 🟡 **Watch — North America AV transparency is narrowing.** One analysis notes 2025's reporting changes
   imply **decreasing public visibility of AV failure modes as fleets grow**, which shrinks the public
   corpus a scenario-mining offering can draw on and raises the value of a client's own logs.
+
+## 🆕 Gaps opened or closed on 2026-11-13
+
+**Closed:**
+- 🟢 *"Is there any open automotive product-tier software, or only research code?"* — **closed by
+  `vision_pilot`.** There is an Apache-2.0 L2 ADAS stack with 927★ and 4,282 commits.
+- 🟢 *"Does the diagnostics-agent category have anything above single-digit stars?"* — **closed.**
+  `farzadnadiri/Peykan` (MIT, 26★), which also covers **J1939**, the commercial-vehicle bus no other
+  agent in this KB touches. ⚠️ It is reachable at `farzadnadiri/mcp-can` in every search result; that
+  address is a **rename** and will eventually rot.
+
+**Opened:**
+- 🔴 **Can `vision_pilot`'s safety claim be substantiated?** The roadmap names ISO 26262 and ISO 8800;
+  nothing published shows progress against them. This is the question that decides whether it is an OEM
+  conversation or a prototype conversation.
+- 🔴 **No benchmark exists for any model in the new release wave.** `vision_pilot` publishes none;
+  `autoware_latent_drive` explicitly publishes none and offers only qualitative open-loop replays. The
+  eight-model ADE/FDE table carried from AutoE2E's README (2026-10-31) is **still the only published
+  multi-model open comparison in this field**, was never like-for-like, and now covers a **minority** of
+  available models. **It is ageing badly.**
+- 🔴 **Model weights remain unverified for a fourth consecutive pass** (`huggingface.co` does not resolve).
+  This now blocks a specific decision: `autoware_latent_drive` has **no repository licence**, and its two
+  ONNX models and all training detail live **only** on Hugging Face — so the model card is the **only**
+  place a grant could exist, and it cannot be read.
+- 🔴 **`autoware.trucks` is a charter, not a codebase** (9 commits). North American freight demand is
+  visible (Kodiak in Indiana and Ohio; California's heavy-duty AV rules of 28 April 2026) and the open
+  supply is not there yet. **That gap is the opportunity, and it has a clock on it.**
+
+---
+*Updated 2026-11-13 (previous passes 2026-10-31, 2026-10-26). Every repository claim in this file was read from the rendered repository page
+or a raw licence file today; `curl` and `api.github.com` are both HTTP 403 in this session. Regulatory and
+market claims are secondary-sourced unless stated otherwise, and the 🔴 markers flag what could not be verified.*

@@ -1,12 +1,202 @@
 ---
 industry: automotive
 region: Global
-updated: 2026-10-31
+updated: 2026-11-13
 ---
 
 # 📈 Trending AI agents & models — Automotive
 
 > **APPEND-ONLY.** Newest dated section on top; history preserved below. Never rewrite earlier sections.
+
+## 2026-11-13
+
+**Window:** automotive AI agents and driving models, 10–13 Nov 2026. Verified today by fetching each
+repository page and reading GitHub's own licence field and star count; licences that mattered were settled
+by fetching the file raw from `raw.githubusercontent.com`. **`curl -sI` on `github.com` and
+`api.github.com` both return HTTP 403** under this session's egress policy, re-tested today on three URLs.
+**19 candidates probed, 13 admitted, 3 rejected on licence, 3 recorded as corrections.**
+
+### The headline: an Apache-2.0 production L2 ADAS stack exists, with 927 stars and 4,282 commits
+
+[autowarefoundation/vision_pilot](https://github.com/autowarefoundation/vision_pilot) — **Apache-2.0,
+927★, 196 forks, 4,282 commits**, updated **12 Nov 2026**. *"Free and fully open-source L2 ADAS stack
+powered by End-to-End AI technology"*, and in the README *"a productionizable and safety certifiable
+implementation."* **ACC, FCW, AEB, LKAS, LDW, ISA and single-lane hands-free highway Autopilot**, running
+**mapless** on **a single front monocular camera (52–55° HFOV, 1–2 MP)** via **ONNX Runtime on GPU or
+CPU**, with Docker images, an optional ROS 2 interface and CARLA 0.9.16 closed-loop simulation. Three
+models inside a *"Hybrid End-to-End AI Architecture"*: **AutoSpeed**, **AutoSteer**, **AutoDrive**.
+
+**Why this is the most consequential single row this KB has added in four passes.** For four passes the
+standing finding was *"the only large permissively-licensed automotive codebase is openpilot (MIT)."*
+There are now two, and the second is **Apache-2.0, under vendor-neutral foundation governance, with
+ISO 26262 and ISO 8800 on its roadmap** — i.e. aimed at the exact objection ("we cannot certify a
+community project") that kills openpilot in OEM conversations. ⚠️ **Certification is a roadmap item, not
+a status**, and "safety certifiable" is the project's own aspirational wording. Do not repeat it to a
+client as achieved.
+
+### The Autoware Foundation shipped eight repositories in three days
+
+Not a model release — a stack. All verified individually today:
+
+| Repo | Licence | ★ | Commits | What it is |
+|---|---|--:|--:|---|
+| [vision_pilot](https://github.com/autowarefoundation/vision_pilot) | Apache-2.0 | 927 | 4,282 | L2 ADAS stack (above) |
+| [agnocast](https://github.com/autowarefoundation/agnocast) | Apache-2.0 | 212 | 1,258 | rclcpp-compatible **true zero-copy IPC** for ROS 2, all message types, kernel module + heaphook |
+| [alpamayo-autoware](https://github.com/autowarefoundation/alpamayo-autoware) | Apache-2.0 | 161 | 42 | Foundation's **own fork of NVlabs/alpamayo**, branch `alpamayo2.0-edge` |
+| [autoware_latent_drive](https://github.com/autowarefoundation/autoware_latent_drive) | 🔴 **NONE** | 42 | 64 | V-JEPA ViT-L camera-only latent planner — **rejected, see below** |
+| [autoware-safety-island](https://github.com/autowarefoundation/autoware-safety-island) | Apache-2.0 (`license.rst`) | 8 | 608 | Safety island on ARM SoCs — **rescued from a bad label, see below** |
+| [scene_3d](https://github.com/autowarefoundation/scene_3d) | Apache-2.0 | 2 | 3 | Monocular depth; part of the **AutoSeg Foundation Model**; Scene3DLite distilled from DepthAnythingV2 |
+| [autoware.trucks](https://github.com/autowarefoundation/autoware.trucks) | Apache-2.0 | 2 | 9 | Highway **trucking** autonomy, L2+ → L4 |
+| [ego_lanes](https://github.com/autowarefoundation/ego_lanes) | Apache-2.0 | 1 | 30 | Lane-boundary segmentation, mapless; maintainers call it *"legacy"* |
+
+The press channel for this release was **unreachable** — `www.manilatimes.net` does not resolve from this
+session — so the repositories were used as the primary source instead. That is the better source, but the
+announcement's own framing and any licence statement in it are **unread**. Declared, not papered over.
+
+### 🔴 Rejected on licence: a major foundation shipped a model with no grant
+
+[autowarefoundation/autoware_latent_drive](https://github.com/autowarefoundation/autoware_latent_drive) —
+**42★, 64 commits, 6 forks, no licence.** Probed today: **no sidebar licence field**, **no licence
+statement anywhere in the README**, and `LICENSE`, `LICENSE.md`, `LICENSE.txt` and `license.rst` **all
+return 404 on `main`** when fetched raw.
+
+Technically it is the most novel thing in the batch: **LatentDrive** plans *"in latent space"* with a
+**V-JEPA ViT-L** video encoder and **no object detection or tracking in between** — last 2 s of front
+camera + six route points + ego motion → **4 s ego trajectory at 10 Hz** — shipped as a **TensorRT C++
+library with no ROS dependency** plus a ROS 2 node. README: *"This is a research model: it is not a
+certified driving system and must not control a vehicle on public roads."* **No benchmarks at all**; the
+plan *"is drawn, not executed."*
+
+**This is the third occurrence of this exact defect in the automotive KB** (after `j2534-mcp-server`, and
+`petrpatek/obd2-mcp-server` below) and the **first inside a major foundation's own organisation**. Its
+sibling `autoware-safety-island` has a licence file, so the org plainly knows how. Recorded as a pattern,
+not an anecdote: **being published by the Autoware Foundation is not a licence.**
+
+### 🟢 Rescued: GitHub's licence label produces false negatives too
+
+[autoware-safety-island](https://github.com/autowarefoundation/autoware-safety-island) — **8★ but 608
+commits**, the most substantial safety-relevant repo in the batch — shows as **"Other"** in the org
+listing. Reason: its licence lives in **`license.rst`**, not `LICENSE`, so GitHub's detector will not name
+it. Fetched raw today, it opens *"Apache License / :Version: 2.0 / :Date: January 2004"* — **verbatim
+Apache-2.0.** Shelved as Apache-2.0.
+
+Every prior pass of this pipeline has warned about licence **false positives** (README says MIT, no file).
+This is the inverse and it is just as expensive: a KB that trusts the label **silently loses** a usable
+Apache-2.0 safety repository. **"Other" is an instruction to fetch the file, not a verdict.**
+
+### 🔴 Addressing defect: `mcp-can` is now `Peykan`
+
+[farzadnadiri/Peykan](https://github.com/farzadnadiri/Peykan) — **MIT, 26★, 29 commits.** *"Talk to Your
+Car Using AI."* Every search result still points at **`farzadnadiri/mcp-can`**, which now resolves to this
+repository. Same defect class as the `openedx/edx-platform` → `openedx/openedx-platform` rename this
+pipeline recorded in the education KB on 2026-11-13 — **a renamed repo silently keeps serving under the
+old address until it doesn't.** Record the new name.
+
+Substantively it is now **the highest-starred real diagnostic agent this KB has found in four passes**
+(Auto Agent Protocol's 110★ is a *specification*, not an agent). It covers **CAN bus, OBD-II, UDS and SAE
+J1939** — and **J1939 is the commercial-vehicle bus**, which nothing else in this category touches. That
+pairs directly with `autoware.trucks` above: the freight line now has both a stack charter and a
+diagnostics agent.
+
+### The diagnostics-agent category: 0–8★ last pass, 0–26★ now, eight projects deep
+
+| Agent | Licence | ★ | Verdict |
+|---|---|--:|---|
+| [farzadnadiri/Peykan](https://github.com/farzadnadiri/Peykan) | MIT | 26 | 🆕 **Admitted.** CAN/OBD-II/UDS/**J1939**, simulator, Docker, live dashboard |
+| [petrpatek/obd2-mcp-server](https://github.com/petrpatek/obd2-mcp-server) | 🔴 **README says MIT, no file, no field** | 12 | **Rejected.** Ships a **1,937-code Ford-specific DTC database** — the genuinely useful asset, and unusable. 5 commits |
+| [castlebbs/Vehicle-Diagnostic-Assistant](https://github.com/castlebbs/Vehicle-Diagnostic-Assistant) | MIT | 8 | Carried. Still the most complete reference design (LangGraph + MCP over JSON-RPC 2.0 + NHTSA vPIC) |
+| [shoka-jp/obd2-mcp](https://github.com/shoka-jp/obd2-mcp) | MIT | 2 | Carried. **Mock vehicle bundled** — runs with no hardware |
+| [ayhammouda/obd-mcp-server](https://github.com/ayhammouda/obd-mcp-server) | **Apache-2.0 + MIT (dual)** | 1 | 🆕 **Admitted.** *"Safety-first, read-only … simulator-first"*, **7 typed MCP tools**, extensible UDS profiles. Most permissive grant in the category; 19 commits |
+| [vehicle-platform/vehicle-mcp](https://github.com/vehicle-platform/vehicle-mcp) | MIT | 0 | 🆕 **Admitted, correcting a secondary source** — see below |
+| [RobertSloan22/tars-car-mcp](https://github.com/RobertSloan22/tars-car-mcp) | 🔴 **No licence** | 0 | **Rejected.** OBD-II/UDS/**GM bidirectional**/CAN — deep capability, but gated on the proprietary TARS desktop app. **1 commit** |
+| [cyrusdavirusss/j2534-mcp-server](https://github.com/cyrusdavirusss/j2534-mcp-server) | 🔴 **README says MIT, no file** | 0 | Carried as rejected. J2534 professional interface — the deepest and still unusable |
+
+**The category's shape has settled even though no winner has emerged.** MCP is unanimous as the transport
+across all eight. The physical layer is ELM327/OBD-II, J2534 and now J1939. And the design convention has
+converged independently on **read-only plus simulator-first** — `obd-mcp-server` makes a deterministic
+simulator the *default backend*, `obd2-mcp` bundles a mock vehicle, `Peykan` ships a simulator. For
+Globant that is a favourable market shape: **the integration contracts are settled and the differentiated
+product does not exist.**
+
+### Corrections to secondary sources this pass
+
+1. **"vehicle-mcp is a skeleton with no code yet"** — a search summary's claim. The repository page says
+   **v0.2.0**, `src/vehicle_mcp`, a `tests` directory, **CI workflows**, a table of read-only tools, and
+   **51 commits**. It is *small* (0★), not *empty*. Admitted. Had this been carried as written, this KB
+   would hold wrong data about a real project.
+2. **`autowarefoundation/auto_e2e` was reported at 184★ on 2026-10-31** and the org listing today shows it
+   updated **10 Nov 2026** — still inside the release wave above, so it is part of this batch rather than
+   a separate event.
+3. **Star drift:** **openpilot 64.0k → 64.1k** (and its own description now reads **300+** supported cars);
+   **Autoware 12.2k — unchanged**; **Senna 558 → 559** between the third-party report and the page read.
+   Small numbers, recorded because this file exists to measure movement rather than rediscover it.
+
+### Also admitted this pass
+
+- [hustvl/Senna](https://github.com/hustvl/Senna) — **Apache-2.0, 559★.** *"[IJCV 2026] Senna: Bridging
+  Large Vision-Language Models and End-to-End Autonomous Driving."* Peer-reviewed, which almost nothing
+  else in this field is. Found through the unlicensed `DatariusAI/AI-in-Automotive` feed — **the first
+  time that reading-feed has earned its place in this KB.**
+- [sunnypilot/sunnypilot](https://github.com/sunnypilot/sunnypilot) — **MIT, 2.2k★, 19,012 commits.** The
+  significant openpilot fork, claiming **350+ car makes and models vs upstream's 300+**. The fork has
+  *more* vehicle coverage than upstream under the same grant — check it when a client's vehicle is
+  unsupported.
+- [JohnsonJiang1996/Awesome-VLA4AD](https://github.com/JohnsonJiang1996/Awesome-VLA4AD) — Apache-2.0,
+  631★ — and [worldbench/awesome-vla-for-ad](https://github.com/worldbench/awesome-vla-for-ad) — MIT,
+  524★, 103 commits. Survey indexes, not code. ⚠️ **At least five near-identical forks of the latter
+  exist** (`776styjsu`, `tongnie`, `ruiguoz`, `mengmengliu1998`, `worldbench`) with differing entries.
+  `worldbench` is the apparent upstream. **Cite upstream only** — otherwise this KB acquires five rows
+  for one artefact, the same duplicate-entity defect the education KB hit with `edx-platform`.
+
+### 🟢 Data-integrity check on this file's own history (no history was altered)
+
+The run contract warns that a row reading `| Nombre | Repo | Licencia |` has been compiled into a KB
+entity literally named *"nombre"* more than once across industries. **Checked this file and
+`repos/trending.md` for that defect. Result: not present as data.**
+
+Both files contain **one Spanish-vocabulary header** —
+`| Nombre | Licencia | Descripción | Stars |` — in the `2026-07-02` snapshot under
+*"History — snapshots before 2026-10-15"*. In both cases it is a **genuine table header followed by ten
+real data rows with live links**, and the 2026-10-15 pass already annotated that snapshot as an unfiltered
+keyword scrape preserved *"for trend continuity, not as recommendations."*
+
+**Nothing was deleted or rewritten** — this file is append-only and that snapshot is the trend record.
+Two things are recorded instead, for whoever maintains the compiler:
+
+1. **The header-skip guard must include the Spanish vocabulary** (`Nombre`, `Licencia`, `Descripción`,
+   `Plataforma`, `Componente`), not only the English one. The education KB's guard already does; this is a
+   note that automotive needs the same list.
+2. **Four entries in that snapshot are not automotive software** (`MotionBastard` — After Effects motion
+   design; `git-lanes` — generic git tooling; `AirForce-API-Auto-Register-System`; `video2robot` — general
+   robotics) and **four carry `?` or `NOASSERTION` licences**, i.e. **no verified grant**. They remain
+   excluded from every shelf in this KB. **An unfiltered scrape preserved as history is history; it is not
+   a candidate list.**
+
+### Declared gaps this window
+
+- 🔴 **`huggingface.co` still does not resolve**, so **no model weights were licence-verified**, for the
+  fourth pass running. This now blocks a specific decision: `autoware_latent_drive`'s repo has **no
+  licence**, and its two ONNX models and all training detail live **only** on Hugging Face — so the model
+  card is **the only place a grant could exist** and it cannot be read. **Escalation:** request
+  `huggingface.co` in the session's allowed domains.
+- 🔴 **No benchmark exists for any model in this release wave.** `vision_pilot` publishes none;
+  `autoware_latent_drive` explicitly publishes none and offers only qualitative replays. The eight-model
+  ADE/FDE table carried from AutoE2E's README (2026-10-31) remains **the only published multi-model open
+  comparison in this field** — it was never like-for-like, and it now covers a **minority** of the
+  available models. **It is ageing badly and should not be quoted as a ranking.**
+- 🟢 **Three of the four "named but not measured" repos were measured before this pass closed**, all
+  Apache-2.0 and all verified from their own pages: **`autoware-index`** (1★, *"Federated registry of
+  community Autoware packages (distribution.yaml + sweep-driven validation history)"*),
+  **`openadkit-rcar-x5h`** (0★, *"Board support for Open AD Kit on the Renesas R-Car X5H: AutoSD image,
+  kernel, CR52 dual boot and demos"*) and **`autoware_carla_scenario`** (0★, pushed today, **no
+  description set** — a repo being created as this was written). ⚪ **`autoware_system_designer` remains
+  unmeasured** (Apache-2.0 per the org listing, stars/README unread).
+- 🔴 **Generic agent searches produced nothing for the fifth pass.** `top open source AI agents automotive
+  2026 github MIT` returned OpenClaw, OpenCode, OpenHands, CrewAI, Hermes Agent and AutoGPT (**archived
+  28 Jan 2026**) — zero automotive content. **Methodological finding: in automotive, search the protocol,
+  not the category.** `automotive MCP server vehicle diagnostics` returned eight real projects.
+
+---
 
 ## 2026-10-31
 
