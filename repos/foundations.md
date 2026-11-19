@@ -1,7 +1,7 @@
 ---
 industry: automotive
 region: Global
-updated: 2026-11-13
+updated: 2026-11-19
 ---
 
 # 🏗️ Foundational repos — Automotive
@@ -17,6 +17,119 @@ updated: 2026-11-13
 > 🔴 **`huggingface.co` still does not resolve from this session**, so no model-weight licence was verified.
 > 🆕 = added 2026-11-13. 🔄 = licence/stars re-read today. ⏸ = URL re-probed, figures carried forward.
 > ⚪ = URL live, licence/stars deliberately left blank rather than guessed.
+
+## 🆕 Added 2026-11-19 — four layers this KB did not have: SDV middleware, bus tooling, the openpilot ecosystem, and assurance
+
+> **Verification:** every row below was re-queried by exact `repo:owner/name` through
+> `gh api -X GET search/repositories` (the GitHub REST API), so licence SPDX IDs, stars, forks and push
+> dates are **first-hand API fields**. 39 of 39 resolved. `curl` to `github.com`/`api.github.com` is
+> **HTTP 403** (host policy); LICENSE files were settled via `raw.githubusercontent.com`.
+
+### 🆕 Layer A — SDV middleware and in-vehicle plumbing (Apache-2.0 / MIT / BSD, all battle-tested)
+
+This KB had Eclipse S-CORE, Kuksa, Velocitas and Ankaios. It was **missing the transport and build
+layers underneath them**, which is where most SDV integration hours actually go.
+
+| Repo | Licence | ★ / forks | Why it is foundational |
+|---|---|--:|---|
+| [nanomq/nanomq](https://github.com/nanomq/nanomq) | **MIT** | **2,666★** / 325f | *"Ultra-lightweight and blazing-fast Messaging Bus/MQTT Broker for Edge & SDV."* Pushed 2026-11-19. The in-vehicle/edge broker that sits under a Kuksa or Velocitas deployment. 59 open issues. |
+| [eclipse-iceoryx/iceoryx](https://github.com/eclipse-iceoryx/iceoryx) | **Apache-2.0** | **2,212★** / 491f | *"True zero-copy inter-process communication."* The IPC layer AUTOSAR Adaptive and ROS 2 automotive stacks use when latency budgets are hard. 259 open issues (large, active project). |
+| [eclipse-ecal/ecal](https://github.com/eclipse-ecal/ecal) | **Apache-2.0** | 1,060★ | High-performance pub/sub + client-server middleware, cross-platform. Pushed 2026-11-19. The recording/replay companion to iceoryx in AV data pipelines. |
+| [eclipse-leda/leda-distro](https://github.com/eclipse-leda/leda-distro) | **Apache-2.0** | 21★ / 12f | **Yocto-based build setup for Eclipse SDV.EDGE components.** Low stars, high leverage: this is the reproducible in-vehicle Linux image that makes Kuksa/Velocitas/Ankaios actually boot on target. Siblings: [`leda`](https://github.com/eclipse-leda/leda) (docs), [`meta-leda`](https://github.com/eclipse-leda/meta-leda) (Yocto meta-layers), [`leda-utils`](https://github.com/eclipse-leda/leda-utils), [`leda-example-applications`](https://github.com/eclipse-leda/leda-example-applications). |
+| [de4sdv/DE4SDV](https://github.com/de4sdv/DE4SDV) | **Apache-2.0** | 13★ / 4f | *"Open-source systems engineering for Software-Defined Vehicle — **SysML v2**, MBSE, product-line engineering, digital continuity, continuous compliance."* Pushed 2026-11-19, 11 open issues. The only open **SysML v2** automotive systems-engineering base found. Pairs directly with the assurance layer below. |
+| [xronos-inc/xronos](https://github.com/xronos-inc/xronos) | **BSD-3-Clause** | 41★ | Deterministic timing + built-in observability for robotics/vehicle software — reproducible behaviour and root-cause analysis. Relevant where non-determinism is the actual defect. |
+| [eclipse-sdv-landscape/sdv-landscape](https://github.com/eclipse-sdv-landscape/sdv-landscape) | **Apache-2.0** | 1★ | The Eclipse SDV landscape map itself. A navigation artefact, not code — use it to check this KB's own coverage. |
+
+⚠️ **`vxedge/*`** (Apache-2.0, ~10 repos, all **1★ or 0★**, all pushed 2026-11-19) is a complete
+manifest-driven SDV testbed — control plane, OTA server, SysML v2 models, telemetry, an **MCP server
+(`vxmcp`, targeting MCP spec 2026-07-28)** and an OCI/ORAS part registry with ARINC-665-shaped part
+numbers. Recorded as a **watch item, not a recommendation**: single-contributor, no community, six
+weeks old. The *architecture* is worth reading before designing an SDV testbed engagement.
+
+### 🆕 Layer B — Bus, DBC and diagnostics tooling (the unglamorous layer that every engagement touches)
+
+| Repo | Licence | ★ / forks | Why it is foundational |
+|---|---|--:|---|
+| [ebroecker/canmatrix](https://github.com/ebroecker/canmatrix) | **BSD-2-Clause** | **1,093★** / 441f | Converts CAN database formats: **`.arxml` ⇄ `.dbc` ⇄ `.dbf` ⇄ `.kcd`**. Pushed 2026-11-18. **This is the ARXML bridge** — the piece that lets an agent read an OEM's AUTOSAR communication matrix. BSD-2 is the cleanest licence in this KB. |
+| [iDoka/awesome-canbus](https://github.com/iDoka/awesome-canbus) | **CC0-1.0** | **3,571★** / 426f | CAN bus tools, hardware and resources, security/reverse-engineering oriented. CC0 = public domain. The index to consult before building any bus tool. |
+| [Sherin-SEF-AI/CanLab](https://github.com/Sherin-SEF-AI/CanLab) | **MIT** | 94★ / 9f | PyQt6 app for reverse-engineering CAN captures: finds counters, checksums and signal boundaries; DBC builder **verified against real frames**; exports **DBC, openpilot and Wireshark dissectors**; UDS + OBD-II. **Injection is bench-only and disarmed until armed.** |
+| [autoas/as](https://github.com/autoas/as) | ⚠️ `NOASSERTION` | 965★ | *"Simple AUTOSAR Basic Software."* Pushed 2026-11-18. The only substantial open AUTOSAR BSW found. **Licence must be settled before any use** — GitHub cannot classify it. |
+| [TrampolineRTOS/trampoline](https://github.com/TrampolineRTOS/trampoline) | 🔴 **GPL-2.0** | 759★ | Static RTOS aligned to OSEK/VDX and **AUTOSAR OS 4.2**. GPL-2.0 — reference and bench only for a client deliverable. |
+| [TOSUN-Shanghai/TSMaster](https://github.com/TOSUN-Shanghai/TSMaster) | ⚠️ **LGPL-2.1** + feature gating | 442★ | Bus monitoring, simulation, testing, diagnostics and calibration across TOSUN, Vector, IXXAT, PEAK, Kvaser, Intrepid, ZLG and more. Page states *"free for research and education purpose for some features"*. **Tool, never a shipped component.** |
+
+### 🆕 Layer C — The openpilot ecosystem as a foundation layer
+
+Previously a single row. It is a supply chain, and the hardware bundle came apart this quarter.
+
+| Repo | Licence | ★ / forks | Role |
+|---|---|--:|---|
+| [commaai/openpilot](https://github.com/commaai/openpilot) | **MIT** | **64,177★** / 11,410f | Anchor. 300+ cars. Pushed 2026-11-19, 141 open issues. |
+| [sunnypilot/sunnypilot](https://github.com/sunnypilot/sunnypilot) | **MIT** | 2,178★ | 350+ makes/models — **broader vehicle coverage than upstream** |
+| [zoompilot/jetlink](https://github.com/zoompilot/jetlink) | **MIT** | 57★ / **40f** | Runs openpilot's large driving model on **Jetson Orin Nano, macOS, iOS, Android, CUDA laptops** with a comma device + USB3 |
+| [zoompilot/zoompilot](https://github.com/zoompilot/zoompilot) | **MIT** | 37★ / 31f | ADAS for **Mazda** and others; pushed 2026-11-19 |
+| [YassineYousfi/openpilot.distill](https://github.com/YassineYousfi/openpilot.distill) | **MIT** | 38★ | Distil openpilot on your own drives |
+| [StarPilotHQ/StarPilot](https://github.com/StarPilotHQ/StarPilot) | **MIT** | 163★ | Tuning-focused fork |
+| [commaai/connect](https://github.com/commaai/connect) | **MIT** | 153★ | openpilot fleet/experience management |
+| [commaai/opendbc](https://github.com/commaai/opendbc) | **MIT** | **3,571★** / 2,408f | *"a Python API for your car"* — the DBC corpus underneath all of the above. Pushed 2026-11-19, 378 open issues. |
+| [Sherin-SEF-AI/Lyne-ADAS](https://github.com/Sherin-SEF-AI/Lyne-ADAS) | **MIT** | 22★ / 7f | **100% on-device ADAS for Android**; self-tunes from budget phones to flagships |
+| [eFiniLan/openpilot-ext-radar-addon](https://github.com/eFiniLan/openpilot-ext-radar-addon) | ⚠️ `NOASSERTION` | 33★ | External radar for longitudinal control — settle licence first |
+
+**`jetlink`'s 40 forks on 57 stars** is the signal: people are porting, not bookmarking.
+
+### 🆕 Layer D — Assurance and standards as code
+
+| Repo | Licence | ★ / forks | Role |
+|---|---|--:|---|
+| [jherrodthomas/automotive-skills-suite](https://github.com/jherrodthomas/automotive-skills-suite) | **MIT** | **2,907★** / 141f | 76 builder+reviewer skill pairs → `.xlsx` artefacts across **ISO 26262 / ISO 21434 / ISO 21448 / ASPICE / AIAG-VDA**, plus CAN-LIN-FlexRay-Ethernet, UDS/ODX/DEM, AUTOSAR Classic+Adaptive, A2L/DCM, MBSE/SysML, V&V traceability. ⚠️ **No "not certified" disclaimer on the page.** |
+| [jherrodthomas/LionDriver](https://github.com/jherrodthomas/LionDriver) | **MIT** | 65★ / 3f | openpilot derivative carrying a **living safety case (36 claims, 50 evidence, 42 open defeaters, 0 accepted)** and 89 V-cycle work products; cites ISO 26262/21448/21434, **ISO/PAS 8800**, **UL 4600**, ASPICE; **explicitly claims no compliance**. Use as the **template** for an assurance repository. |
+| [Lieubk/automotive-safety-security-assurance-kit](https://github.com/Lieubk/automotive-safety-security-assurance-kit) | **MIT** | 2★ | ASPICE 3.1/4.0 + ISO 26262 + ISO/SAE 21434 skills, agents and a **trace engine**. Created 2026-11-19. |
+
+### 🆕 Layer E — Simulation, benchmarking and datasets added this pass
+
+| Repo | Licence | ★ / forks | Role |
+|---|---|--:|---|
+| [Farama-Foundation/HighwayEnv](https://github.com/Farama-Foundation/HighwayEnv) | **MIT** | **3,342★** / 906f | Driving and tactical decision-making environments. Farama (the Gymnasium maintainers) — stable governance. The cheapest place to prototype a planning policy. |
+| [hanruihua/ir-sim](https://github.com/hanruihua/ir-sim) | **MIT** | 1,239★ | Lightweight Python simulator for navigation, control and learning |
+| [ShisatoYano/AutonomousVehicleControlBeginnersGuide](https://github.com/ShisatoYano/AutonomousVehicleControlBeginnersGuide) | **MIT** | 1,963★ | Python simulations + open textbook; swap and compare localisation/planning/control in one system. **The best onboarding asset found for a studio ramp-up.** |
+| [AtsushiSakai/PythonRobotics](https://github.com/AtsushiSakai/PythonRobotics) | ⚠️ `NOASSERTION` | **30,951★** | Robotics algorithm reference implementations. Licence unclassified by GitHub — settle before vendoring. |
+| [MRPT/mrpt](https://github.com/MRPT/mrpt) | **BSD-3-Clause** | 2,175★ | Mobile Robot Programming Toolkit — SLAM, localisation, point clouds |
+| [aditya-ramabadran/drivingbench_harness_code](https://github.com/aditya-ramabadran/drivingbench_harness_code) | **MIT** | 63★ / 8f | **Agents drive real cars over MCP** (comma four, Toyota TSS2, Tesla M3 HW3) with a 3 m/s ceiling and a 6 m/s hard cutoff; Gaussian-splat simulator; full trace replay |
+| [radar-lab/OpenCDA-MARL](https://github.com/radar-lab/OpenCDA-MARL) | **Apache-2.0** | 16★ | Cooperative-driving MARL benchmark on **CARLA + SUMO co-simulation** |
+| [thi-ad/UrbanIng-V2X](https://github.com/thi-ad/UrbanIng-V2X) | **MIT** | 88★ / 14f | **NeurIPS 2025** multi-vehicle, multi-infrastructure cooperative-perception dataset across multiple intersections (TH Ingolstadt, **EMEA**) |
+| [nv-tlabs/omni-dreams](https://github.com/nv-tlabs/omni-dreams) | **Apache-2.0** | 367★ | **NVIDIA OmniDreams** — real-time photorealistic AV-sim video world model |
+| [visionpilot-project/VisionPilot](https://github.com/visionpilot-project/VisionPilot) | **MIT** | 43★ | Modular AD simulation on **BeamNG.tech** with Foxglove visualisation. ⚠️ **Not** `autowarefoundation/vision_pilot` — see the collision note below. |
+| [autowarefoundation/AWSIM](https://github.com/autowarefoundation/AWSIM) | 🔴 **bespoke "AWSIM License"** | 765★ / 163f | Autoware digital-twin simulator. **Not Apache-2.0** — LICENSE read raw. Read the terms before any deliverable depends on it. |
+
+### 🆕 Index repos to track instead of re-searching
+
+[Thinklab-SJTU/Awesome-LLM4AD](https://github.com/Thinklab-SJTU/Awesome-LLM4AD) (**Apache-2.0,
+1,906★**) is the best single map of LLM/VLM/VLA/world-model work for autonomous driving.
+[worldbench/awesome-3d-4d-world-models](https://github.com/worldbench/awesome-3d-4d-world-models)
+(Apache-2.0, 1,031★, TPAMI 2026) and
+[leofan90/Awesome-World-Models](https://github.com/leofan90/Awesome-World-Models) (BSD-3-Clause,
+2,059★) cover the world-model tier.
+[szenergy/awesome-lidar](https://github.com/szenergy/awesome-lidar) (CC0-1.0, 1,373★) covers sensors.
+🔴 [LMD0311/Awesome-World-Model](https://github.com/LMD0311/Awesome-World-Model) (2,304★) and
+🔴 [Little-Podi/Collaborative_Perception](https://github.com/Little-Podi/Collaborative_Perception)
+(639★) carry **no licence** — read, do not vendor.
+
+### ⚠️ Name collision recorded as a procurement hazard
+
+`visionpilot-project/VisionPilot` (**MIT, 43★**, BeamNG simulation) vs
+`autowarefoundation/vision_pilot` (**Apache-2.0, 928★/197f**, productionizable L2 ADAS stack). Different
+owners, licences and purposes; near-identical names; both appear for the query "VisionPilot". **Always
+write the full `owner/name` in a statement of work or an architecture decision record.**
+
+### 🔴 Negative results settled 2026-11-19 — do not re-search these
+
+| Query (`gh api search/repositories`) | Result |
+|---|---|
+| `EV battery charging AI in:name,description pushed:>2026-08-01 stars:>15` | **0 repos** |
+| `automotive manufacturing quality inspection AI in:name,description pushed:>2026-06-01 stars:>3` | **0 repos** — plant-floor vision is proprietary |
+| `fleet management telematics in:name,description pushed:>2026-08-01 stars:>5` | **2 repos** only: `openremote/fleet-management` (51★, `NOASSERTION`), `santoshiimind/fleet-management-system` (**Apache-2.0**, 8★ — FastAPI + SQLAlchemy, OBD-II + GPS + CAN decode + DTC + driver behaviour + fuel analytics; the only permissive open fleet stack found, and it is a one-person project) |
+| `car dealership management in:name,description,topics pushed:>2026-01-01` | 408 repos, **top star count 5**, nearly all unlicensed |
+| `V2X cooperative perception in:name,description pushed:>2026-08-01 stars:>30` | **3 repos**; only `thi-ad/UrbanIng-V2X` is permissively licensed |
+| Generic agent searches (`top open source AI agents automotive 2026 github MIT`, `github trending automotive AI 2026`) | **Still a dead end** — returns OpenHands, OpenCode, CrewAI, OpenClaw, browser-use with no automotive content. Sixth pass with this result. **Search the standard and the protocol, not the buzzword.** |
 
 ## 🆕 Added 2026-11-13 — the Autoware Foundation published a stack, not a model
 

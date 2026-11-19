@@ -1,14 +1,16 @@
 ---
 industry: automotive
 region: Global
-updated: 2026-11-13
+updated: 2026-11-19
 ---
 
 # 🧩 Composition patterns — Automotive
 
 > Concrete recipes: named repos, named wiring, stated assumptions. Every repo referenced here is verified
 > in `repos/foundations.md` or `agents/top.md` (URL probed live 2026-10-26).
-> **New this pass: P7 (S-CORE safety-core engagement) and P8 (USMCA rules-of-origin traceability).**
+> **New on 2026-11-19: P14 (assurance artefact factory), P15 (vehicle-agent evaluation harness) and
+> P16 (on-device cockpit agent) — see the end of this file.**
+> **Added 2026-10-26: P7 (S-CORE safety-core engagement) and P8 (USMCA rules-of-origin traceability).**
 > P3 and P6 were revised — P3 gains the S-CORE core and the published blueprint, P6 gains a licence
 > correction and a small-model option.
 
@@ -604,3 +606,176 @@ repository named above was verified live on its stated date — for this pass, f
 page or a raw licence file, since `curl` and `api.github.com` both return HTTP 403 in this session. Where a
 licence is flagged ⚠️ or 🔴, the flag is the finding.*
 
+---
+
+## P14 🆕 — The assurance artefact factory (ISO 26262 / 21434 / 21448 / ASPICE as agent output, with a named owner)
+
+**Added 2026-11-19.** This is the highest-leverage new pattern in this file, because the same build sells
+into all four regions for four different reasons (see `intel/trends.md` → **N9**).
+
+**Who buys it:** an OEM or Tier-1 that must produce a safety case — in North America because AV
+rulemaking is heading toward a required safety case for SAE L3–L5 and NHTSA enforcement is live
+(**EA26002**, ~3.2M vehicles); in EMEA because the AI Act delta on top of **UNECE R151** type-approval
+documentation has to be written; in APAC because the China-co-led **ADS GTR** plus stricter domestic OTA
+rules demand release evidence; in LATAM because a Bajío supplier shipping into the US needs
+export-readiness it cannot currently demonstrate.
+
+**Components**
+| Role | Repo / asset | Licence |
+|---|---|---|
+| Artefact generators | [`jherrodthomas/automotive-skills-suite`](https://github.com/jherrodthomas/automotive-skills-suite) — 76 builder+reviewer pairs → `.xlsx` across ISO 26262 (HARA, FSC/TSC, FMEDA, safety case), ISO/SAE 21434 (TARA, incident response), ISO 21448 SOTIF, AIAG-VDA (APQP/DFMEA/PFMEA/control plans/PPAP), Automotive SPICE | **MIT**, 2,907★ |
+| Repository *shape* to copy | [`jherrodthomas/LionDriver`](https://github.com/jherrodthomas/LionDriver) — living safety case (claims / evidence / **defeaters**), 89 V-cycle work products, field-monitoring process | **MIT**, 65★ |
+| Traceability engine | [`Lieubk/automotive-safety-security-assurance-kit`](https://github.com/Lieubk/automotive-safety-security-assurance-kit) — ASPICE 3.1/4.0 + 26262 + 21434 trace engine | **MIT** |
+| Systems-engineering spine | [`de4sdv/DE4SDV`](https://github.com/de4sdv/DE4SDV) — **SysML v2**, product-line engineering, digital continuity | **Apache-2.0** |
+| Requirements intake | [`BUAksakal/reqlens`](https://github.com/BUAksakal/reqlens) — LangGraph supervisor + LlamaIndex RAG over PDF specs, flags conflicts and vague wording, engineer in the loop | **MIT** |
+| Communication-matrix bridge | [`ebroecker/canmatrix`](https://github.com/ebroecker/canmatrix) — **`.arxml` ⇄ `.dbc` ⇄ `.kcd`** | **BSD-2-Clause** |
+
+**Wiring**
+1. **Ingest** the client's requirement set with `reqlens`; its conflict/vagueness report is the first
+   deliverable and it lands in week one — it is also the cheapest possible proof of value.
+2. **Model** the system in `DE4SDV` (SysML v2). Requirements allocate to architecture here, so
+   traceability is structural rather than a spreadsheet column.
+3. **Generate** each artefact with the matching builder skill from `automotive-skills-suite`; run the
+   **paired reviewer skill** on every output. Reviewers do not mutate source artefacts — gaps become
+   recommended actions, which is the property that makes the output auditable.
+4. **Trace** with the assurance-kit's trace engine: requirement → architecture element → work product →
+   test → evidence. Break the build when a link is missing.
+5. **Pull real bus facts** through `canmatrix` so communication-matrix and diagnostics artefacts cite the
+   client's actual ARXML rather than a restated summary.
+6. **Structure the repository like LionDriver**: claims, evidence items, and — the part that matters —
+   **open defeaters, counted and published**.
+7. **Assign a named responsible engineer to every generated artefact** before it leaves the studio.
+
+**🔴 The two non-negotiables, and the pattern fails without them**
+- **No generated artefact ships as generated.** The skills-suite repository page carries **no
+  "not certified" disclaimer** while advertising coverage of six standards and the word "compliance".
+  The studio must supply the disclaimer, the review step and the named owner the upstream project does
+  not. Write this into the SoW, not into a readme.
+- **Publish the defeater count.** LionDriver's credibility comes from stating **36 claims, 50 evidence
+  items, 0 accepted, 42 open defeaters** — not from claiming completeness. A client-facing safety case
+  with no open defeaters is either finished (it is not) or dishonest.
+
+**Also note:** the skills suite installs via *"Save skill"* in **Cowork or Claude Desktop**; the page
+names **no Claude Code or non-Claude runtime**. If the client's agent platform is something else, budget
+repackaging as explicit scope.
+
+**Estimate:** **4–5 weeks** for one artefact family (e.g. ISO 26262 HARA → FSC → TSC with traceability)
+on a defined item. **12–16 weeks** for a full V-cycle work-product set with a CI traceability gate.
+**Add 3–4 weeks** if the client's agent runtime is not a Claude surface.
+
+---
+
+## P15 🆕 — Vehicle-agent evaluation harness (buy the harness, not the model)
+
+**Added 2026-11-19.** Clients keep asking which model should drive. The sellable answer is a harness that
+makes the question answerable repeatedly — and `drivingbench_harness_code` has published the reference
+design, including the safety envelope.
+
+**Components**
+| Role | Repo | Licence |
+|---|---|---|
+| Harness + MCP contract | [`aditya-ramabadran/drivingbench_harness_code`](https://github.com/aditya-ramabadran/drivingbench_harness_code) — `drivingbench_sandbox` exposing `observe()` / `set_motion()` / `stop_now()`; chat models, API models and HTTP-served VLA policies all drive the same course | **MIT**, 63★ |
+| Vehicle platform | [`commaai/openpilot`](https://github.com/commaai/openpilot) (comma four; DrivingBench pins upstream `59fcd340`) | **MIT** |
+| Off-car compute | [`zoompilot/jetlink`](https://github.com/zoompilot/jetlink) — openpilot's large driving model on **Jetson Orin Nano / macOS / iOS / Android / CUDA laptops** | **MIT** |
+| Simulation first | [`NVlabs/alpasim`](https://github.com/NVlabs/alpasim) (Apache-2.0, 1,304★), [`carla-simulator/carla`](https://github.com/carla-simulator/carla) (MIT, 14,655★), [`Farama-Foundation/HighwayEnv`](https://github.com/Farama-Foundation/HighwayEnv) (MIT, 3,342★) | permissive |
+| Candidate policies | `xiaomi-research/recogdrive` (Apache-2.0, ICLR 2026), `TabGuigui/WorldDrive`, `chenshi3/DriveWAM` (Apache-2.0, NeurIPS 2026), `ASGuard-UCI/safedrive-vla` (Apache-2.0, CoRL 2026), `autowarefoundation/vision_pilot` (Apache-2.0) | **Apache-2.0** |
+| Candidate shortlist source | [`Thinklab-SJTU/Awesome-LLM4AD`](https://github.com/Thinklab-SJTU/Awesome-LLM4AD) (Apache-2.0, 1,906★) | Apache-2.0 |
+
+**Wiring**
+1. **Three architectural rules first, copied verbatim from DrivingBench, because they are the deliverable
+   a safety reviewer will actually read:**
+   - the agent's free-text `reason` is **logged for the operator and never sent to the controller** —
+     prompt text cannot reach an actuator;
+   - `observe()` returns **image age**, so staleness is an input rather than an assumption;
+   - **four independent stoppers**: operator-set speed ceiling (default **3 m/s**), **hard cutoff at
+     6 m/s**, command expiry, and cancellation on brake / gas / steering override / disengagement.
+2. **Run the simulator leg first** — DrivingBench's course is a Gaussian splat over the real control
+   stack, and it runs with placeholder frames if no splat exists. `HighwayEnv` is cheaper still for
+   planning-policy triage. Nothing reaches a vehicle until it clears simulation.
+3. **Serve every candidate behind one interface**: chat models over MCP, API models through the runner
+   loop, trained VLAs over HTTP returning timed curvature + speed plans. One interface is what makes the
+   comparison honest.
+4. **Record everything**: every tool call, telemetry sample, settings change and **every image the model
+   saw**, replayable. This is the evidence artefact that connects to **P14**.
+5. **Closed course, human supervising, parking-lot speed.** DrivingBench calls itself *"research software
+   for closed courses"*. Treat that as a contractual constraint, not advice.
+6. **Report a decision, not a score.** ⚠️ DrivingBench publishes **no leaderboard and no results**, and
+   `drivingbench.com` has not been read by this KB. The deliverable is *"policy X behaved this way on
+   your course under your limits, with traces"* — never a benchmark number.
+
+**🔴 Hard constraints:** closed course only; a trained safety driver present; the client's insurer and
+legal team consulted **before** week one; and every result scoped to the exact vehicle configuration
+tested — DrivingBench itself names specific platforms (comma four on a pinned build, recent Toyota TSS2,
+Tesla Model 3 HW3) rather than "a car".
+
+**Estimate:** **3–4 weeks** simulator-only, 4–6 candidate policies, with traces and a written decision.
+**8–10 weeks** including a closed-course leg on one vehicle. Add the client's own legal/insurance
+timeline, which is usually the critical path.
+
+---
+
+## P16 🆕 — On-device cockpit agent (no cloud fallback, confirmation-gated)
+
+**Added 2026-11-19.** The OEM direction of travel is explicit: Mercedes-Benz × **Liquid AI** (announced
+23 Apr 2026, multi-year) runs **Liquid Foundation Models on-device** on **MB.OS** for 3rd/4th-generation
+MBUX in North America — speech recognition, language understanding and reasoning **local, no cloud
+dependence** — targeting *"initial production deployment as early as H2 2026"*. CES 2026 analyses
+describe the same move toward **domain-specific automotive language models trained on navigation data,
+vehicle controls and safety rules** rather than general LLMs. The open supply side moved the same way in
+the same window.
+
+**Components**
+| Role | Repo | Licence |
+|---|---|---|
+| Agent framework | [`yancent-dao/cockpit-agent-sim`](https://github.com/yancent-dao/cockpit-agent-sim) — **zero-backend**, **tiered permissions**, **confirmation flow**, card orchestration, **fast/slow dual layer**, real third-party integrations; *"add a capability = add data, not code"* | **MIT**, 98★ |
+| On-device perception precedent | [`Sherin-SEF-AI/Lyne-ADAS`](https://github.com/Sherin-SEF-AI/Lyne-ADAS) — 100% on-device Android ADAS that **self-tunes from budget phones to flagships** | **MIT** |
+| Model portability | [`zoompilot/jetlink`](https://github.com/zoompilot/jetlink) (Jetson Orin Nano / mobile / laptop) and [`YassineYousfi/openpilot.distill`](https://github.com/YassineYousfi/openpilot.distill) (distil on your own drives) | **MIT** |
+| Vehicle signal access | [`eclipse-kuksa/kuksa-databroker`](https://github.com/eclipse-kuksa/kuksa-databroker) + [`COVESA/vehicle_signal_specification`](https://github.com/COVESA/vehicle_signal_specification) | Apache-2.0 / MPL |
+| In-vehicle transport | [`nanomq/nanomq`](https://github.com/nanomq/nanomq) (MIT, 2,666★), [`eclipse-iceoryx/iceoryx`](https://github.com/eclipse-iceoryx/iceoryx) (Apache-2.0, 2,212★) | permissive |
+| Target image | [`eclipse-leda/leda-distro`](https://github.com/eclipse-leda/leda-distro) — Yocto build for SDV.EDGE | Apache-2.0 |
+| Determinism / observability | [`xronos-inc/xronos`](https://github.com/xronos-inc/xronos) | BSD-3-Clause |
+
+**Wiring**
+1. **Adopt `cockpit-agent-sim`'s fast/slow split as the architecture, not as an optimisation.** The fast
+   layer answers deterministically from VSS signals and cards; the slow layer is the model. The fast
+   layer must remain correct when the slow layer is unavailable, because **there is no cloud fallback by
+   design**.
+2. **Read signals through `kuksa-databroker` against the COVESA VSS vocabulary** — never from raw CAN in
+   the HMI path. The bus work stays in the diagnostics layer (see **P10**, **P12**).
+3. **Keep the tiered-permission model and the confirmation flow.** Any action that changes vehicle state
+   requires explicit driver confirmation on the card. This is **T8** (human gate) applied to the cockpit
+   and it is also what the APAC OTA/marketing-terminology rules reward.
+4. **Size the model to the worst device in the fleet, then self-tune up** — the `Lyne-ADAS` discipline.
+   Use `openpilot.distill` as the precedent for distilling against the client's own captured data rather
+   than shipping a generic model.
+5. **Boot on target via `leda-distro`**; transport over `nanomq` for general telemetry and `iceoryx`
+   where the latency budget is hard.
+6. **Instrument with `xronos`** so timing non-determinism is diagnosable rather than mysterious — in a
+   cockpit agent, the defect is almost always latency variance, not accuracy.
+7. **Evidence:** every confirmed action and every refused action logged with its signal snapshot. Feeds
+   **P14** directly; in EMEA that log *is* the AI Act risk-management evidence for the feature.
+
+**Regional notes**
+- **North America:** the Mercedes programme makes "on-device, no cloud" a procurement expectation rather
+  than a differentiator. Lead with the fallback design and the latency budget.
+- **EMEA:** on-device materially simplifies the data-protection story, and the confirmation log is
+  reusable as AI Act risk-management evidence (see **P3**).
+- **APAC:** `cockpit-agent-sim` is CN-origin and MIT, which fits the market it came from; China's
+  **marketing-terminology restrictions** mean the HMI copy itself is a compliance surface — review
+  strings, not just behaviour.
+- **LATAM:** connectivity gaps make on-device the *practical* choice, not merely the private one. This
+  is the one pattern where the LATAM constraint and the global trend point the same way.
+
+**Estimate:** **6–8 weeks** for a bench prototype on a dev board with 3–5 capabilities and the full
+confirmation flow. **14–18 weeks** to run on target hardware through `leda-distro` with VSS signal
+access and an evidence log.
+
+---
+*Sixteen patterns, 2026-11-19. Effort estimates are planning figures for a studio team, not quotes.
+**P14, P15 and P16 are new this pass** (2026-11-13 added P11–P13; 2026-10-31 added P9 and P10;
+2026-10-26 added P7 and P8). Every repository named in P14–P16 was verified on 2026-11-19 through
+`gh api -X GET search/repositories` — the GitHub REST API, so licence SPDX IDs, stars, forks and push
+dates are first-hand API fields; 39 of 39 repos re-queried by exact `repo:owner/name` resolved. `curl` to
+`github.com` and `api.github.com` returns **HTTP 403** in this session (host policy), and
+`huggingface.co` does not resolve, so **no model-weight licence has been verified first-hand in five
+passes.** Where a licence is flagged ⚠️ or 🔴, the flag is the finding.*

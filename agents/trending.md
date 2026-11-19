@@ -1,12 +1,207 @@
 ---
 industry: automotive
 region: Global
-updated: 2026-11-13
+updated: 2026-11-19
 ---
 
 # 📈 Trending AI agents & models — Automotive
 
 > **APPEND-ONLY.** Newest dated section on top; history preserved below. Never rewrite earlier sections.
+
+## 2026-11-19
+
+**Window:** 2026-11-13 → 2026-11-19 (6 days). **Channel used:** `gh api -X GET search/repositories`
+(the GitHub REST API — `license.spdx_id`, stars, forks, `pushed_at`, `created_at` are first-hand API
+fields) plus rendered repository pages for README substance and `raw.githubusercontent.com` for LICENSE
+files. `curl` to `github.com` and `api.github.com` is **HTTP 403** (host policy, re-tested today);
+`huggingface.co` does not resolve. **39 of 39 repos re-queried by exact `repo:owner/name` resolved.**
+
+### 🚨 The standing conclusion that broke this window
+
+Three previous snapshots in this file recorded the automotive agent category as "0–8★", then "0–26★".
+**It is 2,907★.** The error was not in the counting — it was in *where* this file looked. Every prior
+pass searched for agents that sit *in the vehicle*. The largest automotive agent artifact on GitHub sits
+in the **engineering office**:
+
+**[jherrodthomas/automotive-skills-suite](https://github.com/jherrodthomas/automotive-skills-suite)** —
+**MIT, 2,907★, 141 forks**, created 2026-05-01, pushed 2026-10-16, 9 open issues. 76 builder+reviewer
+skill pairs across **ISO 26262, ISO/SAE 21434, ISO 21448 SOTIF, AIAG-VDA/IATF 16949, Automotive SPICE**,
+plus CAN/LIN/FlexRay/Ethernet, UDS/ODX/DEM, AUTOSAR Classic + Adaptive, A2L/DCM calibration, MBSE/SysML
+and V&V traceability. Builders emit `.xlsx`; reviewers check and dashboard without mutating source
+artefacts. Installed via "Save skill" in Cowork or Claude Desktop — **the page names no Claude Code or
+non-Claude runtime**.
+
+**Correction to this file's own method, recorded as a method change for the next pass:** the 2026-10-31
+entry concluded *"in automotive, search the protocol, not the buzzword"* and that produced the
+diagnostics-MCP category. It is right but incomplete. The rule that would have found a 2,907★ repo six
+months earlier is: **search the standard, not only the protocol** — `ISO 26262`, `ISO 21434`,
+`ISO 21448`, `AUTOSAR`, `Automotive SPICE` as query terms. That query
+(`AUTOSAR OR ISO26262 OR "ISO 21434" in:name,description,readme pushed:>2026-08-01 stars:>15`) is what
+surfaced it, along with `iDoka/awesome-canbus` (CC0, 3,571★), `ebroecker/canmatrix` (BSD-2, 1,093★),
+`eclipse-iceoryx/iceoryx` (Apache-2.0, 2,212★) and `autoas/as` (965★, `NOASSERTION`).
+
+### 🆕 Assurance-as-code became a category in six weeks — three projects, one created today
+
+| Repo | Licence | ★/forks | Created | Note |
+|---|---|--:|---|---|
+| [jherrodthomas/automotive-skills-suite](https://github.com/jherrodthomas/automotive-skills-suite) | MIT | 2,907★ / 141f | 2026-05-01 | 76 builder+reviewer pairs → `.xlsx` |
+| [jherrodthomas/LionDriver](https://github.com/jherrodthomas/LionDriver) | MIT | 65★ / 3f | 2026-10-09 | openpilot derivative + **living safety case** |
+| [Lieubk/automotive-safety-security-assurance-kit](https://github.com/Lieubk/automotive-safety-security-assurance-kit) | MIT | 2★ / 0f | **2026-11-19** | ASPICE 3.1/4.0 + 26262 + 21434 trace engine |
+
+**LionDriver is the find of the window, not the skills suite.** Read from its page: a living safety case
+of **36 claims and 50 evidence items with 0 accepted and 42 open defeaters**; **89 V-cycle work products
+(85 draft, 4 skeleton)**; citations to ISO 26262, ISO 21448, ISO/SAE 21434, **ISO/PAS 8800** and
+**UL 4600** plus Automotive SPICE — followed by an **explicit statement that it claims no compliance
+because no assessment has been performed**. No release build. Development builds not for public roads
+outside a controlled test regime. First *evaluated* configuration **Toyota Corolla (E210)**; **no
+configuration is yet assurance-supported**. Field monitoring live with a first case tied to
+**NHTSA PE26007**. Automated checks of inherited openpilot safety code run in CI but are **not yet
+reviewed as evidence**.
+
+Publishing your own 42 unresolved defeaters is the single most credible engineering signal recorded in
+this file to date. By contrast the 2,907★ skills suite carries **no "not certified" disclaimer** while
+advertising coverage of six standards — ⚠️ recorded here as a risk, not a defect of the code.
+
+### 🆕 Agents drove real cars this window — a standing gap closes
+
+**[aditya-ramabadran/drivingbench_harness_code](https://github.com/aditya-ramabadran/drivingbench_harness_code)**
+— **MIT, 63★, 8f**, created 2026-09-18, pushed 2026-11-11. MCP server `drivingbench_sandbox` exposing
+`observe()` / `set_motion()` / `stop_now()`; chat models (Codex, Claude Code, Cursor), API models
+(OpenRouter, Gemini) and **trained VLA policies served over HTTP** all drive the same course. Real
+platforms: **comma four** on pinned openpilot `59fcd340`, **Toyota TSS2**, **Tesla Model 3 HW3**.
+Envelope: default **3 m/s** ceiling, **hard 6 m/s cutoff**, command expiry, cancel on any driver input.
+Simulator is the v1.1 course as a **Gaussian splat** with the real control stack. Full trace replay
+including every image the model saw.
+
+Two design details to copy: the **`reason` argument is logged for the operator and never reaches the
+controller** (prompt text cannot become actuation), and `observe()` returns **image age** (staleness is
+an input, not an assumption).
+
+⚠️ **No scores and no leaderboard are published.** Releases is empty. This is a harness finding, not a
+ranking finding — **do not quote a DrivingBench result**.
+
+### 🆕 openpilot unbundled from comma's hardware this window
+
+- **[zoompilot/jetlink](https://github.com/zoompilot/jetlink)** — MIT, 57★ and **40 forks**, pushed
+  2026-11-08: runs **openpilot's large driving model on Jetson Orin Nano, macOS, iOS, Android and CUDA
+  laptops** with only a comma device and a USB3 cable. A 0.70 fork-to-star ratio is a *build* signal.
+- **[zoompilot/zoompilot](https://github.com/zoompilot/zoompilot)** — MIT, 37★/31f, pushed
+  **2026-11-19**: driver assistance for **Mazda** and others.
+- **[YassineYousfi/openpilot.distill](https://github.com/YassineYousfi/openpilot.distill)** — MIT, 38★:
+  distil openpilot on your own drives.
+- **[Sherin-SEF-AI/Lyne-ADAS](https://github.com/Sherin-SEF-AI/Lyne-ADAS)** — MIT, 22★, pushed
+  2026-11-18: **100% on-device ADAS for Android** (FCW, drivable-area segmentation, pedestrian, lane,
+  traffic-sign), self-tuning from budget phones to flagships.
+
+Together: a permissive driving model is becoming portable to hardware a client already owns.
+
+### 🆕 Vehicle-data MCP: a 142★ leader appears, and the read-only convention holds
+
+[cobanov/teslamate-mcp](https://github.com/cobanov/teslamate-mcp) — **MIT, 142★, 25f, 0 open issues** —
+is now **the largest automotive MCP server in this KB**, 5× the previous high. Also new this window:
+[cyanheads/nhtsa-vehicle-safety-mcp-server](https://github.com/cyanheads/nhtsa-vehicle-safety-mcp-server)
+(Apache-2.0 — VIN decode, recalls, complaints, crash ratings),
+[AbbottDevelopments/shopmonkey-mcp-server](https://github.com/AbbottDevelopments/shopmonkey-mcp-server)
+(MIT, **69 tools** over a real shop-management API),
+[october-dev/car-use](https://github.com/october-dev/car-use) (MIT, created 2026-11-11, **36 open
+issues** — very young),
+[christianOrona/wtfault-scanner](https://github.com/christianOrona/wtfault-scanner) (Apache-2.0 —
+*"never makes anything up"*, every number clickable to raw bytes),
+[Sherin-SEF-AI/CanLab](https://github.com/Sherin-SEF-AI/CanLab) (MIT, 94★ — **injection is bench-only
+and stays disarmed until armed**), and
+[bpawnzZ/lemonwrench](https://github.com/bpawnzZ/lemonwrench) (MIT — OEM service manuals → procedure
+and torque tables, **69 makes, 1960–2025**).
+
+The category's **design convention is now settled in code, not just in READMEs**: read-only by default,
+actuation disarmed, provenance traceable to raw bytes. That is **T8** (human gate) confirmed from the
+supply side.
+
+### 🆕 Non-driving automotive agents spread into cockpit, requirements and procurement
+
+- [yancent-dao/cockpit-agent-sim](https://github.com/yancent-dao/cockpit-agent-sim) — MIT, 98★, CN:
+  smart-cockpit agent framework with **tiered permissions, confirmation flow, card orchestration and a
+  fast/slow dual layer**. The most reusable in-vehicle HMI agent architecture found so far.
+- [BUAksakal/reqlens](https://github.com/BUAksakal/reqlens) — MIT: **LangGraph supervisor + LlamaIndex
+  RAG** reading requirements out of PDF specs and flagging conflicts and vague wording, engineer in the
+  loop. (Türkiye-origin.)
+- [yorkeccak/takt](https://github.com/yorkeccak/takt) — MIT, 19★: automotive **procurement and R&D**
+  deep research → PDF/PPTX/DOCX/CSV from patents, SEC filings and papers.
+- [aws-samples/sample-manufacturing-automotive-ai-toolkit](https://github.com/aws-samples/sample-manufacturing-automotive-ai-toolkit)
+  — **MIT-0**, 19★/7f: **the first hyperscaler-published automotive agent sample set** in this KB.
+  MIT-0 means **no attribution requirement** — the most permissive licence recorded here.
+- [LeventKent/automotive-sdlc-agent-for-mil-sil-hil](https://github.com/LeventKent/automotive-sdlc-agent-for-mil-sil-hil)
+  — MIT, 2★: V-model MIL/SIL/HIL agent.
+
+### 🔴 Rejected on licence this window
+
+| Repo | ★ | Licence | Verdict |
+|---|--:|---|---|
+| [ThinkOffApp/CarWatch](https://github.com/ThinkOffApp/CarWatch) | **306★** | **AGPL-3.0** | Highest-starred automotive agent after the skills suite. Network copyleft — **reference architecture only**, never in a client deliverable. |
+| [FrankRun/WCog-VLA](https://github.com/FrankRun/WCog-VLA) | 76★ | **none** | Do not use. |
+| [xiongqi123123/MarginAD](https://github.com/xiongqi123123/MarginAD) | 41★ | **none** | Do not use. |
+| [liushengjia-AAL/shengjia](https://github.com/liushengjia-AAL/shengjia) | 21★ | **none** | 47 ECU/TCU calibration skills (A2L/DAMOS/WinOLS, Stage1 tuning, checksum, Ghidra, EDC17/MD1/MG1/DCM). No licence **and** the content is ECU remapping — **out of scope for a client deliverable on both counts**. Recorded so it is not re-found. |
+| [TOSUN-Shanghai/TSMaster](https://github.com/TOSUN-Shanghai/TSMaster) | 442★ | **LGPL-2.1** + feature gating | Page states *"free for research and education purpose for some features"*. Tool, not a component. |
+| [mahmutcanborann/mcp-ev-digital-twin-agent](https://github.com/mahmutcanborann/mcp-ev-digital-twin-agent) | 6★ | **none** | EV battery SOH estimation as MCP tools — interesting shape, unusable licence. |
+
+### 🟢 Licence false negatives and a name collision
+
+- **`autowarefoundation/AWSIM` (765★/163f) is NOT Apache-2.0.** The LICENSE file read raw opens
+  *"AWSIM Licenses — AWSIM License Applies to autowarefoundation/AWSIM repositories and all content
+  contained in the Releases"*. A **bespoke licence**. `autoware` and `autoware_universe` remain
+  Apache-2.0.
+- **`H-EmbodVis/SimWAM`** — API says `NOASSERTION`; LICENSE at `main` is **"MIT License / Copyright (c)
+  2026 The SimWAM Authors"**. 🟢 Rescued, same false-negative pattern as 2026-11-13.
+- **`auto-agent-protocol/auto-agent-protocol`** — API says `NOASSERTION`; LICENSE at `main` is the
+  **Apache-2.0 text verbatim**. Now **112★, pushed 2026-11-19** (110★ on 2026-10-31 — slow but alive).
+- ⚠️ **Name collision:** `visionpilot-project/VisionPilot` (**MIT, 43★**, BeamNG.tech simulation
+  platform with Foxglove) is **not** `autowarefoundation/vision_pilot` (**Apache-2.0, 928★/197f**, the
+  L2 ADAS stack). Different owner, licence and purpose. **Paste full `owner/name` in any SoW.**
+
+### Regions represented this snapshot
+
+- **North America:** DrivingBench (MIT), LionDriver (MIT), zoompilot + jetlink (MIT), car-use (MIT),
+  lemonwrench (MIT), aws-samples toolkit (MIT-0), omni-dreams (NVIDIA, Apache-2.0), nhtsa-mcp
+  (Apache-2.0), shopmonkey-mcp (MIT), safedrive-vla (UC Irvine, Apache-2.0).
+- **APAC:** `xiaomi-research/recogdrive` (**Apache-2.0, 631★, ICLR 2026**), `cockpit-agent-sim` (MIT,
+  CN), HERMES / HERMES++ , WorldDrive, DriveWAM, AgentThink, `Thinklab-SJTU/Awesome-LLM4AD`
+  (1,906★). **APAC still supplies the model tier.**
+- **EMEA:** `de4sdv/DE4SDV` (Apache-2.0, SysML v2 for SDV), `eclipse-leda/*` (Apache-2.0),
+  `eclipse-iceoryx/iceoryx` (Apache-2.0, 2,212★), `thi-ad/UrbanIng-V2X` (**MIT, 88★, NeurIPS 2025** —
+  Technische Hochschule Ingolstadt), `reqlens` (Türkiye), `canmatrix` (BSD-2).
+- **LATAM:** 🔴 **nothing.** No LATAM-origin automotive AI repository surfaced in any of the eleven
+  queries run this window. Fifth consecutive snapshot with this result. The gap is in *supply*, not in
+  demand — see `intel/market.md` → Opportunities by region → LATAM.
+
+### Declared gaps this window
+
+1. **EV charging / battery AI:** `EV battery charging AI in:name,description pushed:>2026-08-01
+   stars:>15` → **0 repos**. Nothing maintained above 15★ in the last quarter.
+2. **Plant-floor quality/inspection AI:** `automotive manufacturing quality inspection AI
+   in:name,description pushed:>2026-06-01 stars:>3` → **0 repos**. Entirely proprietary.
+3. **Fleet telematics:** still only 2 repos above 5★ in the last quarter. Fifth pass.
+4. **DMS:** 408 repos for `car dealership management pushed:>2026-01-01`, **top star count 5**, almost
+   all unlicensed. Gap holds.
+5. **No DrivingBench leaderboard published**, so no model ranking can be stated.
+6. **No model weight licence verified** (`huggingface.co` unreachable).
+7. **`drivingbench.com` was not fetched** this pass — only the repository page. Any score claim must
+   wait for that source.
+
+### 🟢 Data-integrity check on this file's own history
+
+The 2026-11-13, 2026-10-31, 2026-10-26 and 2026-10-15 sections and the pre-2026-10-15 history below
+were **read before writing and left byte-for-byte unchanged**. This section was inserted above them.
+The one change to an earlier *conclusion* — the "0–26★ agent category" claim — is **corrected here in
+place, in this section**, and the earlier text that stated it has **not** been edited, so the record of
+what this KB believed and when remains readable.
+
+**Header-as-data check (run this pass, both trending files).** Every markdown table in all eight files
+was parsed programmatically: **0 of them have a first row lacking a `|---|` separator**, so there is no
+header row sitting in the data. The two Spanish-language headers in the pre-2026-10-15 history
+(`| Nombre | Licencia | Descripción | Stars |`) *are* well-formed headers — each is followed by a
+separator row — and they were therefore **left byte-for-byte unchanged** rather than rewritten. If a
+compiler has ever produced an entity named `nombre` from this KB, the defect is in the compiler's table
+parsing, not in these files; the fix belongs upstream and the history should not be edited to work
+around it.
 
 ## 2026-11-13
 

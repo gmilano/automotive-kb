@@ -1,13 +1,176 @@
 ---
 industry: automotive
 region: Global
-updated: 2026-11-13
+updated: 2026-11-19
 ---
 
 # 📡 Trends — Automotive
 
 > Current trends, updated 2026-10-31. Project and vendor self-reported performance figures are labelled
 > as such. Dates name their instrument.
+
+## 🆕 New on 2026-11-19 — four trends, and the first one corrects a claim this file has made three times
+
+### N6 — The automotive agent layer is 2,907★, and it lives in the engineering office, not the vehicle
+
+**Supersedes:** the "0–8★", then "0–26★" ceiling recorded in **N2** (2026-10-31) and carried forward on
+2026-11-13. Those numbers were correctly counted and wrongly scoped.
+
+[`jherrodthomas/automotive-skills-suite`](https://github.com/jherrodthomas/automotive-skills-suite) —
+**MIT, 2,907★, 141 forks** — is 76 builder+reviewer agent-skill pairs that emit the **ISO 26262 /
+ISO/SAE 21434 / ISO 21448 SOTIF / Automotive SPICE / AIAG-VDA (APQP, DFMEA, PFMEA, control plans, PPAP)**
+artefact pack as `.xlsx`, plus CAN/LIN/FlexRay/Ethernet and K-Matrix work, UDS/ODX/DEM diagnostics,
+AUTOSAR Classic and Adaptive, A2L/DCM calibration, MBSE/SysML and V&V traceability matrices.
+
+**Why every prior pass missed it:** the searches were all shaped like the *vehicle* — "in-car agent",
+"diagnostics MCP", "driving policy". The query that finds it is shaped like the *standard*:
+
+```
+AUTOSAR OR ISO26262 OR "ISO 21434" in:name,description,readme pushed:>2026-08-01 stars:>15
+```
+
+**Method change for every future pass of this KB: search the standard, not only the protocol, and never
+the buzzword.** The same query also returned `iDoka/awesome-canbus` (CC0, 3,571★),
+`ebroecker/canmatrix` (BSD-2, 1,093★), `eclipse-iceoryx/iceoryx` (Apache-2.0, 2,212★) and `autoas/as`
+(965★) — four more repos above 900★ that five previous passes never surfaced.
+
+**The commercial reading:** the open automotive agent value is in the **artefact pack a programme
+ships**, not in the car. That is consultable, reviewable, billable work with no vehicle access required
+— and it is the same deliverable in all four regions (see **N9**).
+
+⚠️ **And the risk, stated once:** the repository page carries **no "not certified" disclaimer** and no
+requirement that a qualified engineer validate outputs, while advertising coverage of six standards and
+the word "compliance". A generated safety case is a **draft with a named owner**, or it is a liability.
+
+### N7 — "Assurance-as-code" became a category in six weeks, and the honest one is the small one
+
+Three independent MIT projects, none older than 2026-05-01:
+
+| Project | ★ | Epistemic posture |
+|---|--:|---|
+| `jherrodthomas/automotive-skills-suite` | 2,907★ | Advertises coverage of six standards. **No disclaimer.** |
+| `jherrodthomas/LionDriver` | 65★ | **Publishes 42 unresolved defeaters against its own safety case** and states no compliance is claimed because no assessment was performed |
+| `Lieubk/automotive-safety-security-assurance-kit` | 2★ | *"The toolkit drafts and checks; people decide"* — created **2026-11-19** |
+
+**LionDriver is the template; the skills suite is the tool.** LionDriver ships a living safety case of
+**36 claims and 50 evidence items with 0 accepted and 42 open defeaters**, **89 V-cycle work products
+(85 draft, 4 skeleton)**, citations to ISO 26262 / ISO 21448 / ISO/SAE 21434 / **ISO/PAS 8800** /
+**UL 4600** / Automotive SPICE, a statement that no release build exists and that development builds
+must not be used on public roads outside a controlled test regime, a named first *evaluated*
+configuration (**Toyota Corolla E210**) with **no configuration yet assurance-supported**, automated
+checks of inherited openpilot safety code running in CI but **not yet reviewed as evidence**, and a
+field-monitoring process whose first live case is tied to **NHTSA PE26007**.
+
+**The trend is not that the tooling exists. It is that publishing your own open defeaters has become a
+credibility move.** Expect clients to start asking for the defeater list, and expect the vendors who
+cannot produce one to lose on that question. Globant should arrive with one.
+
+**Two data points is coincidence; three in six weeks is a category.** Watch for a fourth.
+
+### N8 — Agents now actuate real vehicles, and the safety envelope — not the model — is the published artefact
+
+[`aditya-ramabadran/drivingbench_harness_code`](https://github.com/aditya-ramabadran/drivingbench_harness_code)
+— **MIT, 63★** — closes the gap recorded in earlier passes ("no benchmark where an LLM agent actually
+controls a vehicle"). An MCP server named `drivingbench_sandbox` exposes exactly three tools —
+`observe()`, `set_motion()`, `stop_now()` — and **chat models (Codex, Claude Code, Cursor), API models
+(OpenRouter, Gemini) and trained VLA policies served over HTTP all drive the same course through the
+same interface.** Real platforms: **comma four** on pinned openpilot `59fcd340`, **Toyota TSS2**,
+**Tesla Model 3 HW3**. The simulator is the course as a **Gaussian splat** running the real control
+stack, scored identically to the car.
+
+**The three design decisions worth copying into any Globant vehicle-agent architecture:**
+1. **The `reason` string is logged for the operator and never sent to the controller.** Prompt text
+   cannot become actuation. This is the cleanest statement of the agent/actuator boundary found in this
+   KB.
+2. **`observe()` returns image age.** Staleness is an input, not an assumption.
+3. **Layered limits:** operator-set ceiling (default **3 m/s**), **hard cutoff at 6 m/s**, command
+   expiry, and cancellation on brake / gas / steering override / disengagement. Four independent
+   stoppers, not one.
+
+⚠️ **No scores and no leaderboard are published; Releases is empty.** So **N8 is a feasibility trend,
+not a capability trend.** Do not quote a DrivingBench result; `drivingbench.com` was not fetched this
+pass.
+
+**Corollary, and it is the one with budget attached:** this is the shape of the *evaluation harness*
+that every ADAS client will need once a safety case is a regulatory deliverable (**see N9**). The
+harness is more sellable than the model.
+
+### N9 — One artefact factory, four regional buyers: regulation diverged in form and converged in output
+
+For five passes this file treated regional regulation as four separate compliance stories. 2026 ended
+that. **UNECE WP.29's approval of the ADS Global Technical Regulation (22–26 June 2026, all contracting
+parties, co-developed by China, the EU, the UK, the US, Canada and Japan)** means the *technical target*
+is now shared, while **authorisation stays national**. Layer that over what each region is actually
+buying:
+
+| Region | The instrument that pays for it | The deliverable |
+|---|---|---|
+| **North America** | **15 of the 2026 NHTSA/FMCSA rulemakings are AV-focused**; SELF DRIVE Act 2026 (H.R. 7390) reported to require a **safety case for SAE L3–L5**; NHTSA **EA26002** (~3.2M vehicles) shows enforcement is live; Zoox's first-ever FMVSS robotaxi exemption shows the exemption path works | Safety case + **field-monitoring evidence** |
+| **EMEA** | EU AI Act (timeline contested), absorbed through **UNECE type-approval**; OEMs with **UNECE R151** docs must add **bias testing and AI Act risk-management language** | The **delta** on top of existing type-approval |
+| **APAC** | The GTR China co-led, **plus stricter domestic rules**: public-beta ban, marketing-terminology limits, **heavily regulated OTA**; **Japan requires remote monitoring for all L4**; **Korea has issued accident-decision ethics guidelines** | Release-engineering evidence, OTA governance, remote-ops software, an **ethics rationale document** |
+| **LATAM** | **Nothing mandates it.** Binding constraints are **LGPD** and **USMCA (review July 2026)** | **Export-readiness** for suppliers shipping into the other three regions |
+
+**The trend: the artefact is the same in all four; only the buyer's reason differs.** That makes the
+assurance factory of **N6/N7** a single reusable asset rather than four regional builds — and it makes
+**LATAM sellable on a compliance story even though LATAM has no compliance mandate**, because the
+Bajío's customers are in North America.
+
+⚠️ **Source discipline:** every regulatory date above is from a law-firm briefing, a compliance-vendor
+page or a trade outlet. **No primary register was fetched this pass.** Confirm once before any client
+deck. The EU AI Act timeline specifically remains **three-way contested** (2 Aug 2026 / Annex III to
+2 Dec 2027 via Regulation (EU) 2026/1744 / Omnibus adopted June 2026) — six days after this file first
+recorded the conflict, it has not resolved.
+
+### 🆕 Three smaller movements worth recording
+
+- **The research tier became licence-safe by convention.** Of the 14 new driving-policy / world-model
+  rows admitted this pass, **11 are Apache-2.0**, 1 is MIT, 2 have none. Two passes ago the no-licence
+  rate in this tier was the single largest obstacle to using it. It is now the exception. **This
+  materially lowers the cost of a model-selection engagement** (**P9**).
+- **openpilot is unbundling from comma's hardware.** `zoompilot/jetlink` (MIT) runs openpilot's large
+  driving model on **Jetson Orin Nano, macOS, iOS, Android and CUDA laptops** with only a comma device
+  and a USB3 cable — and carries **40 forks on 57 stars**, a build signal rather than a bookmark
+  signal. With `YassineYousfi/openpilot.distill` (MIT) and `Sherin-SEF-AI/Lyne-ADAS` (MIT, on-device
+  Android ADAS), "can a real driving model run on the client's compute?" has become an integration
+  question. **This is the supply-side mirror of the Mercedes × Liquid AI on-device programme** — the
+  direction of travel in both the OEM tier and the open tier is **small, local, no cloud fallback**.
+- **The vehicle-data MCP convention is now in the code, not just the README.** `wtfault-scanner`
+  (*"never makes anything up"*, every number clickable to raw bytes) and `CanLab` (**injection is
+  bench-only and stays disarmed until armed**) are the reference implementations. `cobanov/teslamate-mcp`
+  (MIT, **142★**) is now the category leader at 5× the previous high. **T8** (every credible automotive
+  agent has a human gate) is confirmed from the supply side.
+
+### 🔴 Gaps opened or closed on 2026-11-19
+
+**Closed:**
+- *"No benchmark where an agent actually actuates a vehicle"* → **closed** by DrivingBench (**N8**),
+  with the caveat that no scores are published.
+- *"The automotive agent category has no large repo"* → **closed, and the earlier claim corrected**
+  (**N6**).
+- *"No open SysML v2 automotive systems-engineering base"* → **closed** by `de4sdv/DE4SDV`
+  (Apache-2.0).
+
+**Still open, re-measured this pass with the query stated:**
+- **EV charging / battery AI:** `EV battery charging AI … stars:>15 pushed:>2026-08-01` → **0 repos.**
+- **Plant-floor quality / inspection AI:** `… stars:>3 pushed:>2026-06-01` → **0 repos.** The nearest
+  asset is `aws-samples/sample-manufacturing-automotive-ai-toolkit` (**MIT-0**, 19★) — samples, not a
+  platform.
+- **Fleet telematics:** **2 repos** above 5★ in the last quarter. Fifth pass.
+- **DMS:** 408 repos, **top star count 5**, nearly all unlicensed. Fifth pass. Now a measured finding.
+- **LATAM-origin supply:** **zero** across eleven queries. Fifth consecutive snapshot.
+- **Model weight licences:** `huggingface.co` unreachable from this session. **None verified
+  first-hand**, this pass or any previous pass.
+
+**Newly opened:**
+- **Primary-register verification is now the binding constraint on this file's regulatory content, not
+  search coverage.** Three incompatible AI Act timelines have survived two passes. The next pass should
+  spend its budget on one primary source (Official Journal for Regulation (EU) 2026/1744) rather than
+  on more secondary reading.
+- **Licence-unclassified high-star repos are accumulating:** `AtsushiSakai/PythonRobotics` (**30,951★**,
+  `NOASSERTION`), `autoas/as` (965★, the only substantial open AUTOSAR BSW), `autowarefoundation/AWSIM`
+  (765★, confirmed **bespoke licence**, *not* Apache-2.0), `openremote/fleet-management` (51★,
+  unclassified for five passes). **A licence-resolution pass on these four would unblock more
+  engagement surface than any new search.**
 
 ## 🆕 New on 2026-11-13 — three trends, and the first one supersedes a standing conclusion
 

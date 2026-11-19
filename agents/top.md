@@ -1,7 +1,7 @@
 ---
 industry: automotive
 region: Global
-updated: 2026-11-13
+updated: 2026-11-19
 ---
 
 # 🎯 AI agents & models — Automotive
@@ -19,6 +19,243 @@ updated: 2026-11-13
 >
 > 🆕 = new this pass. 🔄 = licence/stars re-read today. ⏸ = URL re-probed, figures carried from an
 > earlier pass and labelled rather than silently refreshed. **No row is a placeholder.**
+
+## 🆕 What changed on 2026-11-19
+
+> **Verification method this pass.** `curl -sI https://github.com/...` and `https://api.github.com/...`
+> both return **HTTP 403** through this session's egress proxy (re-tested today, host-level policy
+> denial — not a GitHub rate limit). Two channels do work and both were used:
+> 1. **`gh api -X GET search/repositories`** — this is the GitHub REST API itself, so
+>    `license.spdx_id`, `stargazers_count`, `forks_count`, `pushed_at`, `created_at` and
+>    `open_issues_count` below are **first-hand API fields**, not scraped numbers. Every repo in this
+>    section was re-queried by exact `repo:owner/name` and **returned**; a 404 would have returned
+>    nothing. 39 of 39 resolved.
+> 2. **rendered repository page** (for README substance) and **`raw.githubusercontent.com`** (for the
+>    LICENSE file byte-for-byte, which is how `AWSIM` was settled below).
+>
+> `huggingface.co` still does not resolve in this session, so **no model-weight licence was verified
+> first-hand** this pass either. Weights claims stay labelled unverified.
+
+### 1. 🆕 The headline: the automotive agent layer is no longer a 0–26★ curiosity. It is 2,907★, and it is a *compliance* agent, not a driving agent.
+
+For four passes this KB has recorded the automotive agent layer as real but tiny — "0–8 stars",
+then "0–26 stars". That framing is now wrong, and it was wrong because the KB was looking in the
+vehicle and not in the engineering office.
+
+**[jherrodthomas/automotive-skills-suite](https://github.com/jherrodthomas/automotive-skills-suite)** —
+**MIT, 2,907★, 141 forks**, created 2026-05-01, last push 2026-10-16 — is **two orders of magnitude
+larger than anything previously recorded in this category**. It is 76 *builder + reviewer* skill pairs
+(the About line says "100+", the page header says 152 — the count is inconsistent on the repo's own
+page, recorded here as found) covering, read from the rendered page:
+
+- **ISO 26262** functional safety — HARA, FSC/TSC, hardware and software lanes, FMEDA, safety case
+- **ISO/SAE 21434** cybersecurity — TARA, cybersecurity goals, incident response, secure coding
+- **ISO 21448 (SOTIF)** for ADAS/AV
+- **AIAG-VDA / IATF 16949** — APQP, DFMEA, PFMEA, control plans, PPAP
+- **Automotive SPICE** — assessment, gap analysis, improvement plans
+- **Bus & diagnostics** — CAN/DBC, LIN, FlexRay, automotive Ethernet, K-Matrix, bus load, gateway
+  routing; UDS, DTCs, CDD, ODX, DEM configuration
+- **AUTOSAR** Classic and Adaptive; **calibration** (A2L, DCM); **MBSE/SysML**; **V&V** with
+  traceability matrices; programme management (risk registers, gate reviews, change impact)
+
+Each builder takes JSON input plus an upstream artefact and **emits `.xlsx`**; each builder is paired
+with a reviewer skill that checks the builder's output and produces a dashboard, and **reviewers never
+modify source artefacts** — gaps become recommended actions. Installation is "Save skill" in Cowork or
+Claude Desktop; **the page does not mention Claude Code or any non-Claude runtime.**
+
+**Why this matters more than its star count:** this is the *deliverable* side of an automotive
+engagement, not the vehicle side. It is the artefact pack a Tier-1 programme actually ships.
+
+**🔴 Engagement risk, stated plainly:** the repository page carries **no disclaimer that outputs are
+not certified** and no statement that a qualified engineer must validate them — while advertising
+coverage of six safety/quality standards and the word "compliance". Treat generated artefacts as
+**drafts for a named responsible engineer to own**. Do not let a client see an ISO 26262 safety-case
+spreadsheet whose provenance is an unreviewed skill run. See `compose/patterns.md` → **P14**.
+
+### 2. 🆕 "Assurance-as-code" is now a category, not an anecdote — three independent projects, one of them created today
+
+| Repo | Licence | ★ / forks | Created | What it actually ships |
+|---|---|---|---|---|
+| [jherrodthomas/automotive-skills-suite](https://github.com/jherrodthomas/automotive-skills-suite) | **MIT** | 2,907★ / 141f | 2026-05-01 | 76 builder+reviewer skill pairs → `.xlsx` artefacts across ISO 26262 / 21434 / 21448 / ASPICE / AIAG-VDA |
+| [jherrodthomas/LionDriver](https://github.com/jherrodthomas/LionDriver) | **MIT** | 65★ / 3f | 2026-10-09 | openpilot derivative carrying a **living safety case: 36 claims, 50 evidence items, 42 open defeaters, 0 accepted**; 89 V-cycle work products (85 draft, 4 skeleton) |
+| [Lieubk/automotive-safety-security-assurance-kit](https://github.com/Lieubk/automotive-safety-security-assurance-kit) | **MIT** | 2★ / 0f | **2026-11-19 (today)** | Claude Code skills, agents and a **trace engine** for Automotive SPICE 3.1/4.0, ISO 26262, ISO/SAE 21434 — "the toolkit drafts and checks; people decide" |
+
+**The contrast between rows 1 and 2 is the finding.** Same author, same month, opposite epistemics:
+
+- **LionDriver** cites ISO 26262, ISO 21448, ISO/SAE 21434, **ISO/PAS 8800**, **UL 4600** and
+  Automotive SPICE, and then **explicitly claims no compliance, because no assessment has been
+  performed**. It publishes **42 unresolved defeaters** against its own safety case, says no release
+  build exists, says development builds must not be used on public roads outside a controlled test
+  regime, names its first *evaluated* configuration (**Toyota Corolla E210**) and states that **no
+  configuration is yet assurance-supported**. Its field-monitoring process has a first live case tied
+  to **NHTSA PE26007**. Automated checks of inherited safety code run in CI but are **not yet reviewed
+  as evidence**.
+- **automotive-skills-suite** has 45× the stars and none of that hedging.
+
+For a studio, LionDriver is the better *template* and the skills suite is the better *tool*. Row 3
+(created today, 2★) matters only as the third independent data point: **two projects is a coincidence,
+three in six weeks is a category.** Expect clients to arrive holding one of these.
+
+### 3. 🆕 Agents now drive real cars, on a published harness, with a hard speed ceiling — this closes a standing gap
+
+**[aditya-ramabadran/drivingbench_harness_code](https://github.com/aditya-ramabadran/drivingbench_harness_code)**
+— **MIT, 63★, 8 forks**, created 2026-09-18, pushed 2026-11-11. Earlier passes recorded that there was
+no benchmark in which an LLM agent actually actuates a vehicle. There is now.
+
+- **MCP server name:** `drivingbench_sandbox`. Three tools, read from the page:
+  `observe()` → road image(s) + state summary (speed, measured steering, whether a command is
+  executing, timestamp, **image age**); `set_motion(direction, steering_pct 0–100, speed 0.5–3.5 m/s,
+  duration 5–60 s, reason)` where **the `reason` string is logged for the operator and never sent to
+  the controller**; `stop_now()` → cancel + brake.
+- **Safety envelope:** operator-set speed ceiling (**default 3 m/s**), **hard cutoff at 6 m/s**,
+  command expiry, and cancellation on brake / gas / steering override / disengagement. Described as
+  *"research software for closed courses"*, parking-lot speed, human supervising.
+- **Real platforms:** a **comma four** on a pinned openpilot build (upstream `59fcd340`); a **Toyota
+  with torque steering** (recent TSS2, developed on a Corolla); a **Tesla Model 3 HW3** with angle
+  steering. Laptop side: macOS + Python 3.12 + `uv`; Linux can run the gateway in the foreground.
+- **Simulator:** the v1.1 course as a **Gaussian splat**, real control stack over a Tesla model fitted
+  from logs, scored on progress / cone contacts / finish exactly as the real car. Runs with placeholder
+  frames if you have no splat.
+- **Three client classes benchmarked:** chat models via MCP clients (Codex, Claude Code, Cursor); API
+  models via a runner loop (OpenRouter, Gemini API); and **trained driving policies / VLAs served over
+  HTTP returning timed curvature + speed plans** — so an open VLA and a chat model compete on one
+  harness.
+- **Traces:** every tool call, telemetry sample, settings change and **image the model saw** is
+  recorded and replayable in a browser viewer.
+- ⚠️ **No results and no leaderboard are published on the repository page.** It links `drivingbench.com`;
+  no scores are visible, Releases is empty. So this is a **harness finding, not a ranking finding** —
+  do not quote a DrivingBench score to a client.
+
+The `reason`-is-never-sent design and the image-age field are the two details worth copying into any
+Globant vehicle-agent architecture: the first stops prompt text reaching an actuator, the second makes
+staleness a first-class input.
+
+### 4. 🆕 The openpilot ecosystem is a layer, and the hardware bundle is coming apart
+
+Previous passes treated openpilot as a single row. It is a supply chain, and this pass it visibly
+*unbundled from comma's hardware*:
+
+| Repo | Licence | ★ / forks | What it is |
+|---|---|---|---|
+| [commaai/openpilot](https://github.com/commaai/openpilot) | **MIT** | **64,177★** / 11,410f | The anchor. 300+ supported cars. Pushed 2026-11-19. |
+| [sunnypilot/sunnypilot](https://github.com/sunnypilot/sunnypilot) | **MIT** | 2,178★ / — | 350+ makes/models, tracks comma's safety policy |
+| [zoompilot/jetlink](https://github.com/zoompilot/jetlink) | **MIT** | 57★ / **40f** | **Runs openpilot's large driving model on Jetson Orin Nano, macOS, iOS, Android and CUDA laptops** with only a comma device and a USB3 cable |
+| [zoompilot/zoompilot](https://github.com/zoompilot/zoompilot) | **MIT** | 37★ / 31f | Driver-assistance for **Mazda** and others; pushed 2026-11-19 |
+| [StarPilotHQ/StarPilot](https://github.com/StarPilotHQ/StarPilot) | **MIT** | 163★ | Tuning-focused fork |
+| [YassineYousfi/openpilot.distill](https://github.com/YassineYousfi/openpilot.distill) | **MIT** | 38★ | **Distil openpilot using your own drives** |
+| [commaai/connect](https://github.com/commaai/connect) | **MIT** | 153★ | Fleet/experience management for openpilot |
+
+**Read `jetlink`'s fork-to-star ratio (40 forks on 57 stars).** That is a *build* signal, not a
+bookmarking signal — people are porting it. Combined with `openpilot.distill`, the MIT driving model is
+becoming portable to hardware a client already owns. For a Globant engagement this moves "can we run a
+real driving model on the client's compute?" from a research question to an integration question.
+
+### 5. 🆕 The vehicle-data MCP layer grew a 142★ leader, and the useful ones are read-only by default
+
+| Repo | Licence | ★ | What it exposes |
+|---|---|---|---|
+| [cobanov/teslamate-mcp](https://github.com/cobanov/teslamate-mcp) | **MIT** | **142★** / 25f | Queries a **TeslaMate** database — drive/charge history and analytics. **Now the largest automotive MCP server recorded in this KB.** 0 open issues. |
+| [cyanheads/nhtsa-vehicle-safety-mcp-server](https://github.com/cyanheads/nhtsa-vehicle-safety-mcp-server) | **Apache-2.0** | 3★ | **VIN decode, recalls, complaints, crash ratings, investigations** over NHTSA data. STDIO or Streamable HTTP. |
+| [AbbottDevelopments/shopmonkey-mcp-server](https://github.com/AbbottDevelopments/shopmonkey-mcp-server) | **MIT** | 3★ / 8f | **69 tools** over the Shopmonkey REST API v3 — work orders, customers, vehicles, inventory, appointments, labour |
+| [october-dev/car-use](https://github.com/october-dev/car-use) | **MIT** | 7★ | "Let your agent use your car" — reads and diagnoses real cars over **OBD-II**, with a **built-in virtual car**. 36 open issues (very young, created 2026-11-11). |
+| [christianOrona/wtfault-scanner](https://github.com/christianOrona/wtfault-scanner) | **Apache-2.0** | 3★ | Agentic OBD-II scanner, *"never makes anything up"* — reads every module on the bus and **every number is clickable back to the raw bytes** |
+| [Sherin-SEF-AI/CanLab](https://github.com/Sherin-SEF-AI/CanLab) | **MIT** | 94★ / 9f | CAN-capture reverse engineering: finds counters/checksums/signal boundaries, DBC builder verified against real frames, exports **DBC + openpilot + Wireshark** dissectors. **Injection is bench-only and stays disarmed until armed.** |
+| [bpawnzZ/lemonwrench](https://github.com/bpawnzZ/lemonwrench) | **MIT** | 21★ | Agent skill: **free OEM service manuals → procedure, torque table, labelled figures. 69 makes, 1960–2025.** |
+| [zimconsulting-ops/med-vehicle-intelligence](https://github.com/zimconsulting-ops/med-vehicle-intelligence) | **MIT** | 1★ | 4-tool repair/maintenance advisory MCP server |
+
+The **design convention has settled**: read-only by default, injection/actuation explicitly disarmed,
+provenance clickable to raw bytes. `wtfault-scanner` and `CanLab` are the two to copy. This is the same
+human-gate pattern recorded as **T8** in `intel/trends.md`, now visible in the code rather than the
+README.
+
+### 6. 🆕 Cockpit, requirements and procurement agents — the non-driving automotive agent spread
+
+| Repo | Licence | ★ | Role |
+|---|---|---|---|
+| [yancent-dao/cockpit-agent-sim](https://github.com/yancent-dao/cockpit-agent-sim) | **MIT** | 98★ | Smart-cockpit agent framework (CN): zero-backend, **tiered permissions, confirmation flow**, card orchestration, **fast/slow dual-layer**, real third-party integrations; "add a capability = add data, not code" |
+| [yorkeccak/takt](https://github.com/yorkeccak/takt) | **MIT** | 19★ | Deep-research agent for **automotive procurement and R&D** — one prompt → board-ready PDF/PPTX/DOCX/CSV from 100+ sources (patents, SEC filings, papers) |
+| [BUAksakal/reqlens](https://github.com/BUAksakal/reqlens) | **MIT** | 3★ | **LangGraph supervisor + LlamaIndex RAG** agents extract requirements from PDF specs and flag conflicts and vague wording, **engineer in the loop** |
+| [aws-samples/sample-manufacturing-automotive-ai-toolkit](https://github.com/aws-samples/sample-manufacturing-automotive-ai-toolkit) | **MIT-0** | 19★ / 7f | **First hyperscaler-published** automotive + manufacturing agent sample set. **MIT-0 = no attribution requirement**, the most permissive licence in this KB. |
+| [LeventKent/automotive-sdlc-agent-for-mil-sil-hil](https://github.com/LeventKent/automotive-sdlc-agent-for-mil-sil-hil) | **MIT** | 2★ | V-model MIL/SIL/HIL tooling agent |
+| [ThinkOffApp/CarWatch](https://github.com/ThinkOffApp/CarWatch) | 🔴 **AGPL-3.0** | **306★** / 20f | "Your car as a chat-room agent": Raspberry Pi 5 + dashcam + local AI. **Highest-starred automotive agent after the skills suite — and unusable in a client deliverable.** |
+
+`cockpit-agent-sim`'s **fast/slow dual layer + confirmation flow + tiered permissions** is the most
+directly reusable in-vehicle HMI agent architecture found so far, and it is MIT.
+
+### 7. 🆕 Driving-policy and world-model layer — this is where APAC and the labs are
+
+| Repo | Licence | ★ | Venue / note |
+|---|---|---|---|
+| [xiaomi-research/recogdrive](https://github.com/xiaomi-research/recogdrive) | **Apache-2.0** | **631★** / 78f | **ICLR 2026** — reinforced cognitive framework for end-to-end AD. **Xiaomi Research.** Pushed 2026-11-19. |
+| [nv-tlabs/omni-dreams](https://github.com/nv-tlabs/omni-dreams) | **Apache-2.0** | 367★ | **NVIDIA OmniDreams** — world model generating photorealistic AV-sim video **in real time** |
+| [LMD0311/HERMES](https://github.com/LMD0311/HERMES) | **Apache-2.0** | 265★ | ICCV 2025 — unified driving world model, 3D understanding + generation |
+| [H-EmbodVis/SimWAM](https://github.com/H-EmbodVis/SimWAM) | **MIT** (LICENSE read raw; GitHub API says `NOASSERTION`) | 212★ | Simple World Action Model for E2E AD |
+| [curryqka/AgentThink](https://github.com/curryqka/AgentThink) | **Apache-2.0** | 154★ | **EMNLP 2025** — agent-style VQA for autonomous driving |
+| [TabGuigui/WorldDrive](https://github.com/TabGuigui/WorldDrive) | **Apache-2.0** | 85★ | **NeurIPS 2026** — unifies scene generation and planning |
+| [AFARI-Research/WA-JEPA](https://github.com/AFARI-Research/WA-JEPA) | **Apache-2.0** | 89★ | Video-JEPA rethought for world-action modelling |
+| [HaoranZhuExplorer/AD-E2E-JEPA](https://github.com/HaoranZhuExplorer/AD-E2E-JEPA) | **Apache-2.0** | 82★ | JEPA for E2E AD |
+| [H-EmbodVis/HERMESV2](https://github.com/H-EmbodVis/HERMESV2) | **Apache-2.0** | 73★ | **IEEE TPAMI** — HERMES++ |
+| [chenshi3/DriveWAM](https://github.com/chenshi3/DriveWAM) | **Apache-2.0** | 70★ | **NeurIPS 2026** — video generative priors for world-action modelling |
+| [ASGuard-UCI/safedrive-vla](https://github.com/ASGuard-UCI/safedrive-vla) | **Apache-2.0** | 36★ | **CoRL 2026** — navigation-conditioned world-model dreaming, conflict-aware |
+| [OpenDriveLab/ViRA](https://github.com/OpenDriveLab/ViRA) | **Apache-2.0** | 38★ | *"Do better visual representations always lead to better end-to-end AD?"* |
+| [FrankRun/WCog-VLA](https://github.com/FrankRun/WCog-VLA) | 🔴 **no licence** | 76★ | Dual-level world-cognitive VLA — **do not use** |
+| [xiongqi123123/MarginAD](https://github.com/xiongqi123123/MarginAD) | 🔴 **no licence** | 41★ | Safety- and physics-aware planning — **do not use** |
+
+**Apache-2.0 is now the overwhelming default in this layer** (11 of 14 rows), which is a change worth
+recording: the research tier has become *licence-safe by convention*. The two no-licence rows are
+listed so nobody re-searches them.
+
+### 8. 🆕 Survey/index layer — the cheapest way to stay current between passes
+
+| Repo | Licence | ★ | Why track it |
+|---|---|---|---|
+| [Thinklab-SJTU/Awesome-LLM4AD](https://github.com/Thinklab-SJTU/Awesome-LLM4AD) | **Apache-2.0** | **1,906★** / 115f | LLM/VLM/VLA/world-model for AD, continually updated. **The single best map of this space.** |
+| [iDoka/awesome-canbus](https://github.com/iDoka/awesome-canbus) | **CC0-1.0** | **3,571★** / 426f | CAN bus tools, hardware, resources — security/RE oriented |
+| [worldbench/awesome-3d-4d-world-models](https://github.com/worldbench/awesome-3d-4d-world-models) | **Apache-2.0** | 1,031★ | **TPAMI 2026** survey of 3D/4D world modelling |
+| [leofan90/Awesome-World-Models](https://github.com/leofan90/Awesome-World-Models) | **BSD-3-Clause** | 2,059★ | World models incl. AD |
+| [LMD0311/Awesome-World-Model](https://github.com/LMD0311/Awesome-World-Model) | 🔴 no licence | 2,304★ | Reference only — **do not vendor the list** |
+| [Little-Podi/Collaborative_Perception](https://github.com/Little-Podi/Collaborative_Perception) | 🔴 no licence | 639★ | V2I/V2V/V2X cooperative-perception digest. Reference only. |
+| [szenergy/awesome-lidar](https://github.com/szenergy/awesome-lidar) | **CC0-1.0** | 1,373★ | LiDAR vendors, datasets, algorithms |
+| [RYNing/Awesome-Post-Training-In-Autonomous-Driving-Papers](https://github.com/RYNing/Awesome-Post-Training-In-Autonomous-Driving-Papers) | `NOASSERTION` | 43★ | Post-training for E2E AD — distillation, preference alignment, RL, test-time refinement. Supports **T3**. |
+
+### 9. 🔴 Licence findings that change a decision this pass
+
+1. **`autowarefoundation/AWSIM` is NOT Apache-2.0.** The GitHub API reports `NOASSERTION`; the LICENSE
+   file fetched raw from `raw.githubusercontent.com/autowarefoundation/AWSIM/main/LICENSE` begins
+   *"AWSIM Licenses — AWSIM License Applies to autowarefoundation/AWSIM repositories and all content
+   contained in the Releases"*. It is a **bespoke licence**, 765★/163f. Autoware itself
+   (Apache-2.0) and `autoware_universe` (Apache-2.0) are unaffected. **Read the AWSIM terms before any
+   client simulation deliverable depends on it.**
+2. **`auto-agent-protocol/auto-agent-protocol`** — API reports `NOASSERTION`; the LICENSE file at
+   `main` is the **Apache License 2.0 verbatim**. GitHub's classifier is producing a false negative,
+   as recorded on 2026-11-13 for other repos. Figures today: **112★, pushed 2026-11-19.**
+   Still: confirm there is no second licence file before relying on it.
+3. **🆕 Name collision, and it is a procurement hazard.**
+   [visionpilot-project/VisionPilot](https://github.com/visionpilot-project/VisionPilot) — **MIT, 43★**,
+   a BeamNG.tech-based modular AD *simulation* platform with Foxglove visualisation — is **a different
+   project** from
+   [autowarefoundation/vision_pilot](https://github.com/autowarefoundation/vision_pilot) —
+   **Apache-2.0, 928★/197f**, the productionizable L2 ADAS stack. Different owners, different licences,
+   different purpose, near-identical names. **Always paste the full `owner/name`** in a statement of
+   work.
+4. **`TOSUN-Shanghai/TSMaster`** — **LGPL-2.1, 442★** — bus monitoring/simulation/diagnostics/
+   calibration across Vector, IXXAT, PEAK, Kvaser and others. The page states it is **free for research
+   and education for some features**. LGPL **plus** feature-gating: treat as a tool, never as a
+   component of a shipped product.
+5. **`ThinkOffApp/CarWatch` — AGPL-3.0, 306★.** Strong network copyleft. Reference architecture only.
+
+### 10. 🔴 Declared gaps 2026-11-19 — searched, found nothing, recorded so nobody re-runs it
+
+These are **informed gaps**, with the query that produced them:
+
+| Query run (`gh api search/repositories`) | Result |
+|---|---|
+| `EV battery charging AI in:name,description pushed:>2026-08-01 stars:>15` | **0 repos.** There is no maintained, non-trivial open EV-charging/battery-AI project above 15★ in the last quarter. |
+| `automotive manufacturing quality inspection AI in:name,description pushed:>2026-06-01 stars:>3` | **0 repos.** The plant-floor vision/quality layer is **entirely proprietary** in open source terms. |
+| `fleet management telematics in:name,description pushed:>2026-08-01 stars:>5` | **2 repos only** (`openremote/fleet-management` 51★ `NOASSERTION`; `santoshiimind/fleet-management-system` Apache-2.0 8★). Confirms the telematics gap for a fifth pass. |
+| `car dealership management in:name,description,topics pushed:>2026-01-01` | 408 repos, **highest star count = 5**, overwhelmingly unlicensed student projects. **The DMS gap is re-confirmed with a fresh query** — see `verticals/solutions.md`. |
+| Region of origin, automotive agents | **No LATAM-origin automotive AI repository was found in any query this pass.** Origins observed: US, China, Germany, Türkiye, Korea, India. This is a real gap, not an absence of searching — see `intel/market.md` → LATAM. |
+| Model weights | `huggingface.co` does not resolve through this session's proxy. **No weight licence verified first-hand.** |
 
 ## What changed on 2026-11-13
 

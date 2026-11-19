@@ -1,12 +1,162 @@
 ---
 industry: automotive
 region: Global
-updated: 2026-11-13
+updated: 2026-11-19
 ---
 
 # 📈 Trending repos — Automotive
 
 > **APPEND-ONLY.** Newest dated section on top; history preserved below. Never rewrite earlier sections.
+
+## 2026-11-19
+
+**Window:** 2026-11-13 → 2026-11-19 (6 days). **Channel:** `gh api -X GET search/repositories`
+(GitHub REST API — licence/stars/forks/push dates are first-hand API fields), rendered repository pages
+for README substance, `raw.githubusercontent.com` for LICENSE files. `github.com` and `api.github.com`
+are **HTTP 403** via `curl` (host policy, re-tested today). **11 queries run, 39 repos verified by exact
+`repo:owner/name`, 39 resolved.**
+
+### Still no "GitHub Trending for automotive" — and the substitute got better
+
+Sixth snapshot recording this: GitHub publishes no automotive trending feed, and the generic queries the
+rotation prescribes (`github trending automotive AI 2026`) return general-purpose agent lists. The
+substitute that works is **the REST search API with a date floor and a star floor**, and this window it
+produced a result the previous five passes missed entirely, because of one query shape:
+
+```
+AUTOSAR OR ISO26262 OR "ISO 21434" in:name,description,readme pushed:>2026-08-01 stars:>15
+```
+
+**Search the standard, not the buzzword.** That single query surfaced
+`jherrodthomas/automotive-skills-suite` (**MIT, 2,907★**), `iDoka/awesome-canbus` (CC0, 3,571★),
+`ebroecker/canmatrix` (BSD-2, 1,093★), `eclipse-iceoryx/iceoryx` (Apache-2.0, 2,212★),
+`autoas/as` (965★) and `TrampolineRTOS/trampoline` (GPL-2.0, 759★) — six repos above 700★ that five
+previous passes of protocol- and category-shaped queries never returned.
+
+### The trend of the window: the open automotive stack grew *downward* and *sideways*, not upward
+
+Previous windows recorded movement in the model tier (E2E/VLA) and then in the stack tier (vision_pilot,
+S-CORE). This window the additions are **middleware, bus tooling and assurance** — the parts an SDV
+programme bills the most hours against:
+
+| Repo | Licence | ★ / forks | Pushed | Layer |
+|---|---|--:|---|---|
+| [iDoka/awesome-canbus](https://github.com/iDoka/awesome-canbus) | CC0-1.0 | 3,571★ / 426f | 2026-11-16 | Bus index |
+| [Farama-Foundation/HighwayEnv](https://github.com/Farama-Foundation/HighwayEnv) | MIT | 3,342★ / 906f | 2026-11-11 | Simulation |
+| [nanomq/nanomq](https://github.com/nanomq/nanomq) | MIT | 2,666★ / 325f | **2026-11-19** | SDV/edge broker |
+| [eclipse-iceoryx/iceoryx](https://github.com/eclipse-iceoryx/iceoryx) | Apache-2.0 | 2,212★ / 491f | 2026-08-18 | Zero-copy IPC |
+| [jherrodthomas/automotive-skills-suite](https://github.com/jherrodthomas/automotive-skills-suite) | MIT | **2,907★** / 141f | 2026-10-16 | Assurance |
+| [Thinklab-SJTU/Awesome-LLM4AD](https://github.com/Thinklab-SJTU/Awesome-LLM4AD) | Apache-2.0 | 1,906★ / 115f | 2026-10-15 | Index |
+| [ShisatoYano/AutonomousVehicleControlBeginnersGuide](https://github.com/ShisatoYano/AutonomousVehicleControlBeginnersGuide) | MIT | 1,963★ | **2026-11-19** | Onboarding |
+| [hanruihua/ir-sim](https://github.com/hanruihua/ir-sim) | MIT | 1,239★ | 2026-11-18 | Simulation |
+| [eclipse-ecal/ecal](https://github.com/eclipse-ecal/ecal) | Apache-2.0 | 1,060★ | **2026-11-19** | Middleware |
+| [worldbench/awesome-3d-4d-world-models](https://github.com/worldbench/awesome-3d-4d-world-models) | Apache-2.0 | 1,031★ | 2026-11-14 | Survey (TPAMI 2026) |
+| [ebroecker/canmatrix](https://github.com/ebroecker/canmatrix) | BSD-2-Clause | 1,093★ / 441f | 2026-11-18 | ARXML ⇄ DBC |
+| [autoas/as](https://github.com/autoas/as) | ⚠️ `NOASSERTION` | 965★ | 2026-11-18 | AUTOSAR BSW |
+| [autowarefoundation/AWSIM](https://github.com/autowarefoundation/AWSIM) | 🔴 bespoke | 765★ / 163f | 2026-10-20 | Digital twin |
+| [TrampolineRTOS/trampoline](https://github.com/TrampolineRTOS/trampoline) | 🔴 GPL-2.0 | 759★ | 2026-10-19 | OSEK/AUTOSAR OS |
+| [xiaomi-research/recogdrive](https://github.com/xiaomi-research/recogdrive) | Apache-2.0 | 631★ / 78f | **2026-11-19** | E2E policy (ICLR 2026) |
+| [TOSUN-Shanghai/TSMaster](https://github.com/TOSUN-Shanghai/TSMaster) | ⚠️ LGPL-2.1 | 442★ | 2026-10-28 | Bus tooling |
+| [nv-tlabs/omni-dreams](https://github.com/nv-tlabs/omni-dreams) | Apache-2.0 | 367★ / 27f | 2026-10-02 | World model (NVIDIA) |
+| [ThinkOffApp/CarWatch](https://github.com/ThinkOffApp/CarWatch) | 🔴 AGPL-3.0 | 306★ / 20f | 2026-10-09 | In-car agent |
+
+### Movement in tracked repos
+
+| Repo | Then | Now (2026-11-19) | Read |
+|---|---|---|---|
+| `commaai/openpilot` | 64.1k★ (2026-11-13) | **64,177★ / 11,410f**, pushed 2026-11-19, 141 open issues | Flat in 6 days, as expected at this size |
+| `autowarefoundation/vision_pilot` | 927★ / 196f / 4,282 commits | **928★ / 197f**, pushed 2026-11-17, 23 open issues | +1★ in 6 days. **The 2026-11-13 "headline" is real but not yet growing.** Recorded plainly rather than re-narrated. |
+| `autowarefoundation/autoware` | 12.2k★ | **12,265★ / 3,752f**, pushed 2026-11-19, 74 open issues | Steady |
+| `NVlabs/alpasim` | — | **1,304★ / 170f**, pushed 2026-11-19, 20 open issues | Active |
+| `auto-agent-protocol/auto-agent-protocol` | 110★ (2026-10-31) | **112★**, pushed 2026-11-19 | +2★ in 19 days. The dealership contract layer is alive but **not** gaining adoption. Treat as a specification to implement, not a community to join. |
+| `sunnypilot/sunnypilot` | 2.2k★ | **2,178★**, pushed 2026-11-19 | Steady |
+| `openremote/fleet-management` | — | **51★**, `NOASSERTION`, pushed 2026-10-13 | Licence still unclassified; the telematics gap holds |
+
+### 🆕 New repos admitted this snapshot (beyond the table above)
+
+- **openpilot ecosystem:** [`zoompilot/jetlink`](https://github.com/zoompilot/jetlink) (MIT, 57★/**40f**),
+  [`zoompilot/zoompilot`](https://github.com/zoompilot/zoompilot) (MIT, 37★/31f, pushed 2026-11-19),
+  [`YassineYousfi/openpilot.distill`](https://github.com/YassineYousfi/openpilot.distill) (MIT, 38★),
+  [`StarPilotHQ/StarPilot`](https://github.com/StarPilotHQ/StarPilot) (MIT, 163★),
+  [`commaai/connect`](https://github.com/commaai/connect) (MIT, 153★),
+  [`Sherin-SEF-AI/Lyne-ADAS`](https://github.com/Sherin-SEF-AI/Lyne-ADAS) (MIT, 22★, pushed 2026-11-18).
+- **Assurance:** [`jherrodthomas/LionDriver`](https://github.com/jherrodthomas/LionDriver) (MIT, 65★,
+  pushed 2026-11-19),
+  [`Lieubk/automotive-safety-security-assurance-kit`](https://github.com/Lieubk/automotive-safety-security-assurance-kit)
+  (MIT, 2★, **created today**).
+- **Benchmark:** [`aditya-ramabadran/drivingbench_harness_code`](https://github.com/aditya-ramabadran/drivingbench_harness_code)
+  (MIT, 63★/8f).
+- **SDV:** [`eclipse-leda/leda-distro`](https://github.com/eclipse-leda/leda-distro) (Apache-2.0, 21★),
+  [`de4sdv/DE4SDV`](https://github.com/de4sdv/DE4SDV) (Apache-2.0, 13★, **SysML v2**, pushed
+  2026-11-19), [`xronos-inc/xronos`](https://github.com/xronos-inc/xronos) (BSD-3, 41★).
+- **World models / policies:** [`LMD0311/HERMES`](https://github.com/LMD0311/HERMES) (Apache-2.0, 265★),
+  [`H-EmbodVis/HERMESV2`](https://github.com/H-EmbodVis/HERMESV2) (Apache-2.0, 73★, IEEE TPAMI),
+  [`H-EmbodVis/SimWAM`](https://github.com/H-EmbodVis/SimWAM) (**MIT** per raw LICENSE, 212★),
+  [`AFARI-Research/WA-JEPA`](https://github.com/AFARI-Research/WA-JEPA) (Apache-2.0, 89★),
+  [`HaoranZhuExplorer/AD-E2E-JEPA`](https://github.com/HaoranZhuExplorer/AD-E2E-JEPA) (Apache-2.0, 82★),
+  [`TabGuigui/WorldDrive`](https://github.com/TabGuigui/WorldDrive) (Apache-2.0, 85★, NeurIPS 2026),
+  [`chenshi3/DriveWAM`](https://github.com/chenshi3/DriveWAM) (Apache-2.0, 70★, NeurIPS 2026),
+  [`ASGuard-UCI/safedrive-vla`](https://github.com/ASGuard-UCI/safedrive-vla) (Apache-2.0, 36★,
+  CoRL 2026), [`OpenDriveLab/ViRA`](https://github.com/OpenDriveLab/ViRA) (Apache-2.0, 38★),
+  [`curryqka/AgentThink`](https://github.com/curryqka/AgentThink) (Apache-2.0, 154★, EMNLP 2025).
+- **V2X:** [`thi-ad/UrbanIng-V2X`](https://github.com/thi-ad/UrbanIng-V2X) (MIT, 88★, NeurIPS 2025),
+  [`radar-lab/OpenCDA-MARL`](https://github.com/radar-lab/OpenCDA-MARL) (Apache-2.0, 16★).
+
+**Licence composition of the 14 new model/world-model rows: 11 Apache-2.0, 1 MIT, 2 none.** The research
+tier has become licence-safe by convention — a change worth recording, because two passes ago the
+no-licence rate in this tier was the main obstacle.
+
+### 🔴 Verified and deliberately excluded
+
+| Repo | ★ | Reason |
+|---|--:|---|
+| [`ThinkOffApp/CarWatch`](https://github.com/ThinkOffApp/CarWatch) | 306★ | **AGPL-3.0** network copyleft |
+| [`TrampolineRTOS/trampoline`](https://github.com/TrampolineRTOS/trampoline) | 759★ | **GPL-2.0** |
+| [`TOSUN-Shanghai/TSMaster`](https://github.com/TOSUN-Shanghai/TSMaster) | 442★ | **LGPL-2.1** + *"free for research and education for some features"* |
+| [`autowarefoundation/AWSIM`](https://github.com/autowarefoundation/AWSIM) | 765★ | **Bespoke "AWSIM License"** — raw LICENSE reads *"AWSIM Licenses — AWSIM License Applies to autowarefoundation/AWSIM repositories and all content contained in the Releases"*. **Not Apache-2.0.** `autoware` and `autoware_universe` unaffected. |
+| [`AtsushiSakai/PythonRobotics`](https://github.com/AtsushiSakai/PythonRobotics) | 30,951★ | `NOASSERTION` — the largest unclassified-licence repo in this KB. Settle before vendoring. |
+| [`autoas/as`](https://github.com/autoas/as) | 965★ | `NOASSERTION` — the only substantial open AUTOSAR BSW; licence must be settled first |
+| [`LMD0311/Awesome-World-Model`](https://github.com/LMD0311/Awesome-World-Model) | 2,304★ | No licence — read, do not vendor |
+| [`Little-Podi/Collaborative_Perception`](https://github.com/Little-Podi/Collaborative_Perception) | 639★ | No licence |
+| [`liushengjia-AAL/shengjia`](https://github.com/liushengjia-AAL/shengjia) | 21★ | No licence **and** ECU remapping content — out of scope twice over |
+| [`vxedge/*`](https://github.com/vxedge/vxedge) | 0–1★ | Apache-2.0 and architecturally interesting (manifest-driven SDV testbed, OTA, SysML v2, `vxmcp` on MCP spec 2026-07-28, ARINC-665-shaped part numbers) but **single-contributor, six weeks old**. Watch item. |
+
+### ⚠️ Name collision recorded
+
+`visionpilot-project/VisionPilot` (**MIT, 43★**, BeamNG.tech AD simulation with Foxglove) is **not**
+`autowarefoundation/vision_pilot` (**Apache-2.0, 928★/197f**, L2 ADAS stack). Both answer to
+"VisionPilot". **Full `owner/name` in every SoW and ADR.**
+
+### Declared negatives for this snapshot
+
+1. `EV battery charging AI … stars:>15 pushed:>2026-08-01` → **0 repos.**
+2. `automotive manufacturing quality inspection AI … stars:>3 pushed:>2026-06-01` → **0 repos.**
+3. `fleet management telematics … stars:>5 pushed:>2026-08-01` → **2 repos.**
+4. `car dealership management … pushed:>2026-01-01` → 408 repos, **top star count 5**, nearly all
+   unlicensed. DMS gap holds for a fifth pass.
+5. `autonomous driving OR automotive OR vehicle in:name,description created:>2026-09-15 stars:>25` →
+   **80 repos, and essentially none are automotive**: the word "autonomous" is dominated by autonomous
+   *agent* projects (pentest legions, dev harnesses, desktop agents). **Recorded as a query-design
+   finding**: the token "autonomous" is no longer an automotive signal in 2026 and must be paired with
+   `driving`, `vehicle`, `ADAS` or a standard name.
+6. **No LATAM-origin automotive repository** in any of the 11 queries. Fifth consecutive snapshot.
+7. **`drivingbench.com` not fetched** — repository page only. No benchmark scores available.
+
+### 🟢 Data-integrity check on this file's own history
+
+The 2026-11-13, 2026-10-31, 2026-10-26 and 2026-10-15 sections and the pre-2026-10-15 history below were
+read before writing and are **unchanged**. This section was inserted above them. Where this snapshot
+contradicts an earlier one — the agent-category star ceiling, and the `vision_pilot` growth expectation
+— the contradiction is stated **here**, and the earlier text is left as written.
+
+**Header-as-data check (run this pass, both trending files).** Every markdown table in all eight files
+was parsed programmatically: **0 of them have a first row lacking a `|---|` separator**, so there is no
+header row sitting in the data. The two Spanish-language headers in the pre-2026-10-15 history
+(`| Nombre | Licencia | Descripción | Stars |`) *are* well-formed headers — each is followed by a
+separator row — and they were therefore **left byte-for-byte unchanged** rather than rewritten. If a
+compiler has ever produced an entity named `nombre` from this KB, the defect is in the compiler's table
+parsing, not in these files; the fix belongs upstream and the history should not be edited to work
+around it.
 
 ## 2026-11-13
 
