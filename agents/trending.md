@@ -8,6 +8,89 @@ updated: 2026-11-21
 
 > **APPEND-ONLY.** Newest dated section on top; history preserved below. Never rewrite earlier sections.
 
+## 2026-11-21 — third pass (13:40Z)
+
+**Window:** 2026-11-21 12:45Z → 13:40Z (≈1 hour, same day — the third automotive pass today). The two
+earlier sections below are preserved unchanged. **This pass went after the three gaps this KB has
+carried longest instead of re-measuring a shelf measured 55 minutes ago.** Two of the three moved.
+**Channel:** `git ls-remote --symref` (liveness **and** default branch), byte-read `LICENSE` from
+`raw.githubusercontent.com`, `gh api -X GET search/repositories` for metadata.
+
+### 🆕 Gap CLOSED — plant-floor quality AI, after five passes at zero
+
+Full detail in `repos/foundations.md` → **Layer G**. The headline: **[open-edge-platform/anomalib](https://github.com/open-edge-platform/anomalib)**,
+**Apache-2.0** (byte-read, 11,357 bytes, canonical), **6,414★ / 1,047f, pushed 2026-11-20**.
+
+**Why five passes missed it:** the searches all said *automotive*. This layer calls itself **industrial
+anomaly detection** and never mentions cars. **The gap was in the query, not in the world** — worth
+applying to every remaining `0-repos` gap in this KB and in the other eleven.
+
+🔴 **And the trap that comes with it:** `anomalib`'s code is Apache-2.0; **MVTec AD, the benchmark
+everything in this layer reports against, is CC BY-NC-SA 4.0 — non-commercial.** Code licence and
+dataset licence are independent axes and **byte-reading `LICENSE` does not catch the second one.**
+
+### 🔴 Gap CONFIRMED OPEN with a measured reason — driver monitoring (DMS)
+
+Prior passes recorded "DMS = none." This pass establishes **why**, which is more useful than the count:
+
+| Candidate | Measured | ★ | Pushed | Verdict |
+|---|---|--:|---|---|
+| [kiralygomba/nottired_guard](https://github.com/kiralygomba/nottired_guard) | 🔴 **GPL-3.0** — `LICENSE`, 35,149 bytes | **1** | ⚠️ **2024-03-08** | **Rejected, twice over.** The *only* framework-grade open DMS found — head pose + gaze + blink + yawn, with a 2025 peer-reviewed preprint behind it. **Copyleft *and* abandoned for 20 months.** |
+
+Everything else returned by the leg is a **single-file eye-aspect-ratio demo** (MediaPipe or dlib,
+0–3★, no temporal model, no gaze, no standards claim). **One search result advertised "EU regulation
+C(2023)4523-compliant gaze-zone detection" without naming a repo — unverifiable, so not recorded.**
+
+**The conclusion to carry, because it is a sales argument rather than an absence:** DMS is **mandated**
+in the EU (GSR / UN R159-adjacent driver-attention requirements) and there is **no permissively-licensed
+implementation to start from.** A regulatory mandate with zero viable open supply is **the strongest
+build-versus-adopt case in this entire KB** — everywhere else the honest advice is "adopt the open base."
+
+### 🔴 Gap STILL OPEN but better characterised — EV / battery AI
+
+Five passes recorded `0 repos`. There is in fact a **populated but uniformly sub-scale** layer: the leg
+returned ~10 SoC/SoH estimators, of which the two best are below. **Nothing here is a base to build on.**
+
+| Candidate | Measured | ★ | Pushed | Verdict |
+|---|---|--:|---|---|
+| [ArpanBiswas99/Battery-State-of-Charge-Estimation](https://github.com/ArpanBiswas99/Battery-State-of-Charge-Estimation) | **MIT** — `LICENSE`, 1,069 bytes | 83 | ⚠️ 2024-01-22 | Best-of-breed of a weak field: FCN/CNN/LSTM SoC estimation on LG HG2 cells with Optuna tuning. **Dissertation-grade and dormant 22 months — a method reference, not a platform.** |
+| [MayankGangwal-code/ev-battery-soc-estimation](https://github.com/MayankGangwal-code/ev-battery-soc-estimation) | **MIT** — `LICENSE`, 1,280 bytes (GitHub says `NOASSERTION`) | 0 | 2026-11-02 | Not recommendable at 0★, but **methodologically the most honest repo found this pass**: Extended Kalman Filter on a Thevenin cell model *versus* ML, on 62 real drive cycles from −20 °C to 40 °C. **It is also the specimen that explains `NOASSERTION`** — see below. |
+
+**Revised gap statement:** the EV/battery gap is **not** "no open work exists." It is **"no open work
+above hobby scale exists."** The physics-plus-ML correction architecture (EKF for the state, ML for the
+residual) is the consensus design across the whole field — **take the architecture, leave the code.**
+
+### 🆕 `NOASSERTION` explained, and the signal runs backwards
+
+Measured twice this pass. Both are **verbatim licence text made non-matching by appending honest
+information**, which defeats GitHub's near-exact-match classifier:
+
+- `PythonRobotics` (30,951★) inserts a **contributors URL** after the copyright line → MIT, misread.
+- `MayankGangwal-code/ev-battery-soc-estimation` appends a **dataset attribution** — *"derived from 'LG
+  18650HG2 Li-ion Battery Data' … Mendeley Data, doi:10.17632/cp3473x7xv.3, **licensed CC BY 4.0**"* →
+  MIT, misread.
+
+**So `NOASSERTION` tracks conscientious authors, not risky ones** — the careless repos in this KB carry
+**no licence file at all** and measure `NONE`. And note what the second one disclosed: **the dataset
+licence**, CC BY 4.0, which *is* commercially usable — the opposite of MVTec AD. **`NOASSERTION` is
+frequently a pointer to a dataset grant**, the one axis `LICENSE` cannot express.
+
+### ✅ Independent re-verification of the whole shelf, with a stricter oracle
+
+Re-probed **all 193 repo slugs** in the eight files. **190 live, 3 dead — the same three already
+recorded, none a recommendation.** 0 new rot in the 55 minutes since 12:45Z, as expected.
+
+🔴 **Method correction that matters to this fleet's standing instructions:** the task spec says *verify
+every URL with `curl -sI`*. Executed literally against `github.com` from this environment **that
+instruction returns no information at all** — the proxy answers **403 for a live repo
+(`torvalds/linux`) and 403 for a repo that does not exist**, identically. It is not a liveness test
+here. `git ls-remote --symref` **is** one, and it returns the **default branch** in the same call —
+which `raw.githubusercontent.com` licence reads need, and guessing it `main`/`master` is a silent
+false-negative generator. `anomalib` is `main`; `sagemaker-defect-detection` is **`mainline`**;
+`hcengineering/platform` is **`develop`**. See `compose/patterns.md` P19, channel 1, updated this pass.
+
+---
+
 ## 2026-11-21 — second pass (verification, 12:45Z)
 
 **Window:** 2026-11-21 09:55Z → 12:45Z (≈3 hours, same day). **This is a same-day re-measurement, so

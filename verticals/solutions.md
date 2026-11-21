@@ -15,6 +15,51 @@ updated: 2026-11-21
 > this session's proxy, re-tested today, so licences and stars are read from the rendered repository page;
 > 🆕 = new this pass, 🔄 = licence/stars re-read today, ⏸ = carried forward and labelled).
 
+## 🆕 2026-11-21 (third pass, 13:40Z) — the manufacturing / plant-floor gap is CLOSED, and the DMS gap is confirmed an eighth time
+
+### ✅ Gap closed — the plant-floor layer has a customisable base after all
+
+This file declared **"Manufacturing / plant floor — a declared gap, stated with its query"** on
+2026-11-19 (section below, preserved). **The query was the problem.** The base exists, it is mature, and
+it is permissive — it simply does not describe itself as automotive.
+
+| Platform | Repo | Licence (byte-read) | ★ | Stack | Why it belongs in this file |
+|---|---|---|--:|---|---|
+| 🆕 **Anomalib** | [open-edge-platform/anomalib](https://github.com/open-edge-platform/anomalib) | **Apache-2.0** — `LICENSE`, 11,357 b, canonical | **6,414** / 1,047f | Python / PyTorch / OpenVINO | **The customisable base for plant-floor visual inspection.** Intel-maintained, 20+ industrial anomaly-detection algorithms, edge export built in, **pushed 2026-11-20**. Paint, weld, panel-gap, battery-module inspection. **This is the Odoo of the plant floor for this KB** — a real system to customise with AI on top, not a research drop |
+| ⏸ DEye | [sundyCoder/DEye](https://github.com/sundyCoder/DEye) | **Apache-2.0** — 11,357 b | 885 / 367f | C++ | Surface/semiconductor defect inspection. **Dormant since 2023-03-14 — prior art only** |
+| ⏸ SageMaker Defect Detection | [awslabs/sagemaker-defect-detection](https://github.com/awslabs/sagemaker-defect-detection) | **Apache-2.0** — 10,142 b | 62 / 25f | Python / SageMaker | Supervised steel-surface detection (NEU dataset). **Dormant since 2022-12-21, AWS-coupled — architecture reference for an AWS client** |
+
+**What makes it a *vertical platform* rather than a model:** the engagement is to customise it against
+one plant's lines and then **qualify it as an inspection tool under VDA QMC Volume 5 Part 3** — the route
+Audi took for AI spot-weld inspection (`intel/market.md` → EMEA). **The audit qualification is the
+deliverable; the detector is the commodity.** Full recipe: `compose/patterns.md` **P22**.
+
+🔴 **The one trap, and it is not in any `LICENSE` file.** `anomalib`'s code is Apache-2.0. **MVTec AD —
+the benchmark this entire layer reports against — is CC BY-NC-SA 4.0, non-commercial.** Train on the
+client's own line images; use MVTec AD only to shortlist an algorithm internally. **Never ship
+MVTec-trained weights or quote an MVTec score in a commercial proposal** (`intel/trends.md` **N17**).
+
+### 🔴 The DMS gap — eighth consecutive confirmation, now with the reason rather than the count
+
+A leg aimed directly at open DMS (gaze + drowsiness, permissive, automotive-grade) returned **one**
+framework-grade project and it fails twice over:
+
+| Candidate | Measured | ★ | Pushed | Verdict |
+|---|---|--:|---|---|
+| [kiralygomba/nottired_guard](https://github.com/kiralygomba/nottired_guard) | 🔴 **GPL-3.0** — `LICENSE`, 35,149 b | **1** | ⚠️ **2024-03-08** | **Rejected: copyleft *and* abandoned 20 months.** Head pose + gaze + blink + yawn, with a 2025 peer-reviewed preprint behind it — the only one with a method paper |
+
+Everything else is a **single-file eye-aspect-ratio demo** (MediaPipe/dlib, 0–3★, no temporal model, no
+gaze, no standards claim). One listing advertised **"EU regulation C(2023)4523-compliant gaze-zone
+detection"** without naming a repo — **unverifiable, not recorded.**
+
+🟢 **Stop filing this as research debt and start selling it.** Driver monitoring is **regulatorily
+mandated in the EU** and has **no adoptable open implementation.** Every other recommendation in this
+file is "adopt the open base" — which a client can do without us. **DMS is the one place where build is
+the honest answer**, and it is therefore the strongest build-versus-adopt case in this KB
+(`intel/trends.md` **N18**).
+
+---
+
 ## 🆕 2026-11-21 (second pass, verification 12:45Z) — the ERP/CRM shelf re-measured; the DMS gap survives a leg aimed straight at it
 
 **Verification pass.** The dealership/ERP leg was re-run specifically to attack the DMS gap recorded

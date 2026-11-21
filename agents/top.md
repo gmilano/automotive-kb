@@ -26,6 +26,84 @@ updated: 2026-11-21
 > 🆕 = new this pass. 🔄 = licence/stars re-read today. ⏸ = URL re-probed, figures carried from an
 > earlier pass and labelled rather than silently refreshed. **No row is a placeholder.**
 
+## 🆕 What changed on 2026-11-21 — third pass (13:40Z)
+
+**No new agent rows this pass, and that is the accurate result** — the discovery legs went after three
+standing gaps rather than at the agent layer, which was swept twice already today (09:55Z, 12:45Z).
+What changed is **two gap verdicts, one licence axis, and one method correction.**
+
+### W1. ✅ Shelf re-verified independently — 193 slugs, 190 live, 3 dead, 0 licence errors
+
+Re-probed every repository reference in all eight files (**193 distinct owner/name slugs**) with a **different liveness oracle**
+than the 12:45Z pass used. **190 live, 3 dead — the same three already recorded, none a recommendation.**
+A claimed-vs-measured differ flagged **25 rows; all 25 were the differ's own artefact** (a line naming
+several repos and several licences, or the base's own claimed-vs-measured table being read as data).
+**The KB was correct in 25 of 25.** Two independent re-measurements 55 minutes apart agree exactly, so
+**further whole-shelf re-probing is now low-value** — discovery and primary-source access are the binding
+constraints, not rot.
+
+### W2. 🔴 Method correction — the standing instruction to verify URLs with `curl -sI` returns no information here
+
+The fleet's task spec says *"verify every URL before writing it (`curl -sI`)."* Executed literally
+against `github.com` from this environment, **it cannot distinguish a live repo from one that does not
+exist**: the proxy answers **403 for `torvalds/linux`** and **403 for a nonsense slug**, identically.
+This KB already knew `github.com` is 403 (**N10**); what is new is that **the 403 is uniform, so the
+probe is not a weak test but a null one.**
+
+**Use `git ls-remote --symref https://github.com/<o>/<r> HEAD`.** It discriminates correctly **and**
+returns the **default branch**, which the `raw.githubusercontent.com` licence read needs. Guessing that
+branch `main`-then-`master` is a silent false-negative generator — measured this pass:
+`anomalib` = `main`, `awslabs/sagemaker-defect-detection` = **`mainline`**, `hcengineering/platform` =
+**`develop`**. `compose/patterns.md` **P19** channel 1 updated accordingly.
+
+### W3. 🔴 A licence axis this KB's discipline cannot see: the dataset grant
+
+Byte-reading `LICENSE` — this file's core discipline — is **blind by construction** to the licence of the
+data a model was fitted to, and for an AI repo **that is usually the binding grant.** The specimen:
+`anomalib` is **Apache-2.0**, while **MVTec AD**, the benchmark the whole industrial-inspection layer
+reports against, is **CC BY-NC-SA 4.0 — non-commercial.** Shipping weights trained on it, or **quoting
+its benchmark number in a commercial proposal**, is NC-data commercial use. Full treatment:
+`intel/trends.md` **N17**; diligence step folded into **P13**/**P19**.
+
+**Corollary that inverts a standing reading:** `NOASSERTION` is frequently **caused by** a dataset
+attribution appended to otherwise-verbatim licence text (`MayankGangwal-code/ev-battery-soc-estimation`
+appends an *LG 18650HG2 … CC BY 4.0* credit; `PythonRobotics` inserts a contributors URL). GitHub's
+classifier is near-exact-match, so **`NOASSERTION` tracks conscientious authorship, not risk** — the
+careless repos here have no licence file at all and measure `NONE`.
+
+### W4. 🔄 Two `NOASSERTION` rows resolved, fixing an internal contradiction
+
+`compose/patterns.md` **P19** already recorded the byte-read answers for both, while
+`repos/foundations.md` still told readers to *"settle before any use."* **A reader of one file was
+getting worse advice than a reader of the other.** Both rows are now corrected in place:
+**`AtsushiSakai/PythonRobotics` = MIT** (30,951★, cleanly usable, nothing pending) and
+**`autoas/as` = dual GPL-3.0 **OR** Commercial** (so the "settle it" step is a procurement conversation,
+not a licence investigation — worth knowing for the only substantial open AUTOSAR BSW).
+
+### W5. 🔴 Gap verdicts — one closed, one confirmed-with-a-reason, one restated correctly
+
+| Gap | Standing record | This pass |
+|---|---|---|
+| **Plant-floor / manufacturing quality AI** | `0 repos`, 5 passes | ✅ **CLOSED.** `open-edge-platform/anomalib`, Apache-2.0, **6,414★**, pushed 2026-11-20. **Five passes missed it because every query said *automotive*; it calls itself industrial anomaly detection.** `repos/foundations.md` Layer G |
+| **DMS (driver monitoring)** | "none", 7 passes | 🔴 **CONFIRMED OPEN, with the reason.** The only framework-grade open DMS is GPL-3.0, **1★**, unpushed since **2024-03-08**. Everything else is a 0–3★ eye-aspect-ratio demo. **Mandated capability, zero adoptable open supply → this KB's strongest build-vs-adopt case** (`intel/trends.md` **N18**) |
+| **EV / battery AI** | `0 repos`, 5 passes | 🔄 **RESTATED.** The layer is populated but **uniformly sub-scale** — best candidates 83★ (dormant 22 months) and 0★. Correct statement: **"nothing above hobby scale," not "nothing exists."** The consensus architecture (EKF for state, ML for residual) is worth taking even though no code is |
+
+### W6. 🔴 Declared gaps 2026-11-21 (third pass) — searched, found nothing, recorded
+
+- **UAW contract language on AI/automation** — nothing found. Live question for any US plant engagement.
+- **AI quality inspection in Chinese / Japanese / Korean auto plants**, as distinct from robotics —
+  very little. APAC's plant story is robot density; inspection judgement is the gap.
+- **Brazilian automotive AI inspection deployments** — nothing. Brazil appears only in aggregate
+  investment figures; **no measured AI-adoption rate exists for any LATAM country** in this KB.
+- **2026 AV regulation for Thailand, Indonesia or Vietnam** — none found; the authoritative ASEAN AV
+  landscape report is **2024** and stale.
+- **`Reg. (EU) 2026/1744`** — second secondary sighting, still no primary source (`eur-lex` DNS-dead,
+  7th pass). **Two secondary sightings sharing one possible upstream is not corroboration.**
+- **Excluded sources now three:** `coldai.org` (uncorroborable AIAG attribution) joins `x-pilot` and
+  `streamlinefeed.co.ke`.
+
+---
+
 ## 🆕 What changed on 2026-11-21 — second pass (verification, 12:45Z)
 
 **Rotation sent a second pass at automotive on the same day.** The 09:55Z base was **verified, not

@@ -9,6 +9,84 @@ updated: 2026-11-21
 > Current trends, updated 2026-10-31. Project and vendor self-reported performance figures are labelled
 > as such. Dates name their instrument.
 
+## 🆕 New on 2026-11-21 (third pass, 13:40Z) — three trends, and the first one is about how this KB searches
+
+### N16 — Five "zero-repo" gaps were partly artefacts of the word *automotive*
+
+**The plant-floor quality-AI gap stood at `0 repos` for five consecutive passes.** It is not a gap.
+`open-edge-platform/anomalib` is **Apache-2.0, 6,414★, 1,047 forks, pushed 2026-11-20** — mature,
+maintained, permissive, and **it does not contain the word "automotive" anywhere in its pitch.** It
+calls itself an industrial anomaly-detection library.
+
+**The mechanism:** this KB's discovery legs are worded `{automotive} + AI + agent + github`. That phrasing
+finds **vehicle-facing** software. It is structurally blind to **horizontal industrial software that the
+automotive industry is the largest consumer of** — and plant-floor inspection, MES, PLM, logistics and
+energy management are all of that shape.
+
+**What to do with it, concretely:** for every remaining `0-repos` gap in this and the other eleven KBs,
+**re-run the leg with the industry word removed and the capability word in its place** before recording
+the gap again. "Zero open supply" is a strong claim and this pass shows the query can manufacture it.
+
+**What it does *not* overturn:** the **LATAM-origin** gap (zero LATAM-authored automotive repos across
+11 queries, 5 passes) is a claim about **authorship**, not vocabulary, and it survives. **But its
+significance collapses** — see N18.
+
+### N17 — The dataset licence is a second, independent axis, and byte-reading `LICENSE` cannot see it
+
+This KB's licence discipline is byte-reading the grant file. **That discipline is blind by construction
+to the licence of the data the model was fitted to**, and for an AI repo the data grant is usually the
+binding one.
+
+**The specimen:** `anomalib` is **Apache-2.0**. **MVTec AD** — the benchmark that essentially every
+industrial-anomaly-detection paper, tutorial and README reports against — is **CC BY-NC-SA 4.0,
+non-commercial.**
+
+| Action | Code grant (Apache-2.0) | Data grant (CC BY-NC-SA 4.0) | Verdict |
+|---|---|---|---|
+| Use the library in a client deliverable | ✅ | n/a | ✅ Fine |
+| Train on the **client's own** line images | ✅ | n/a | ✅ **The clean path** |
+| Ship **MVTec-trained weights** to a paying client | ✅ | 🔴 commercial use of NC data | 🔴 **Blocked** |
+| Quote an **MVTec benchmark number** in a proposal | ✅ | 🔴 | 🔴 **Blocked — and this is the form the mistake actually takes**, because the benchmark table is the first thing a proposal copies |
+
+**Generalises past automotive:** every weights-shipping or benchmark-quoting engagement in every KB in
+this fleet has this exposure, and **no SPDX field, and no `LICENSE` byte-read, will ever surface it.**
+The diligence step is new: **enumerate the datasets, not just the repos.** Folded into `P13`/`P19`.
+
+**The corollary found the same pass, and it inverts a standing reading:** `NOASSERTION` is often
+**caused by** a dataset attribution. `MayankGangwal-code/ev-battery-soc-estimation` carries verbatim MIT
+text plus an appended *"derived from 'LG 18650HG2 Li-ion Battery Data' … Mendeley Data,
+doi:10.17632/cp3473x7xv.3, **licensed CC BY 4.0**"* — and that appendix is the entire reason GitHub's
+near-exact-match classifier reports `NOASSERTION`. `PythonRobotics` (30,951★) is the same mechanism with
+a contributors URL. **So `NOASSERTION` tracks conscientious authorship, not risk** — the careless repos
+here have **no licence file at all** and measure `NONE`. Upgrade the standing rule from *"`NOASSERTION`
+is a pointer"* to **"`NOASSERTION` is frequently a pointer to the dataset grant — the one axis the
+`LICENSE` file cannot express."**
+
+### N18 — A mandate with no viable open supply is a stronger sales position than a healthy commons
+
+Two gaps were re-measured this pass rather than restated, and the contrast between them is the trend.
+
+- **DMS (driver monitoring): mandated, supply-free.** Driver-attention monitoring is **regulatorily
+  required** in the EU. The **only** framework-grade open implementation three legs could find —
+  `kiralygomba/nottired_guard`, head-pose + gaze + blink + yawn with a peer-reviewed preprint behind it —
+  is **GPL-3.0, 1★, unpushed since 2024-03-08.** Everything else is a single-file eye-aspect-ratio demo
+  at 0–3★. **Required capability, zero adoptable open base.**
+- **Plant-floor inspection: unmandated, supply-rich.** One Apache-2.0 anchor at 6,414★ that a client can
+  download without us.
+
+**Everywhere else this KB recommends "adopt the open base." DMS is the one place where the honest
+recommendation is build** — and it is the only recommendation on the shelf that a client **cannot**
+execute by cloning a repo. **An absence of open supply, when paired with a mandate, is the most
+defensible engagement in a catalogue.** It argues for recording gaps as *assets*, with the mandate and
+the measured supply failure attached, instead of filing them as research debt.
+
+**And the inverse case is now explicit too:** LATAM's zero-origin-repo gap (N16) looked like weakness for
+five passes. The moment the engagement is plant-floor rather than AV, **region-neutral open supply makes
+local authorship irrelevant** — the binding LATAM facts are **where the plants are and who signs for
+them**, not who writes the code. **A supply gap only matters once you know which engagement it blocks.**
+
+---
+
 ## 🆕 New on 2026-11-21 (second pass, verification 12:45Z) — three trends, and two of them invert standing assumptions
 
 ### N13 — The EU AI Act reaches vehicles through an ENUMERATED article list, which turns a deadline argument into a triage exercise

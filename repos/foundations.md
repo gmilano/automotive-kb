@@ -23,6 +23,79 @@ updated: 2026-11-21
 > 🆕 = added 2026-11-13. 🔄 = licence/stars re-read today. ⏸ = URL re-probed, figures carried forward.
 > ⚪ = URL live, licence/stars deliberately left blank rather than guessed.
 
+## 🆕 Added 2026-11-21 (third pass, 13:40Z) — Layer G: the plant floor, a gap this KB has carried at **zero repos for five passes**
+
+**This closes the longest-standing supply gap in this KB.** Every prior pass measured
+`plant-floor / manufacturing quality AI = 0 repos` and moved on. The gap was an artefact of **where we
+were looking**: five passes searched `automotive` + `AI` + `agent`, and the plant-floor stack does not
+describe itself as automotive at all — it is **industrial anomaly detection**, and it is mature,
+permissive and maintained.
+
+This matters disproportionately for this industry because **manufacturing is where the non-AV automotive
+money is**, and it is the one automotive layer with a serious installed base in **every** region
+including LATAM (see `intel/market.md` → Opportunities by region).
+
+### 🆕 Layer G — Industrial visual inspection / anomaly detection (the plant-floor layer)
+
+| Repo | Licence (byte-read) | ★ | Pushed | Why it is here |
+|---|---|--:|---|---|
+| [open-edge-platform/anomalib](https://github.com/open-edge-platform/anomalib) | **Apache-2.0** — `LICENSE`, 11,357 bytes, canonical | **6,414** / 1,047f | **2026-11-20** | **The anchor of this layer, and the only production-grade one.** Intel-maintained library of 20+ industrial anomaly-detection algorithms (PatchCore, PaDiM, EfficientAD…) with OpenVINO export. **Pushed yesterday**, 1,047 forks. For paint, weld, panel-gap and battery-module inspection this is the base to start from rather than build. ⚠️ **Read the dataset warning below before quoting a benchmark number.** |
+| [sundyCoder/DEye](https://github.com/sundyCoder/DEye) | **Apache-2.0** — `LICENSE`, 11,357 bytes, canonical | 885 / 367f | ⚠️ **2023-03-14** | Surface-defect inspection, semiconductor-oriented. **Dormant 3.5 years — reference only, do not propose it as a base.** Listed because 885★/367f means client teams will have heard of it and will ask. |
+| [awslabs/sagemaker-defect-detection](https://github.com/awslabs/sagemaker-defect-detection) | **Apache-2.0** — `LICENSE`, 10,142 bytes, canonical | 62 / 25f | ⚠️ **2022-12-21** | Supervised bounding-box defect detection on steel surfaces (NEU dataset). **Dormant 4 years and AWS-coupled** — useful as an architecture reference for a SageMaker-hosted client, not as a starting point. Default branch is `mainline`, not `main`. |
+
+**The honest shape of this layer: one live anchor and two dormant references.** That is a finding, not a
+shortfall — it means an engagement standardises on `anomalib` and treats everything else as prior art.
+
+### 🔴 The dataset-licence trap, and it is the new error class from this pass
+
+**`anomalib` is Apache-2.0. Its benchmark dataset is not.** **MVTec AD** — the dataset essentially every
+industrial-anomaly-detection paper and tutorial reports against — is **CC BY-NC-SA 4.0: non-commercial.**
+
+The code licence and the data licence are **independent axes**, and for an AI repo **the data licence is
+usually the binding one**:
+
+- ✅ Using `anomalib`'s **code** in a client deliverable: permitted by Apache-2.0.
+- 🔴 Shipping **weights trained on MVTec AD** to a paying client: **commercial use of an NC dataset.**
+- 🔴 Quoting an **MVTec AD benchmark number** in a commercial proposal: the same problem, and it is the
+  form the mistake actually takes, because the benchmark table is the first thing a proposal copies.
+- ✅ The clean path: train on **the client's own line images**, which is what the engagement should be
+  doing anyway. The NC dataset is for *method selection*, never for the delivered model.
+
+**Generalise this across every KB in this fleet:** a permissive SPDX on the repo says **nothing** about
+the corpus the model was fitted to. Byte-reading `LICENSE` — the discipline this KB already enforces —
+**does not catch this at all**, because the trap is not in `LICENSE`.
+
+### 🔄 Two NOASSERTION rows resolved — and the resolution was already in `compose/patterns.md` P19
+
+An internal inconsistency found by cross-reading this file against P19: **P19 records the byte-read answer
+for both of these, while the rows below still tell the reader to "settle before any use."** A reader of
+`foundations.md` was getting worse advice than a reader of `patterns.md`. Both rows are corrected in
+place in Layer A / Layer 2 below, and the answers are:
+
+| Repo | GitHub SPDX | Byte-read grant | What it means |
+|---|---|---|---|
+| [AtsushiSakai/PythonRobotics](https://github.com/AtsushiSakai/PythonRobotics) | `NOASSERTION` | **MIT** — `LICENSE`, 1,170 bytes, *"The MIT License (MIT)"* | ✅ **Usable. Settled, not pending.** The largest repo in this file (**30,951★**) is cleanly permissive. |
+| [autoas/as](https://github.com/autoas/as) | `NOASSERTION` | **Dual: GPL-3.0 OR Commercial** — `LICENSE`, 1,299 bytes, *"Dual License: GPLv3 and Commercial"*, © 2025 Parai Wang | 🔴 **Not usable under GPLv3 for proprietary client work — but a commercial grant exists and is offered by the author.** The "settle it" step is a **procurement conversation**, not a licence investigation. For the only substantial open AUTOSAR BSW, that is worth knowing before it is written off. |
+
+### 🆕 The mechanism behind `NOASSERTION`, measured twice this pass — and it inverts the signal
+
+Both NOASSERTION cases above are **verbatim licence text made non-matching by appending honest
+information**. GitHub's classifier is near-exact-match, so *any* insertion drops the file to
+`NOASSERTION`:
+
+- `PythonRobotics` inserts a **contributors URL** after the copyright line.
+- `MayankGangwal-code/ev-battery-soc-estimation` (probed this pass) appends a **dataset attribution**:
+  *"The processed data in `data/` is derived from 'LG 18650HG2 Li-ion Battery Data' … Mendeley Data,
+  doi:10.17632/cp3473x7xv.3, licensed CC BY 4.0."* Its MIT text is otherwise byte-identical to a
+  canonical MIT file that GitHub classifies correctly.
+
+**So `NOASSERTION` correlates with conscientious authorship, not with licence risk** — the careless
+repos in this KB have **no licence file at all** and classify as `NONE`, not `NOASSERTION`. Sharpen the
+standing rule: **`NOASSERTION` is not merely "a pointer" — it is frequently a pointer to a
+*dataset* attribution**, which is exactly the axis the section above shows `LICENSE` cannot cover.
+
+---
+
 ## 🆕 Added 2026-11-21 (second pass, verification 12:45Z) — one new reference repo, and the shelf re-measured
 
 **This pass verified the 09:55Z base rather than rewriting it.** All 188 repo URLs across the eight files
@@ -153,7 +226,7 @@ weeks old. The *architecture* is worth reading before designing an SDV testbed e
 | [ebroecker/canmatrix](https://github.com/ebroecker/canmatrix) | **BSD-2-Clause** | **1,093★** / 441f | Converts CAN database formats: **`.arxml` ⇄ `.dbc` ⇄ `.dbf` ⇄ `.kcd`**. Pushed 2026-11-18. **This is the ARXML bridge** — the piece that lets an agent read an OEM's AUTOSAR communication matrix. BSD-2 is the cleanest licence in this KB. |
 | [iDoka/awesome-canbus](https://github.com/iDoka/awesome-canbus) | **CC0-1.0** | **3,571★** / 426f | CAN bus tools, hardware and resources, security/reverse-engineering oriented. CC0 = public domain. The index to consult before building any bus tool. |
 | [Sherin-SEF-AI/CanLab](https://github.com/Sherin-SEF-AI/CanLab) | **MIT** | 94★ / 9f | PyQt6 app for reverse-engineering CAN captures: finds counters, checksums and signal boundaries; DBC builder **verified against real frames**; exports **DBC, openpilot and Wireshark dissectors**; UDS + OBD-II. **Injection is bench-only and disarmed until armed.** |
-| [autoas/as](https://github.com/autoas/as) | ⚠️ `NOASSERTION` | 965★ | *"Simple AUTOSAR Basic Software."* Pushed 2026-11-18. The only substantial open AUTOSAR BSW found. **Licence must be settled before any use** — GitHub cannot classify it. |
+| [autoas/as](https://github.com/autoas/as) | 🔄 🔴 **GPL-3.0 OR Commercial** (byte-read 2026-11-21, 1,299 bytes, *"Dual License: GPLv3 and Commercial"*) | 965★ | *"Simple AUTOSAR Basic Software."* Pushed 2026-11-18. The only substantial open AUTOSAR BSW found. **Resolved this pass — GitHub's `NOASSERTION` was it failing to express a dual grant.** Unusable under GPLv3 for proprietary work, **but the author offers a commercial licence**, so this is a procurement conversation, not a dead end. |
 | [TrampolineRTOS/trampoline](https://github.com/TrampolineRTOS/trampoline) | 🔴 **GPL-2.0** | 759★ | Static RTOS aligned to OSEK/VDX and **AUTOSAR OS 4.2**. GPL-2.0 — reference and bench only for a client deliverable. |
 | [TOSUN-Shanghai/TSMaster](https://github.com/TOSUN-Shanghai/TSMaster) | ⚠️ **LGPL-2.1** + feature gating | 442★ | Bus monitoring, simulation, testing, diagnostics and calibration across TOSUN, Vector, IXXAT, PEAK, Kvaser, Intrepid, ZLG and more. Page states *"free for research and education purpose for some features"*. **Tool, never a shipped component.** |
 
@@ -191,7 +264,7 @@ Previously a single row. It is a supply chain, and the hardware bundle came apar
 | [Farama-Foundation/HighwayEnv](https://github.com/Farama-Foundation/HighwayEnv) | **MIT** | **3,342★** / 906f | Driving and tactical decision-making environments. Farama (the Gymnasium maintainers) — stable governance. The cheapest place to prototype a planning policy. |
 | [hanruihua/ir-sim](https://github.com/hanruihua/ir-sim) | **MIT** | 1,239★ | Lightweight Python simulator for navigation, control and learning |
 | [ShisatoYano/AutonomousVehicleControlBeginnersGuide](https://github.com/ShisatoYano/AutonomousVehicleControlBeginnersGuide) | **MIT** | 1,963★ | Python simulations + open textbook; swap and compare localisation/planning/control in one system. **The best onboarding asset found for a studio ramp-up.** |
-| [AtsushiSakai/PythonRobotics](https://github.com/AtsushiSakai/PythonRobotics) | ⚠️ `NOASSERTION` | **30,951★** | Robotics algorithm reference implementations. Licence unclassified by GitHub — settle before vendoring. |
+| [AtsushiSakai/PythonRobotics](https://github.com/AtsushiSakai/PythonRobotics) | 🔄 ✅ **MIT** (byte-read 2026-11-21, 1,170 bytes, *"The MIT License (MIT)"*) | **30,951★** | Robotics algorithm reference implementations. **Resolved this pass — cleanly permissive, nothing to settle.** GitHub reported `NOASSERTION` only because the file inserts a contributors URL after the copyright line, which breaks its exact-match classifier. |
 | [MRPT/mrpt](https://github.com/MRPT/mrpt) | **BSD-3-Clause** | 2,175★ | Mobile Robot Programming Toolkit — SLAM, localisation, point clouds |
 | [aditya-ramabadran/drivingbench_harness_code](https://github.com/aditya-ramabadran/drivingbench_harness_code) | **MIT** | 63★ / 8f | **Agents drive real cars over MCP** (comma four, Toyota TSS2, Tesla M3 HW3) with a 3 m/s ceiling and a 6 m/s hard cutoff; Gaussian-splat simulator; full trace replay |
 | [radar-lab/OpenCDA-MARL](https://github.com/radar-lab/OpenCDA-MARL) | **Apache-2.0** | 16★ | Cooperative-driving MARL benchmark on **CARLA + SUMO co-simulation** |

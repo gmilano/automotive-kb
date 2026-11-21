@@ -8,6 +8,53 @@ updated: 2026-11-21
 
 > **APPEND-ONLY.** Newest dated section on top; history preserved below. Never rewrite earlier sections.
 
+## 2026-11-21 — third pass (13:40Z)
+
+**Window:** 2026-11-21 12:45Z → 13:40Z (≈1 hour, same day). Earlier sections preserved unchanged.
+**Channel:** `git ls-remote --symref` (liveness + default branch), byte-read `LICENSE` from
+`raw.githubusercontent.com`, `gh api -X GET search/repositories` for metadata.
+
+### 🆕 New layer, not new repos: the industrial-inspection stack enters this KB
+
+The three rows below are **not newly created** — `anomalib` is years old at 6,414★. They are **newly
+visible to this KB**, because five passes of `automotive`-worded queries could not see a layer that
+never says "automotive". Full detail and the dataset trap: `repos/foundations.md` → **Layer G**.
+
+| Repo | Licence (byte-read) | ★ / forks | Pushed | Default branch | Status |
+|---|---|--:|---|---|---|
+| [open-edge-platform/anomalib](https://github.com/open-edge-platform/anomalib) | **Apache-2.0**, 11,357 b, canonical | **6,414** / 1,047 | **2026-11-20** | `main` | ✅ **Live anchor.** Intel; 20+ anomaly algorithms; OpenVINO export |
+| [sundyCoder/DEye](https://github.com/sundyCoder/DEye) | **Apache-2.0**, 11,357 b, canonical | 885 / 367 | ⚠️ 2023-03-14 | `master` | ⏸ Dormant 3.5 y — reference only |
+| [awslabs/sagemaker-defect-detection](https://github.com/awslabs/sagemaker-defect-detection) | **Apache-2.0**, 10,142 b, canonical | 62 / 25 | ⚠️ 2022-12-21 | **`mainline`** | ⏸ Dormant 4 y — architecture reference |
+
+**Note the third row's default branch.** It is `mainline`. A `main`-then-`master` licence probe reports
+**"no licence file"** on an Apache-2.0 repo — the same false negative that `autoware-safety-island`
+produced for a different reason (`license.rst`) in the 12:45Z pass. **Resolve the branch; do not guess
+it.**
+
+### 🔴 Rejected this window
+
+| Repo | Measured | ★ | Verdict |
+|---|---|--:|---|
+| [kiralygomba/nottired_guard](https://github.com/kiralygomba/nottired_guard) | 🔴 **GPL-3.0**, 35,149 b | 1 | **Rejected** — copyleft *and* unpushed since 2024-03-08. Recorded because it is the **only** framework-grade open DMS in existence as far as three search legs can tell. |
+| [charanvalavala/inspectlab](https://github.com/charanvalavala/inspectlab) | **MIT**, 1,077 b | **0** | Not recommendable at 0★. **Recorded for the licence lesson: the search snippet stated "its code is Apache-2.0"; the file byte-reads MIT.** A snippet licence is a claim, not a measurement — this KB's N11 error class, caught again. |
+
+### ✅ Shelf re-verified under a stricter oracle — 193 slugs, 190 live, 3 dead
+
+| Check | Result |
+|---|---|
+| Slugs probed | **193** (every distinct owner/name repository slug referenced in the eight files) |
+| Live | **190** |
+| Dead | **3** — `RobertSloan22/tars-car-mcp`, `luca1234413/MotionBastard`, `vaisakhvenugopal/Deconstructing-BYD-s-Technology-Architecture` (all three already recorded; **none is a recommendation**) |
+| New dead since 12:45Z | **0** |
+| Written licence vs. independently measured | **25 flagged → 0 real errors.** Every one was the differ attributing the wrong licence token to a line naming several repos, or catching the base's **own** claimed-vs-measured table. The KB was right in all 25. |
+| Licence spread (byte-read, 190 live) | **82 Apache-2.0, 62 MIT, 20 no-licence-file, 4 BSD, 3 MPL, 3 LGPL, 3 GPL, 3 CC, 2 AGPL, 8 needing title-line classification** |
+
+**Two independent re-measurements, 55 minutes apart, using different liveness oracles, returning the
+same dead set and zero licence errors.** The shelf is in good condition and **further whole-shelf
+re-probing is now low-value** — the binding constraint is discovery and primary-source access, not rot.
+
+---
+
 ## 2026-11-21 — second pass (verification, 12:45Z)
 
 **Window:** 2026-11-21 09:55Z → 12:45Z (≈3 hours, same day). The 09:55Z section below is preserved

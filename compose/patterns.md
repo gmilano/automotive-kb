@@ -885,11 +885,16 @@ deliverable into a standing service.
 **The four channels (verified working 2026-11-21 — see `intel/trends.md` N10):**
 
 ```bash
-# 1. Liveness, no API quota, parallelisable
-git ls-remote --heads https://github.com/<owner>/<repo>    # 40-hex SHA = live; credential prompt = gone
+# 1. Liveness AND the default branch, in one call, no API quota, parallelisable
+git ls-remote --symref https://github.com/<owner>/<repo> HEAD   # "ref: refs/heads/X" = live, X is the
+                                                                # default branch; credential prompt = gone
+#    Use --symref, not --heads: channel 2 needs the branch name, and GUESSING it main-then-master is a
+#    silent false-negative generator. Measured 2026-11-21: anomalib=main,
+#    awslabs/sagemaker-defect-detection=mainline, hcengineering/platform=develop.
 
 # 2. The grant, byte for byte (github.com is 403; THIS host is 200)
-curl -sS https://raw.githubusercontent.com/<owner>/<repo>/<branch>/LICENSE
+curl -sS https://raw.githubusercontent.com/<owner>/<repo>/<default-branch>/LICENSE
+#    Try LICENSE, LICENSE.txt, LICENSE.md, LICENCE, COPYING, *and* license.rst before concluding "none".
 
 # 3. Stars / forks / pushed_at / archived / SPDX
 gh api -X GET search/repositories -f q='repo:<owner>/<repo>'
@@ -902,6 +907,11 @@ gh api -X GET search/repositories -f q='repo:<owner>/<repo>'
 2. **Byte-read the LICENSE; never trust `license.spdx_id`.** It returns `NOASSERTION` for a plainly-MIT
    30,954★ repo (`PythonRobotics`), for a dual GPL-3.0-OR-Commercial grant it cannot express
    (`autoas/as`), and for an Apache-2.0-with-named-carve-out (`waymo-open-dataset`).
+   🆕 **And the reason, measured 2026-11-21: GitHub's classifier is near-exact-match, so *appending
+   honest information* to verbatim licence text defeats it.** `PythonRobotics` inserts a contributors
+   URL; `MayankGangwal-code/ev-battery-soc-estimation` appends a dataset attribution. **`NOASSERTION`
+   therefore tracks conscientious authorship, not risk** — careless repos carry no licence file at all
+   and measure `NONE`. **Read every `NOASSERTION` as a likely pointer to a dataset grant (step 6).**
 3. **Classify on the licence's title line, never by substring.** MPL/GPL/LGPL/EPL texts all name *other*
    licences in their bodies (`intel/trends.md` N11). Size-check too: `openremote/openremote`'s
    172,870-byte LICENSE bundles a dependency listing around a one-paragraph **AGPL-3.0** grant.
@@ -911,8 +921,14 @@ gh api -X GET search/repositories -f q='repo:<owner>/<repo>'
 5. **Flag, never overwrite, a curated cell.** Automation disagreed with this base's published licences
    8 times and was wrong 8 times. Two repos state their grant only in a README or source header, so a
    LICENSE-only probe would downgrade them and call it a refresh. **Emit diffs for human adjudication.**
-6. **Deliverable:** per-repo row of `{url, live?, grant (byte-read), SPDX (for contrast), stars,
-   pushed_at, archived, carve-outs}` plus a **refused list** with reasons. The refusals are the part
+6. 🆕 **Enumerate the DATASETS, not only the repos.** Added 2026-11-21: a permissive code grant says
+   **nothing** about the corpus the model was fitted to, and **this sweep cannot see that axis at all**.
+   `anomalib` is Apache-2.0 while **MVTec AD, its benchmark, is CC BY-NC-SA 4.0 — non-commercial**
+   (`intel/trends.md` **N17**). Shipping weights trained on it, or quoting its benchmark in a proposal,
+   is commercial use of NC data. **For every AI repo, record `{code grant, training-data grant,
+   benchmark-data grant}` as three separate cells.**
+7. **Deliverable:** per-repo row of `{url, live?, default branch, grant (byte-read), SPDX (for contrast),
+   dataset grants, stars, pushed_at, archived, carve-outs}` plus a **refused list** with reasons. The refusals are the part
    clients cannot get elsewhere — e.g. `mikko-lab/kopilotti-sales-demo` is on the `automotive-ai` topic
    page and reads like a finding, but its LICENSE is **"All Rights Reserved"**; and `xtuple/xtuple`
    is **404** while still appearing in current ERP roundups.
@@ -1015,3 +1031,71 @@ play should be sold as compliance with a settled framework. Supply-side reality 
 so the engineering is imported and the **regulatory and integration work is the local value** — which
 matches the buyer's own stated problem (**KPMG**: the obstacle is integrating data across fragmented
 systems and supply-chain players).
+
+---
+
+## P22 🆕 — VDA-5-qualified plant-floor inspection (every region; the ROI argument is rework-vs-scrap)
+
+**Regions: Global**, with a different unblocker per region (`intel/market.md` → Opportunities by region).
+**This is the first pattern in this file that is not about vehicles.** It is about the plant that builds
+them, which is where the non-AV automotive money is and the only automotive layer with world-scale
+installed capacity in **every** region including LATAM.
+
+**Why it is now buildable:** `repos/foundations.md` **Layer G** — a live, permissive anchor exists.
+
+### The stack
+
+| Layer | Repo / artefact | Licence | Role |
+|---|---|---|---|
+| Detection core | [`open-edge-platform/anomalib`](https://github.com/open-edge-platform/anomalib) | **Apache-2.0** (byte-read, 11,357 b) | 20+ algorithms (PatchCore, PaDiM, EfficientAD). **Choose the algorithm on the client's own images, not on a paper's table** |
+| Edge runtime | OpenVINO export path, built into `anomalib` | Apache-2.0 | On-line inference on plant hardware; no cloud round-trip on the line |
+| Signal plumbing | [`nanomq/nanomq`](https://github.com/nanomq/nanomq) (**MIT**, 2,666★) | MIT | MQTT broker between line cameras/PLCs and the detector — already in this KB's Layer A |
+| Prior art only | [`sundyCoder/DEye`](https://github.com/sundyCoder/DEye), [`awslabs/sagemaker-defect-detection`](https://github.com/awslabs/sagemaker-defect-detection) | Apache-2.0 | **Dormant (2023 / 2022). Cite, do not build on** |
+| Assurance output | [`jherrodthomas/automotive-skills-suite`](https://github.com/jherrodthomas/automotive-skills-suite) (**MIT**, 2,907★) | MIT | Already covers **AIAG-VDA**; the generator for the qualification pack in step 3 |
+
+### Wiring
+
+1. **Train on the client's line, never on the benchmark.** 🔴 **`anomalib` is Apache-2.0; MVTec AD is
+   CC BY-NC-SA 4.0 — non-commercial** (`intel/trends.md` **N17**). Use MVTec AD **only** to shortlist an
+   algorithm internally. **Shipping MVTec-trained weights, or quoting an MVTec score in the proposal, is
+   commercial use of a non-commercial dataset** — and the proposal is where it actually happens, because
+   the benchmark table is the first thing anyone copies.
+2. **Anomaly detection first, classification later.** The plant has thousands of good parts and almost no
+   labelled defects. Unsupervised/one-class is the only architecture that fits the data the client
+   actually has, which is why this layer is built the way it is. **Defect *classification* is a phase-2
+   upsell after enough true positives have accumulated.**
+3. 🟢 **Make VDA QMC Volume 5 Part 3 qualification the deliverable, not accuracy.** Audi's AI spot-weld
+   inspection **qualified as an inspection tool under VDA 5 Part 3** (optical sensors / image
+   processing) — `intel/market.md` → EMEA. **Audit acceptance, not F1, is what lets the system actually
+   gate parts.** Deliver a measurement-capability pack: repeatability/reproducibility on the optical
+   system, decision thresholds, drift monitoring, and the human-adjudication path. **This is the step a
+   generic CV vendor cannot do and it is the reason the engagement is worth automotive rates.**
+4. **Price it on rework-versus-scrap.** The lever a plant controller already tracks is whether a
+   defective part **can be reworked instead of scrapped** (`intel/market.md` → LATAM). **Quote
+   cash-per-part recovered, not detection accuracy** — accuracy is a number the client cannot bank.
+5. **Keep the inspector in the loop and say so.** Plants face a **shortage of certified NDT inspectors
+   and experienced quality technicians**; the framing that lands is **extending scarce certified
+   talent**. Route uncertain parts to human review rather than auto-passing them — which is also what
+   step 3's audit pack requires. **Never pitch this as replacing operators**; in Mexico specifically the
+   automation argument has already shifted from labour savings to **process stability**.
+6. **Regional entry point — same stack, different first conversation:**
+   - **NA:** industrialise a pilot that already exists (42% already use AI in quality, ~half still
+     self-report "awareness-stage" digitalisation). Frame as **tariff-era margin defence**.
+   - **EMEA:** lead with step 3. The qualification *is* the product.
+   - **APAC:** robot density is already world-leading; sell **inspection judgement** on top of arms that
+     are installed.
+   - **ASEAN:** time it to the **subsidy withdrawal** (Indonesia's EEAI ends **31 Dec 2026**) — that is
+     when cost-per-unit work gets funded.
+   - **LATAM:** a **retrofit pilot on an installed Bajío line**; **89% of Mexico's H1-2026 FDI is
+     reinvestment into existing plants**, so the budget owner is the plant, not a site-selection team.
+
+**Why it sells:** it needs **no autonomy claim, no homologation, and no vehicle** — so it closes in
+quarters rather than years, and it is the only pattern in this file that is **equally deliverable in all
+five regions**. The entire regional difference sits in the evidence-and-economics wrapper, not the model
+— the **second** independent instance of the *"one artefact factory, N regional buyers"* shape this KB
+first recorded as **N9**, which is what makes that shape structural rather than coincidental.
+
+🔴 **Honest limits.** No measured AI-adoption rate exists for any LATAM country in this KB (investment
+flows and labour-market facts only). The VW "99.7% accuracy" figure is vendor-adjacent. Market size for
+this sub-segment disagrees **4×** ($829M vs $3.26B for 2026) — **quote the VDA gate and the scrap
+economics, never the market size.**

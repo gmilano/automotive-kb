@@ -10,6 +10,39 @@ updated: 2026-11-21
 > Every regulatory date below names its instrument. Where sources conflict, the conflict is shown rather
 > than resolved — and where a date comes from a vendor page rather than a primary register, it says so.
 
+## 🆕 What changed on 2026-11-21 — third pass (13:40Z)
+
+**The plant floor entered this market map, and it changes which region is the hard one.**
+
+1. **A gap this KB carried at zero for five passes is closed on the supply side** —
+   `open-edge-platform/anomalib`, **Apache-2.0, 6,414★, pushed 2026-11-20** (`repos/foundations.md`
+   Layer G). Five passes missed it because every query said *automotive* and this layer calls itself
+   *industrial anomaly detection*. **The gap was in the query, not in the world.**
+2. **Demand-side intelligence for plant-floor AI is now placed in all five regions** (below). The
+   pattern: **one Apache-2.0 base, five different unblockers** — industrialisation in NA, **VDA 5
+   qualification** in EMEA, inspection judgement in APAC, the subsidy shock in ASEAN, and a **retrofit
+   pilot** in LATAM.
+3. 🟢 **LATAM is reframed.** Five passes measured "zero LATAM origin repos" and concluded LATAM was a
+   weak automotive region. **The measurement was right; the inference was wrong.** LATAM's automotive
+   strength is assembly and quality, the open base for it is region-neutral, and **89% of Mexico's
+   H1-2026 FDI ($30.96B of $34.97B) is reinvestment into existing plants** — the most precisely
+   actionable targeting fact in this file.
+4. 🟢 **EMEA gains an audit gate worth more than any date in this file:** Audi's AI spot-weld inspection
+   **qualified under VDA QMC Volume 5 Part 3**. A deadline produces advisory work; **a qualification
+   produces delivery work that ends in an accepted artefact.**
+5. 🔴 **A new licence axis, and byte-reading `LICENSE` cannot see it.** `anomalib` is Apache-2.0;
+   **MVTec AD, its benchmark, is CC BY-NC-SA 4.0 — non-commercial.** Code grant and data grant are
+   independent, and for AI repos **the data grant is usually the binding one.**
+6. **Two gaps re-measured rather than restated:** **DMS stays open with a reason** (the only
+   framework-grade open DMS is GPL-3.0, 1★, abandoned since 2024-03-08 — **a regulatory mandate with
+   zero viable open supply, i.e. this KB's strongest build case**), and **EV/battery is re-stated
+   correctly** as "nothing above hobby scale" rather than "nothing exists."
+7. 🔴 **Three excluded sources now**, `coldai.org` joining `x-pilot` and `streamlinefeed.co.ke`.
+8. **Market size disagreed 4× again** ($829M vs $3.26B for automotive AI quality inspection in 2026),
+   independently reproducing T9/N14 in a sub-segment this file had never priced.
+
+---
+
 ## 🆕 What changed on 2026-11-21 — second pass (verification, 12:45Z)
 
 **This was a VERIFICATION pass, not a rewrite.** Rotation pointed at automotive as unprocessed; the
@@ -298,6 +331,27 @@ adoption figures instead — they are more consistent and more useful in a sales
 
 ### North America
 
+**🆕 Added 2026-11-21 (third pass) — the plant floor, and NA's problem is industrialisation, not awareness.**
+- **42% of automotive respondents already use AI in quality; 47% plan to deploy within two years**
+  (Octave *Pulse of Quality in Manufacturing 2026*). Of the uses named, **GenAI chatbots 51%, agentic AI
+  39%**. ⚠️ Multi-sector survey — the automotive subset is the relevant slice, and the publisher is a
+  quality-software vendor.
+- **And yet: nearly half of North American automotive manufacturers place their own digitalisation at the
+  "awareness" stage** (AMS / Kyndryl / Microsoft, n=316). **Read these two together — that is the whole NA
+  opportunity.** Adoption is broad and shallow: plenty of pilots, little industrialised. **The NA
+  engagement is not "introduce AI to quality"; it is "get the pilot you already ran onto the line."**
+- **Tariffs and trade barriers are the #1 operations challenge** (~1/3 of respondents), and **56%** say
+  tariffs or geopolitics have significantly affected the business. **Pitch plant-floor AI as margin
+  defence under tariff pressure, not as innovation spend** — it is competing against a tariff line, and
+  scrap-rate reduction is the argument that survives that comparison.
+- >Half expect significant GenAI benefit in **design and predictive maintenance** specifically.
+- 🔴 **Excluded source:** `coldai.org` claims "~34% of NA automotive assembly lines deploy AI agents with
+  real-time decision authority over quality gates," attributed to AIAG surveys. **The attribution could
+  not be corroborated and the same article carries two further uncorroborable claims. Do not quote it.**
+  (Third excluded source in this KB, after `x-pilot` and `streamlinefeed.co.ke`.)
+- 🔴 **Informed gap:** a leg aimed at **UAW contract language on AI/automation** returned nothing. For a
+  US plant engagement that is a live question and this KB cannot answer it.
+
 **🆕 Added 2026-11-21 (verification pass) — a hard state-level date, and the demand-side headwind.**
 - **🔴 California: the Alliance for Automotive Innovation has urged state lawmakers to fix requirements it
   calls "technically unworkable" that take effect 1 July 2026.** This is the **nearest binding
@@ -494,6 +548,27 @@ adoption figures instead — they are more consistent and more useful in a sales
 
 ### EMEA
 
+**🆕 Added 2026-11-21 (third pass) — the audit gate, and it is the most sellable EMEA fact in this file.**
+- 🟢 **Audi's AI spot-weld inspection system qualified as an inspection tool under VDA QMC Volume 5
+  Part 3** (the VDA guidance for optical sensors and image processing), after a Neckarsulm pilot and now
+  rolling out. **This is the finding to build EMEA plant-floor work on.** An automotive AI inspection
+  system in EMEA does not merely need accuracy — **it needs to qualify as a measurement/inspection tool
+  under VDA 5 to be accepted by audit.** That qualification is **the billable deliverable**, and it is
+  what separates an automotive engagement from a generic computer-vision project. See
+  `compose/patterns.md` **P22**.
+- **BMW:** `GenAI4Q` piloted at Regensburg (with Datagon AI) builds a **per-vehicle** final-inspection
+  catalogue across ~**1,400 vehicles/day**; the `AIQX` platform runs camera/sensor AI quality checks
+  across plants.
+- **Volkswagen:** a German-plant welding inspection task that previously took two operators full-shift is
+  reported running at **99.7% accuracy**. ⚠️ Vendor-adjacent figure — use as a directional claim only.
+- **Market size, again 4× apart:** automotive AI quality inspection in 2026 quoted at **~$829M** (21.87%
+  CAGR) by one house and **$3.26B** by another. **Same pathology as every other figure in this file —
+  quote adoption and the VDA gate, never the size.** (Corroborates T9 / N14.)
+- 🔴 **`Reg. (EU) 2026/1744` seen a second time, still never from a primary source.** A vendor page calls
+  it the "Digital Omnibus on AI," effective **27 July 2026**. `eur-lex.europa.eu` remains DNS-dead from
+  this environment (7th pass). **Two secondary sightings are not corroboration when both could share one
+  upstream. Keep it hedged and never put the date in a proposal.**
+
 **🆕 Added 2026-11-21 (verification pass) — the AI Act mechanism resolves to a NAMED ARTICLE, and that turns a date argument into a triage exercise.**
 - **🔴 THE UPGRADE: the route is Article 2(2), and it is an ENUMERATED list of articles.** Multiple
   independent secondary sources now converge on the same reading: for an AI system that is a **safety
@@ -688,6 +763,48 @@ adoption figures instead — they are more consistent and more useful in a sales
 
 ### APAC
 
+**🆕 Added 2026-11-21 (third pass) — APAC's plant story is robot density, not inspection software.**
+- **Automotive robot installations in China: 78,900 units in 2025, +38% y/y**; China installed ~**354,000**
+  industrial robots overall, ~**59%** of the world total. **Automotive is one of the largest single
+  customer segments.** ⚠️ Figures are secondary reporting of **IFR *World Robotics 2026***, not the IFR
+  release itself — directionally safe, decimal places not.
+- **Korea: highest robot density on earth** (~1,000/10,000 manufacturing employees; another source cites
+  the IFR's 1,220 for 2024 — **different years, do not average them**), but only ~**30,200** annual
+  installs. Government target: **500 "AI factories" by 2030**, and a **regulatory exemption** has been
+  granted for live humanoid testing at **automotive**, semiconductor, shipbuilding and logistics sites.
+- **Japan: ~36,219 installs, down 19%** — third place, with strength in precision small-batch work.
+- **"Dark factory" is a real reference, not a slogan:** Chang'An Automobile's Chongqing plant (opened
+  2024) operates **2,000+ robots and autonomous vehicles**. ⚠️ A Reuters investigation reportedly found
+  Xiaomi's EV plant to be **conventional body-shop automation** rather than anything novel — **the
+  headline category and the installed reality diverge, and in APAC that gap is the diligence work.**
+- **Humanoids in automotive are at trial stage only:** UBTech with Duksan JM Robotics / AJIN Industrial on
+  a parts line; CATL running Galbot S1 in module and battery-pack handling.
+- 🔴 **Informed gap:** three legs found **very little on AI *quality inspection*** in Chinese, Japanese or
+  Korean auto plants, as distinct from robotics. **APAC buys arms and axes; EMEA buys inspection
+  judgement.** That is a real difference in what to lead with, not a hole in the research.
+
+**🆕 ASEAN — closing p940's "largest unmapped sub-region" item (partially).**
+- **The near-term event is subsidy withdrawal, not adoption.** **Indonesia's EEAI (Early Electric Vehicle
+  Adoption Incentive) ends 31 December 2026** — ~5 weeks out. NEV subsidies across Southeast Asia are
+  expected to be **phased out through H2 2026**, and **Thailand's EV 4.0 is being adjusted**. **A margin
+  shock lands on ASEAN EV assemblers inside this quarter, which is precisely when cost-per-unit and
+  scrap-rate work gets funded.**
+- **Thailand "30@30"** aims at ASEAN EV leadership; **Thailand and Indonesia both target EV manufacturing
+  dominance by 2030**; Malaysia and Vietnam following.
+- **Vietnam's targets are the most specific:** 30% EV penetration for passenger cars by 2030, 50% of
+  urban vehicles, **100% of electric urban buses and taxis**.
+- **Singapore is the only ASEAN AV deployment:** `Ai.R`, its first autonomous public ride service, began
+  operating in **Punggol in April 2026**.
+- One market view names the region's strongest AI opportunities as **factory automation, fleet
+  intelligence, battery monitoring, and connected two-wheeler/commercial-vehicle services** —
+  **independent corroboration of this pass's plant-floor and battery findings**, from a region this KB
+  had barely mapped.
+- 🔴 **Informed gap, and it is specific:** **no 2026 AV regulation for Thailand, Indonesia or Vietnam was
+  found.** The authoritative *ASEAN Autonomous Vehicle Landscape Report* is **2024** and therefore
+  stale. **Treat ASEAN AV governance as unmapped**, and note the contrast with Vietnam's education-AI
+  regime (globant-kb p939) — **Vietnam legislates AI by sector, so an automotive filing duty may simply
+  not exist yet.**
+
 **🆕 Added 2026-11-21 (verification pass) — the regional institutions, and a demand-side framing to use.**
 - **KPMG (ASPAC automotive lead, Nov 2026): "there is no single playbook for the automotive market across
   Asia Pacific," and the release is built around a *"readiness gap"* as AI and geopolitics redraw the
@@ -863,6 +980,47 @@ adoption figures instead — they are more consistent and more useful in a sales
   data-security/localisation constraints.
 
 ### LATAM
+
+**🆕 Added 2026-11-21 (third pass) — and it reframes LATAM from "zero AV supply" to a funded plant-floor buyer.**
+
+**Five passes recorded "LATAM: zero origin repos across 11 queries" and treated LATAM as a supply
+desert. That measurement was right and the conclusion drawn from it was wrong.** LATAM's automotive
+position is **not** autonomous driving — it is **assembly and quality**, and that is the one automotive
+layer where the region has world-scale installed capacity. **The open supply that matters to LATAM is
+Layer G (`anomalib`, Apache-2.0), which is region-neutral — so the "no local repos" finding stops
+being a blocker the moment the engagement is about the plant floor.**
+
+- **Where:** the **Bajío** is the automotive heartland — **Guanajuato, Querétaro, Aguascalientes, San Luis
+  Potosí** — plus Monterrey. IMCO ranks the region among Mexico's strongest on industrial base and
+  innovation capacity.
+- 🟢 **The single best targeting fact in this section: reinvested earnings were $30.96B of Mexico's
+  $34.97B H1-2026 FDI.** ~**89% of the money is going into plants that already exist**, not greenfield.
+  **So the first engagement is a retrofit pilot on an installed line — and the budget holder is the
+  existing plant's operations owner, not a site-selection committee.**
+- **The justification for automation in Mexico has shifted from labour savings to process stability.**
+  Mexico can no longer win on labour cost, so **the ROI argument must be variance and scrap, not
+  headcount** — which is exactly what an anomaly-detection base delivers, and exactly the wrong pitch to
+  bring as "replace operators."
+- 🟢 **The staffing constraint is the opening:** plants report a **shortage of experienced quality
+  technicians and certified NDT inspectors**, and the framing used locally is that AI **extends scarce
+  certified talent** rather than replacing it. One trade source puts it as plants being **"rich in data
+  and poor in reaction time."**
+- **The ROI lever to quote is rework-versus-scrap:** inspection systems that judge whether a defective
+  part **can be reworked instead of scrapped**. That is a per-part cash number a plant controller already
+  tracks — **a far easier business case than defect-detection accuracy.**
+- **EV battery inspection is named explicitly** as a driver of the Mexican automation surge.
+- **Mexico + Brazil together took >$1.9B in new manufacturing commitments**, with EV and battery projects
+  leading.
+- 🔴 **Informed gap — Brazil specifically:** the leg found **nothing** on Brazilian automotive AI
+  inspection deployments. Brazil appears only in aggregate investment figures. **ANFAVEA / INEGI-style
+  adoption surveys were not reachable**, so there is **no adoption rate for any LATAM country** in this
+  file — the LATAM case is built on investment flows and labour-market facts, **not** on measured AI
+  adoption. State that limitation when using it.
+- 🔴 **Excluded source:** `streamlinefeed.co.ke` carries very specific Bajío claims (sub-millimetre
+  tolerances, sub-30-second scans) with no sourcing. **Excluded.**
+- ⚠️ **Source-quality caveat for this whole block:** most of it is **trade press and vendor-adjacent
+  commentary** (Mexico Business News and similar), not independent data. The **FDI composition figure is
+  the hardest number here**; lean on it.
 
 **🆕 Added 2026-11-21 (verification pass) — LATAM is no longer a regulatory blank, and the leader is NOT the one this KB assumed.**
 - **🔴 THE FINDING THAT INVERTS THIS FILE'S OWN LATAM ASSUMPTION: Colombia already regulates the
@@ -1082,6 +1240,29 @@ adoption figures instead — they are more consistent and more useful in a sales
   proprietary vendors handle poorly; Traccar self-hosted answers both. See P5.
 
 ### Global
+
+**🆕 Added 2026-11-21 (third pass) — one cross-region pattern, stated once instead of four times.**
+
+**The plant floor is the automotive AI engagement that exists in every region**, and the regional
+difference is not whether it is wanted but **what unblocks it**:
+
+| Region | What is already true | What the engagement actually is |
+|---|---|---|
+| **North America** | 42% using AI in quality, yet ~half self-report "awareness stage" digitalisation | **Industrialise an existing pilot.** Sell as tariff-era margin defence |
+| **EMEA** | Audi qualified AI weld inspection under **VDA QMC Vol. 5 Part 3**; BMW/VW deployed | **Earn the audit qualification.** The VDA 5 evidence pack is the deliverable |
+| **APAC** | 78,900 automotive robot installs in China (+38%); Korea at 500-AI-factories-by-2030 | **Add inspection judgement to dense robotics.** Arms exist; verdicts do not |
+| **ASEAN** | EV subsidies ending (Indonesia EEAI **31 Dec 2026**), Thailand EV 4.0 adjusted | **Cost-per-unit work, funded by the subsidy shock** |
+| **LATAM** | 89% of Mexican FDI is reinvestment into existing plants; NDT inspector scarcity | **Retrofit pilot on an installed Bajío line.** ROI = rework-vs-scrap |
+
+**One open base (`anomalib`, Apache-2.0, 6,414★) serves all five.** The regional work is the
+**evidence and economics wrapper**, not the model — the same shape this KB already found for assurance
+artefacts in N9 (*"one artefact factory, four regional buyers"*). **That is now the second independent
+instance of that shape, which makes it the structural fact about this industry rather than a
+coincidence.**
+
+🔴 **And the constraint that applies to all five:** the dataset-licence axis. **MVTec AD — the benchmark
+this entire layer reports against — is CC BY-NC-SA 4.0, non-commercial.** The code is free; the number
+in the paper is not reusable in a commercial proposal. See `repos/foundations.md` Layer G.
 
 **🆕 Added 2026-11-21 (verification pass) — separate INVESTMENT figures from MARKET-SIZE figures; they are not the same evidence.**
 - **This file's market-size spread (1.6×–4× depending on year) is a definitional artefact and cannot be
