@@ -8,6 +8,82 @@ updated: 2026-11-21
 
 > **APPEND-ONLY.** Newest dated section on top; history preserved below. Never rewrite earlier sections.
 
+## 2026-11-21 — second pass (verification, 12:45Z)
+
+**Window:** 2026-11-21 09:55Z → 12:45Z (≈3 hours, same day). **This is a same-day re-measurement, so
+read it for drift direction, not for growth rates.** The 09:55Z section below is preserved unchanged.
+**Channel:** batched `gh api -X GET search/repositories` (8 slugs/query, 188 URLs),
+`raw.githubusercontent.com` byte-reads, `git ls-remote` for exact-case liveness.
+
+### 🆕 New this window — two permissive repos, and the MIT one matters more than its star count
+
+| Repo | Licence (byte-read) | ★ | Note |
+|---|---|--:|---|
+| [LogosIntelligenceLab/SGDrive](https://github.com/LogosIntelligenceLab/SGDrive) | **MIT** — 1,077 bytes, *"Copyright (c) 2025 Logos Robotics Group"* | 81 | **The only MIT-licensed driving model in this KB.** Every other model row is Apache-2.0 at best. For work that must be sublicensed into a proprietary stack, **the licence outranks the star count.** Pushed 2026-10-23. |
+| [TUM-AVS/FM-AD-Survey](https://github.com/TUM-AVS/FM-AD-Survey) | **Apache-2.0** — 11,337 bytes, canonical | 249 | TU Munich AVS chair; foundation-models-for-AD survey. **Pushed 2026-11-19** — a live index, attributable to a named academic group. |
+
+### 🔴 Rejected on licence this window
+
+| Repo | Measured | ★ | Verdict |
+|---|---|--:|---|
+| [XiaomiAutoL3/DriveZero](https://github.com/XiaomiAutoL3/DriveZero) | **`NONE`** — no licence file | **147** | **Rejected.** *"End-to-end driving beyond human demonstrations."* **The lesson is about vendors, not this repo: this KB already holds Xiaomi's `recogdrive` as Apache-2.0 (631★). The same vendor is inconsistent across its own repositories, so vendor reputation is not a licence signal.** Worth re-probing — an unlicensed 147★ model is a plausible candidate for a grant being added later. |
+
+### 📈 Drift this window — attention is concentrating on one cluster
+
+Largest absolute moves among rows with ≥200 claimed stars, **all four in the VLA / world-model layer**:
+
+| Repo | Written | Measured | Δ |
+|---|--:|--:|--:|
+| [NVlabs/alpamayo-recipes](https://github.com/NVlabs/alpamayo-recipes) | 205 | **245** | **+40** |
+| [NVlabs/alpamayo2](https://github.com/NVlabs/alpamayo2) | 287 | **314** | **+27** |
+| [QwenLM/Qwen-Drive-1.0](https://github.com/QwenLM/Qwen-Drive-1.0) | 537 | **563** | **+26** |
+| [OpenDriveLab/WorldEngine](https://github.com/OpenDriveLab/WorldEngine) | 520 | **542** | **+22** |
+
+Everything with a large base moved in single digits — `commaai/openpilot` measures **64,192**,
+`AtsushiSakai/PythonRobotics` 30,951 → **30,953**, `esmini/esmini` 949 → **954**. **The open stacks are
+stable; the open VLA/world-model frontier is where attention is moving, and the NVIDIA Alpamayo line is
+its centre.** Fast movers on a small base: `autowarefoundation/autoware_latent_drive` **42 → 95**,
+`superdeman/cockpit-agent` **1 → 30**, `masoudjtehrani/pcla` 77 → **103**.
+
+⚠️ **Method caveat, carried from the education KB's finding that an inference and a measurement are not
+the same evidence:** these deltas are **drift since each row was written** (snapshot dates range from
+2026-10-31 to 2026-11-21), **not** a 3-hour rate. Direction is sound; **do not quote a per-day figure.**
+
+### ✅ The licence layer held — 20 flags, 0 real errors
+
+188 URLs re-probed → **185 live, 3 dead (the same 3 already recorded, none a recommendation — zero new
+rot)**. 20 rows where the written licence disagreed with measured SPDX, **all 20 resolved in the base's
+favour**: 13 were `NOASSERTION`-as-pointer (byte-read confirmed `nuscenes-devkit` Apache-2.0, `odoo`
+LGPL-3.0, `auto-agent-protocol` Apache-2.0 code + CC BY 4.0 docs), and **7 were the differ catching the
+base's own warning prose** — "README says MIT; there is **NO** LICENSE file", "**Not** Apache-2.0".
+**A base that states its exceptions precisely will trip a naive grep-based checker.** Detail in
+`agents/top.md` §V1.
+
+### 🔴 Method correction this window — the filename list is not the instrument
+
+`autowarefoundation/autoware-safety-island` returned **404 on 18/18** probe combinations
+(`LICENSE`/`LICENSE.md`/`LICENSE.txt`/`LICENCE`/`COPYING`/`NOTICE` × `main`/`master`/`develop`) and would
+have been written up as *"Apache-2.0 claimed, no licence file"* — **a false correction against a correct
+base.** It carries a full **10,894-byte Apache-2.0 text in `license.rst`**, plus
+`SPDX-License-Identifier: Apache-2.0` in its README header under an **Arm Limited** copyright.
+**The row already cited `license.rst`. Read a row's stated evidence before re-probing it**, and add
+`license.rst`/`LICENSE.rst` to the probe list.
+
+### Declared gaps this window
+
+1. **`SpaceDrive`** — named by an aggregator as a CVPR 2026 driving project; **resolves to no repository.**
+2. **`carlover`** — MIT automotive assistant cited by an ecosystems aggregator; **slug does not exist**
+   (only 0–3★ unlicensed namesakes). **Two aggregator-sourced candidates evaporated in one pass — resolve
+   the slug before writing the row.**
+3. **Model weights licences: still unverifiable.** `huggingface.co` DNS-dead, re-probed, 6th consecutive
+   pass. Also dead this pass: `eur-lex.europa.eu`, `unece.org`, `www.federalregister.gov`.
+4. **No LATAM-origin automotive agent** surfaced again. **6th consecutive pass.** The gap is in *supply*.
+5. **No permissive dealership DMS/ERP — 7th consecutive negative.** `Dolibarr` GPL-3.0, `YetiForceCRM`
+   `NOASSERTION` + stale since 2024, `SuiteCRM` unresolved; `open-mercato` (MIT) is a framework only.
+
+---
+
+
 ## 2026-11-21
 
 **Window:** 2026-11-19 → 2026-11-21 (2 days). **Channel — changed this pass, and it matters:**

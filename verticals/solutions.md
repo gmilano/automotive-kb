@@ -15,6 +15,37 @@ updated: 2026-11-21
 > this session's proxy, re-tested today, so licences and stars are read from the rendered repository page;
 > 🆕 = new this pass, 🔄 = licence/stars re-read today, ⏸ = carried forward and labelled).
 
+## 🆕 2026-11-21 (second pass, verification 12:45Z) — the ERP/CRM shelf re-measured; the DMS gap survives a leg aimed straight at it
+
+**Verification pass.** The dealership/ERP leg was re-run specifically to attack the DMS gap recorded
+below. **It produced no new permissive platform — the eighth consecutive negative result on this
+question** — but it did produce **fresh measurements** for the candidates, which is what the gap statement
+needs to stay credible.
+
+### 🔄 ERP/CRM candidates re-measured 2026-11-21
+
+| Platform | Measured licence | ★ | Last push | Verdict for Globant |
+|---|---|--:|---|---|
+| [Dolibarr/dolibarr](https://github.com/Dolibarr/dolibarr) | **GPL-3.0** | 7,889 | **2026-11-21** | ❌ **Strong copyleft.** Very much alive — pushed the same day as this pass — and still unusable as a base a client ships proprietary work on. Correctly held as copyleft in this file. |
+| [open-mercato/open-mercato](https://github.com/open-mercato/open-mercato) | **MIT** | **1,953** | **2026-11-21** | ✅ **The only permissive option, and it is a framework — not a dealership product.** Pushed the same day; genuinely active. Building a dealer layer on it is **P17** below, and it remains a *build*, not a *configure*. |
+| [YetiForceCompany/YetiForceCRM](https://github.com/YetiForceCompany/YetiForceCRM) | **`NOASSERTION`** | 1,788 | 🔴 **2024-09-13** | ❌ **Rejected on two counts:** no resolvable SPDX grant **and unpushed for over two years.** Named here because listicles still recommend it as an open ERP/CRM for dealerships. |
+| SuiteCRM | **did not resolve** | — | — | ❌ Named by a comparison page; **the slug did not resolve to a repository.** Not a finding. |
+
+**The gap statement, restated with this pass's evidence:** a search aimed directly at permissive
+dealership ERP/CRM returns **general-purpose business software, one permissive framework, and one
+abandoned CRM.** **There is still no open-source DMS**, and the two live candidates split exactly the
+wrong way — **the mature one is copyleft and the permissive one is a framework.** That is a stable,
+well-measured finding across eight passes, not an absence of searching.
+
+⚠️ **Watch the "MIT" trap in this layer specifically.** The education KB recorded *licence-by-association*
+(a platform described as "founded by Harvard and MIT" rendered elsewhere as "under Apache 2.0"). The same
+shape is live here: comparison pages describe permissive licences generically as "commonly MIT or Apache
+2.0" in the same breath as naming dealership products. **Measure the repo; never inherit a licence from a
+sentence about licences.**
+
+---
+
+
 ## 🆕 2026-11-21 — Huly moves from *rejected* to *viable*, and Odoo's LGPL grant is byte-confirmed
 
 > **Verification this pass:** licences **byte-read** from `raw.githubusercontent.com` (HTTP 200 — it

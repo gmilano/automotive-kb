@@ -23,6 +23,46 @@ updated: 2026-11-21
 > 🆕 = added 2026-11-13. 🔄 = licence/stars re-read today. ⏸ = URL re-probed, figures carried forward.
 > ⚪ = URL live, licence/stars deliberately left blank rather than guessed.
 
+## 🆕 Added 2026-11-21 (second pass, verification 12:45Z) — one new reference repo, and the shelf re-measured
+
+**This pass verified the 09:55Z base rather than rewriting it.** All 188 repo URLs across the eight files
+were re-probed; **185 live, 3 dead — the same 3 already recorded as dead, none of them a recommendation.**
+Every licence cell that disagreed with GitHub's measured SPDX was byte-read: **20 disagreements, 0 real
+errors.** Details in `agents/top.md` §V1.
+
+### 🆕 New reference repo — the survey layer gains a university-authored index
+
+| Repo | Licence | ★ / forks | What it is |
+|---|---|--:|---|
+| 🆕 [TUM-AVS/FM-AD-Survey](https://github.com/TUM-AVS/FM-AD-Survey) | **Apache-2.0** — `LICENSE` byte-read 2026-11-21, **11,337 bytes, full canonical text** | **249★** | **Foundation-models-for-autonomous-driving survey from TU Munich's Autonomous Vehicle Systems chair (TUM-AVS).** Pushed **2026-11-19**, so it is tracking the layer in near-real time. **Prefer it over the anonymous `awesome-*` lists in "Index repos to track" below for anything client-facing**: it is attributable to a named academic group, which matters when a survey is the citation under a recommendation. Pair with `Thinklab-SJTU/Awesome-LLM4AD` (Apache-2.0, 1,906★) for breadth. |
+
+### 🔴 This pass strengthens the standing warning about LICENSE-file-only probes — with a third example
+
+The note below already records that `TrampolineRTOS/trampoline` and `navariltd/Fleet-Management-System`
+state their grants outside a `LICENSE` file. **A third and sharper case was found this pass:**
+**`autowarefoundation/autoware-safety-island` carries a full 10,894-byte Apache-2.0 text in
+`license.rst`** — invisible to a probe of `LICENSE*`/`LICENCE`/`COPYING`/`NOTICE` across `main`,
+`master` and `develop` (**18/18 404s**), and invisible to GitHub's matcher (`NOASSERTION`) because it is
+reStructuredText. **Add `license.rst` and `LICENSE.rst` to every future probe list.** The existing row
+for that repo already named `license.rst` as its evidence — **the base was right and the probe was wrong.**
+
+### 🔴 Negative results settled 2026-11-21 (verification pass) — do not re-search these
+
+- **No permissive dealership ERP/CRM exists — 7th consecutive negative.** Re-measured this pass:
+  `Dolibarr/dolibarr` **GPL-3.0** (7,889★), `YetiForceCompany/YetiForceCRM` **`NOASSERTION`, unpushed
+  since 2024-09-13**, `SuiteCRM` did not resolve. **`open-mercato/open-mercato` (MIT, 1,953★, pushed
+  2026-11-21) is the only permissive option and it is a framework, not a dealership product.**
+- **Two aggregator-sourced candidates evaporated under verification:** `SpaceDrive` (named as a CVPR 2026
+  driving project) **resolves to no repository at all**, and the `carlover` slug cited by an ecosystems
+  aggregator **does not exist** — the only matches are 0–3★ unlicensed projects. **Aggregator listings
+  name papers and dead slugs as if they were repos; resolve the slug before writing the row.**
+- **`huggingface.co`, `eur-lex.europa.eu`, `unece.org` and `www.federalregister.gov` are all DNS-dead from
+  this environment — re-probed and re-confirmed this pass (6th consecutive).** Model **weights** licences
+  therefore remain unverifiable here by construction. This is a channel limit, not a research gap.
+
+---
+
+
 ## 🆕 Added 2026-11-21 — the canonical perception/benchmark layer, with honest dormancy labels
 
 > **Verification:** `git ls-remote` for liveness, `raw.githubusercontent.com` for the byte-read licence,

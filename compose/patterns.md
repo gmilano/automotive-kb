@@ -920,3 +920,98 @@ gh api -X GET search/repositories -f q='repo:<owner>/<repo>'
 **Why it sells:** this industry's licence-defect rate is high in **both** directions (`intel/trends.md`
 N5/N11) — false-permissive claims that create exposure, and false-restrictive labels that discard usable
 bases. Both are expensive, and **both are found by the same half-hour sweep.**
+
+---
+
+## P20 🆕 — The AI Act type-approval boundary inventory (EMEA, and it is sellable while the dates are still disputed)
+
+**Region: EMEA.** This KB has argued the AI Act **date** across four passes (2 Aug 2026 / 2 Aug 2028 /
+2027) and never resolved it. **P20 exists because the date was the wrong question.** The mechanism
+resolves to an enumerated article list, and that converts an unanswerable timing question into a
+**triage** a studio can actually deliver — see `intel/trends.md` **N13** and `intel/market.md` → `### EMEA`.
+
+**The legal spine (verify against the OJ before client use — `eur-lex.europa.eu` is unreachable here):**
+an AI system that is a **safety component of a type-approved vehicle** is a product under **AI Act
+Annex I, Section B** (which lists **Reg. (EU) 2018/858** and **Reg. (EU) 2019/2144**). For those systems
+**Art. 2(2) applies only Art. 6(1), Arts. 102–109 and Art. 112 directly, with no separate AI Act
+conformity assessment**; requirements arrive via **Art. 109 → Reg. 2019/2144 → delegated/implementing
+acts under the amended Reg. 2018/858**. **Systems outside those regimes take the full AI Act on the
+general timeline.**
+
+**The deliverable is the boundary, not a deadline memo:**
+
+| Column | Path | Typical systems |
+|---|---|---|
+| **A — inside type approval** | Art. 2(2) narrow path; no separate conformity assessment | ADAS, ADS, event-data recorders, GSR driver monitoring |
+| **B — outside type approval** | Full AI Act obligations, general timeline | Cockpit/voice assistants, dealer & CRM AI, manufacturing quality AI, HR and marketing AI |
+
+**How to wire it, using only repos this KB has licence-verified:**
+
+1. **Enumerate the client's automotive AI systems.** Seed the taxonomy from
+   [COVESA/vehicle_signal_specification](https://github.com/COVESA/vehicle_signal_specification)
+   (**MPL-2.0**, 455★) for in-vehicle signal scope, and from the client's own type-approval dossier for
+   what is already a declared safety component.
+2. **Place each system in column A or B, and record the reason.** This is the billable judgement. The
+   output is a table with a per-system rationale, not a RAG status.
+3. **For column A, build the evidence trace.** Use the assurance-as-code layer —
+   [lieubk/automotive-safety-security-assurance-kit](https://github.com/lieubk/automotive-safety-security-assurance-kit)
+   (**MIT**) and the `automotive-skills-suite` builder/reviewer pairs (**MIT**, 2,907★) in
+   `repos/foundations.md` **Layer D** — to generate the ISO 26262 / 21434 / 21448 artefacts that the
+   delegated-act route will ask for, and map **UNECE R157 transition-demand design → the human-oversight
+   requirement** (the mapping already recorded under `### EMEA`).
+4. **For column B, run the ordinary high-risk workflow.** No automotive relief applies; these are
+   general-purpose AI systems that happen to belong to a carmaker.
+5. **Ship the boundary table as the artefact**, with every placement cited to Art. 2(2), Annex I §B, or
+   the absence of both.
+
+**Why it sells, and why now:** ⚠️ **the date conflict is a feature of this engagement, not an obstacle to
+it.** Each column's deadline follows from which column a system is in, so **the work can be scoped,
+priced and delivered while the Digital Omnibus timing is still contested** — and the EC's own
+**Apply AI Strategy** consultation is explicitly collecting *"barriers to AI adoption and practical
+challenges in implementing the AI Act"*, which is this deliverable described by the regulator.
+**Proving a system sits in column A reduces the client's obligations**, which is the rare compliance
+engagement that subtracts work — and it is argued from statutory text rather than from a forecast.
+
+---
+
+## P21 🆕 — Colombia-first ADS deployment, Brazil-first AV governance (LATAM, and it reverses the usual order)
+
+**Region: LATAM.** Five passes of this KB treated LATAM as a regulatory blank and defaulted every
+conversation to Brazil. **One measured fact reverses that for one of the two work types** — see
+`intel/trends.md` **N15**.
+
+**The asymmetry:** **Colombia already regulates the circulation of automated driving systems up to SAE
+Level 3** (CMS, *Automotive Outlook 2026*) but has **no AI bill and is not debating one federally**.
+**Brazil has the inverse**: no operating ADS rule, but **Bill 2,338/2023** would classify AVs as
+**high-risk AI systems** with **risk-management, transparency, cybersecurity and human-supervision**
+duties.
+
+**So run two different plays, and do not mix them up:**
+
+**Play A — deployment/homologation, in Colombia.** Something is already permitted, so the engagement is
+to operate inside it: an L3-bounded ODD definition, the evidence pack for it, and the vehicle-side stack.
+Wire [commaai/openpilot](https://github.com/commaai/openpilot) (**MIT**, 64,192★) or
+[autowarefoundation/vision_pilot](https://github.com/autowarefoundation/vision_pilot) (**Apache-2.0**) as
+the L2/L3 base per **P11**, with `esmini` (**MPL-2.0**, 954★) +
+[carla-simulator/scenario_runner](https://github.com/carla-simulator/scenario_runner) (**MIT**, 687★)
+driving the scenario regression factory of **P1** to produce ODD-bounded evidence.
+
+**Play B — governance, in Brazil.** Bill 2,338 **names its own four work packages**, so build to them
+directly: risk management, transparency, cybersecurity, human supervision. Use the **P14** assurance
+artefact factory (`automotive-skills-suite`, **MIT**) to emit the four as versioned artefacts with named
+owners, and keep **LGPD** as the binding constraint today (per **P5**) rather than the un-passed AI bill.
+
+**Sequencing advice that follows from the asymmetry:** **a client wanting to *drive* something in LATAM
+should be pointed at Colombia; a client wanting to *govern* AVs across LATAM should be anchored in
+Brazil.** Pitching Brazilian deployment or Colombian AI governance is pitching into the half of each
+regime that does not exist.
+
+⚠️ **Two hard caveats before this is used commercially.** **(1) CMS names no Colombian decree or
+resolution**, the analysis dates to ~March 2026, and no primary Colombian source resolved from this
+environment — **confirm the instrument at the Ministerio de Transporte / Diario Oficial first.**
+**(2) Baker McKenzie: no Latin American country has a fully mature, harmonised AI regime**, so neither
+play should be sold as compliance with a settled framework. Supply-side reality is unchanged:
+**zero LATAM-origin automotive repos across six consecutive passes** (`intel/market.md` → `### LATAM`),
+so the engineering is imported and the **regulatory and integration work is the local value** — which
+matches the buyer's own stated problem (**KPMG**: the obstacle is integrating data across fragmented
+systems and supply-chain players).

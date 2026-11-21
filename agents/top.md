@@ -26,6 +26,94 @@ updated: 2026-11-21
 > 🆕 = new this pass. 🔄 = licence/stars re-read today. ⏸ = URL re-probed, figures carried from an
 > earlier pass and labelled rather than silently refreshed. **No row is a placeholder.**
 
+## 🆕 What changed on 2026-11-21 — second pass (verification, 12:45Z)
+
+**Rotation sent a second pass at automotive on the same day.** The 09:55Z base was **verified, not
+rewritten**. Two new permissive rows, one rejection, and a licence layer that held up under independent
+re-measurement.
+
+### V1. ✅ The licence layer was re-measured from scratch and came back clean — 0 errors in 182 rows
+
+All 188 `github.com/<owner>/<repo>` URLs in the eight files were re-probed via batched
+`gh api -X GET search/repositories` (8 slugs per query), returning measured stars, forks, SPDX,
+`pushed_at` and `archived` for **182 rows**. Every row whose written licence disagreed with the measured
+SPDX was then **byte-read from `raw.githubusercontent.com`**.
+
+| Result | Count |
+|---|--:|
+| URLs probed | **188** |
+| Live | **185** |
+| Dead | **3** — *the same 3 the 09:55Z pass already recorded*, none a recommendation |
+| Rows where written licence ≠ measured SPDX | **20** |
+| **Of those, real errors in this base** | **0** |
+| Archived repos presented as live | **0** |
+
+**All 20 flags resolved in the base's favour, in two distinct ways** — and the split is the useful part:
+
+- **13 flags were `NOASSERTION`-as-pointer**, exactly as this KB's standing rule predicts. Byte-read
+  verdicts: `nutonomy/nuscenes-devkit` **is** Apache-2.0 (549-byte pointer header); `odoo/odoo` **is**
+  LGPL-3.0 (43,529 bytes); `auto-agent-protocol` **is** Apache-2.0 for code/schemas with **CC BY 4.0
+  documentation** — a dual arrangement, which is why its `LICENSE` is a short 5,290 bytes and why the API
+  cannot classify it. **The written rows were right and the API was wrong in every case.**
+- **7 flags were the detector catching the base's own warning prose.** `petrpatek/obd2-mcp-server` and
+  `cyrusdavirusss/j2534-mcp-server` are flagged because their cells contain the word *MIT* — inside the
+  sentence **"README says MIT; there is NO `LICENSE` file"**. `autowarefoundation/AWSIM` is flagged for
+  containing *Apache-2.0* inside **"🔴 bespoke AWSIM License — **Not Apache-2.0**"**.
+  `waymo-research/waymo-open-dataset` already carries the **`wdl_limited/` carve-out**. **A base that
+  states its own exceptions precisely will trip a naive licence differ; that is a feature of the base, not
+  a defect.** Any future automated checker must read the cell, not grep it.
+
+### V2. 🔴 Method finding: the licence-filename list is not the instrument — the row is
+
+Probing `LICENSE`, `LICENSE.md`, `LICENSE.txt`, `LICENCE`, `COPYING` and `NOTICE` on `main`, `master` and
+`develop` returned **404 on all 18 combinations** for `autowarefoundation/autoware-safety-island`, which
+would have been written up as *"claimed Apache-2.0, no licence file exists"* — **a false correction
+against a correct base.** The repo carries a **full 10,894-byte Apache-2.0 text in `license.rst`**
+(reStructuredText, hence GitHub's `NOASSERTION`), and its README header carries
+`SPDX-License-Identifier: Apache-2.0` under an **Arm Limited** copyright.
+
+**The row already said `license.rst`.** The rule for every later pass: **read the evidence a row cites
+before re-probing it.** Extend the probe list with `license.rst` / `LICENSE.rst`.
+
+### V3. 🆕 Two new rows, both permissive, both byte-read
+
+| Repo | Licence (byte-read 2026-11-21) | ★ | Why it is here |
+|---|---|--:|---|
+| [LogosIntelligenceLab/SGDrive](https://github.com/LogosIntelligenceLab/SGDrive) | **MIT**, 1,077 bytes | 81 | **The only MIT-licensed driving model in this KB.** See *Driving policies & VLA models*. |
+| [TUM-AVS/FM-AD-Survey](https://github.com/TUM-AVS/FM-AD-Survey) | **Apache-2.0**, 11,337 bytes (canonical) | 249 | TU Munich foundation-models-for-AD survey, pushed 2026-11-19. See *Survey/index layer*. |
+
+### V4. 🔴 Rejected on licence: Xiaomi's L3 org shipped a 147★ model with no grant
+
+[XiaomiAutoL3/DriveZero](https://github.com/XiaomiAutoL3/DriveZero) — **147★, measured `NONE`, no licence
+file.** *"End-to-end driving beyond human demonstrations."* **Rejected.** Noteworthy because this KB
+already holds **Xiaomi's `recogdrive` as Apache-2.0 (631★)**: **the same vendor is inconsistent across its
+own repositories, so vendor reputation is not a licence signal.** Re-probe later — an unlicensed 147★
+model is a plausible candidate for a grant being added.
+
+### V5. 📈 Drift: the shelf is stable, and the movement is concentrated in one cluster
+
+Of rows with ≥200 claimed stars, **the largest absolute moves are all in the VLA / world-model layer**:
+`NVlabs/alpamayo-recipes` **205 → 245 (+40)**, `NVlabs/alpamayo2` **287 → 314 (+27)**,
+`QwenLM/Qwen-Drive-1.0` **537 → 563 (+26)**, `OpenDriveLab/WorldEngine` **520 → 542 (+22)**. Everything
+else with a large base moved by single digits (`openpilot` **64,192**, `PythonRobotics` 30,951 → 30,953).
+**Attention is concentrating on the open VLA/world-model frontier, not on the stacks** — and the NVIDIA
+Alpamayo line is the centre of it. Fast movers on a small base: `autowarefoundation/autoware_latent_drive`
+**42 → 95**, `superdeman/cockpit-agent` **1 → 30**.
+⚠️ **These are drift-since-the-row-was-written, not a measured growth rate** — rows carry snapshot dates
+from 2026-10-31 through 2026-11-21. Direction is sound; do not quote a per-day figure.
+
+### V6. 🔴 Declared gaps 2026-11-21 (verification pass) — searched, found nothing, recorded
+
+| Query / target | Result |
+|---|---|
+| `SpaceDrive in:name` (named as a CVPR 2026 driving paper by an aggregator) | **No such repository resolves.** The aggregator named a paper, not a reachable repo. |
+| `carlover` (named MIT automotive assistant via an ecosystems aggregator) | **5 repos, all 0–3★, all unlicensed junk.** The specific slug the aggregator cited does not resolve. **Second aggregator-sourced candidate to evaporate in one pass.** |
+| Dealership ERP/CRM, permissive | **7th consecutive negative.** Leg returned general-purpose ERP only: `Dolibarr` **GPL-3.0** (7,889★, correctly held as copyleft), `YetiForceCRM` **`NOASSERTION` and unpushed since Sep 2024**, `SuiteCRM` did not resolve. **`open-mercato` (MIT, 1,953★) remains the only permissive option and it is a framework, not a dealership product.** |
+| Model **weights** licences | **Unverifiable from this environment, 6th consecutive pass** — `huggingface.co` DNS-dead, re-probed this pass. |
+
+---
+
+
 ## 🆕 What changed on 2026-11-21
 
 **Channel breakthrough — the verification problem this file has carried since 2026-10-26 is solved.**
@@ -387,6 +475,7 @@ listed so nobody re-searches them.
 
 | Repo | Licence | ★ | Why track it |
 |---|---|---|---|
+| 🆕 [TUM-AVS/FM-AD-Survey](https://github.com/TUM-AVS/FM-AD-Survey) | **Apache-2.0** (`LICENSE` byte-read 2026-11-21, 11,337 bytes — full canonical text) | **249★** | **New to this KB, and it is the academically strongest index in this layer.** Foundation-models-for-autonomous-driving survey from **TU Munich's Autonomous Vehicle Systems chair** — a named university group rather than an anonymous awesome-list, which is why it is worth tracking separately from the lists above. **Pushed 2026-11-19, i.e. actively maintained.** Use it as the between-pass reading list for the VLA/world-model layer in section 7. |
 | [Thinklab-SJTU/Awesome-LLM4AD](https://github.com/Thinklab-SJTU/Awesome-LLM4AD) | **Apache-2.0** | **1,906★** / 115f | LLM/VLM/VLA/world-model for AD, continually updated. **The single best map of this space.** |
 | [iDoka/awesome-canbus](https://github.com/iDoka/awesome-canbus) | **CC0-1.0** | **3,571★** / 426f | CAN bus tools, hardware, resources — security/RE oriented |
 | [worldbench/awesome-3d-4d-world-models](https://github.com/worldbench/awesome-3d-4d-world-models) | **Apache-2.0** | 1,031★ | **TPAMI 2026** survey of 3D/4D world modelling |
@@ -501,6 +590,7 @@ pass is methodological: **in automotive, search the protocol, not the buzzword.*
 
 | Agent / model | Repo | Licence | Stars | What it is |
 |---|---|---|--:|---|
+| 🆕 **SGDrive** | [LogosIntelligenceLab/SGDrive](https://github.com/LogosIntelligenceLab/SGDrive) | **MIT** (`LICENSE` byte-read 2026-11-21, 1,077 bytes, *"Copyright (c) 2025 Logos Robotics Group"*) | 81 | **New to this KB.** CVPR-2026-cited driving model from Logos Robotics Group. **The reason to care is the licence, not the star count: MIT is the most permissive grant in this entire table** — every other model row here is Apache-2.0 at best, and several carry no grant at all. For a client deliverable that must be sublicensed or shipped inside a proprietary stack, **an 81★ MIT model can be worth more than an 800★ Apache-2.0 one**. Last pushed 2026-10-23. ⚠️ Small project, single-org provenance, no independent reproduction found — treat as a licence-safe starting point, not a production policy. |
 | 🆕 **alpamayo-autoware** | [autowarefoundation/alpamayo-autoware](https://github.com/autowarefoundation/alpamayo-autoware) | Apache-2.0 | 161 | **Autoware Foundation's fork of `NVlabs/alpamayo`**, updated 11 Nov 2026, default branch **`alpamayo2.0-edge`**, 42 commits, no description set. Significant as *governance*, not as new science: the vendor-neutral foundation is now carrying its own edge branch of NVIDIA's model rather than consuming releases. If you build on Alpamayo for a client who cares about vendor neutrality, **this is the fork to track**. |
 | 🆕 **autoware_latent_drive** | [autowarefoundation/autoware_latent_drive](https://github.com/autowarefoundation/autoware_latent_drive) | 🔴 **NO LICENCE** — see exclusions | 42 | Listed here for findability and **excluded from use below**. LatentDrive: a **camera-only** E2E planner whose video encoder is a **V-JEPA ViT-L**, planning *"in that latent space"* with *"no object detection or tracking in between"*. Takes the **last 2 s of front-camera video + six route points + ego motion**, outputs a **4 s ego trajectory at 10 Hz**. Ships a **TensorRT C++ inference library with no ROS dependency**, plus an offline sample and a ROS 2 node. Targets ROS 2 Jazzy, CUDA 13.0, TensorRT 10.13. Two ONNX models on HF (3-camera and 1-camera). README: *"This is a research model: it is not a certified driving system and must not control a vehicle on public roads."* **No benchmarks** — evidence is qualitative open-loop replay; the plan *"is drawn, not executed."* |
 | 🆕 **Senna** | [hustvl/Senna](https://github.com/hustvl/Senna) | Apache-2.0 | 559 | *"[IJCV 2026] Senna: Bridging Large Vision-Language Models and End-to-End Autonomous Driving."* A peer-reviewed (IJCV 2026) VLM↔E2E bridge from HUST's vision lab — the academic line alongside OpenDriveVLA, and a useful second opinion on how to attach a language model to a planner without replacing it. 16 commits. |

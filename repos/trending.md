@@ -8,6 +8,80 @@ updated: 2026-11-21
 
 > **APPEND-ONLY.** Newest dated section on top; history preserved below. Never rewrite earlier sections.
 
+## 2026-11-21 — second pass (verification, 12:45Z)
+
+**Window:** 2026-11-21 09:55Z → 12:45Z (≈3 hours, same day). The 09:55Z section below is preserved
+unchanged. **Channel:** batched `gh api -X GET search/repositories` (8 slugs/query), byte-read
+`LICENSE` from `raw.githubusercontent.com`, `git ls-remote` for exact-case liveness.
+
+### ✅ Shelf re-measured from scratch: 188 URLs → 185 live, 3 dead, zero new rot
+
+| Check | Result |
+|---|---|
+| URLs probed | **188** |
+| Live | **185** |
+| Dead | **3** — `RobertSloan22/tars-car-mcp`, `luca1234413/MotionBastard`, `vaisakhvenugopal/Deconstructing-BYD-s-Technology-Architecture` |
+| New dead since 09:55Z | **0** — all three were already recorded as dead, **none is a recommendation** |
+| Written licence ≠ measured SPDX | **20 rows → 0 real errors** (see `agents/top.md` §V1) |
+| Archived repos presented as live | **0** — `ChanMeng666/automotive-repair-management-system`, `eclipse-score/inc_feo`, `microsoft/AutonomousDrivingCookbook` are all already labelled |
+
+**An independent re-probe reproducing the prior pass's dead-URL set exactly is the strongest available
+evidence that this file's addresses are trustworthy** — it is the first time the whole shelf has been
+re-measured by a separate pass on the same day and agreed to the row.
+
+**Liveness instrument note:** `git ls-remote` on a deleted or private repo fails with
+`could not read Username for 'https://github.com'` — **an auth prompt, not a 404**. A control
+(`COMMAAI/OPENPILOT`, deliberately wrong case) resolved **LIVE**, confirming **owner/repo case does not
+affect the probe** and that the three failures above are genuine disappearances rather than case errors.
+
+### 🆕 New repos this window
+
+| Repo | Licence (byte-read 2026-11-21) | ★ | Note |
+|---|---|--:|---|
+| [LogosIntelligenceLab/SGDrive](https://github.com/LogosIntelligenceLab/SGDrive) | **MIT**, 1,077 bytes | 81 | **The only MIT-licensed driving model in this KB.** Pushed 2026-10-23. |
+| [TUM-AVS/FM-AD-Survey](https://github.com/TUM-AVS/FM-AD-Survey) | **Apache-2.0**, 11,337 bytes | 249 | TU Munich foundation-models-for-AD survey, pushed 2026-11-19. |
+
+### 📈 Measured movement — the VLA/world-model cluster is where the stars are going
+
+`NVlabs/alpamayo-recipes` 205 → **245**, `NVlabs/alpamayo2` 287 → **314**, `QwenLM/Qwen-Drive-1.0`
+537 → **563**, `OpenDriveLab/WorldEngine` 520 → **542**. Large-base repos essentially flat:
+`commaai/openpilot` **64,192**, `ApolloAuto/apollo` **26,915** (⚠️ last pushed **2026-04-16**),
+`carla-simulator/carla` **14,670**, `autowarefoundation/autoware` **12,268**, `traccar/traccar`
+**8,162**. Small-base fast movers: `autowarefoundation/autoware_latent_drive` 42 → **95**,
+`superdeman/cockpit-agent` 1 → **30**, `masoudjtehrani/pcla` 77 → **103**.
+⚠️ Deltas are **drift since each row was written** (2026-10-31 → 2026-11-21), not a 3-hour rate.
+
+### 🔴 Measured SPDX distribution across the 182 resolved rows — the shelf is 71% permissive
+
+| Licence | Rows |
+|---|--:|
+| Apache-2.0 | **76** |
+| MIT | **53** |
+| `NOASSERTION` | 16 |
+| `NONE` (no licence file) | 16 |
+| MPL-2.0 / CC0-1.0 / BSD-3-Clause / AGPL-3.0 | 3 each |
+| GPL-3.0 / EPL-2.0 | 2 each |
+| GPL-2.0 / LGPL-2.1 / LGPL-3.0 / MIT-0 / BSD-2-Clause | 1 each |
+
+**129 of 182 rows (71%) are MIT or Apache-2.0** — the two licences Globant can build on without
+copyleft analysis. **Only 9 rows carry a copyleft grant**, and each is labelled as such in place.
+**The 32 `NOASSERTION`/`NONE` rows are the real work surface**: this pass byte-read every one that a
+written row claimed as permissive and found **no misstatement**, but they remain the rows where a
+future automated checker will keep raising false alarms.
+
+### 🔴 Declared gaps this window
+
+- **`SpaceDrive`** (named as a CVPR 2026 driving project by an aggregator) — **no repository resolves.**
+- **`carlover`** (MIT automotive assistant per an ecosystems aggregator) — **slug does not exist.**
+  **Two aggregator-sourced candidates evaporated in one pass; resolve a slug before writing its row.**
+- **Permissive dealership ERP/CRM: 7th consecutive negative.** `Dolibarr/dolibarr` **GPL-3.0** (7,889★),
+  `YetiForceCompany/YetiForceCRM` **`NOASSERTION`, unpushed since 2024-09-13**, `SuiteCRM` unresolved.
+  **`open-mercato/open-mercato` (MIT, 1,953★) is a framework, not a dealership product.**
+- **`huggingface.co` DNS-dead (6th pass)** — weights licences unverifiable from this environment.
+
+---
+
+
 ## 2026-11-21
 
 **Window:** 2026-11-19 → 2026-11-21 (2 days). **Channel:** `git ls-remote` (liveness),

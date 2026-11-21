@@ -9,6 +9,98 @@ updated: 2026-11-21
 > Current trends, updated 2026-10-31. Project and vendor self-reported performance figures are labelled
 > as such. Dates name their instrument.
 
+## 🆕 New on 2026-11-21 (second pass, verification 12:45Z) — three trends, and two of them invert standing assumptions
+
+### N13 — The EU AI Act reaches vehicles through an ENUMERATED article list, which turns a deadline argument into a triage exercise
+
+**This file and `intel/market.md` have spent three passes arguing about a date** (2 Aug 2026 vs 2 Aug 2028
+vs 2027). **The date was the wrong question.** The mechanism now resolves to a named article, and the
+article is an enumeration:
+
+- An AI system that is a **safety component of a type-approved vehicle** is a product under **AI Act
+  Annex I, Section B**, which lists **Regulation (EU) 2018/858** (type approval) and **Regulation (EU)
+  2019/2144** (general safety, incl. ADAS).
+- For those systems, **Article 2(2) applies only Article 6(1), Articles 102–109 and Article 112
+  directly**, and **there is no separate AI Act conformity assessment.** The substantive requirements
+  arrive instead **via Article 109's amendments to Reg. 2019/2144**, then through **delegated and
+  implementing acts under the amended Reg. 2018/858**.
+- **But numerous automotive AI systems do not fall under those sector-specific regimes at all** — and
+  those take the **full AI Act on the general timeline**, with no Article 2(2) relief.
+
+**The trend, stated as a trend: automotive AI compliance is bifurcating, and the boundary is type
+approval.** The same OEM will hold systems on both sides of it. **An enumerated list cuts scope in the
+client's favour** — the identical shape as the enumerated high-risk list recorded in the education KB,
+and argued **from the text of Art. 2(2)** rather than from a contested date.
+
+**Why it matters commercially:** the deliverable is **the inventory and the boundary**, not a deadline
+memo. See `compose/patterns.md` **P20**. It is also **robust to the date conflict**, because each column's
+date follows from which column a system lands in — so the work can be sold and delivered while the
+Digital Omnibus timing is still disputed.
+
+⚠️ **All secondary.** Sources explicitly disagree on direct-vs-indirect application, and
+**`eur-lex.europa.eu` is DNS-dead from this environment for the 6th consecutive pass.** Verify
+**Annex I, Art. 2(2) and Art. 109** against the Official Journal before client use. Corroboration
+improved this pass: **Taylor Wessing** (incl. a June 2026 automotive-specific Digital Omnibus Q&A) and
+**Squire Patton Boggs** both describe the framework, and political agreement in trilogue is reported for
+**7 May 2026**.
+
+### N14 — Stop quoting market size for this industry; quote announced investment and adoption rate instead
+
+**This KB has recorded an irreconcilable market-size spread for five passes** — 2026 automotive-AI
+estimates of **US$5.8B / 6.52B / 9.13B / 27.33B**, a 4× range, because the vendors are measuring
+different things. **Five passes of further searching has not narrowed it and will not.** The trend worth
+recording is that **a better class of number exists and this file was not using it:**
+
+| Class of figure | Example | Why it is more defensible |
+|---|---|---|
+| ❌ **Market size** | "automotive AI is US$X B in 2026" | A vendor **model** over a self-chosen definition. 4× spread. |
+| ✅ **Announced investment** | **>US$80B across 2021–2025, plus ~US$30B in early 2026 alone** (PwC) | **Disclosed capital**, tallied from company announcements rather than modelled. |
+| ✅ **Adoption rate** | **47% of companies today → 72% by 2030** (PwC, 2026 Global Automotive Outlook) | A **rate**, so definitional disagreement about market boundaries cancels out. |
+
+**And the single most useful sentence found this pass is about where the money sits, not how much there
+is: PwC reports OEMs deploy approximately 75% of automotive AI capital, with suppliers mainly *enabling*
+that OEM work.** If three quarters of the capital is OEM-side, **a supplier-first pipeline is competing
+for the remaining quarter.** The supplier opportunity is real but it is **an enablement sale** — tooling,
+compliance evidence, integration for an OEM programme — **not a platform sale.** That should change which
+door a studio knocks on and what it carries through it.
+
+**Secondary signal:** multiple 2026 sources report the CES 2026 vocabulary moving from *"software-defined
+vehicle"* to **"AI-defined vehicle"**. Positioning language rather than a technical category — but it is
+the buyer's current language.
+
+### N15 — LATAM has its first positive automotive-AI regulatory fact, and it is not in Brazil
+
+**Five passes of this KB recorded LATAM as a regulatory blank** — bills pending, nothing in force, zero
+origin repos. **That is now wrong in a specific and useful way.**
+
+**Colombia already regulates the circulation of automated driving systems up to SAE Level 3** (CMS,
+*Automotive Outlook 2026*, "Liability and the regulation for autonomous driving in Latin America").
+Meanwhile **Brazil has the legislative debate and no operating rule** — Bill 2,338/2023 would classify
+AVs as **high-risk AI systems** with **risk-management, transparency, cybersecurity and human-supervision**
+duties, but it is still awaiting a rapporteur's opinion.
+
+**The inversion, and it should change where a LATAM AV engagement starts:**
+
+| | Operating rule for ADS | AI/AV legislation |
+|---|---|---|
+| **Colombia** | ✅ **regulated up to SAE L3** | 🔴 none; **not** debating one federally |
+| **Brazil** | 🔴 none found | ⏳ Bill 2,338/2023 pending, AVs = high-risk |
+
+**Deployment and homologation work points to Colombia, because something is already permitted there.
+Governance and risk-framework work points to Brazil, because the draft names its own four work packages.**
+This KB — like most LATAM practice — defaulted to Brazil-first for both. **A regime with no AI law but a
+live ADS permission is an opportunity, not a constraint.**
+
+⚠️ **CMS names no Colombian decree or resolution, the piece dates to ~March 2026, and no primary
+Colombian source was reachable.** Good enough to open a conversation; **not** good enough for a compliance
+memo. **Naming that instrument is now the highest-value LATAM verification task in this KB.**
+Regional frame (Baker McKenzie): **no Latin American country has a fully mature, harmonised AI regime
+across all sectors**; CMS adds that **Colombia, Peru and Mexico are not discussing federal bills**, while
+**Brazil and Chile** are the two where technology and regulation are both advancing.
+
+---
+
+
 ## 🆕 New on 2026-11-21 — three trends, and the first one is about the ground this KB stands on
 
 ### N10 — Capability attributed to a blocked channel was never blocked: `github.com` is 403, `raw.githubusercontent.com` is 200
