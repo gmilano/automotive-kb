@@ -805,3 +805,37 @@ All exist; none can be built on. Re-confirmed or newly probed 2026-11-13.
 
 ---
 *Verified 2026-11-13 (previous pass 2026-10-31). 🆕 = new this pass. 🔄 = licence and stars re-read from the repository page today. ⏸ = carried from an earlier pass with the figures labelled. Stars are GitHub's rounded display values.*
+
+---
+
+## 🆕 Added 2026-11-21 (fourth pass) — in-vehicle diagnostics agents, byte-read
+
+Three real agents, all **MIT** and all byte-read this pass. They were found by **short** `gh` queries
+after the long-query defect was identified (`agents/trending.md` → this date). Only the first is a
+recommendation; the other two are recorded because a 2026 listicle presents them as current and
+**their own bytes say otherwise.**
+
+| Agent | Repo | Licence (byte-read) | ★ / forks | Verdict |
+|---|---|---|--:|---|
+| 🆕 **CarDash** | [surendranb/CarDash](https://github.com/surendranb/CarDash) | **MIT** — `main/LICENSE`, 1,079 b | **61** / — | ✅ **Use this one.** Android (Kotlin + Jetpack Compose) OBD-II dashboard, **pushed 2026-08-03**. Real-time metrics + deep diagnostics over the OBD-II port, a **persistent local vehicle-health ledger in Room/SQLite**, and **Google Gemini as an on-demand assistant** — i.e. the LLM is a *feature of a working telemetry app*, not the app. Privacy posture is stated in the README and is unusually strong for this category: *"No Account Required"*, *"No Data Collection"*, *"No Analytics"*, *"No Advertisements"*, *"100% Local Storage … Your vehicle data belongs to you alone."* **That architecture — local ledger, cloud LLM only on demand — is the one to copy for any consumer-facing vehicle agent under GDPR or Brazil's LGPD.** |
+| 🆕 **Automotive-AI** | [Eloquent-Algorithmics/Automotive-AI](https://github.com/Eloquent-Algorithmics/Automotive-AI) | **MIT** — `main/LICENSE`, 1,061 b | 38 / 14 | ⚠️ **Reference implementation, stale model.** *"Developed to assist in managing day-to-day operations of a mobile automotive diagnostic, and car key replacement business."* Voice-activated hands-free diagnostics: NLP + TTS + STT + an **OBD-II ELM327** dongle, 127 commits. Voice commands are concrete and worth copying as a command surface — `read trouble codes`, `freeze frame data`, `pending trouble codes`, `clear trouble codes`, `engine coolant temperature`, `time run with MIL on`. ⚠️ **README's newest dated entry is 2024-03-17 and it pins `gpt-3.5-turbo-0125`.** The *shape* is current; the model and SDK are two years old. 🔴 **And its documented no-car test path is `Ircama/ELM327-emulator`, which is CC-BY-NC — unusable in a paid engagement.** Substitute `the-can-opener/simple-elm` (MIT) or real hardware. |
+| 🆕 **VIA-AI** | [via-intelligent-vision/VIA-AI](https://github.com/via-intelligent-vision/VIA-AI) | **MIT** — `master/LICENSE`, 1,079 b | 59 / 26 | ⛔ **Historical interest only — do not propose.** *"Open source driver assistance app"* with **ACC, LKAS and CAN bus integration** running on an Android phone. The licence file reads **`Copyright (c) 2019 VIA, Inc.`**, the repo shows **1 commit**, and the hardware requirements are **comma.ai White Panda + Giraffe** (both long discontinued) on an **HTC U11+, U12+ or Pixel 2** with Android 8.0. **A phone-based L2 stack is a dead branch; `autowarefoundation/vision_pilot` (Apache-2.0, 927★) is the live answer to the same question.** |
+
+> ⚠️ **Freshness trap, logged as a recurring class.** `medevel.com`'s *"Top 15 Open-Source Car AI
+> Projects … (2026)"* presents VIA-AI as a current option. **The article's year is not the repo's
+> freshness.** This is the licence-badge-on-a-listicle pathology one layer up — same fix: open the
+> bytes. (That article could not be read first-hand; `medevel.com` does not resolve from this session.
+> Names came from snippets, then every row above was verified against `raw.githubusercontent.com` and
+> the rendered repo page.)
+
+### ❌ Negative results from this leg
+
+- **`DriveSense`** → [TensorTrove/DriveSense](https://github.com/TensorTrove/DriveSense): real and
+  **MIT**, but **4★ and last pushed 2024-08-09.** Too small and too stale to carry a row.
+- **`XiaomiAutoL3/DriveZero` re-probed as the third pass requested: still no licence file.** Both
+  `main` and `master` serve a README; no `LICENSE`/`LICENSE.md`/`LICENSE.txt`/`COPYING` on either.
+  **Open item stays open; still excluded** (147★, unlicensed).
+- 🔴 **`hypery11/flipper-tesla-fsd`** (1,336★, `NOASSERTION`) surfaced on stars and is **excluded on
+  suitability, not only licence**: *"nag killer, FSD region unlock"* defeats manufacturer restrictions
+  and driver-attention monitoring. **Not appropriate for a client engagement whatever its grant.**
+  Recorded so a later pass does not surface it as a find.

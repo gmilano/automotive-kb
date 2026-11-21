@@ -8,6 +8,151 @@ updated: 2026-11-21
 
 > **APPEND-ONLY.** Newest dated section on top; history preserved below. Never rewrite earlier sections.
 
+## 2026-11-21 — fourth pass (14:50Z)
+
+**Window:** 2026-11-21 13:54Z → 14:50Z (≈1 hour, same day — the **fourth** automotive pass today; the
+three sections below are preserved unchanged). **Channel:** byte-read `LICENSE` from
+`raw.githubusercontent.com`, `gh api -X GET search/repositories` for metadata, `WebFetch` on
+`github.com` for page-rendered star/fork counts.
+
+**This pass did not re-measure the shelf.** p941 rewrote this base 56 minutes earlier. It went after the
+*shape of the queries* instead, and that turned out to be where the KB's "discovery ceiling" actually lived.
+
+### 🔴 METHOD DEFECT FOUND IN THIS KB'S OWN INSTRUMENT — long `gh` queries return a FALSE ZERO
+
+The single most important finding of this pass, because it has been silently capping discovery.
+
+`gh api -X GET search/repositories` with a long natural-language `q` returns **zero items** — not few, zero:
+
+| Query sent | Result |
+|---|---|
+| `automotive manufacturing quality inspection AI pushed:>2026-06-01 stars:>100` | **0 items** |
+| `vehicle predictive maintenance machine learning pushed:>2026-06-01 stars:>50` | **0 items** |
+| `software defined vehicle SDV platform pushed:>2026-06-01 stars:>50` | **0 items** |
+| `AUTOSAR adaptive pushed:>2026-01-01 stars:>100` | **0 items** |
+| `in-vehicle voice assistant LLM cockpit pushed:>2026-06-01 stars:>30` | **0 items** |
+
+Re-run **short**, the same index is dense:
+
+| Query sent | Result |
+|---|---|
+| `autosar stars:>50` | **10 items**, incl. `cogu/autosar` MIT 503★ and `autoas/as` 966★ |
+| `software-defined-vehicle` | **10 items**, incl. `eclipse-leda/leda`, `sw-mobility/open-sdv` |
+| `topic:adas stars:>50` | **10 items** |
+| `topic:v2x stars:>50` | **10 items**, incl. the `riebl` ETSI C-ITS stack |
+
+**`search/repositories` matches name, description and topics — not README prose — and ANDs every
+term.** A five-word phrase therefore demands all five words inside one short description field, which
+almost nothing satisfies. **The zero is an artifact of query length, not a statement about the world.**
+
+⚠️ **This is the `anomalib` lesson a second time, and it generalises past automotive: a `0 repos` cell
+is a claim about the instrument until a SHORT query has been tried.** Any KB in this fleet carrying
+`0 repos` gaps gathered from long queries should re-probe them short before trusting the gap. Had this
+pass written those five zeros down as findings, it would have published five fabricated gaps — and an
+informed gap is only information when the instrument was actually pointed at the question.
+
+### 🆕 Discovery: 27 unheld repos from eight short queries
+
+Deduped against all **202** github addresses this KB already holds: **49 unique hits → 22 already held →
+27 genuinely new.** The ceiling was query shape. Rows written to `repos/foundations.md` → **Layer H**.
+The two that matter most for a studio:
+
+| Repo | Licence (byte-read) | ★ | Note |
+|---|---|--:|---|
+| [ecubus/EcuBus-Pro](https://github.com/ecubus/EcuBus-Pro) | ⚠️ **Apache-2.0 declared in `package.json` only — NO `LICENSE` FILE** | 914 | UDS, CAN-TP, DoIP, LIN, TS scripting "like CAPL", HIL test. An open CANoe-class bench. **See the licence caveat below — it is not a clean grant.** |
+| [pylessard/python-udsoncan](https://github.com/pylessard/python-udsoncan) | **MIT**, `master/LICENSE.txt`, 1,074 b | 746 | UDS (ISO-14229) in Python. The clean permissive anchor for any diagnostics agent. |
+
+### 🔴 Three licence traps, and one of them sits inside a repo this KB was about to recommend
+
+**1. `Ircama/ELM327-emulator` is CC BY-NC — and it is the documented test path of an MIT agent.**
+[Eloquent-Algorithmics/Automotive-AI](https://github.com/Eloquent-Algorithmics/Automotive-AI) is
+genuinely **MIT** (byte-read, 1,061 b). Its README tells you to test without a car using
+[Ircama/ELM327-emulator](https://github.com/Ircama/ELM327-emulator) — which byte-reads as
+**CC-BY-NC, 20,849 bytes**. A client engagement is commercial use **by its own definition**, so *the
+permissive agent's recommended development workflow is unusable as shipped.* The grant on the repo you
+clone does not cover the tools its README tells you to install. **Licence-check the dev dependencies,
+not just the deliverable.** (Mitigation: a real ELM327 dongle, or `the-can-opener/simple-elm`, MIT.)
+
+**2. `ucla-mobility/OpenCDA` is not open source at all.** 1,174★, API reports `NOASSERTION`. The
+byte-read is an **Academic Software License**: grant runs only to *"academic or nonprofit researchers"*,
+*"you are prohibited from further transferring the Software — including any derivatives you make
+thereof"*, and *"Commercial entities: please contact the UCLA Mobility Lab … for licensing
+opportunities."* **Hard exclusion.** A cooperative-driving prototype built on it could not be delivered.
+
+**3. `riebl/vanetza` is CC BY-NC.** The widely-used open implementation of the **ETSI C-ITS protocol
+stack** (231★) byte-reads **CC-BY-NC, 43,043 bytes**. This bites precisely where EMEA V2X work lands.
+Peer check: `riebl/artery` GPL-2.0, `eclipse-mosaic/mosaic` EPL-2.0 — the whole ETSI V2X simulation
+neighbourhood is copyleft-or-worse, with **no permissive anchor found**.
+
+> **Pattern across all three:** every one arrived as `NOASSERTION` or `None` from the API. The standing
+> rule holds and is now 3-for-3 this pass — **a short or absent SPDX is a pointer, not a licence.**
+
+### ⚠️ `EcuBus-Pro`: the API's Apache-2.0 came from `package.json`, not a licence file
+
+Probed `LICENSE`, `LICENSE.md`, `LICENSE.txt`, `license`, `COPYING` on both `main` and `master`: **all
+404.** The repo's `package.json` (v0.8.68) declares `"license": "Apache-2.0"`. So the grant exists as a
+**metadata field with no licence text in the tree** — weaker than a `LICENSE` file, and the first time
+this KB has recorded that specific state. Usable for evaluation; **ask the maintainer to add a `LICENSE`
+file before it goes under a client deliverable.** Recorded as *declared* Apache-2.0, not *byte-read*.
+
+### 📉 Two instruments disagree on star counts — do NOT cross-write them
+
+`jherrodthomas/automotive-skills-suite` is recorded in this KB at **2,907★** (p941, page-rendered). The
+`gh` **search index** returns **2,876★** for the same repo in the same hour — **31 fewer (1.1%)**.
+
+**This is not a 31-star decline.** It is two instruments: the search index lags the rendered page.
+**Rule, and it is a correction to this KB's own practice: never refresh a star count with a different
+instrument than the one that set it — doing so manufactures drift that never happened.** p941's
+2,907★ is left standing, since page-rendered was its channel. Only like-for-like re-measurement counts.
+
+Substantive drift on the same repo, which *is* real: the README headline now reads **"152 installable
+Claude skills"**, and the API's description still says *"100+"*. The KB's existing **"76 builder+reviewer
+pairs"** is correct and equals 152. **No correction needed — the KB was right and the API is stale.**
+
+### ✅ Three new real agent rows — one current, two honestly legacy
+
+Written to `agents/top.md`. All three are real, MIT and byte-read; only the third is a recommendation:
+
+| Repo | Licence | ★ / forks | State |
+|---|---|--:|---|
+| [Eloquent-Algorithmics/Automotive-AI](https://github.com/Eloquent-Algorithmics/Automotive-AI) | **MIT**, 1,061 b | 38 / 14 | Voice OBD-II diagnostic assistant, 127 commits. **README's newest entry is 2024-03-17 and it pins `gpt-3.5-turbo-0125`** — a live reference implementation of the shape, on a two-year-old model. |
+| [via-intelligent-vision/VIA-AI](https://github.com/via-intelligent-vision/VIA-AI) | **MIT**, 1,079 b | 59 / 26 | ACC + LKAS + CAN bus on an Android phone. ⚠️ **Legacy: `Copyright (c) 2019`, 1 commit, requires comma.ai White Panda + Giraffe (both discontinued) and an HTC U11+/U12+/Pixel 2.** Historical interest only. |
+| [surendranb/CarDash](https://github.com/surendranb/CarDash) | **MIT**, 1,079 b | 61 / — | ✅ **The one worth keeping.** Android/Kotlin + Jetpack Compose OBD-II dashboard, **pushed 2026-08-03**. Persistent local vehicle-health ledger in **Room/SQLite**, **Google Gemini as an on-demand assistant**. README is explicit: *"No Data Collection"*, *"100% Local Storage"*, no account, no analytics, no ads. |
+
+⚠️ **A 2026 listicle recommended both as current.** `medevel.com`'s "Top 15 Open-Source Car AI Projects
+(2026)" lists VIA-AI as a live option; the repo's own bytes say 2019 and its hardware is off the market.
+**A listicle's publication year is not the repo's freshness** — the same pathology as a licence badge on
+a listicle, one layer up. (That article could not be read first-hand: `medevel.com` does not resolve
+from this session. Candidate names came from search snippets; **every row above was then verified
+against `raw.githubusercontent.com` and the repo page directly.**)
+
+### ❌ Negative results — recorded so silence is not mistaken for coverage
+
+- **`CarDash` — and this is the method defect catching its own author, inside one pass.** The first
+  probe sent `CarDash OBD2 AI assistant` and got **zero**, which was about to be written down here as
+  "may not exist under that name". It was re-run short on the strength of the finding above —
+  `q=cardash` returns **eight repositories**, and the right one is real, permissive and current. It is
+  now a row in `agents/top.md`, not a negative result. **The false zero was one edit away from being
+  published as a gap in the same document that documents false zeros.**
+- **`DriveSense`** resolved to [TensorTrove/DriveSense](https://github.com/TensorTrove/DriveSense) —
+  **MIT, but 4★ and last pushed 2024-08-09.** Real, permissive, and too small/stale to carry a row.
+- **`XiaomiAutoL3/DriveZero` re-probed as p941 asked: still NO licence file.** `main` and `master` both
+  serve a README; no `LICENSE`, `LICENSE.md`, `LICENSE.txt`, `COPYING` on either. The open item stays
+  open — an unlicensed 147★ model, **unchanged, and still excluded.**
+- **`iDoka/awesome-automotive-can-id`** (API: CC0-1.0, 1,033★) and **`linux-can/can-utils`** (API:
+  `None`, 2,961★): **no licence file found at either root** under six filenames × two branches.
+  `can-utils` is widely held to be per-file dual GPL-2.0/BSD-3 but **this pass could not byte-read a
+  grant**, so both are left **unrecorded as usable** rather than guessed.
+
+### 🔧 Correction to this file's own verification script
+
+The pass's first licence classifier reported `TOSUN-Shanghai/TSMaster` and `autoas/as` as plain `GPL`.
+**Both were wrong, and the cause is reusable:** LGPL's text *contains the string* "GNU GENERAL PUBLIC
+LICENSE" in its preamble, so a grep for that phrase silently mislabels LGPL as GPL. Re-read matching
+`LESSER` first: **TSMaster is LGPL-2.1** (26,526 b — the LGPL-2.1 full text length), **`autoas/as` is
+GPL-3.0** (*"Version 3, 29 June 2007"*). `openmobilityfoundation/mobility-data-specification` resolved
+the same way: not UNKNOWN but **CC-BY-4.0** (14,527 b) — a *data spec*, attribution-only, usable.
+
 ## 2026-11-21 — third pass (13:40Z)
 
 **Window:** 2026-11-21 12:45Z → 13:40Z (≈1 hour, same day — the third automotive pass today). The two

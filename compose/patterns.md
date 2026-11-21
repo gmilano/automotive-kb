@@ -1099,3 +1099,118 @@ first recorded as **N9**, which is what makes that shape structural rather than 
 flows and labour-market facts only). The VW "99.7% accuracy" figure is vendor-adjacent. Market size for
 this sub-segment disagrees **4×** ($829M vs $3.26B for 2026) — **quote the VDA gate and the scrap
 economics, never the market size.**
+
+---
+
+## P23 🆕 — The fully-permissive UDS diagnostics bench (every region; the licence story is clean end to end)
+
+**Why this pattern is new:** this KB has carried diagnostics patterns before (**P10** on a published MCP
+contract, **P12** for J1939 freight), but both had to route around the fact that the *protocol toolchain*
+underneath was unverified. The fourth pass found it, byte-read it, and **it is permissive nearly
+throughout** (`repos/foundations.md` → **Layer H**). This is the pattern where *nothing in the stack
+needs a legal conversation* — which is itself the sellable property.
+
+**The stack, with grants attached:**
+
+| Role | Component | Grant (byte-read 2026-11-21) |
+|---|---|---|
+| UDS protocol, bench side | [pylessard/python-udsoncan](https://github.com/pylessard/python-udsoncan) | **MIT**, 1,074 b |
+| Protocol constants, edge side | [oxibus/automotive_diag](https://github.com/oxibus/automotive_diag) (UDS, KWP2000, OBD-II, DoIP) | **MIT**, 1,139 b |
+| ECU bench / HIL / DoIP+LIN | [ecubus/EcuBus-Pro](https://github.com/ecubus/EcuBus-Pro) | ⚠️ **Apache-2.0 in `package.json` only — no `LICENSE` file** |
+| Bus triage UI | [Chanchaldhiman/CANviz](https://github.com/Chanchaldhiman/CANviz) | **MIT**, 1,076 b |
+| Log ingest | [COVESA/dlt-viewer](https://github.com/COVESA/dlt-viewer) | **MPL-2.0** (file-level copyleft) |
+| Technician app surface | [surendranb/CarDash](https://github.com/surendranb/CarDash) (Android) / [kkonteh97/SwiftOBD2](https://github.com/kkonteh97/SwiftOBD2) (iOS) | **MIT** / **MIT** |
+
+**Wiring.** `automotive_diag` supplies the ISO-14229/14230/9141/13400 enums to a Rust edge collector on
+the vehicle; `python-udsoncan` drives the same services from the bench, so **one protocol vocabulary
+spans edge and bench**. `EcuBus-Pro` replaces a CANoe seat for DoIP/LIN/HIL scripting (TypeScript, not
+CAPL). Session logs land as DLT and are read with `dlt-viewer`. The **agent sits above
+`python-udsoncan`, never on the bus**: it proposes a service call, a deterministic allow-list executes
+it, and `CarDash`/`SwiftOBD2` is the technician surface. Reuse **P10**'s MCP contract for the interface
+and **P12**'s technician confirmation gate unchanged — an LLM must never emit a raw UDS write.
+
+**Two things to put in the SOW, both discovered this pass:**
+1. 🔴 **`EcuBus-Pro`'s grant is a `package.json` field with no licence text in the tree.** Probed five
+   filenames on two branches: all 404. **Open a PR or an issue asking for a `LICENSE` file as task
+   zero** — it is a ten-minute ask that converts the most valuable tool in the stack from
+   "evaluation-only" to "deliverable-safe", and the answer is also a maintainer-responsiveness signal.
+2. 🔴 **Licence-check the dev dependencies, not just the shipped artefact.** `Automotive-AI` is MIT and
+   its README sends you to `Ircama/ELM327-emulator`, which is **CC-BY-NC** — non-commercial, so the
+   documented no-car test path is unusable in a paid engagement. **Substitute
+   [the-can-opener/simple-elm](https://github.com/the-can-opener/simple-elm) (MIT) or real ELM327
+   hardware**, and add a dev-dependency licence scan to the gate in **P13**.
+
+**Sell it as:** a diagnostics capability with a **complete, byte-read provenance table** (the P13
+artefact) delivered alongside the code. The table is the differentiator — most competitors cannot
+produce one, and this KB can now generate it from Layer H in an afternoon.
+
+---
+
+## P24 🆕 — Privacy-first consumer vehicle agent: local ledger, LLM on demand (LGPD / GDPR)
+
+**The pattern exists as working MIT code, which is the whole point.**
+[surendranb/CarDash](https://github.com/surendranb/CarDash) (**MIT**, 1,079 b byte-read, 61★, pushed
+2026-08-03) implements it: an Android/Kotlin + Jetpack Compose OBD-II dashboard holding a **persistent
+local vehicle-health ledger in Room/SQLite**, with **Google Gemini invoked only on demand** as an
+assistant. Its README states the posture plainly — *"No Account Required"*, *"No Data Collection"*,
+*"No Analytics"*, *"No Advertisements"*, *"100% Local Storage … Your vehicle data belongs to you alone."*
+
+**Distinct from P5**, which is LGPD-compliant *fleet* telematics (an operator processing driver data for
+its own purposes). This is the **consumer-owned-vehicle** case, where the data subject is the buyer.
+
+**Why the architecture is the compliance argument.** Under **LGPD** and **GDPR**, most of the consent,
+retention, cross-border-transfer and DSAR surface is created by *the telemetry leaving the device*.
+Keep the ledger local and that surface largely does not arise; only the on-demand inference call does,
+and it carries a single trip's context rather than a history. 🟢 **The reviewable claim becomes "by
+default, nothing leaves the vehicle" — demonstrable in code, not asserted in a DPIA.**
+
+**Wiring for a client build.** Fork the `CarDash` shape, not the app: (1) local Room/SQLite ledger as
+system of record; (2) **on-device inference first** via
+[OpenSparX/MasterAgent](https://github.com/OpenSparX/MasterAgent) (Apache-2.0, *"zero cloud
+dependency"*, sub-100 ms on Qualcomm NPU) so the common path never leaves the device at all;
+(3) cloud LLM as an **explicit, per-invocation, user-initiated escalation** — never a background sync;
+(4) [kkonteh97/SwiftOBD2](https://github.com/kkonteh97/SwiftOBD2) (MIT) for the iOS half;
+(5) the technician/service escalation path reuses **P23**'s allow-list — a consumer app must never
+write to the bus.
+
+**Where it sells.** **North America:** Deloitte's 2026 consumer study finds buyers wanting advanced
+features while **privacy concerns loom large** and resisting paying extra — this answers the objection
+that kills the upsell. **LATAM:** it removes most of the LGPD consent surface before legal review opens.
+**EMEA:** it is the cleanest GDPR data-minimisation story available for a connected feature.
+🟢 **And because it is MIT, the client can be shown the pattern as running code in the first workshop.**
+
+---
+
+## P25 🆕 — ARXML as data: programmatic AUTOSAR configuration with a review gate
+
+**The gap this closes.** **P14** industrialises the *assurance* artefacts (ISO 26262 / 21434 / 21448 /
+ASPICE) out of
+[jherrodthomas/automotive-skills-suite](https://github.com/jherrodthomas/automotive-skills-suite)
+(**MIT**, 76 builder + 76 reviewer skill pairs — the README now headlines **152 installable skills**).
+But the suite's **ARXML / DBC / LDF / K-Matrix** skills emit `.xlsx` deliverables, and ARXML is the
+format an AUTOSAR toolchain actually consumes. **Nothing in this KB previously connected the two.**
+[cogu/autosar](https://github.com/cogu/autosar) (**MIT**, 1,088 b byte-read, 503★, pushed 2026-10-16)
+is the missing link: Python modules that **read and write AUTOSAR XML**.
+
+**Wiring.**
+1. The suite's communication-matrix skill produces the K-Matrix / signal mapping as reviewed `.xlsx` —
+   the human-auditable source of truth, with its paired **reviewer skill** as the confirmation step.
+2. `cogu/autosar` **generates ARXML from that sheet**, deterministically. The sheet is the input; the
+   ARXML is a build output, not a hand-edited artefact.
+3. **The gate that makes this sellable:** `cogu/autosar` also *parses* ARXML, so the pipeline runs in
+   reverse to **diff generated ARXML against what the OEM's toolchain actually returns.** A signal that
+   drifted in integration shows up as a diff, not as a bus fault three months later.
+4. Model-level traceability upstream via [de4sdv/DE4SDV](https://github.com/de4sdv/DE4SDV)
+   (Apache-2.0, **SysML v2**, Layer D), so a requirement reaches a signal definition by a traced path.
+5. Runtime side: [COVESA/vsomeip](https://github.com/COVESA/vsomeip) (**MPL-2.0**) for SOME/IP service
+   deployment and `dlt-viewer` for the logs. ⚠️ **MPL-2.0 is file-level copyleft — modified `vsomeip`
+   files stay MPL; linking proprietary code alongside is fine. Respect the file boundary in the build.**
+
+**The deliverable is the diff, not the ARXML.** Any Tier-1 can hand-produce ARXML. **What they cannot
+cheaply produce is continuous evidence that the deployed configuration still matches the reviewed
+communication matrix** — that is the billable artefact, it recurs every integration cycle, and it is
+built entirely from MIT + Apache + MPL parts.
+
+⚠️ **Scope honestly:** `cogu/autosar` is an ARXML *library*, not an AUTOSAR authoring tool. It will not
+replace DaVinci or EB tresos. **Position it as the automation and verification layer beside the
+client's existing toolchain** — which is also why it is adoptable without displacing a vendor.

@@ -526,3 +526,66 @@ the 2026-10-15 pass recorded.
 ⏸ carried from an earlier pass and labelled; ⚪ URL present in the org listing but licence/stars deliberately left blank rather than guessed.
 `curl` and `api.github.com` are both 403 in this session, so the rendered page and `raw.githubusercontent.com` are the verification channels.
 See `verticals/solutions.md` for full customisable platforms and `agents/top.md` for the exclusion list.*
+
+---
+
+## 🆕 Layer H — the permissive diagnostics & ECU-tooling stack (added 2026-11-21, fourth pass)
+
+**Why this layer did not exist until now, and it is the same cause as Layer G:** it was never absent
+from the world, only from the queries. Layer G was missed because five passes said *automotive* to a
+layer that calls itself *industrial anomaly detection*. Layer H was missed because the `gh` queries were
+**too long** — `search/repositories` matches name/description/topics and ANDs every term, so a
+five-word phrase returns a literal zero. Eight short queries returned 27 unheld repos. **Full defect
+write-up: `agents/trending.md` → 2026-11-21 fourth pass.**
+
+This is the layer a studio actually bills against: **UDS/OBD diagnostics, ECU bench tooling and
+AUTOSAR data plumbing**, and unlike the AV-stack layers it is **permissively licensed nearly throughout.**
+
+| Repo | Licence (byte-read 2026-11-21) | ★ | Pushed | Why it is here |
+|---|---|--:|---|---|
+| [pylessard/python-udsoncan](https://github.com/pylessard/python-udsoncan) | **MIT** — `master/LICENSE.txt`, 1,074 b | **746** | 2026-10-26 | **The anchor of this layer.** A Python implementation of **UDS (ISO-14229)**, the diagnostic protocol every ECU on a modern vehicle speaks. Clean permissive grant, actively pushed. Any diagnostics agent that needs to *do* something rather than describe it starts here. |
+| [oxibus/automotive_diag](https://github.com/oxibus/automotive_diag) | **MIT** — `main/LICENSE-MIT`, 1,139 b | 105 | 2026-11-09 | **UDS (ISO-14229-1), KWP2000 (ISO-14230), OBD-II (ISO-9141) and DoIP (ISO-13400) definitions** as a Rust crate. The constants/enums layer — pairs with `python-udsoncan` rather than competing: Rust for on-vehicle/edge, Python for the bench and the agent. Dual-licensed (`LICENSE-MIT` present; Apache variant typical of Rust crates). |
+| [ecubus/EcuBus-Pro](https://github.com/ecubus/EcuBus-Pro) | ⚠️ **Apache-2.0 *declared in `package.json` v0.8.68*; NO `LICENSE` FILE IN THE TREE** | **914** | 2026-11-05 | An open **CANoe/CAPL-class ECU development bench**: **UDS, CAN-TP, DoIP, LIN, TypeScript scripting "like CAPL", HIL test**. Functionally the most valuable single tool in this layer — commercial equivalents are five-figure seats. ⚠️ **Probed `LICENSE`, `LICENSE.md`, `LICENSE.txt`, `license`, `COPYING` on `main` and `master`: all 404.** The grant is a metadata field with no licence text in the repo. **Fine to evaluate; get a `LICENSE` file added before it sits under a client deliverable.** |
+| [cogu/autosar](https://github.com/cogu/autosar) | **MIT** — `master/LICENSE`, 1,088 b | 503 | 2026-10-16 | Python modules for reading/writing **AUTOSAR XML (ARXML)**. ARXML is the interchange format for AUTOSAR ECU configuration, and this is the permissive way to generate and diff it programmatically. Direct pair for `automotive-skills-suite`'s ARXML skill. |
+| [COVESA/vsomeip](https://github.com/COVESA/vsomeip) | **MPL-2.0** — `master/LICENSE`, 16,725 b | **1,471** | 2026-11-13 | An implementation of **SOME/IP** (Scalable service-Oriented MiddlewarE over IP), the service protocol of automotive Ethernet. **COVESA-governed**, i.e. an actual industry consortium rather than a lone maintainer. ⚠️ **MPL-2.0 is file-level weak copyleft:** modified MPL files must stay MPL, but linking proprietary code alongside is permitted. Usable — with the file boundary respected. |
+| [COVESA/dlt-viewer](https://github.com/COVESA/dlt-viewer) | **MPL-2.0** — `master/LICENSE.txt`, 372 b (short-form pointer) | 557 | 2026-11-19 | **Diagnostic Log and Trace (DLT)** viewer — AUTOSAR's standard logging transport. The companion to `vsomeip` for anything that has to read vehicle logs at scale. Same MPL file-boundary caveat. |
+| [toyota-connected/ivi-homescreen](https://github.com/toyota-connected/ivi-homescreen) | **Apache-2.0** — `main/LICENSE`, 571 b | 404 | **2026-11-21** | A **Flutter embedder for automotive/embedded displays** — Wayland, DRM/KMS, EGL, Vulkan incl. zero-copy. Maintained by **Toyota Connected North America**, pushed today. The permissive route to an IVI/cluster UI without licensing a HMI stack. ⚠️ 571 bytes is the **short-form Apache notice**, not the full text — read and confirmed to grant Apache-2.0 unambiguously (*"Licensed under the Apache License, Version 2.0"*, Copyright 2020 Toyota Connected North America). |
+| [OpenSparX/MasterAgent](https://github.com/OpenSparX/MasterAgent) | **Apache-2.0** — `main/LICENSE`, 11,259 b | **966** | 2026-09-28 | *"Build AI agents that run 100% on-device. Sub-100 ms latency on Qualcomm NPU. Zero cloud dependency."* **Not automotive-labelled, which is why no pass saw it** — but Qualcomm NPUs are the dominant in-cabin compute, and "no cloud" is the in-vehicle constraint. The permissive base for a cabin agent that must work in a tunnel. |
+| [Chanchaldhiman/CANviz](https://github.com/Chanchaldhiman/CANviz) | **MIT** — `main/LICENSE`, 1,076 b | 299 | 2026-08-08 | Browser-based **CAN bus analyzer** working off low-cost USB hardware. The zero-install triage tool for a workshop or a demo. |
+| [kkonteh97/SwiftOBD2](https://github.com/kkonteh97/SwiftOBD2) | **MIT** (API; not byte-read this pass) | 163 | 2026-01-26 | Swift **OBD-II** library — live data, DTC clearing. The iOS half of a diagnostics product; `CarDash` is the Android half. |
+| [the-can-opener/simple-elm](https://github.com/the-can-opener/simple-elm) | **MIT** (API; not byte-read this pass) | 19 | 2026-04-20 | Small **ELM327** helper for serial OBD/CAN adapters. Listed for one specific reason: it is the **permissive replacement for `Ircama/ELM327-emulator`, which is CC-BY-NC** and therefore unusable in a commercial engagement. |
+| [sw-mobility/open-sdv](https://github.com/sw-mobility/open-sdv) | **Apache-2.0** — `main/LICENSE`, 11,357 b, canonical | 12 | 2026-11-16 | *"Open Software Defined Vehicle Framework."* **12★ — a seed, not a platform**, recorded as a watch item because a canonical Apache grant on an SDV framework is rare (compare `de4sdv/DE4SDV` at 13★ in Layer D). |
+
+### Perception/AV additions found by the same sweep
+
+| Repo | Licence (byte-read) | ★ | Pushed | Note |
+|---|---|--:|---|---|
+| [autonomousvision/transfuser](https://github.com/autonomousvision/transfuser) | **MIT**, 1,073 b | **1,616** | 2026-09-21 | **[PAMI'23] TransFuser** — transformer-based multi-modal sensor fusion for autonomous driving (+ [CVPR'21]). One of the standard CARLA leaderboard baselines, and **MIT**, so a client prototype can start from a published baseline rather than a blank repo. |
+| [sjtuyinjie/Ultra-Fusion](https://github.com/sjtuyinjie/Ultra-Fusion) | **MIT**, 1,074 b | 930 | 2026-08-29 | Tightly-coupled **multi-sensor fusion SLAM under sensor degradation** and spatiotemporal misalignment. The failure-mode case — degraded/misaligned sensors — is the one that matters in production and is usually the one no baseline handles. |
+| [YuruiAI/DistillDrive](https://github.com/YuruiAI/DistillDrive) | **MIT**, 1,063 b | 127 | 2026-08-30 | **[ICCV 2025]** end-to-end multi-mode driving **distillation**. Distillation is the deployability lever: it is how an E2E planner gets small enough for vehicle compute (same role `Scene3DLite` plays in Layer F). |
+| [jiachenli94/Awesome-Interaction-Aware-Trajectory-Prediction](https://github.com/jiachenli94/Awesome-Interaction-Aware-Trajectory-Prediction) | **MIT** (API) | **1,696** | 2026-08-24 | A curated state-of-the-art index for **trajectory prediction**. A reading list, not a dependency — the fastest way to brief an engagement team on the prediction literature. |
+
+### 🔴 What this sweep refused — read before reusing any V2X or cooperative-driving code
+
+Three grants were refused on byte-read, and **all three arrived as `NOASSERTION` from the API**:
+
+- **[ucla-mobility/OpenCDA](https://github.com/ucla-mobility/OpenCDA)** (1,174★) — **Academic
+  Software License, not open source.** Grant runs only to *"academic or nonprofit researchers"*;
+  *"you are prohibited from further transferring the Software — including any derivatives you make
+  thereof"*; *"Commercial entities: please contact the UCLA Mobility Lab … for licensing
+  opportunities."* **Hard exclusion** — a cooperative-driving prototype built on it is undeliverable.
+- **[riebl/vanetza](https://github.com/riebl/vanetza)** (231★) — **CC-BY-NC, 43,043 b.** The open
+  implementation of the **ETSI C-ITS protocol stack**: non-commercial.
+- **[Ircama/ELM327-emulator](https://github.com/Ircama/ELM327-emulator)** (708★) — **CC-BY-NC,
+  20,849 b**, and it is what MIT-licensed `Automotive-AI` tells you to install to test without a car.
+
+⚠️ **The V2X/C-ITS neighbourhood has no permissive anchor.** `vanetza` CC-BY-NC, `riebl/artery`
+GPL-2.0, `eclipse-mosaic/mosaic` EPL-2.0, `sommer/veins` GPL-2.0, `DriveX-devs/VaN3Twin` GPL-2.0.
+Permissive options exist only on the *research dataset/model* side —
+[DerrickXuNu/v2x-vit](https://github.com/DerrickXuNu/v2x-vit) MIT (348★, stale 2024-09),
+[DerrickXuNu/CoBEVT](https://github.com/DerrickXuNu/CoBEVT) Apache-2.0 (263★, stale 2024-08),
+[ai4ce/V2X-Sim](https://github.com/ai4ce/V2X-Sim) Apache-2.0 (147★, stale 2025-01). **So a V2X
+engagement in EMEA is a copyleft-compliance conversation from day one, not a licence-shopping exercise.**
+The one permissive, current, policy-side asset is
+[openmobilityfoundation/mobility-data-specification](https://github.com/openmobilityfoundation/mobility-data-specification)
+— **CC-BY-4.0** (14,527 b), a *data specification* for right-of-way regulation and geofencing, 754★.

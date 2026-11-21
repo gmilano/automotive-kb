@@ -1,3 +1,9 @@
+---
+industry: automotive
+region: Global
+updated: 2026-11-21
+---
+
 # 🚗 Automotive KB
 
 > Knowledge base de la industria **Automotive** para Globant AI Studios.

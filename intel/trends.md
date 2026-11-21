@@ -812,3 +812,67 @@ source; 🔴 an open gap; 🟢 a gap closed since the previous pass.*
 *Updated 2026-11-13 (previous passes 2026-10-31, 2026-10-26). Every repository claim in this file was read from the rendered repository page
 or a raw licence file today; `curl` and `api.github.com` are both HTTP 403 in this session. Regulatory and
 market claims are secondary-sourced unless stated otherwise, and the 🔴 markers flag what could not be verified.*
+
+---
+
+## 🆕 2026-11-21 (fourth pass) — trends with the evidence attached
+
+### 📡 "AI-defined vehicle" replaces "software-defined vehicle" in the industry's own language
+
+CES 2026 coverage reports the framing moving from **software-defined** to **AI-defined**; NTT DATA calls
+the same shift **"from software-defined to AI-native."** AI is being described as core infrastructure
+spanning design, manufacturing and predictive maintenance rather than an in-cabin feature.
+🟢 **Why it matters for a studio:** it changes the buying centre. "Software-defined" was a platform/E-E
+architecture conversation owned by engineering; "AI-defined" pulls in manufacturing and aftersales
+budgets too. **The vocabulary is worth adopting; the underlying stacks are the ones in Layer F and the
+new Layer H.**
+
+### 📊 Agentic AI has arrived in automotive *engineering*, not in the car
+
+The most load-bearing adoption datapoint found this pass: Capgemini Research Institute, **800 senior
+automotive executives, July 2026** (400 OEM / 160 Tier-1 / 240 technology providers) — **35% report
+using agentic AI in engineering processes, 33% beginning pilots**, with value realisation strongest in
+**software-focused environments.** 🟢 **Note where the agents are: in the V-cycle, not the vehicle.**
+That is precisely the surface `jherrodthomas/automotive-skills-suite` (MIT, 2,907★, 76
+builder+reviewer pairs → ISO 26262 / 21434 / 21448 / ASPICE / AIAG-VDA `.xlsx` artefacts) addresses, and
+it is why that repo remains the highest-relevance single asset in this KB for an AI studio.
+
+### 📊 Readiness ≠ results — the gap is the engagement
+
+PwC projects adoption rising **47% → 72% of companies by 2030**. Deloitte's readiness work finds that
+**some firms score well on readiness while realising the fewest benefits.** KPMG (via Bloomberg Línea)
+names the mechanism in LATAM specifically: **AI scales poorly when data is fragmented across systems
+and supply-chain players.** 🟢 **Three independent houses describing one shape — pilots exist,
+consolidation does not.** Treat "we already have pilots" as the *starting* condition, and sell
+consolidation. **This is the same adoption-without-governance pattern the education KB recorded across
+all four regions; it is one pattern across industries, not an automotive peculiarity.**
+
+### 📡 Edge inference moves in-vehicle, and the open base is no longer missing
+
+Market commentary flags the shift to **edge AI processed inside the vehicle**, with implementation cost
+(hardware + software) as the main brake. The permissive base now exists:
+[OpenSparX/MasterAgent](https://github.com/OpenSparX/MasterAgent) (Apache-2.0, 966★) —
+*"100% on-device, sub-100 ms on Qualcomm NPU, zero cloud dependency"* — plus
+[toyota-connected/ivi-homescreen](https://github.com/toyota-connected/ivi-homescreen) (Apache-2.0,
+pushed today) for the display layer. 🟢 **An in-cabin agent that degrades gracefully with no
+connectivity is now buildable entirely from permissive parts.**
+
+### ⚠️ Margin pressure is reshaping *which* AI gets bought
+
+RSM reports **NA suppliers** pushed by OEM pricing pressure and margin compression toward data
+investments with **immediate operational value: forecasting, scrap reduction, predictive maintenance,
+energy optimisation.** Ward's notes **tariffs weighing on profits** and a **record average new-vehicle
+cost above US$50,000**. 🔴 **Consequence for proposals: the horizon has shortened.** An AI proposal that
+cannot name a cost line it reduces this fiscal year is competing against one that can. Of those four
+named cost lines, **scrap/rework is the one with a production-grade permissive base already in this KB**
+(`anomalib`, Apache-2.0, 6,414★, Layer G).
+
+### 🔴 A licence trend, and it is the actionable one for a studio
+
+Across this pass's sweep, **the automotive open-source licence picture splits by layer, and the split is
+sharp**: the **diagnostics / ECU-tooling layer is permissive nearly throughout** (MIT and Apache-2.0 —
+`python-udsoncan`, `automotive_diag`, `cogu/autosar`, `CarDash`, `CANviz`, `SwiftOBD2`), while the
+**V2X / cooperative-driving layer has no permissive anchor at all** (`vanetza` CC-BY-NC, `artery`
+GPL-2.0, `mosaic` EPL-2.0, `veins` GPL-2.0, `OpenCDA` academic-only). 🟢 **So licence risk in automotive
+is predictable by layer, and it is a planning input: diagnostics and bench work can be quoted as
+build-on-open-source; V2X work must be quoted with legal review in the SOW.**

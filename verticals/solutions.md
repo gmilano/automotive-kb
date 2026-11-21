@@ -450,3 +450,51 @@ a paid-support path, so "unsupported open source" is not a valid objection.
 *Verified 2026-11-13 (previous passes 2026-10-31, 2026-10-26). 🆕 = new this pass. 🔄 = licence/stars read today. ⏸ = carried forward and
 labelled. Where a licence is listed as "not read", the URL is confirmed live and the licence was deliberately left blank rather than guessed.
 `curl` and `api.github.com` are both HTTP 403 in this session, so the rendered repository page is the verification channel.*
+
+---
+
+## 🆕 2026-11-21 (fourth pass) — the dealership-DMS question is now CLOSED, and with better evidence
+
+This KB has recorded **seven consecutive negative results** on "is there a permissive open-source
+dealership DMS / automotive ERP-CRM". Every one of those came from **web search and listicles**, which
+can only ever support *"we did not find one."* This pass asked the **licence-filtered GitHub index**
+directly, which supports a much stronger claim.
+
+**Queries and the complete result sets — not a sample, the whole return:**
+
+| Query | Every repository returned |
+|---|---|
+| `dealership management system DMS license:mit` | `Defcon27/Autorizz-…-NodeJS-Express-MongoDB` **88★, last push 2022-11-21**; `imtutul/dms` **0★, 2019-03-03**; `timsa-m/ebenezar-dms` **0★, 2026-11-20** |
+| `car dealership inventory management license:apache-2.0` | `Casey-Jeremy/car_dealership` **0★, 2025-09-19** (a dealership *website*, not a DMS) |
+
+**The finding, stated at the strength the evidence now supports: there is no maintained permissive
+open-source Dealer Management System on GitHub.** Not "none found" — the licence-filtered index over
+all of GitHub returns **nothing above 88★, and the 88★ entry is a student project abandoned in 2022.**
+This is the **8th negative and the first authoritative one.** It is now safe to tell a client, in
+writing, that a dealership build starts from a framework and not from a product.
+
+**What that means for an engagement, unchanged but now defensible:**
+- [open-mercato/open-mercato](https://github.com/open-mercato/open-mercato) (**MIT**, 1,953★) remains
+  the only permissive option and is a **framework, not a dealership product** — budget the domain model.
+- The copyleft suites are real but carry obligations: **ERPNext GPL-3.0**, **Dolibarr GPL-3.0**
+  (7,889★), **Opentaps GPL-2.0**. `YetiForceCRM` is `NOASSERTION` and unpushed since 2024-09;
+  `SuiteCRM` did not resolve.
+- 🆕 **Say the quiet part in the proposal:** the DMS market (Tekion, CDK, Reynolds) is proprietary with
+  no open flank. **The open opportunity is not replacing the DMS — it is the agent layer beside it**,
+  which is why `agents/top.md`'s Auto Agent Protocol row matters more than any ERP fork would.
+
+## 🆕 ECU development benches — a real vertical tool category, newly recorded
+
+Not ERP, but the platform category a studio most often needs to sit beside: the **ECU development and
+test bench**, where the commercial incumbents (Vector CANoe/CAPL, ETAS) run five figures per seat.
+
+| Platform | Licence | ★ | What it replaces |
+|---|---|--:|---|
+| [ecubus/EcuBus-Pro](https://github.com/ecubus/EcuBus-Pro) | ⚠️ **Apache-2.0 in `package.json` only — no `LICENSE` file in the tree** | **914** | **CANoe/CAPL-class bench.** UDS, CAN-TP, DoIP, LIN, TypeScript scripting *"like CAPL"*, HIL test. Functionally the strongest open option; **get the licence file added before it carries a deliverable.** |
+| [TOSUN-Shanghai/TSMaster](https://github.com/TOSUN-Shanghai/TSMaster) | **LGPL-2.1** (byte-read, 26,526 b) | 442 | *"A powerful open environment for automotive bus monitoring, simulation, testing."* **APAC-origin (Shanghai)** — relevant where a client's supply chain already runs TOSUN hardware. ⚠️ LGPL: link, don't absorb. |
+| [COVESA/dlt-viewer](https://github.com/COVESA/dlt-viewer) | **MPL-2.0** (372 b short form) | 557 | AUTOSAR **Diagnostic Log and Trace** viewing — the log side of the same bench. |
+
+⚠️ **Licence-classifier correction worth carrying:** the first read of `TSMaster` and `autoas/as`
+reported plain "GPL". **LGPL's own text contains the string "GNU GENERAL PUBLIC LICENSE"**, so a naive
+grep mislabels LGPL as GPL — and the difference decides whether a client can link against it. Match
+`LESSER` first. Re-read: **TSMaster = LGPL-2.1**, **`autoas/as` = GPL-3.0** (*"Version 3, 29 June 2007"*).

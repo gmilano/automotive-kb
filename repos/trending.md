@@ -8,6 +8,60 @@ updated: 2026-11-21
 
 > **APPEND-ONLY.** Newest dated section on top; history preserved below. Never rewrite earlier sections.
 
+## 2026-11-21 — fourth pass (14:50Z)
+
+**Window:** 2026-11-21 13:54Z → 14:50Z (≈1 hour, same day). Earlier sections preserved unchanged.
+**Channel:** byte-read `LICENSE` from `raw.githubusercontent.com`, `gh api -X GET
+search/repositories` for metadata, `WebFetch` on `github.com` for page-rendered counts.
+
+### 🆕 The discovery ceiling was a query-shape artifact, not an exhausted world
+
+Eight **short** `gh` queries returned **49 unique repositories; 22 already held; 27 new.** The
+preceding passes' long natural-language queries return **literal zero** against the same index —
+`search/repositories` matches name/description/topics only and ANDs every term, so a five-word phrase
+asks for five words inside one short field. **Full defect write-up in `agents/trending.md` → this
+date.** Rows below are new *to this KB*; most are years old. Detail: `repos/foundations.md` → **Layer H**.
+
+| Repo | Licence (byte-read) | ★ | Pushed | Status |
+|---|---|--:|---|---|
+| [pylessard/python-udsoncan](https://github.com/pylessard/python-udsoncan) | **MIT**, `LICENSE.txt`, 1,074 b | 746 | 2026-10-26 | ✅ **New anchor.** UDS / ISO-14229 in Python |
+| [oxibus/automotive_diag](https://github.com/oxibus/automotive_diag) | **MIT**, `LICENSE-MIT`, 1,139 b | 105 | 2026-11-09 | ✅ UDS + KWP2000 + OBD-II + DoIP constants (Rust) |
+| [ecubus/EcuBus-Pro](https://github.com/ecubus/EcuBus-Pro) | ⚠️ **Apache-2.0 in `package.json` only — no `LICENSE` file** | 914 | 2026-11-05 | ⚠️ Open CANoe-class bench; grant is metadata-only |
+| [cogu/autosar](https://github.com/cogu/autosar) | **MIT**, 1,088 b | 503 | 2026-10-16 | ✅ Python modules for AUTOSAR **ARXML** |
+| [COVESA/vsomeip](https://github.com/COVESA/vsomeip) | **MPL-2.0**, 16,725 b | 1,471 | 2026-11-13 | ✅ **SOME/IP** middleware, COVESA-governed |
+| [COVESA/dlt-viewer](https://github.com/COVESA/dlt-viewer) | **MPL-2.0**, 372 b (short form) | 557 | 2026-11-19 | ✅ Diagnostic Log & Trace viewer |
+| [autonomousvision/transfuser](https://github.com/autonomousvision/transfuser) | **MIT**, 1,073 b | 1,616 | 2026-09-21 | ✅ PAMI'23 transformer sensor fusion; CARLA baseline |
+| [sjtuyinjie/Ultra-Fusion](https://github.com/sjtuyinjie/Ultra-Fusion) | **MIT**, 1,074 b | 930 | 2026-08-29 | ✅ Multi-sensor SLAM under sensor degradation |
+| [YuruiAI/DistillDrive](https://github.com/YuruiAI/DistillDrive) | **MIT**, 1,063 b | 127 | 2026-08-30 | ✅ ICCV'25 E2E driving distillation |
+| [OpenSparX/MasterAgent](https://github.com/OpenSparX/MasterAgent) | **Apache-2.0**, 11,259 b | 966 | 2026-09-28 | ✅ **On-device agents, sub-100 ms on Qualcomm NPU, zero cloud** |
+| [toyota-connected/ivi-homescreen](https://github.com/toyota-connected/ivi-homescreen) | **Apache-2.0**, 571 b (short notice) | 404 | 2026-11-21 | ✅ Flutter IVI embedder — Wayland, DRM/KMS, Vulkan |
+| [Chanchaldhiman/CANviz](https://github.com/Chanchaldhiman/CANviz) | **MIT**, 1,076 b | 299 | 2026-08-08 | ✅ Browser-based CAN bus analyzer |
+| [kkonteh97/SwiftOBD2](https://github.com/kkonteh97/SwiftOBD2) | **MIT** (API) | 163 | 2026-01-26 | ✅ Swift/iOS OBD-II library |
+| [sw-mobility/open-sdv](https://github.com/sw-mobility/open-sdv) | **Apache-2.0**, 11,357 b, canonical | 12 | 2026-11-16 | 🌱 Early Apache SDV framework — watch item |
+| [openmobilityfoundation/mobility-data-specification](https://github.com/openmobilityfoundation/mobility-data-specification) | **CC-BY-4.0**, 14,527 b | 754 | 2026-09-17 | 📄 **Data spec**, not code; right-of-way/geofence policy |
+
+### 🔴 Excluded this pass — byte-read refused the grant
+
+| Repo | ★ | API said | **Byte-read** | Why excluded |
+|---|--:|---|---|---|
+| [ucla-mobility/OpenCDA](https://github.com/ucla-mobility/OpenCDA) | 1,174 | `NOASSERTION` | **Academic Software License**, 1,882 b | *"academic or nonprofit researchers"* only; *"prohibited from further transferring"*; commercial use requires a separate licence. **Not open source.** |
+| [riebl/vanetza](https://github.com/riebl/vanetza) | 231 | `NOASSERTION` | **CC-BY-NC**, 43,043 b | Non-commercial. The ETSI C-ITS stack — bites exactly where EMEA V2X work lands. |
+| [Ircama/ELM327-emulator](https://github.com/Ircama/ELM327-emulator) | 708 | `NOASSERTION` | **CC-BY-NC**, 20,849 b | Non-commercial — **and it is the documented test dependency of MIT-licensed `Automotive-AI`.** |
+| [autoas/as](https://github.com/autoas/as) | 966 | `NOASSERTION` | **GPL-3.0**, *"Version 3, 29 June 2007"* | Strong copyleft; AUTOSAR BSW |
+| [TOSUN-Shanghai/TSMaster](https://github.com/TOSUN-Shanghai/TSMaster) | 442 | `LGPL-2.1` | **LGPL-2.1**, 26,526 b | Weak copyleft — linkable, not forkable-closed. APAC-origin CANoe peer |
+| [linux-can/can-utils](https://github.com/linux-can/can-utils) | 2,961 | `None` | **no licence file at root** | Held to be per-file dual GPL-2.0/BSD-3; **no grant byte-read**, so unrecorded rather than guessed |
+| [iDoka/awesome-automotive-can-id](https://github.com/iDoka/awesome-automotive-can-id) | 1,033 | `CC0-1.0` | **no licence file at root** | CAN-ID payload database; grant unverified |
+| [MatthewKuKanich/CAN_Commander](https://github.com/MatthewKuKanich/CAN_Commander) | 1,094 | `None` | **no licence file** | CAN reverse-engineering tool; no grant |
+| [hypery11/flipper-tesla-fsd](https://github.com/hypery11/flipper-tesla-fsd) | 1,336 | `NOASSERTION` | not read | ⛔ **Excluded on suitability as well as licence:** *"nag killer, FSD region unlock"* defeats vehicle restrictions. Not appropriate for a client engagement whatever its grant. |
+
+> **3-for-3 again:** every refused grant above arrived as `NOASSERTION`/`None` from the API. **A short
+> or absent SPDX is a pointer to read the bytes, not a licence.**
+
+### ⚠️ `home-assistant/android` matched and is NOT automotive
+
+Apache-2.0, 4,067★, pushed 2026-11-21 — it surfaced on `topic:automotive` because of Android Auto
+support. **Recorded here as a known false positive** so a later pass does not "discover" it again.
+
 ## 2026-11-21 — third pass (13:40Z)
 
 **Window:** 2026-11-21 12:45Z → 13:40Z (≈1 hour, same day). Earlier sections preserved unchanged.

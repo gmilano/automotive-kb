@@ -546,6 +546,31 @@ adoption figures instead — they are more consistent and more useful in a sales
   That is the P3 evidence pipeline aimed at an FMVSS exemption/compliance file, and the deadline pressure
   is the client's product launch rather than a regulator's calendar.
 
+
+
+**🆕 Added 2026-11-21 (fourth pass) — demand-side signal, snippet-sourced.**
+- 📊 **The supplier squeeze names the first project for you.** RSM's *Global automotive trends 2026*
+  reports that in **North America**, OEM pricing pressure and margin compression are pushing suppliers
+  toward data investments with **immediate operational value — forecasting, scrap reduction, predictive
+  maintenance, energy optimisation.** 🟢 **Read that as a sales constraint, not a trend:** a NA supplier
+  will not buy a platform narrative, and an AI proposal that cannot name a cost line it reduces in the
+  current fiscal year loses to one that can. Pair with `anomalib` (Layer G) for scrap/rework, which is
+  the one of those four with a production-grade permissive base already identified in this KB.
+- ⚖️ **Regulatory posture is the mirror image of EMEA's and that changes what you can sell.** The one
+  NA-specific item this leg surfaced is the **Alliance for Automotive Innovation urging California
+  lawmakers to pass a Senate bill amending requirements it calls "technically unworkable", due to take
+  effect 2026-07-01** (Foley automotive update; bill details and outcome **not confirmed** — do not cite
+  a bill number). 🔴 **The structural point stands: NA has no enumerated federal high-risk AI list and
+  no filing counter**, so — applying the distinction carried from the education pass — **NA automotive
+  AI work is *advisory* in shape, and billed as such.** What converts it to delivery work is a
+  *client-internal* gate (an FMVSS-delta file, a customer PPAP, an audit), not a regulator's calendar.
+- 🟢 **Opportunity — the privacy architecture is now demonstrable, not theoretical.**
+  [surendranb/CarDash](https://github.com/surendranb/CarDash) (MIT, 61★) ships the pattern:
+  **local Room/SQLite ledger + cloud LLM on demand only.** Deloitte's 2026 consumer study (via
+  Ward's) finds consumers wanting advanced features while **privacy concerns loom large** and
+  hesitating to pay extra. A connected-vehicle feature that can show data never leaves the device by
+  default answers the objection that kills the upsell. **MIT, so it can be shown to the client as code.**
+
 ### EMEA
 
 **🆕 Added 2026-11-21 (third pass) — the audit gate, and it is the most sellable EMEA fact in this file.**
@@ -760,6 +785,38 @@ adoption figures instead — they are more consistent and more useful in a sales
   Continental, ZF, Mobileye; Harman in cockpit; 🆕 Sonatus and Qorix as both partners and competitors.
 - 🆕 **Calendar anchor:** the **European AI and Software-Defined Vehicle Summit** is the OEM/Tier-1 venue
   for this agenda (reported 19–20 May 2026, Stuttgart) — useful for engagement timing.
+
+
+
+**🆕 Added 2026-11-21 (fourth pass) — the AI Act clock, and a V2X licence wall.**
+- ⚖️ **The AI Act date that matters for automotive is the *embedded-in-regulated-product* one.** For AI
+  systems that are safety components of products already under EU type-approval, the obligations attach
+  on the **2028** track rather than the 2026 general-purpose dates (automotive-iq analysis of the AI Act
+  for ADAS/AD). 🔴 **This is the same unresolved-date hazard flagged for education's Annex III —
+  so scope an EMEA proposal against the DUTIES (risk management, data governance, logging, human
+  oversight, conformity evidence), which are stable, and NOT against a date.** Do not put an AI Act
+  date in a proposal.
+- ⚖️ **CLEPA's duplication argument is a billable deliverable in disguise.** The European suppliers'
+  association argues the AI Act and its guidance **must avoid duplicating existing vehicle
+  type-approval and safety frameworks**. 🟢 **The work a Tier-1 actually needs is therefore a *mapping*:
+  which AI Act duty is already discharged by existing ISO 26262 / ISO 21448 / UNECE R155 evidence, and
+  which is genuinely new.** That is a scoping exercise that *reduces* client obligations from documents
+  they already own — the cheap, high-value, defensible-from-the-text deliverable, and
+  `jherrodthomas/automotive-skills-suite` (MIT, 76 builder+reviewer pairs) already produces the
+  underlying ISO artefacts. The Commission is **consulting on an Apply AI Strategy**, including
+  barriers to adoption and practical AI Act implementation difficulties — an open input channel.
+- 📊 **Adoption is real and engineering-led.** Capgemini Research Institute surveyed **800 senior
+  automotive executives (July 2026; 400 OEM, 160 Tier-1, 240 technology providers)**: **35% report
+  using agentic AI in engineering processes and 33% are beginning pilots**, with value realisation
+  strongest in **software-focused environments**. Deloitte's readiness work adds the warning that some
+  firms **score well on readiness while realising the fewest benefits** — a readiness-to-results gap.
+  🟢 Treat "we have pilots" as the *starting* condition of an EMEA engagement, not the goal.
+- 🔴 **Opportunity blocked — V2X/C-ITS has no permissive anchor, and EMEA is where V2X lands.**
+  `riebl/vanetza`, the open **ETSI C-ITS protocol stack**, byte-reads **CC-BY-NC** (43,043 b) — not
+  usable commercially. Its neighbourhood is copyleft throughout: `riebl/artery` GPL-2.0,
+  `eclipse-mosaic/mosaic` EPL-2.0, `sommer/veins` GPL-2.0. **So an EMEA V2X engagement opens with a
+  copyleft-compliance conversation, not a build-on-open-source plan.** Budget legal review in the SOW.
+  See `repos/foundations.md` → Layer H exclusions.
 
 ### APAC
 
@@ -978,6 +1035,32 @@ adoption figures instead — they are more consistent and more useful in a sales
   which means the conformity *interpretation* is billable work, exactly as it is in EMEA.
 - **Barriers to price in:** uneven frameworks, infrastructure limits in developing markets, and
   data-security/localisation constraints.
+
+
+
+**🆕 Added 2026-11-21 (fourth pass) — APAC is the supply side of this KB's own tool stack.**
+- 📊 **KPMG (2026) positions ASPAC as "a key driver of the next phase of automotive transformation"**,
+  while noting that **electrification and software adoption vary significantly market to market** —
+  so a single APAC strategy is the wrong unit; the country is the unit.
+- 🟢 **The finding specific to this pass: APAC is where the open ECU-tooling supply actually comes from.**
+  [TOSUN-Shanghai/TSMaster](https://github.com/TOSUN-Shanghai/TSMaster) (**LGPL-2.1**, byte-read
+  26,526 b, 442★) is a Shanghai-origin open automotive bus monitoring/simulation/test environment, and
+  `gotonote/Autopilot-Notes` (Apache-2.0, 853★) is a Chinese-language autonomy knowledge base. **If a
+  client's supply chain already runs TOSUN hardware, the open bench is the integration path** — and
+  ⚠️ **LGPL-2.1 means link against it, do not absorb it**, which is a real architectural constraint,
+  not a footnote.
+- ⚠️ **Regulation is the thinnest leg in this file and that is an instrument limit, not an absence.**
+  This leg surfaced **no country-level APAC rule text**. A 2026 academic paper (`sciopen.com`) compares
+  the EU AI Act's high-risk regime against **US rider-only safety evidence** and **China's policy
+  approach**, but the excerpt carries no rule detail. **Country-level sources (China MIIT, Japan, Korea,
+  Singapore, ASEAN) were not reachable from this session** — see the instrument note at the end of this
+  file. 🔴 **Recorded explicitly so this gap is not mistaken for coverage:** APAC regulatory posture in
+  this KB is **unestablished**, and a China or Japan engagement needs primary research first.
+- 📊 Vendor lists from market-research sources (treat as indicative, they disagree with each other):
+  **Toyota, Honda, Denso** (JP), **Baidu, Pony.ai** (CN), **Hyundai** (KR), with **NVIDIA, Zoox, Aptiv**
+  as non-APAC entrants. **APEC held an automotive dialogue on advanced driving technologies in Shanghai
+  on 2026-05-12**, with Yinwang Intelligent Industry and Tesla participating. PwC's ASEAN snapshot
+  reports **ASEAN-4 truck sales down ~3.4% in 2025** — softer freight demand in those markets.
 
 ### LATAM
 
@@ -1239,6 +1322,45 @@ being a blocker the moment the engagement is about the plant floor.**
 - **Opportunity — LGPD-compliant fleet telematics.** Anatel + LGPD give a concrete compliance hook that
   proprietary vendors handle poorly; Traccar self-hosted answers both. See P5.
 
+
+
+**🆕 Added 2026-11-21 (fourth pass) — the one region with a named, usable regulatory fact pattern.**
+- ⚖️ **Colombia is the concrete one: it regulates the circulation of automated driving systems up to
+  SAE Level 3.** **Brazil and Chile** are described as advancing on both technology and regulatory
+  discussion (CMS *Automotive Outlook 2026*, "Liability and the regulation for autonomous driving in
+  Latin America"). 🟢 **An enumerated ceiling is scope that cuts in the client's favour** — the same
+  mechanism as Vietnam's enumerated education list: **if a product is L2/L2+, a Colombian deployment is
+  demonstrably inside an existing permission**, and proving that is a cheap, defensible deliverable.
+- ⚖️ **Brazil's pending AI bill would classify autonomous vehicles as "high-risk AI systems"**, with
+  obligations around **risk management, transparency, cybersecurity and human supervision**, and
+  proposes **controlled testing spaces** (regulatory sandboxes). 🔴 **Status not confirmed by this pass
+  — it is a *bill*, and `cms.law` could not be read first-hand.** Do not cite it as law. But note the
+  shape: **a sandbox provision is a filing counter**, and by the distinction carried from the education
+  pass, *a rule with a counter produces delivery engagements rather than advisory ones.* **If that
+  sandbox opens, Brazil becomes the region's first delivery-shaped AV engagement.** Worth a watch item.
+- ⚖️ **Liability today is a patchwork, and that is the sellable problem.** With no AV-specific regime,
+  liability falls across **traffic law, product liability, consumer protection, cybersecurity
+  standards, insurance regulation and AI governance frameworks** simultaneously. Baker McKenzie adds
+  that **no Latin American country currently has a fully mature, harmonised AI regime across all
+  sectors**, and that Brazil is moving toward **sector regulators** playing the central role. 🟢 **A
+  liability-surface map across those six bodies of law, per country, is a deliverable a regional OEM or
+  importer cannot produce internally** — and it does not depend on any bill passing.
+- 📊 **The adoption blocker is named and it is not model quality.** KPMG's *Global Tech Report 2026*
+  (via Bloomberg Línea, PT) finds automakers **accelerating AI use while integration remains hard**,
+  with the specific mechanism being that **AI scales poorly when data is fragmented across systems and
+  supply-chain players.** 🟢 **That makes the first LATAM engagement a data-consolidation engagement**
+  — the same "discovery and consolidation before strategy" shape the education pass found in LATAM HEIs.
+  **It is one pattern across industries in this region, not two.**
+- ⚠️ **Market sizing here is weak and labelled as such.** One vendor report puts LATAM automotive AI at
+  **~US$193.5M (2023) → ~US$1.26B (2030)** but names only global players (NVIDIA, Alphabet, Intel,
+  Microsoft, IBM, Qualcomm, Tesla, BMW) **with no LATAM-specific activity shown**, which is the
+  signature of a sizing model rather than observed deployments. **No LATAM adoption rate and no named
+  regional OEM/supplier AI deployment was found this pass** — recorded as a genuine gap.
+- 🟢 **LGPD angle, now with code behind it.** [surendranb/CarDash](https://github.com/surendranb/CarDash)
+  (MIT) demonstrates **local-ledger-plus-on-demand-LLM**: vehicle data stays on the device, no account,
+  no analytics. Under **LGPD** that architecture removes most of the consent surface before the legal
+  review starts, and it can be shown to a Brazilian client **as working MIT code**, not as a diagram.
+
 ### Global
 
 **🆕 Added 2026-11-21 (third pass) — one cross-region pattern, stated once instead of four times.**
@@ -1387,6 +1509,37 @@ subsection at all.
   advanced technologies across the value chain; **Perforce** 71% implementing AI in vehicles, 57% working
   on SDV architectures, 70% using AI for SDV optimisation (vendor survey); **43% of dealers** already
   deploying AI with a further **47% planning to**.
+
+
+
+**🆕 Added 2026-11-21 (fourth pass) — global adoption and investment baseline, snippet-sourced.**
+- 📊 **The one adoption number to quote, because it is a consultancy survey rather than a sizing model:**
+  PwC's *2026 Global Automotive Outlook* projects **AI and advanced-technology use across the automotive
+  value chain rising from 47% of companies today to 72% by 2030.** Attributed, bounded, and about
+  *companies adopting* rather than dollars — the figure most likely to survive scrutiny in a deck.
+- 📊 **Investment:** PwC reports **over US$80B in AI investment announced across 2021–2025, with nearly
+  US$30B more committed in early 2026 alone.** ⚠️ "Announced" and "committed" are not "spent" — say so.
+- 📊 **Revenue context:** IBM puts **digital- and software-related revenue at 15% of total automotive
+  industry revenue** — useful because it bounds how large a software proposal can credibly claim to move.
+- ⚠️ **MARKET-HYGIENE WARNING, consistent with this fleet's standing finding.** Automotive AI market
+  size estimates seen this pass **do not reconcile and should not be averaged**: a global 2026 base of
+  **~US$5.8B projected ~10× by 2035**; **North America US$3,769.7M (2025) → US$7,234.7M (2030) at 13.9%
+  CAGR** (MarketsandMarkets); and a separate claim that **North America is ~39.7% of global revenue**
+  (Market Research Future). 🔴 **The NA-at-39.7%-of-global claim is arithmetically incompatible with a
+  ~US$5.8B global base alongside a US$3.77B NA base** — those two cannot both be right. **Quote at most
+  one, name the house, and never present a blended figure.** Prefer the PwC adoption percentages over
+  any dollar total.
+- 📡 **The framing shift worth adopting in client language:** CES 2026 coverage reports the conversation
+  moving from **"software-defined vehicle" to "AI-defined vehicle"**, with AI treated as core
+  infrastructure across design, manufacturing and predictive maintenance rather than as a feature.
+  NTT DATA frames the same move as **"from software-defined to AI-native."** 🟢 Useful vocabulary, and
+  it is also the honest framing of what this KB's Layer F/H stacks actually enable.
+- 📡 **Edge/in-vehicle inference is the technical direction, and it now has a permissive base.** Market
+  commentary flags a shift to **edge AI processing inside the vehicle** (alongside high implementation
+  cost as the main brake). [OpenSparX/MasterAgent](https://github.com/OpenSparX/MasterAgent)
+  (**Apache-2.0**, 966★) targets exactly that: *"agents that run 100% on-device, sub-100 ms latency on
+  Qualcomm NPU, zero cloud dependency."* **Not automotive-labelled, which is why earlier passes missed
+  it** — but Qualcomm NPUs are the dominant in-cabin compute and "works in a tunnel" is the requirement.
 
 ## Globant positioning
 
