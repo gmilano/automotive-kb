@@ -1,15 +1,20 @@
 ---
 industry: automotive
 region: Global
-updated: 2026-11-19
+updated: 2026-11-21
 ---
 
 # 🧩 Composition patterns — Automotive
 
 > Concrete recipes: named repos, named wiring, stated assumptions. Every repo referenced here is verified
 > in `repos/foundations.md` or `agents/top.md` (URL probed live 2026-10-26).
-> **New on 2026-11-19: P14 (assurance artefact factory), P15 (vehicle-agent evaluation harness) and
-> P16 (on-device cockpit agent) — see the end of this file.**
+> **New on 2026-11-21: P17 (dealer retail agent layer on a permissive ERP), P18 (cockpit agent graded
+> against China's C1–C5 scale) and P19 (shelf audit as a repeatable service) — see the end of this file.**
+> Every repo named in P17–P19 had its URL probed with `git ls-remote` and its licence **byte-read** from
+> `raw.githubusercontent.com` on 2026-11-21.
+>
+> *Earlier —* **2026-11-19: P14 (assurance artefact factory), P15 (vehicle-agent evaluation harness) and
+> P16 (on-device cockpit agent).**
 > **Added 2026-10-26: P7 (S-CORE safety-core engagement) and P8 (USMCA rules-of-origin traceability).**
 > P3 and P6 were revised — P3 gains the S-CORE core and the published blueprint, P6 gains a licence
 > correction and a small-model option.
@@ -578,10 +583,17 @@ to ship. This pattern exists because of a measured rate, not a hunch: **of 19 re
    language data** — non-commercial), Auto Agent Protocol (**Apache-2.0 spec/code, CC BY 4.0 docs**).
 4. **Flag directory-level carve-outs.** `open-mercato` is MIT with `packages/enterprise` under a separate
    **commercial** licence. The repo badge is MIT; the tree is not.
-5. **Check liveness, not just licence.** Huly (`hcengineering/platform`) is **28.1k★** and its page states
-   it is **"frozen and is no longer actively maintained."** A healthy star count is not a maintained
-   project. Likewise `NVlabs/alpamayo` carries a *"no longer under active development"* banner, and
-   `ChanMeng666/Automotive-Repair-Management-System` was **archived 2026-07-08**.
+5. **Check liveness, not just licence — and keep "service" separate from "project".** A healthy star
+   count is not a maintained project: `NVlabs/alpamayo` carries a *"no longer under active development"*
+   banner, and `ChanMeng666/Automotive-Repair-Management-System` was **archived 2026-07-08**.
+   🔄 **Corrected 2026-11-21 — Huly is no longer the example here, because it was the wrong one.** This
+   step previously read that Huly (`hcengineering/platform`, 28.1k★) *"is frozen and no longer actively
+   maintained."* The notice actually says the **hosted Huly service** is being discontinued for lack of
+   hosting funding, and directs users to **self-hosting**; the repository was **pushed 2026-11-09**, is
+   **`archived: false`**, and its last commits are real fixes. **The inverse error is as expensive as the
+   one this step warns about:** reading a SaaS wind-down as an abandoned codebase discarded a viable
+   28k★ EPL-2.0 base. **Diligence test: `pushed_at` + `archived` + *who* the notice is about** — the
+   service, or the code. See `verticals/solutions.md` → 2026-11-21.
 6. **Re-verify claimed URLs — renames rot silently.** `farzadnadiri/mcp-can` → **`Peykan`**;
    `openedx/edx-platform` → `openedx/openedx-platform` (recorded by this pipeline in the education KB).
 7. **Deduplicate near-identical forks before they become separate entities.** `awesome-vla-for-ad` exists
@@ -779,3 +791,132 @@ dates are first-hand API fields; 39 of 39 repos re-queried by exact `repo:owner/
 `github.com` and `api.github.com` returns **HTTP 403** in this session (host policy), and
 `huggingface.co` does not resolve, so **no model-weight licence has been verified first-hand in five
 passes.** Where a licence is flagged ⚠️ or 🔴, the flag is the finding.*
+
+---
+
+## P17 🆕 — Dealer retail agent layer on a permissive ERP (the DMS gap, worked around instead of waited out)
+
+**Region: North America** (the agent layer's vocabulary is US dealer retail). **Problem:** there is no
+open-source DMS — seventh consecutive confirmation in `verticals/solutions.md` — and the gap is
+structural, so waiting is not a plan. Meanwhile **43% of US dealers are reported already deploying AI
+and 47% planning to**. The addressable estate is dealer **operations**, not the DMS itself.
+
+**Parts, all licence-verified by byte-read this pass:**
+
+| Role | Repo | Licence |
+|---|---|---|
+| Dealer-ops agent skills | [arielcoro/dealer-ai-skills](https://github.com/arielcoro/dealer-ai-skills) | **MIT**, 3★, pushed 2026-10-21 |
+| Service-advisor assistant (VIN decode + labour times) | [rogue-media-lab/waypoint](https://github.com/rogue-media-lab/waypoint) | **MIT**, 1★, pushed 2026-11-13 |
+| CRM base | [krayin/laravel-crm](https://github.com/krayin/laravel-crm) | **MIT** |
+| ERP base (if accounting/inventory needed) | [apache/ofbiz-framework](https://github.com/apache/ofbiz-framework) | **Apache-2.0** |
+| Diagnostics tool surface | [shoka-jp/obd2-mcp](https://github.com/shoka-jp/obd2-mcp) (**bundles a mock vehicle**) | **MIT** |
+| Outward-facing contract | [auto-agent-protocol/auto-agent-protocol](https://github.com/auto-agent-protocol/auto-agent-protocol) | **Apache-2.0** |
+
+**Wiring.**
+1. **Krayin (MIT) is the system of record for the pilot, not the DMS.** Do not attempt DMS replacement —
+   integrate read-only against whatever DMS the dealer runs (CDK/Reynolds/Dealertrack are proprietary;
+   treat them as external systems behind an adapter).
+2. **Install `dealer-ai-skills` as the agent skill set** over that record: SEO/AEO/GEO, BDC follow-up,
+   F&I, fixed ops, equity mining. It runs on Claude Code / Codex / Cursor / Gemini CLI, so **no runtime
+   lock-in** — this is the part that would otherwise be rebuilt from scratch per engagement.
+3. **`waypoint` supplies the service lane**: VIN decode → labour-time lookup → advisor draft.
+4. **Expose diagnostics through `obd2-mcp`'s MCP tools.** The bundled mock vehicle means **the demo runs
+   before any hardware or dealer data exists** — this is what makes the pattern sellable pre-contract.
+5. **Any dealer-facing discovery/inventory/pricing surface implements Auto Agent Protocol**, not a
+   bespoke schema (the standing rule in `agents/top.md`).
+6. **Human gate on anything that quotes a price or commits money.** Non-negotiable, and it is also the
+   answer to the consumer-protection exposure that is the real regulatory surface in US dealer retail.
+
+**Why this beats waiting for an open DMS:** every part above is MIT/Apache-2.0 and verified live, and the
+value sits in the **workflow skills**, which are portable across whatever DMS the dealer already pays for.
+⚠️ **Stated assumption:** `dealer-ai-skills` is 3★ and single-author — treat it as a **well-shaped
+starting point to fork**, not a dependency to pin. Its MIT grant is what makes forking safe.
+
+## P18 🆕 — Cockpit agent graded against China's C1–C5 scale (APAC)
+
+**Region: APAC.** **Why now:** **GB/Z 177.7—2026** (released 30 Apr 2026, CATARC-drafted) grades
+intelligent-cockpit AI **C1–C5** — reported as the first such scale anywhere. That converts "our cockpit
+is smart" into a **measurable, evidenced target**, which is a far better engagement shape than a feature
+argument. Two **mandatory** standards (vehicle cybersecurity, software updates) already apply to newly
+approved models from **1 Jul 2026**, and **GB 47955—2026** (combined driving assistance) lands
+**1 Jan 2027**.
+
+**Parts:**
+
+| Role | Repo | Licence |
+|---|---|---|
+| Deterministic intent routing + slot extraction, on-device | [neura-edit/omni-intent](https://github.com/neura-edit/omni-intent) | **MIT**, pushed 2026-10-03 |
+| Cloud-edge cockpit multi-agent orchestration | [SuperdeMan/cockpit-agent](https://github.com/SuperdeMan/cockpit-agent) | **Apache-2.0**, 30★, pushed 2026-10-19 |
+| Vehicle signal contract | [COVESA/vehicle_signal_specification](https://github.com/COVESA/vehicle_signal_specification) + [COVESA/vss-tools](https://github.com/COVESA/vss-tools) | **MPL-2.0** (both byte-read) |
+| In-vehicle data broker | [eclipse-kuksa/kuksa-databroker](https://github.com/eclipse-kuksa/kuksa-databroker) | **Apache-2.0** |
+| Warning-omission test generation | [keklikci/deeptest-talking-manual-26](https://github.com/keklikci/deeptest-talking-manual-26) | **MIT** |
+
+**Wiring.**
+1. **`omni-intent` owns the hot path, and this is the whole design decision.** It does deterministic
+   multi-intent routing with **no auto-regressive generation**, which is the only shape that survives a
+   cockpit latency budget. An LLM that must emit tokens before the car responds cannot hit C-grade
+   responsiveness targets.
+2. **`cockpit-agent` (Apache-2.0) supplies the cloud-edge split**: fast on-device intent, cloud LLM for
+   planning, cross-domain orchestration. Use it as the architecture reference for the slow path.
+3. **All vehicle signals go through VSS (MPL-2.0) into `kuksa-databroker`.** MPL-2.0 is file-level
+   copyleft only, so proprietary cockpit modules stay proprietary — **byte-confirmed this pass**, which
+   matters because an automated licence read misreports VSS as AGPL-3.0 (see `intel/trends.md` N11).
+4. **Grade the result.** Build the C1–C5 evidence package as a deliverable: latency traces from the
+   deterministic path, capability coverage per level, and **`deeptest-talking-manual-26` run against any
+   manual/owner-info assistant to hunt omitted safety warnings** — which is exactly the kind of negative
+   evidence a grading submission needs and nobody generates by hand.
+5. **Design for Qualcomm NPU targets** (~**71.4%** of China's cockpit domain-controller chip market in
+   H1 2026) **but keep the intent engine portable** — `omni-intent` is Kotlin and on-device, so this is
+   feasible rather than aspirational.
+6. **OTA and cybersecurity evidence are mandatory, not optional**, from 1 Jul 2026. Budget the update
+   pipeline and its evidence package as first-class scope.
+
+⚠️ **Stated assumptions:** `omni-intent` is 1★ and `cockpit-agent` is 30★ — both are **reference designs
+to fork**, not vendors. **GB/Z 177.7—2026 is a guidance document (`GB/Z`), not a mandatory standard
+(`GB`)** — the grading is a market and procurement lever, while the 1 Jul 2026 cybersecurity/OTA
+standards are the hard requirement. Do not conflate the two in a client conversation.
+
+## P19 🆕 — Shelf audit as a repeatable service (the diligence pattern, now cheap)
+
+**Region: Global.** `P13` already sells licence and provenance diligence as a delivered artefact. This
+pass makes the **mechanics** cheap enough to run continuously, and that changes it from an engagement
+deliverable into a standing service.
+
+**The four channels (verified working 2026-11-21 — see `intel/trends.md` N10):**
+
+```bash
+# 1. Liveness, no API quota, parallelisable
+git ls-remote --heads https://github.com/<owner>/<repo>    # 40-hex SHA = live; credential prompt = gone
+
+# 2. The grant, byte for byte (github.com is 403; THIS host is 200)
+curl -sS https://raw.githubusercontent.com/<owner>/<repo>/<branch>/LICENSE
+
+# 3. Stars / forks / pushed_at / archived / SPDX
+gh api -X GET search/repositories -f q='repo:<owner>/<repo>'
+#    NOT `gh api repos/<o>/<r>` — per-repo REST is scoped and returns 403
+```
+
+**Wiring.**
+1. **Sweep liveness first, discover second.** A full 174-URL sweep took minutes. An audited shelf of
+   verified repos is worth more to an engagement than three new unverified rows.
+2. **Byte-read the LICENSE; never trust `license.spdx_id`.** It returns `NOASSERTION` for a plainly-MIT
+   30,954★ repo (`PythonRobotics`), for a dual GPL-3.0-OR-Commercial grant it cannot express
+   (`autoas/as`), and for an Apache-2.0-with-named-carve-out (`waymo-open-dataset`).
+3. **Classify on the licence's title line, never by substring.** MPL/GPL/LGPL/EPL texts all name *other*
+   licences in their bodies (`intel/trends.md` N11). Size-check too: `openremote/openremote`'s
+   172,870-byte LICENSE bundles a dependency listing around a one-paragraph **AGPL-3.0** grant.
+4. **Check `pushed_at` *and* `archived` *and* the README banner, and keep them separate.** A
+   discontinued **hosted service** is not a dead **project** — the Huly correction in
+   `verticals/solutions.md` moved a repo from *rejected* back to *viable* on exactly this distinction.
+5. **Flag, never overwrite, a curated cell.** Automation disagreed with this base's published licences
+   8 times and was wrong 8 times. Two repos state their grant only in a README or source header, so a
+   LICENSE-only probe would downgrade them and call it a refresh. **Emit diffs for human adjudication.**
+6. **Deliverable:** per-repo row of `{url, live?, grant (byte-read), SPDX (for contrast), stars,
+   pushed_at, archived, carve-outs}` plus a **refused list** with reasons. The refusals are the part
+   clients cannot get elsewhere — e.g. `mikko-lab/kopilotti-sales-demo` is on the `automotive-ai` topic
+   page and reads like a finding, but its LICENSE is **"All Rights Reserved"**; and `xtuple/xtuple`
+   is **404** while still appearing in current ERP roundups.
+
+**Why it sells:** this industry's licence-defect rate is high in **both** directions (`intel/trends.md`
+N5/N11) — false-permissive claims that create exposure, and false-restrictive labels that discard usable
+bases. Both are expensive, and **both are found by the same half-hour sweep.**

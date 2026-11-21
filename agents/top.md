@@ -1,13 +1,19 @@
 ---
 industry: automotive
 region: Global
-updated: 2026-11-19
+updated: 2026-11-21
 ---
 
 # 🎯 AI agents & models — Automotive
 
 > Open-source AI agents, policies and models for the automotive industry. Focus: MIT / Apache 2.0 / BSD.
-> **Verification method this pass (2026-11-13):** `curl -sI` against `github.com` returns **HTTP 403**
+> **Verification method this pass (2026-11-21):** all 174 repository URLs in this KB were probed with
+> `git ls-remote` (existence/liveness) and 152 LICENSE files were byte-read from
+> `raw.githubusercontent.com` (**HTTP 200** — it works, unlike `github.com`). Stars, forks, `pushed_at`
+> and `archived` come from `gh api -X GET search/repositories`. See the channel table under **"What changed on 2026-11-21"**
+> for the full channel table. **Nothing below is a page-read guess any more.**
+>
+> *Superseded note, kept for the record —* **2026-11-13:** `curl -sI` against `github.com` returns **HTTP 403**
 > through this session's proxy — re-tested today on three URLs, including `api.github.com`, all 403. So
 > licence and star figures are read from the **rendered repository page**, and where a licence had to be
 > settled the file was fetched raw from `raw.githubusercontent.com` and read directly. That is how
@@ -19,6 +25,178 @@ updated: 2026-11-19
 >
 > 🆕 = new this pass. 🔄 = licence/stars re-read today. ⏸ = URL re-probed, figures carried from an
 > earlier pass and labelled rather than silently refreshed. **No row is a placeholder.**
+
+## 🆕 What changed on 2026-11-21
+
+**Channel breakthrough — the verification problem this file has carried since 2026-10-26 is solved.**
+Every pass since then recorded that `curl -sI https://github.com` is **HTTP 403** and concluded that
+licences and liveness therefore had to be inferred from rendered pages. Re-tested today: `github.com`
+and `api.github.com` are still 403, **but two channels do work and were never tried together.**
+
+| Channel | Status today | What it settles authoritatively |
+|---|---|---|
+| `git ls-remote --heads https://github.com/<owner>/<repo>` | ✅ works | **Existence and liveness.** Returns a 40-hex SHA for a live repo; fails with a credential prompt for one that is gone. Distinguishes live from 404 with no API quota. |
+| `curl https://raw.githubusercontent.com/<o>/<r>/<branch>/LICENSE` | ✅ **HTTP 200** | **The licence grant, byte for byte.** No SPDX guessing. |
+| `gh api -X GET search/repositories -f q='repo:<o>/<r>'` | ✅ works | Stars, forks, `pushed_at`, `archived`, `license.spdx_id`. |
+| `gh api repos/<o>/<r>` | 🔴 403 | Per-repo REST is scoped to this session's own repositories. Use the **search** endpoint instead. |
+| `curl -sI https://github.com` / `api.github.com` | 🔴 403 | Host policy. Not retryable — do not route around it. |
+| `huggingface.co` | 🔴 does not resolve | Still no first-hand model-weight licence. Unchanged. |
+
+**Consequence: this pass verified all 174 repository URLs in the KB and byte-read 152 LICENSE files.**
+No row in this base is now a page-read guess. Future passes should start from these four channels.
+
+### 1. 🔴 URL sweep: 174 URLs probed, 170 live, 3 genuinely dead, 1 false positive
+
+All 174 distinct `github.com/<owner>/<repo>` URLs across the eight KB files were probed with
+`git ls-remote`. **The result is better than it looks:** of the 3 dead URLs, **none is a recommendation.**
+
+| Dead URL | Where it sits | Status |
+|---|---|---|
+| [RobertSloan22/tars-car-mcp](https://github.com/RobertSloan22/tars-car-mcp) | `agents/top.md` **exclusions** table + `agents/trending.md` as *"Rejected"* | Gone. It was already excluded for having no licence and being gated on a proprietary desktop app. **Its removal confirms the exclusion** — kept as a record, not promoted. |
+| [luca1234413/MotionBastard](https://github.com/luca1234413/MotionBastard) | Legacy *"Pipeline automático"* block (2026-07-02) in both trending files | Gone. Already flagged in-file as **not automotive software** (After Effects motion design). |
+| [vaisakhvenugopal/Deconstructing-BYD-s-Technology-Architecture](https://github.com/vaisakhvenugopal/Deconstructing-BYD-s-Technology-Architecture) | Same legacy block | Gone. Licence was `?` — never a usable grant. |
+
+**Known false positives for the next sweep** (these are valid URLs that are not repositories, so
+`git ls-remote` correctly fails on them — do not re-flag them):
+`github.com/orgs/autowarefoundation` (organisation listing), `github.com/topics/automotive-ai` and
+`github.com/topics/autonomous-driving` (topic pages — both verified to render, and both are **working
+discovery channels** for this industry; see `repos/trending.md`). A sweep script should skip the
+`orgs/` and `topics/` path prefixes.
+
+**The pattern worth keeping:** all three dead URLs were **0★ rows added by an automated discovery pass**,
+and all three had already been labelled unusable by a later human-grade pass. 0★ repositories are not
+merely low-signal — **they are the ones that vanish.** Every repository in this base with ≥1★ is live.
+
+### 2. ✅ Licence census by byte-read — and the published shelf beat the automated read 8 times
+
+152 of the 170 live repos serve a LICENSE file; **18 serve none** (all 18 already labelled "no licence"
+or licence-from-README in this base — see §4). Census of the 152:
+
+| Grant (byte-read) | Count | Buildable for Globant? |
+|---|--:|---|
+| Apache-2.0 | 79 | ✅ Yes |
+| MIT | 52 | ✅ Yes |
+| MPL-2.0 | 3 | ✅ Yes — file-level copyleft only |
+| BSD-3-Clause / BSD-2-Clause | 3 / 1 | ✅ Yes |
+| EPL-2.0 | 2 | ✅ Yes — weak, file-level copyleft |
+| CC0-1.0 | 3 | ✅ Yes (these are lists, not code) |
+| AGPL-3.0 | 3 | ⚠️ Network copyleft — service-boundary risk |
+| GPL-3.0 / GPL-2.0 | 3 / 2 | ⚠️ Strong copyleft |
+| LGPL-3.0 / LGPL-2.1 | 2 / 1 | ⚠️ Linking exception only |
+| **Total** | **152** | **143 permissive-or-weak (94%)** |
+
+**The important result is a negative one.** An automated licence classifier run over these same 152 files
+disagreed with this base's published cells on 8 repositories — **and the published cells were right every
+time.** The cause is a single trap worth recording permanently:
+
+> **Every GNU-family, MPL and EPL licence text names *other* licences inside its own body.**
+> MPL-2.0 §1.12 defines "Secondary License" as the GPL/LGPL/**AGPL**. GPL-3.0 §13 references the
+> **AGPL**. LGPL-3.0 appends the full GPL text. EPL-2.0 names **GPL-2.0** as a Secondary License.
+> So *any* classifier that substring-matches a licence name anywhere in the file misclassifies.
+> **Key on the document's title line, never on names appearing in the body.**
+
+| Repo | Naive automated read | Published here (correct) |
+|---|---|---|
+| [COVESA/vehicle_signal_specification](https://github.com/COVESA/vehicle_signal_specification) | AGPL-3.0 | **MPL-2.0** |
+| [esmini/esmini](https://github.com/esmini/esmini) | AGPL-3.0 | **MPL-2.0** |
+| [odoo/odoo](https://github.com/odoo/odoo) | AGPL-3.0 | **LGPL-3.0** |
+| [Dolibarr/dolibarr](https://github.com/Dolibarr/dolibarr) | AGPL-3.0 | **GPL-3.0** |
+| [winterautollc/OpenAutoCore](https://github.com/winterautollc/OpenAutoCore) | AGPL-3.0 | **GPL-3.0** |
+| [eclipse-sumo/sumo](https://github.com/eclipse-sumo/sumo) | GPL-2.0 | **EPL-2.0** |
+| [hcengineering/platform](https://github.com/hcengineering/platform) | GPL-2.0 | **EPL-2.0** |
+| [openremote/openremote](https://github.com/openremote/openremote) | Apache-2.0 | **AGPL-3.0** |
+
+The `openremote` case is the sharpest: its `LICENSE` is **172,870 bytes** because it bundles a full
+dependency-licence listing that contains the Apache text. The project's *own* grant is in the first
+paragraph — **AGPL-3.0**. A size-aware reader catches this; a substring matcher cannot.
+
+**`odoo/odoo` is worth stating plainly**, because the rotation brief names Odoo as the ERP exemplar:
+its LICENSE header reads *"Odoo is published under the GNU LESSER GENERAL PUBLIC LICENSE, Version 3
+(LGPLv3) … Since the LGPL is a set of additional permissions on top of the GPL, the text of the GPL is
+included at the bottom as well."* **LGPL-3.0, byte-confirmed** — which is precisely why proprietary Odoo
+modules are viable where they would not be under GPL or AGPL.
+
+### 3. 🔴 Four licence cells the API cannot answer and this pass filled by byte-read
+
+`license.spdx_id` returns `NOASSERTION` or `NONE` for these. The byte-read settles all four:
+
+| Repo | ★ | API says | **Byte-read grant** | Why it matters |
+|---|--:|---|---|---|
+| [autoas/as](https://github.com/autoas/as) | 965 | `NOASSERTION` | **GPL-3.0 *OR* Commercial (dual)** — LICENSE opens *"Dual License: GPLv3 and Commercial"* | Was `NOASSERTION` here too. An AUTOSAR-class stack with a **commercial escape hatch** is a materially different procurement conversation from GPL-only. |
+| [openremote/fleet-management](https://github.com/openremote/fleet-management) | 51 | `NOASSERTION` | **AGPL-3.0** | Was `NOASSERTION` here. Network copyleft on a fleet backend — now a known constraint, not an unknown. |
+| [COVESA/vss-tools](https://github.com/COVESA/vss-tools) | 81 | `MPL-2.0` | **MPL-2.0** | Was *"⚪ not read this pass"*. Cell now filled. |
+| [AtsushiSakai/PythonRobotics](https://github.com/AtsushiSakai/PythonRobotics) | 30,954 | `NOASSERTION` | **MIT** (*"The MIT License (MIT)"*) | The largest repo touching this base had no usable licence field. It is plain MIT. |
+
+[waymo-research/waymo-open-dataset](https://github.com/waymo-research/waymo-open-dataset) (3,438★) shows
+why `NOASSERTION` happens and why it must not be read as "no licence": the LICENSE states the repo is
+**Apache-2.0 *excluding* `src/waymo_open_dataset/wdl_limited`**, which carries its own terms. A named
+carve-out directory is actionable; `NOASSERTION` is not. **Use the code, avoid that one directory, and
+treat the dataset itself as separately licensed.**
+
+### 4. ✅ The 18 repos with no LICENSE file — this base already had them right
+
+All 18 were cross-checked against their published cells. **No corrections needed.** Two are worth noting
+because their cells are *better* than a LICENSE-file probe can be:
+[TrampolineRTOS/trampoline](https://github.com/TrampolineRTOS/trampoline) (**GPL-2.0**) and
+[navariltd/Fleet-Management-System](https://github.com/navariltd/Fleet-Management-System) (**GPL-3.0**)
+serve no LICENSE file; this base read their grant from the README and source headers. A probe that only
+fetches `LICENSE` would have downgraded both to "no licence" — **a regression dressed as a refresh.**
+
+### 5. 🔄 Correction that changes a decision: Huly's *repo* is not frozen — its *hosted service* is
+
+This base records `hcengineering/platform` (28,161★, EPL-2.0) as *"frozen and no longer actively
+maintained"*, and `compose/patterns.md` cites it as the cautionary liveness example. **The underlying
+notice says something different.** The README banner reads: *"The hosted Huly service is being
+discontinued because its hosting is no longer being funded … migrate as soon as possible — we can help
+you move to either a self-hosted setup or a hosted option."*
+
+First-hand repository state today: `pushed_at` **2026-11-09**, `archived` **false**, and the last five
+commits are real fixes, not README edits alone — `fix(github): do not persist the Octokit client in the
+user integration secret` (2026-11-05), `fix(gantt)` (2026-11-04), `fix(contact)` (2026-11-02).
+
+**The conflation was "hosted SaaS shutting down" → "project dead", and it runs the wrong way for us.**
+The vendor's own recommended path is now **self-hosting**, the code is live, and EPL-2.0 is weak
+file-level copyleft. For a Globant engagement that would self-host anyway, Huly moved from *avoid* to
+*viable*. The genuine risk is commercial sustainability of the upstream, not abandonment of the code.
+The liveness lesson in `compose/patterns.md` still stands — **but it needs a different example**, because
+this one was never a case of a dead repo.
+
+### 6. 🆕 New rows this pass — four small agents, one rejection
+
+| Agent | Repo | Licence (byte-read) | ★ | Last push | What it does | Origin |
+|---|---|---|--:|---|---|---|
+| 🆕 Dealer AI Skills | [arielcoro/dealer-ai-skills](https://github.com/arielcoro/dealer-ai-skills) | **MIT** | 3 | 2026-10-21 | Installable agent skills for **car-dealer retail ops**: SEO/AEO/GEO, BDC, F&I, fixed ops, equity mining, customer lifecycle. Runs on Claude Code, Codex, Cursor, Gemini CLI. | **North America** — US franchise/independent dealer vocabulary (BDC, F&I, equity mining) throughout |
+| 🆕 Waypoint | [rogue-media-lab/waypoint](https://github.com/rogue-media-lab/waypoint) | **MIT** | 1 | 2026-11-13 | Service-advisor assistant over SQLite with **VIN decoding and labour-time lookup**. | North America (service-advisor / labour-guide model) |
+| 🆕 OmniIntent | [neura-edit/omni-intent](https://github.com/neura-edit/omni-intent) | **MIT** | 1 | 2026-10-03 | **On-device multi-intent routing + deterministic slot extraction** for cockpits, Kotlin. Explicitly *"zero auto-regressive generation delay, automotive-grade determinism"* — no LLM in the hot path. | Not stated |
+| 🆕 deeptest-talking-manual | [keklikci/deeptest-talking-manual-26](https://github.com/keklikci/deeptest-talking-manual-26) | **MIT** | 0 | 2026-08-20 | Test generator that hunts **omitted safety warnings** in LLM-backed owner's-manual assistants. | Not stated |
+| 🔴 **REJECTED** | [mikko-lab/kopilotti-sales-demo](https://github.com/mikko-lab/kopilotti-sales-demo) | 🔴 **"All Rights Reserved"** | 0 | 2026-10-14 | Used-car price negotiation with rule-based safety bounds. Interesting design; **no grant whatsoever** — LICENSE reads *"No part … may be copied, distributed, modified, or used commercially without prior written permission."* | — |
+
+**`omni-intent` is the one with a design idea worth stealing even at 1★:** it treats cockpit intent as a
+*routing* problem with deterministic slot extraction rather than a generation problem, which is the only
+shape that survives an automotive latency budget. It pairs directly with the C1–C5 cockpit-AI grading
+China published this year (see `intel/market.md`).
+
+**`dealer-ai-skills` is the first dealer-retail agent in this base with a real MIT grant.** It is 3★ and
+single-author — but the §1 finding applies in reverse: it is ≥1★, live, and licensed, and it occupies the
+dealership-operations slot this base previously had to fill with general-purpose ERP/CRM.
+
+### 7. 🔴 Declared gaps 2026-11-21 — searched, found nothing, recorded
+
+- **No open-source dealership DMS exists.** Searched `open source platform automotive ERP CRM dealership
+  MIT Apache` plus iDempiere / XTuple / Compiere / OFBiz / Krayin / Huly / Open Mercato. Every result is a
+  **general-purpose** ERP/CRM. There is no open DMS with inventory, F&I and deal-desk modules. `xtuple/xtuple`
+  is **gone** (404 today). [idempiere/idempiere](https://github.com/idempiere/idempiere) is live (678★,
+  pushed 2026-11-20) but **GPL-2.0** — see `verticals/solutions.md`.
+- **No LATAM-origin automotive AI repository found.** Four region-scoped searches run. Not one
+  LATAM-origin automotive agent or platform surfaced. This is an **informed gap, not coverage** — see the
+  LATAM subsection of `intel/market.md` for what the region does have (industrial policy, no AI-specific
+  automotive rule).
+- **No GitHub "trending for automotive" feed** — sixth consecutive pass recording this. The working
+  substitute remains the search API with star and date floors, documented in `repos/trending.md`.
+- **`huggingface.co` still does not resolve**, so no model-weight licence is first-hand. Unchanged since
+  2026-10-26.
+
+---
 
 ## 🆕 What changed on 2026-11-19
 

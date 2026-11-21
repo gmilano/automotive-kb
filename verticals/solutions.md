@@ -1,16 +1,98 @@
 ---
 industry: automotive
 region: Global
-updated: 2026-11-19
+updated: 2026-11-21
 ---
 
 # 🏭 Vertical platforms — Automotive
 
 > Real, running open-source systems that can be customised with an AI layer on top.
 > Model: start from something that already works, add the agentic layer above it.
-> Verified 2026-11-13 (`curl -sI` on `github.com` and `api.github.com` both return **HTTP 403** through
+> **Verified 2026-11-21:** licences **byte-read** from `raw.githubusercontent.com` (HTTP 200), liveness
+> via `git ls-remote`, stars/push dates via `gh api -X GET search/repositories`.
+>
+> *Superseded note —* verified 2026-11-13 (`curl -sI` on `github.com` and `api.github.com` both return **HTTP 403** through
 > this session's proxy, re-tested today, so licences and stars are read from the rendered repository page;
 > 🆕 = new this pass, 🔄 = licence/stars re-read today, ⏸ = carried forward and labelled).
+
+## 🆕 2026-11-21 — Huly moves from *rejected* to *viable*, and Odoo's LGPL grant is byte-confirmed
+
+> **Verification this pass:** licences **byte-read** from `raw.githubusercontent.com` (HTTP 200 — it
+> works), liveness via `git ls-remote`, metadata via `gh api -X GET search/repositories`. The
+> rendered-page channel earlier passes relied on is no longer the best available. See
+> `agents/top.md` → *"What changed on 2026-11-21"*.
+
+### 🔄 Correction: Huly's *hosted service* is discontinued — its *repository* is not frozen
+
+The rejection table below (2026-11-19) excludes
+[hcengineering/platform](https://github.com/hcengineering/platform) partly because *"the page states it
+is frozen and is no longer actively maintained."* **The licence call was right; the liveness call was
+not.** The README banner actually says:
+
+> *"The hosted Huly service is being discontinued because its hosting is no longer being funded. If you
+> keep important data on the hosted platform, export and back it up, and migrate as soon as possible —
+> we can help you move to either a self-hosted setup or a hosted option."*
+
+That is a **SaaS wind-down with a vendor-recommended migration to self-hosting**, not an abandoned
+codebase. First-hand repository state today:
+
+| Field | Value (read 2026-11-21) |
+|---|---|
+| Stars | **28,161** |
+| `pushed_at` | **2026-11-09** |
+| `archived` | **false** |
+| Last commits | `fix(github): do not persist the Octokit client in the user integration secret` (2026-11-05), `fix(gantt)` (2026-11-04), `fix(contact)` (2026-11-02) |
+| Licence (byte-read) | **EPL-2.0** — weak, file-level copyleft |
+
+**Revised verdict: viable for a self-hosted engagement.** EPL-2.0 does not reach proprietary modules kept
+in separate files, the code is actively fixed, and self-hosting is the upstream's own recommended path.
+The real risk is **commercial sustainability of the vendor**, which is a diligence question, not a
+licence or liveness blocker. The **Apache-2.0 claim remains false** — it is EPL-2.0, and today's search
+results repeated the Apache claim again, so the secondary-source error is upstream and persistent.
+
+**Method note worth keeping:** *"hosted service shutting down"* and *"project dead"* are different
+findings, and the first is routinely published in language that reads like the second. **Check
+`pushed_at` and `archived` before converting a service notice into a project obituary.**
+
+### ✅ Odoo — the LGPL-3.0 grant, byte-confirmed
+
+The rotation brief names Odoo as the ERP exemplar, so this is worth settling first-hand rather than
+citing. `odoo/odoo` `LICENSE`, read byte for byte today, opens:
+
+> *"Odoo is published under the GNU LESSER GENERAL PUBLIC LICENSE, Version 3 (LGPLv3), as included
+> below. Since the LGPL is a set of additional permissions on top of the GPL, the text of the GPL is
+> included at the bottom as well. Some external libraries and contributions bundled with Odoo may be
+> published under other GPL-compatible licenses."*
+
+**LGPL-3.0, confirmed.** This is exactly why proprietary Odoo modules are viable where they would not be
+under GPL or AGPL — and why an automated classifier that sees the appended GPL text and reports "AGPL-3.0"
+(as one did against this shelf today) would wrongly disqualify the single most useful ERP base in this file.
+
+### 🆕 ERP bases — one dead, one live-but-copyleft
+
+| Platform | Repo | Licence (byte-read) | ★ | Last push | Verdict |
+|---|---|---|--:|---|---|
+| **XTuple** | `xtuple/xtuple` | — | — | — | 🔴 **GONE** — 404 via `git ls-remote`. Still cited in current ERP roundups. **Any shortlist naming XTuple is stale.** |
+| **iDempiere** | [idempiere/idempiere](https://github.com/idempiere/idempiere) | ⚠️ **GPL-2.0** (API says `NOASSERTION`; `LICENSE.md` is the GPL-2.0 text) | 678 | 2026-11-20 | ⚠️ **Live and genuinely maintained**, but strong copyleft. Usable only where the deliverable can be GPL — not for a proprietary dealer module. |
+
+Both were returned by this pass's `open source platform automotive ERP CRM dealership MIT Apache` query.
+Neither closes the DMS gap.
+
+### 🔴 The DMS gap — seventh consecutive confirmation
+
+Still **no open-source dealer management system** with inventory, F&I and deal-desk modules. Today's
+query returned only general-purpose ERP/CRM: OFBiz (Apache-2.0), Huly (EPL-2.0), Krayin (MIT), iDURAR
+(AGPL-3.0), Open Mercato (MIT core + commercial enterprise package), Dolibarr (GPL-3.0), iDempiere
+(GPL-2.0), ERPNext (GPL-3.0). **The gap is structural, not a search failure** — a DMS is a regulated,
+OEM-integrated product category, and no one has open-sourced one.
+
+What *did* appear this pass is the first **MIT-licensed dealer-operations agent layer**:
+[arielcoro/dealer-ai-skills](https://github.com/arielcoro/dealer-ai-skills) (MIT, 3★, pushed 2026-10-21)
+— SEO/AEO/GEO, BDC, F&I, fixed ops, equity mining as installable agent skills. It is small and
+single-author, but it is the first thing in this base that speaks **dealer retail** with a real grant.
+See `compose/patterns.md` for how to pair it with a permissive ERP instead of waiting for a DMS.
+
+---
 
 ## 🆕 2026-11-19 — the DMS gap re-measured, and the first *shop-management* contract appears
 
@@ -238,7 +320,7 @@ licensed. **Neither is.** Recorded so no future pass re-admits them.
 | Repo | Search summary claimed | **Repository page says (read 2026-11-13)** | Why excluded |
 |---|---|---|---|
 | [idurar/idurar-erp-crm](https://github.com/idurar/idurar-erp-crm) | *"fully open-source under the MIT license"* | 🔴 **AGPL-3.0**, 9.0k★ | **Strong network copyleft.** A hosted client deliverable triggers source obligations. The claim was simply false. |
-| [hcengineering/platform](https://github.com/hcengineering/platform) (**Huly**) | *"licensed under Apache License 2.0"* | 🔴 **EPL-2.0**, 28.1k★ — **and the page states it is "frozen and is no longer actively maintained"** | **Wrong on two counts**, and the second is worse: a 28.1k-star project that looks alive in every search result is **dead upstream**. Never base an engagement on it. |
+| [hcengineering/platform](https://github.com/hcengineering/platform) (**Huly**) | *"licensed under Apache License 2.0"* | 🔴 **EPL-2.0**, 28.1k★ — **and the page states it is "frozen and is no longer actively maintained"** — 🔄 **see 2026-11-21 above: the licence call stands, the "frozen" call does not. Hosted *service* discontinued; repo pushed 2026-11-09, `archived: false`. Revised to VIABLE self-hosted.** | **Wrong on two counts**, and the second is worse: a 28.1k-star project that looks alive in every search result is **dead upstream**. Never base an engagement on it. |
 
 **The lesson, stated plainly because it keeps recurring.** Four ERP/CRM licence claims were probed this
 pass and **three were wrong or incomplete** — one false MIT, one false Apache-2.0 on an abandoned repo, one

@@ -1,7 +1,7 @@
 ---
 industry: automotive
 region: Global
-updated: 2026-11-19
+updated: 2026-11-21
 ---
 
 # 🗺️ Market map — Automotive
@@ -9,6 +9,41 @@ updated: 2026-11-19
 > Key players, market map and opportunities **by region**. Updated 2026-11-13.
 > Every regulatory date below names its instrument. Where sources conflict, the conflict is shown rather
 > than resolved — and where a date comes from a vendor page rather than a primary register, it says so.
+
+## 🆕 What changed on 2026-11-21
+
+**Eight region-scoped and global searches run; all five regional subsections updated under
+`## Opportunities by region`.** Shelf evidence is first-hand this pass: 174 repository URLs probed with
+`git ls-remote`, 152 LICENSE files byte-read from `raw.githubusercontent.com`.
+
+**The four things that would change a conversation this week:**
+
+1. **NA — the federal AV framework became a rulemaking.** NHTSA granted **Zoox the first commercial
+   robotaxi exemption** (up to 2,500 vehicles/yr for 2 years), proposed **removing the manual
+   brake-pedal requirement** for driverless-only designs, and signed a **3-year $5M agreement with SAE
+   ("A2SCEND") to author measurable driving competencies**. State authorisations and **federal
+   preemption remain unsettled.**
+2. **APAC — China now grades cockpit AI.** **GB/Z 177.7—2026** (released 30 Apr 2026, CATARC-drafted)
+   classifies cockpit AI **C1–C5**, reported as the first such scale anywhere. Two **mandatory**
+   standards (cybersecurity, software updates) apply to newly approved models from **1 Jul 2026**;
+   **GB 47955—2026** on combined driving assistance from **1 Jan 2027**.
+3. **EMEA — the AI Act reaches vehicles through type approval.** Best reading this pass: the **Annex I
+   type-approval route** under **Regulation (EU) 2026/1744** puts the operative automotive deadline at
+   **2 Aug 2028**, not the Act's general 2 Aug 2026 date. The date conflict is **not resolved** — so
+   **quote the mechanism, not the date.** Also safe to state: no separate AI Act conformity assessment,
+   and type approval alone does not confer compliance.
+4. **LATAM — the gap is now specific rather than general.** **Brazil's Bill 2,338/2023** sits in the
+   Chamber of Deputies awaiting a rapporteur's opinion; **Mexico has no AI-specific law** and, per
+   Chambers, **no regulations governing AI in autonomous vehicles**. The demand-side entry point is
+   **Rota 2030 (Decree 9.557/2018)**, a funded industrial-policy programme with R&D obligations.
+
+**Five claims refused this pass for lack of corroboration** — recorded so no later pass quotes them: a
+€45M fine on a German supplier; first CEN-CENELEC harmonised standards; "no OEM is fully AI Act
+compliant in 2026"; "Europe 28% vs North America 42%" of agentic AI in automotive (single vendor, no
+methodology); and MLIT-driven cockpit collision-mitigation adoption in Japan. **Also: the 2026 market
+size has a 1.6× spread across vendors ($5.8B–$9.1B) — cite the range, never one number.**
+
+---
 
 ## 🆕 What changed on 2026-11-19
 
@@ -218,6 +253,36 @@ adoption figures instead — they are more consistent and more useful in a sales
 
 ### North America
 
+**🆕 Added 2026-11-21 — the federal AV framework stopped being a consultation and became a rulemaking.**
+- **NHTSA granted Zoox the first-ever commercial exemption for a purpose-built robotaxi** (reported
+  30 Jul 2026), permitting up to **2,500 vehicles annually for two years**. The federal hurdle is
+  cleared; **state-level authorisations are still required before service launches**, so the
+  patchwork problem moved down a layer rather than disappearing.
+- **The brake-pedal NPRM is the structural change.** NHTSA proposed amending the Federal Motor Vehicle
+  Safety Standards to **remove the manual brake-pedal requirement** for vehicles designed to operate
+  exclusively without a human driver. If finalised, purpose-built cabins (no steering wheel, no pedals)
+  become type-approvable rather than exemption-dependent. **This is the single item to watch for a NA
+  robotaxi engagement.**
+- **A federal performance standard is being authored, not just discussed.** NHTSA signed a **three-year,
+  $5M cooperative agreement with SAE International ("A2SCEND")** to develop **measurable driving
+  competencies** for automated driving systems. ⚠️ **Opportunity signal:** "measurable competencies"
+  means a published, testable rubric — the same shape as the assurance-as-code layer in
+  `repos/foundations.md` Layer D. Whoever has the harness wired when the rubric lands has a head start.
+- **An interim final rule now allows vehicles to be built *before* an exemption is granted** (comment
+  period extended to late Sep 2026 at the Alliance for Automotive Innovation's request).
+- **Enforcement is live, not theoretical.** NHTSA escalated its Tesla robotaxi probe with a **Special
+  Order** (Sep 2026; sworn response reported due 30 Oct 2026), and opened a probe into **Avride**
+  (May 2026). A **31 Jul 2026 deadline for first-responder remediation plans** from robotaxi operators
+  passed with **no submissions made public** per one tracker — ⚠️ unconfirmed, flagged not quoted.
+- **Dealer-side adoption is the under-served half of this region.** Kerrigan Advisors is reported at
+  **43% of dealers already deploying AI and 47% planning to**. This base now holds its first
+  MIT-licensed dealer-operations agent layer ([`arielcoro/dealer-ai-skills`](https://github.com/arielcoro/dealer-ai-skills)),
+  which is **North-America-shaped by vocabulary** (BDC, F&I, equity mining, fixed ops).
+  **The robotaxi story attracts the attention; the 18,000-dealer service-and-retail estate is where
+  near-term engagement volume is.**
+- 🔴 **Unresolved and material:** **federal preemption of state AV rules** is still not settled, so a
+  NA deployment plan must still be written per-state.
+
 **🆕 Added 2026-11-19.**
 - **Robotaxi is now a multi-city operating business, and the city counts conflict across trackers —
   quote the conflict, not a number.** Waymo is reported at **"about 10 to 15 U.S. markets"** depending
@@ -358,6 +423,36 @@ adoption figures instead — they are more consistent and more useful in a sales
 
 ### EMEA
 
+**🆕 Added 2026-11-21 — the type-approval route is now the clearest reading of how the AI Act reaches vehicles.**
+- **The mechanism matters more than the date.** The most coherent account found this pass: vehicle AI
+  reaches the AI Act **through the Annex I type-approval route**, which pushes the operative automotive
+  deadline to **2 Aug 2028** under **Regulation (EU) 2026/1744**, rather than the Act's general
+  application date of **2 Aug 2026**. One source records the **Digital Omnibus published in the OJ on
+  24 Jul 2026, in force 27 Jul 2026**. Older material still says 2027.
+  ⚠️ **The three-way conflict recorded on 2026-11-19 is not resolved — it is now better explained.**
+  Quote the *mechanism* (type approval, Annex I) and let the client's counsel pick the date.
+- **Two compliance facts that are safe to state, because they are structural rather than date-dependent:**
+  1. **Manufacturers do not run a separate AI Act conformity assessment** — it folds into existing type
+     approval. 2. **A type-approved vehicle is not automatically AI Act compliant.** Both can be said
+     without taking a position on the deadline.
+- **UNECE regulations are the evidence layer, and this is the actionable detail.** Specific UNECE rules
+  map onto AI Act articles — e.g. **R157 transition-demand design is evidence for the human-oversight
+  requirement**. ⚠️ **Opportunity:** that mapping is a deliverable. An EMEA engagement that produces a
+  traceable UNECE-article → AI-Act-article matrix, backed by the assurance-as-code layer in
+  `repos/foundations.md` Layer D, is selling demonstrable oversight rather than asserted compliance.
+- **Who is the "provider" is settled enough to design around:** the **OEM** is generally the provider,
+  and **Tier-1 suppliers furnishing AI subsystems are providers of those subsystems**. That makes the
+  Tier-1 a compliance counterparty in its own right — a distinct, addressable buyer.
+- **L3 is shipping in-region:** BMW Highway Assistant and Mercedes-Benz Drive Pilot under **UNECE R157**.
+- 🔴 **Claims refused this pass for lack of corroboration** (recorded so no later pass quotes them):
+  a **€45M fine on a German supplier**; **first CEN-CENELEC harmonised standards**; **"no OEM is fully
+  AI Act compliant in 2026"**; and **Europe at 28% vs North America at 42% of agentic AI in automotive**
+  (single vendor source, no stated methodology). None independently verified.
+- ✅ **EMEA is where the open SDV commons actually lives**, and that is a durable regional advantage:
+  the Eclipse stack (**S-CORE, Kuksa, Leda, Ankaios, iceoryx, eCAL, Velocitas**) and **COVESA VSS**
+  (**MPL-2.0**, byte-confirmed) are European-governed and permissively licensed. For a sovereignty-
+  sensitive EMEA client this is assembled from parts they can audit — see `compose/patterns.md`.
+
 **🆕 Added 2026-11-19.**
 - **The AI Act timeline conflict is still unresolved, and it is now the single most valuable thing to
   know in an EMEA automotive conversation.** Sources split three ways: (a) the main automotive
@@ -472,6 +567,35 @@ adoption figures instead — they are more consistent and more useful in a sales
   for this agenda (reported 19–20 May 2026, Stuttgart) — useful for engagement timing.
 
 ### APAC
+
+**🆕 Added 2026-11-21 — China now *grades* cockpit AI, which turns a feature argument into a compliance target.**
+- 🚨 **The headline: cockpit AI has a national grading scale.** **GB/Z 177.7—2026**, a guidance document
+  released **30 Apr 2026** and drafted with **CATARC**, classifies intelligent-cockpit AI into **five
+  levels, C1 through C5**. This is reported as the **first evaluation system for grading cockpit AI
+  capability** anywhere. ⚠️ **Why it is the most actionable APAC item in this file:** a graded scale
+  converts "our cockpit is smart" into "our cockpit is C3 and here is the evidence." That is a
+  measurable engineering target, and it is exactly the shape
+  [`neura-edit/omni-intent`](https://github.com/neura-edit/omni-intent) (MIT, deterministic on-device
+  intent routing — see `agents/top.md` §6) is built for.
+- **Two mandatory national standards — vehicle cybersecurity and software updates — apply to newly
+  approved models from 1 Jul 2026.** A third, **GB 47955—2026** on combined driving assistance, is set
+  to take effect **1 Jan 2027**. Mandatory OTA and cybersecurity standards are a **services** opportunity
+  (update pipelines, evidence packages), not only a product one.
+- **Adoption is mass-market, not pilot-stage:** **L2 driver-assistance penetration reported at 70.5%**
+  in China. **IDC** puts China's AI-cockpit market at **¥710M in H1 2026**, with **Volcano Engine at 45%
+  share**. ⚠️ Market-size figures across APAC reports conflict and are directional only.
+- **The silicon layer is the concentration risk worth naming:** **Qualcomm still holds ~71.4% of China's
+  cockpit domain-controller chip market in H1 2026**, with Huawei and SiEngine well behind. A
+  cockpit-software engagement should assume Qualcomm NPU targets while designing for portability.
+- **Partnership structure is the entry mode:** Xpeng MONA L03 with **XOS 6** (Jul 2026); **Neusoft Smart
+  Go + Tencent Cloud** on AI cockpit (Apr 2026); **Toyota Boshoku + Huaqin** smart-cockpit JV (Jul 2026).
+  **Japan and Korea contribute cluster/HUD expertise; China sets the mass-production pace.**
+- ✅ **APAC is where the open driving-policy and world-model work is**, consistent with earlier passes —
+  `QwenLM/Qwen-Drive-1.0`, `hustvl/Senna`, `xiaomi-research/recogdrive`, the Autoware ecosystem
+  (TIER IV, Japan). **The models are APAC; the SDV middleware is EMEA; the robotaxi operators are NA.**
+- 🔴 **Japan's regulatory picture remains thin.** One market report attributes accelerating
+  cockpit-integrated collision-mitigation adoption to **MLIT** rules; the source is low-detail and
+  **this is not corroborated**. Recorded as unverified, not quoted.
 
 **🆕 Added 2026-11-19.**
 - 🆕 **China co-led the first global AV regulation, and that is a standard-setting shift, not a
@@ -599,6 +723,41 @@ adoption figures instead — they are more consistent and more useful in a sales
   data-security/localisation constraints.
 
 ### LATAM
+
+**🆕 Added 2026-11-21 — sixth confirmation of the supply gap, and the regulatory answer is now specific.**
+- 🔴 **Supply gap, confirmed again and stated as a gap, not as silence.** A region-scoped search
+  (`AI automotive LATAM Brazil Mexico 2026 adoption regulation automotive industry`) plus the full
+  174-URL shelf audit produced **no LATAM-origin automotive AI repository**. Observed origins across
+  this base remain **US, China, Germany, Türkiye, Korea, India**. **This is an informed gap: it was
+  searched for and it is absent.** Do not read the absence as "not yet surveyed."
+- 🔴 **No AI-specific automotive regulation exists in either major market, and that is now sourced
+  rather than assumed:**
+  - **Brazil** — **Bill 2,338/2023** passed the Federal Senate and sits in the **Chamber of Deputies**,
+    **awaiting the rapporteur's opinion in a special committee as of Jul 2026**. A separate government
+    bill, **6,237/2025**, proposes a National System for AI Development, Regulation and Governance.
+    ⚠️ One source describes **Oct 2026 Senate amendments adding strict civil liability for high-risk
+    automated decision systems**; not corroborated elsewhere — **flagged, not quoted.**
+  - **Mexico** — **no AI-specific federal law.** Sources conflict on whether **2026 amendments** count as
+    the first binding AI obligations; both readings can hold, since those amendments are not a
+    comprehensive law. A Chambers guide states plainly that **there are no specific regulations in
+    Mexico governing AI in autonomous vehicles.**
+  - **Consequence for an engagement:** LATAM automotive AI runs under **general data-protection,
+    consumer and sector rules** — not an AV-specific regime. **That is a lower compliance barrier than
+    EMEA and a less certain one than NA.** Say both halves.
+- ✅ **The demand side is industrial policy, and it has a name.** Brazil's **Rota 2030 — Mobilidade e
+  Logística** (**Decree 9.557/2018**) still anchors industrial and technology requirements around
+  **energy efficiency, safety and innovation**, with R&D spend obligations attached. ⚠️ **This is the
+  LATAM entry point:** a programme that *requires* qualifying R&D is a budget line that an AI
+  engineering engagement can be written against. Regional vehicle regulation is also shaped by
+  **Mercosur** trade disciplines (local content, tariffs, model approvals).
+- ✅ **The concrete adoption example found this pass is aftermarket retail, not manufacturing:**
+  **AI-driven appraisal engines in used-car retail**, offering transparent pricing — reported to raise
+  consumer trust and shorten transaction times. **That is reachable with permissively licensed parts
+  today** (see `compose/patterns.md`) and does not wait on any legislature.
+- **Read the gap as the position.** No local open-source supply, no AV-specific rule, and a funded
+  industrial-policy programme is the profile of a region where **a studio that brings the stack is the
+  differentiator** — the parts are EMEA/APAC/NA-origin and permissively licensed, so they can be
+  assembled and localised rather than invented.
 
 **🆕 Added 2026-11-19 — the supply gap is confirmed a fifth time, and the demand side got more concrete.**
 - 🔴 **Supply, restated with the queries:** **eleven** GitHub REST API queries were run this pass
@@ -748,6 +907,32 @@ adoption figures instead — they are more consistent and more useful in a sales
   proprietary vendors handle poorly; Traccar self-hosted answers both. See P5.
 
 ### Global
+
+**🆕 Added 2026-11-21.**
+- **The regional division of labour is now stable enough to plan against, and it is the most useful
+  single sentence in this file:** **driving models and cockpit AI are APAC, SDV middleware and the
+  compliance apparatus are EMEA, robotaxi operations and dealer retail are North America, and LATAM is
+  demand without local supply.** Every pass since 2026-10-15 has reproduced this shape.
+- **2026 automotive-AI market size: quote the conflict.** Estimates for 2026 range from **~$5.8B**
+  (Precedence Research) to **~$6.5B** (Market Research Future) to **~$9.1B** (Coherent Market Insights)
+  — a **1.6× spread between vendors for the same year**. Growth forecasts diverge further. ⚠️ **Never
+  cite one of these as *the* number**; cite the range and name the houses.
+- **Software-defined vehicle + AI is the consensus frame.** Perforce's 2026 survey reports **70% of
+  respondents using AI for SDV optimisation** (predictive maintenance, in-vehicle personalisation).
+  ⚠️ Perforce sells automotive software tooling — vendor-surveyed figure, treat as directional.
+- **Physical AI moved to domain-specific models.** At **CES 2026** NVIDIA unveiled **Alpamayo**, a
+  **10-billion-parameter** model for complex driving scenarios; S&P Global describes an industry shift
+  toward **domain-specific models trained on navigation data, vehicle controls and safety rules**
+  rather than general-purpose ones. ✅ **Verified first-hand:** the `NVlabs/alpamayo*` family and
+  `autowarefoundation/alpamayo-autoware` are in this base, **Apache-2.0, byte-read** — this is the rare
+  case where a CES announcement has permissively licensed code behind it.
+- **OTA is becoming table stakes with regulation attached** — continuous OTA plus cybersecurity and
+  functional-safety requirements (China mandates both from 1 Jul 2026; see APAC).
+- **The open-source commons has a clear split that should drive build-vs-adopt:** **perception research
+  code is largely frozen** (7 of 9 canonical perception repos dormant >1yr, 1 archived — see
+  `repos/foundations.md` Layer F) while **stacks and middleware are actively pushed** (CARLA
+  2026-11-21, Autoware 2026-11-20, PythonRobotics 2026-11-16). **Take algorithms from the frozen layer;
+  take infrastructure from the live one.**
 
 **🆕 Added 2026-11-19.**
 - 🆕 **The first global AV regulation exists.** **UNECE WP.29 approved the Automated Driving System

@@ -1,12 +1,81 @@
 ---
 industry: automotive
 region: Global
-updated: 2026-11-19
+updated: 2026-11-21
 ---
 
 # 📈 Trending repos — Automotive
 
 > **APPEND-ONLY.** Newest dated section on top; history preserved below. Never rewrite earlier sections.
+
+## 2026-11-21
+
+**Window:** 2026-11-19 → 2026-11-21 (2 days). **Channel:** `git ls-remote` (liveness),
+`raw.githubusercontent.com` (**byte-read LICENSE**, HTTP 200), `gh api -X GET search/repositories`
+(stars/forks/`pushed_at`/`archived`). `github.com`, `api.github.com` and `gh api repos/<o>/<r>` are
+**403**. **174 URLs probed, 170 live; 152 LICENSE files byte-read.**
+
+### Seventh snapshot: still no automotive trending feed — but the *shelf audit* is now cheap
+
+Six previous snapshots recorded that GitHub publishes no automotive trending feed and that the
+rotation's prescribed query (`github trending automotive AI 2026`) returns general-purpose agent lists.
+**Confirmed a seventh time, verbatim.** Today's run of that exact query returned: a DEV Community listicle,
+two news-radar issue threads, a ZimaSpace blog, and the `automotive-ai` / `automotive` **topic pages** —
+which are the only genuinely useful results in the set.
+
+What changed is cheaper **maintenance**: `git ls-remote` probes the entire shelf for liveness with no API
+quota at all, and `raw.githubusercontent.com` settles licences without the REST API. A full 174-URL
+sweep now costs minutes. **Recommendation for the next pass: sweep every time, discover second.** An
+audited shelf of 170 verified repos is worth more to an engagement than three new 0★ rows.
+
+### Trending substitute that works — the two channels, ranked
+
+1. **`gh api -X GET search/repositories`** with star + date floors. Still the best discovery channel.
+   The 2026-11-19 insight holds: **search the standard, not the buzzword**
+   (`AUTOSAR OR ISO26262 OR "ISO 21434"`), which is what found a 2,907★ repo five passes late.
+2. **GitHub topic pages**, read as rendered pages: `github.com/topics/automotive-ai` (25 repos) and
+   `github.com/topics/autonomous-driving` (3,344 repos). The `automotive-ai` topic is **small and
+   low-star** — its top entry is 30★ — so it is readable end to end in one pass. The
+   `autonomous-driving` topic is where the ★1k+ repos are.
+
+### 🆕 Repos added to `repos/foundations.md` this window — the dormant perception commons
+
+The `autonomous-driving` topic page surfaced nine canonical repos this base did not hold. **Seven of the
+nine have not been pushed in over a year and one is formally archived** — which is itself the finding:
+
+| Repo | Licence (byte-read) | ★ | Last push | State |
+|---|---|--:|---|---|
+| [fundamentalvision/BEVFormer](https://github.com/fundamentalvision/BEVFormer) | Apache-2.0 | 4,652 | 2024-08-15 | 🔴 Dormant 2+ yrs |
+| [Ly0n/awesome-robotic-tooling](https://github.com/Ly0n/awesome-robotic-tooling) | CC0-1.0 | 3,924 | 2023-11-20 | 🔴 Dormant |
+| [OpenDriveLab/End-to-end-Autonomous-Driving](https://github.com/OpenDriveLab/End-to-end-Autonomous-Driving) | MIT | 3,730 | 2025-07-02 | ⚠️ Slow |
+| [waymo-research/waymo-open-dataset](https://github.com/waymo-research/waymo-open-dataset) | Apache-2.0 **except `wdl_limited/`** | 3,438 | 2026-01-08 | ⚠️ Slow |
+| [PJLab-ADG/SensorsCalibration](https://github.com/PJLab-ADG/SensorsCalibration) | Apache-2.0 | 3,261 | 2024-06-17 | 🔴 Dormant |
+| [zhulf0804/3D-PointCloud](https://github.com/zhulf0804/3D-PointCloud) | 🔴 **none** | 2,949 | 2024-08-30 | 🔴 Dormant, no grant |
+| [daohu527/dig-into-apollo](https://github.com/daohu527/dig-into-apollo) | MIT | 2,457 | 2026-02-03 | ✅ Live-ish |
+| [microsoft/AutonomousDrivingCookbook](https://github.com/microsoft/AutonomousDrivingCookbook) | MIT | 2,440 | 2025-08-25 | 🔴 **ARCHIVED** |
+| [hustvl/YOLOP](https://github.com/hustvl/YOLOP) | MIT | 2,258 | 2023-10-20 | 🔴 Dormant 3 yrs |
+
+**The automotive perception commons is frozen research code.** The live investment moved to end-to-end /
+VLA models and the Autoware/Apollo stacks this base already tracks. Take **algorithms and calibration
+maths** from these; take **runnable infrastructure** from the stacks. Note `waymo-open-dataset`'s API
+licence is `NOASSERTION` only because of the named `src/waymo_open_dataset/wdl_limited` carve-out — a
+carve-out is actionable, `NOASSERTION` is not.
+
+### 🔴 `xtuple/xtuple` is gone
+
+404 via `git ls-remote`. It appears in current ERP roundups (including one returned by today's searches)
+and in older automotive-ERP shortlists. **Any shortlist citing XTuple is stale.** Live alternative found:
+[idempiere/idempiere](https://github.com/idempiere/idempiere) — 678★, pushed 2026-11-20, but
+**GPL-2.0** (byte-read; API says `NOASSERTION`), so it is a copyleft base, not a permissive one.
+
+### Declared gaps this window
+
+- **No open-source dealership DMS.** Searched `open source platform automotive ERP CRM dealership MIT
+  Apache`; every hit is a general-purpose ERP/CRM (OFBiz, Huly, Krayin, iDURAR, Open Mercato, Dolibarr,
+  iDempiere). Nothing with inventory + F&I + deal-desk modules. Seventh consecutive confirmation.
+- **No LATAM-origin automotive repo** across four region-scoped searches. Informed gap, not coverage.
+- **`huggingface.co` does not resolve** — no first-hand model-weight licences. Unchanged.
+
 
 ## 2026-11-19
 

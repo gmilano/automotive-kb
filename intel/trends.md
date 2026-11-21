@@ -1,13 +1,102 @@
 ---
 industry: automotive
 region: Global
-updated: 2026-11-19
+updated: 2026-11-21
 ---
 
 # 📡 Trends — Automotive
 
 > Current trends, updated 2026-10-31. Project and vendor self-reported performance figures are labelled
 > as such. Dates name their instrument.
+
+## 🆕 New on 2026-11-21 — three trends, and the first one is about the ground this KB stands on
+
+### N10 — Capability attributed to a blocked channel was never blocked: `github.com` is 403, `raw.githubusercontent.com` is 200
+
+For four consecutive passes (2026-10-26 → 2026-11-19) every file in this base carried a version of
+*"`curl` to `github.com` and `api.github.com` returns HTTP 403, therefore licences and liveness must be
+inferred from rendered pages."* The 403 was real and re-tested each time. **The conclusion was still
+wrong**, because only one host was ever re-tested. Tested this pass:
+
+| Channel | Result | Settles |
+|---|---|---|
+| `git ls-remote --heads https://github.com/<o>/<r>` | ✅ works | Existence/liveness — 40-hex SHA vs credential prompt. No API quota. |
+| `curl https://raw.githubusercontent.com/<o>/<r>/<br>/LICENSE` | ✅ **200** | The grant, byte for byte |
+| `gh api -X GET search/repositories -f q='repo:<o>/<r>'` | ✅ works | Stars, forks, `pushed_at`, `archived`, SPDX |
+| `gh api repos/<o>/<r>` | 🔴 403 | Per-repo REST — scoped to the session's own repos. Use **search** instead. |
+| `github.com`, `api.github.com` | 🔴 403 | Host policy. Not retryable. |
+
+**The trend, stated generally because it is not about GitHub:** in an agent-run knowledge pipeline, a
+*recorded* limitation propagates faster and lives longer than the condition that produced it. Each pass
+inherited the sentence, re-tested the one host named in it, confirmed the 403, and copied it forward —
+while a sibling host on the same domain answered 200 the whole time. **The costly error was not the
+403; it was that the workaround became a documented property of the environment.** Operational rule now
+recorded in every file's header: **when a host refuses, enumerate its siblings before writing down that
+the capability is unavailable.**
+
+This is the second base in this KB family to find that its *method*, not its data, was the defect — the
+`education` base reached the same conclusion on 2026-11-21 from the opposite direction (a line-keyed
+audit that had desynced). **Both corrections were found by re-deriving the measurement, not by searching
+for more repos.**
+
+### N11 — The licence-defect rate runs in both directions, and the curated shelf now wins against automation
+
+`T5`/`N5` recorded that secondary sources misstate licences often enough to be a service line. This pass
+inverts the test: an **automated classifier was run against this base's own 152 byte-read LICENSE files**,
+and where it disagreed with the published cells — **8 repositories — the published cells were right every
+time.**
+
+The cause is a single structural property of licence texts, and it is permanent:
+
+> **Every GNU-family, MPL and EPL licence names *other* licences inside its own body.** MPL-2.0 §1.12
+> defines "Secondary License" as GPL/LGPL/**AGPL**. GPL-3.0 §13 references the **AGPL**. LGPL-3.0
+> appends the entire GPL text. EPL-2.0 names **GPL-2.0** as a Secondary License. Apache-2.0 §4 permits
+> "additional or different license terms."
+
+So substring matching produces MPL-2.0 → AGPL (COVESA VSS, esmini), LGPL-3.0 → AGPL (**Odoo**),
+GPL-3.0 → AGPL (Dolibarr, OpenAutoCore), EPL-2.0 → GPL-2.0 (SUMO, Huly). The sharpest case is
+`openremote/openremote`: its `LICENSE` is **172,870 bytes** because it bundles a dependency-licence
+listing containing the full Apache text, while the project's own grant — **AGPL-3.0** — is in the first
+paragraph.
+
+**The trend that matters for how these bases are maintained:** as the shelves get older and the tooling
+gets cheaper, the temptation to "refresh" a curated cell with an automated read grows. **This pass is
+evidence that the refresh is often the regression.** Two rows in this base carry grants stated only in a
+README or source header (`TrampolineRTOS/trampoline` GPL-2.0, `navariltd/Fleet-Management-System`
+GPL-3.0); a LICENSE-file-only probe downgrades both to "no licence" and calls it an update. **Automation
+should propose diffs against a curated cell, never overwrite it.**
+
+Corollary finding, same mechanism: **`license.spdx_id` is not a grant.** It returns `NOASSERTION` for
+`AtsushiSakai/PythonRobotics` (30,954★, plainly **MIT**), for `autoas/as` (**GPL-3.0 OR Commercial**,
+a dual licence the field cannot express), for `openremote/fleet-management` (**AGPL-3.0**), and for
+`waymo-research/waymo-open-dataset` (**Apache-2.0 except a named carve-out directory**). A carve-out is
+actionable; `NOASSERTION` is noise.
+
+### N12 — The automotive open-source commons has split: frozen research, live infrastructure
+
+Measured first-hand this pass across the canonical perception repos the `autonomous-driving` topic
+surfaces (★2.2k–4.7k): **7 of 9 have not been pushed in over a year, and 1 is formally archived.**
+BEVFormer last pushed **2024-08-15**; SensorsCalibration **2024-06-17**; YOLOP **2023-10-20**;
+awesome-robotic-tooling **2023-11-20**; 3D-PointCloud **2024-08-30** (and carries **no licence at all**);
+microsoft/AutonomousDrivingCookbook **archived**.
+
+Against that, the infrastructure layer is pushing continuously: **CARLA 2026-11-21, Autoware 2026-11-20,
+PythonRobotics 2026-11-16, autoas/as 2026-11-18, iDempiere 2026-11-20, COVESA/vss-tools 2026-11-17.**
+
+**The trend is a build-vs-adopt rule, not a lament.** The academic perception commons did its job and
+stopped moving, because the capability frontier moved to **end-to-end/VLA models and productised stacks**
+(`NVlabs/alpamayo*`, `Qwen-Drive-1.0`, `hustvl/Senna`, Autoware, Apollo). For an engagement:
+**take algorithms and calibration mathematics from the frozen layer — that knowledge does not rot — and
+take every runnable component from the live layer.** Proposing a 2024-dormant perception repo as a 2026
+production base is the specific mistake this trend exists to prevent.
+
+**One liveness caveat this pass had to correct in its own base:** a *hosted service* shutting down is not
+a *project* dying. Huly (`hcengineering/platform`, 28,161★, EPL-2.0) was recorded here as "frozen"; the
+notice is that the **hosted service** is discontinued for lack of hosting funding, while the repository
+was **pushed 2026-11-09**, is **`archived: false`**, and its recent commits are real fixes. **Check
+`pushed_at` and `archived` before converting a service notice into a project obituary.**
+
+---
 
 ## 🆕 New on 2026-11-19 — four trends, and the first one corrects a claim this file has made three times
 

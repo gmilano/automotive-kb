@@ -1,14 +1,19 @@
 ---
 industry: automotive
 region: Global
-updated: 2026-11-19
+updated: 2026-11-21
 ---
 
 # 🏗️ Foundational repos — Automotive
 
 > The bases to build on. Open licence, active community. Grouped by layer, because "automotive open source"
 > is four unrelated stacks that are routinely confused.
-> **Verification (2026-11-13):** `curl -sI` on `github.com` returns **HTTP 403** through this session's
+> **Verification (2026-11-21):** liveness via `git ls-remote`, licences **byte-read** from
+> `raw.githubusercontent.com` (HTTP 200), metadata from `gh api -X GET search/repositories`. All 174 KB
+> URLs probed; 152 LICENSE files read. `github.com` and `api.github.com` remain **403**, but they are no
+> longer needed.
+>
+> *Superseded note —* **2026-11-13:** `curl -sI` on `github.com` returns **HTTP 403** through this session's
 > proxy — re-tested today on three URLs including `api.github.com`, all 403 — so figures are read from
 > rendered repository pages. Where the licence was the point, the file was fetched raw from
 > `raw.githubusercontent.com`; that is how `autoware-safety-island` was reclassified from GitHub's
@@ -17,6 +22,61 @@ updated: 2026-11-19
 > 🔴 **`huggingface.co` still does not resolve from this session**, so no model-weight licence was verified.
 > 🆕 = added 2026-11-13. 🔄 = licence/stars re-read today. ⏸ = URL re-probed, figures carried forward.
 > ⚪ = URL live, licence/stars deliberately left blank rather than guessed.
+
+## 🆕 Added 2026-11-21 — the canonical perception/benchmark layer, with honest dormancy labels
+
+> **Verification:** `git ls-remote` for liveness, `raw.githubusercontent.com` for the byte-read licence,
+> `gh api -X GET search/repositories` for stars/forks/`pushed_at`/`archived`. All first-hand.
+> See `agents/top.md` → *"What changed on 2026-11-21"* for the channel table.
+
+This base was strong on **stacks** (Autoware, Apollo, openpilot), **SDV middleware** (Eclipse) and
+**bus tooling**, and thin on the **perception and benchmark repos that every ADAS engagement actually
+reads**. Those are added here — **with the dormancy stated, because most of them are dormant, and that
+is the finding.**
+
+### 🆕 Layer F — Canonical perception, benchmark and dataset repos
+
+| Repo | Licence (byte-read) | ★ | Last push | Liveness | What it is |
+|---|---|--:|---|---|---|
+| [waymo-research/waymo-open-dataset](https://github.com/waymo-research/waymo-open-dataset) | **Apache-2.0 *except* `src/waymo_open_dataset/wdl_limited`** (API: `NOASSERTION`) | 3,438 | 2026-01-08 | ⚠️ Slow | The reference AV dataset devkit. **Use the code, avoid that one directory**, treat the dataset as separately licensed. |
+| [fundamentalvision/BEVFormer](https://github.com/fundamentalvision/BEVFormer) | **Apache-2.0** | 4,652 | 2024-08-15 | 🔴 **Dormant 2+ yrs** | Camera-only BEV perception (ECCV 2022). Still the most-cited BEV baseline — **read it, do not depend on it.** |
+| [PJLab-ADG/SensorsCalibration](https://github.com/PJLab-ADG/SensorsCalibration) | **Apache-2.0** | 3,261 | 2024-06-17 | 🔴 **Dormant** | OpenCalib multi-sensor calibration toolbox. Calibration maths does not rot as fast as frameworks — **highest-value dormant repo here.** |
+| [OpenDriveLab/End-to-end-Autonomous-Driving](https://github.com/OpenDriveLab/End-to-end-Autonomous-Driving) | **MIT** | 3,730 | 2025-07-02 | ⚠️ Slow | The E2E survey + curated paper list (IEEE T-PAMI 2024). MIT, so quotable in client material. |
+| [hustvl/YOLOP](https://github.com/hustvl/YOLOP) | **MIT** | 2,258 | 2023-10-20 | 🔴 **Dormant 3 yrs** | Panoptic driving perception — detection + drivable area + lane in one head. Small, MIT, easy to port. |
+| [daohu527/dig-into-apollo](https://github.com/daohu527/dig-into-apollo) | **MIT** | 2,457 | 2026-02-03 | ✅ Live-ish | Apollo architecture notes. **The fastest way to onboard an engineer onto Apollo** without reading 27k★ of C++. |
+| [zhulf0804/3D-PointCloud](https://github.com/zhulf0804/3D-PointCloud) | 🔴 **No licence file** (API: `NONE`) | 2,949 | 2024-08-30 | 🔴 Dormant | Point-cloud papers/datasets index. **No grant — read-only reference, do not vendor it.** |
+| [Ly0n/awesome-robotic-tooling](https://github.com/Ly0n/awesome-robotic-tooling) | **CC0-1.0** | 3,924 | 2023-11-20 | 🔴 Dormant | Robotics/AD tooling list. CC0 means **reusable verbatim** in internal docs. |
+| [microsoft/AutonomousDrivingCookbook](https://github.com/microsoft/AutonomousDrivingCookbook) | **MIT** | 2,440 | 2025-08-25 | 🔴 **ARCHIVED** | Archived by Microsoft (`archived: true`). Tutorials only. **Listed so nobody proposes it as a base.** |
+
+**Read this layer as a warning, not a shopping list.** Seven of the nine have not been pushed in over a
+year; one is formally archived. The automotive perception commons is **largely frozen research code**,
+while the *live* investment has moved to end-to-end/VLA models and the Autoware/Apollo stacks already in
+this base. For an engagement that means: **take algorithms and calibration maths from Layer F; take
+runnable infrastructure from Layers A–E and the stacks.** Proposing BEVFormer as a 2026 production base
+would be a mistake this table exists to prevent.
+
+### 🔄 Licence cells filled by byte-read this pass
+
+| Repo | ★ | API `license.spdx_id` | **Byte-read grant** |
+|---|--:|---|---|
+| [AtsushiSakai/PythonRobotics](https://github.com/AtsushiSakai/PythonRobotics) | 30,954 | `NOASSERTION` | **MIT** — *"The MIT License (MIT)"* |
+| [COVESA/vss-tools](https://github.com/COVESA/vss-tools) | 81 | `MPL-2.0` | **MPL-2.0** (was *"not read this pass"* here) |
+| [autoas/as](https://github.com/autoas/as) | 965 | `NOASSERTION` | **GPL-3.0 OR Commercial (dual)** |
+| [openremote/fleet-management](https://github.com/openremote/fleet-management) | 51 | `NOASSERTION` | **AGPL-3.0** |
+
+**`PythonRobotics` at 30,954★ is plain MIT and the API could not say so.** That single row is the
+argument for byte-reading licences in this base rather than trusting an SPDX field.
+
+### 🔴 Negative results settled 2026-11-21 — do not re-search these
+
+- **`xtuple/xtuple` is gone** (404 via `git ls-remote`). Any ERP shortlist citing XTuple is stale.
+- **No open-source dealership DMS exists.** See `verticals/solutions.md` and `agents/top.md` §7.
+- **No LATAM-origin automotive foundation repo** surfaced across four region-scoped searches.
+- **18 of 170 live repos serve no LICENSE file.** All already labelled correctly in this base; two
+  (`TrampolineRTOS/trampoline`, `navariltd/Fleet-Management-System`) carry grants stated only in the
+  README/source headers, so **a LICENSE-file-only probe would wrongly downgrade them.**
+
+---
 
 ## 🆕 Added 2026-11-19 — four layers this KB did not have: SDV middleware, bus tooling, the openpilot ecosystem, and assurance
 

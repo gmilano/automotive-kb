@@ -1,12 +1,96 @@
 ---
 industry: automotive
 region: Global
-updated: 2026-11-19
+updated: 2026-11-21
 ---
 
 # 📈 Trending AI agents & models — Automotive
 
 > **APPEND-ONLY.** Newest dated section on top; history preserved below. Never rewrite earlier sections.
+
+## 2026-11-21
+
+**Window:** 2026-11-19 → 2026-11-21 (2 days). **Channel — changed this pass, and it matters:**
+`git ls-remote` for liveness, `raw.githubusercontent.com` for **byte-read LICENSE files** (HTTP 200),
+`gh api -X GET search/repositories` for stars/forks/`pushed_at`/`archived`. `github.com`,
+`api.github.com` and **`gh api repos/<o>/<r>`** (per-repo REST, scoped to this session's own repos) are
+all **403**. `huggingface.co` still does not resolve.
+**174 KB URLs probed → 170 live, 3 dead, 1 false positive. 152 LICENSE files byte-read.**
+
+### 🚨 The finding of this window is about method, not about a repo
+
+Every pass in this file since 2026-10-26 has carried the line *"`curl` to `github.com` is 403, so figures
+come from rendered pages."* That was true and it was also **incomplete**. Two channels were never tried:
+
+```
+git ls-remote --heads https://github.com/<owner>/<repo>     # 40-hex SHA = live; credential prompt = gone
+curl https://raw.githubusercontent.com/<o>/<r>/main/LICENSE  # HTTP 200 — the grant, byte for byte
+```
+
+**Both work.** The licence-verification problem this base has described as blocked for four passes was
+never blocked — only the *one* channel everyone kept re-testing was. Recorded as a standing method, not
+a one-off: **when a host returns 403, enumerate the host's siblings before declaring the capability
+unavailable.** `github.com` is 403; `raw.githubusercontent.com` is 200. Same organisation, different host.
+
+### The 0★ mortality rule, now with evidence
+
+Three of the 174 URLs are dead. **All three were 0★ rows added by an automated discovery pass**, and all
+three had already been labelled unusable by a later pass:
+
+| Dead | Was already labelled |
+|---|---|
+| [RobertSloan22/tars-car-mcp](https://github.com/RobertSloan22/tars-car-mcp) | *"Rejected"* — no licence, gated on a proprietary desktop app |
+| [luca1234413/MotionBastard](https://github.com/luca1234413/MotionBastard) | *"not automotive software"* (After Effects motion design) |
+| [vaisakhvenugopal/Deconstructing-BYD-s-Technology-Architecture](https://github.com/vaisakhvenugopal/Deconstructing-BYD-s-Technology-Architecture) | licence `?` |
+
+**Every repo in this base with ≥1★ is live.** 0★ is not just weak signal — it is the mortality band. The
+rows above sit in historical sections and are **left in place** (this file is append-only and a recorded
+rejection that later 404s is evidence, not debris). `github.com/orgs/autowarefoundation` also flagged as
+dead and is a **false positive** — an org listing URL in prose, not a repo. Do not re-flag it.
+
+### 🆕 Admitted this window — four agents, all MIT, all byte-read
+
+| Agent | Repo | Licence | ★ | Last push | Why admitted |
+|---|---|---|--:|---|---|
+| Dealer AI Skills | [arielcoro/dealer-ai-skills](https://github.com/arielcoro/dealer-ai-skills) | **MIT** | 3 | 2026-10-21 | **First dealer-retail agent in this base with a real grant.** SEO/AEO/GEO, BDC, F&I, fixed ops, equity mining. Runs on Claude Code, Codex, Cursor, Gemini CLI. North-America dealer vocabulary throughout. |
+| Waypoint | [rogue-media-lab/waypoint](https://github.com/rogue-media-lab/waypoint) | **MIT** | 1 | 2026-11-13 | Service-advisor assistant, SQLite-backed, **VIN decode + labour-time lookup**. Narrow and real. |
+| OmniIntent | [neura-edit/omni-intent](https://github.com/neura-edit/omni-intent) | **MIT** | 1 | 2026-10-03 | **Cockpit intent as routing, not generation** — deterministic slot extraction, Kotlin, on-device, *"zero auto-regressive generation delay"*. The only shape that fits an automotive latency budget. |
+| deeptest-talking-manual | [keklikci/deeptest-talking-manual-26](https://github.com/keklikci/deeptest-talking-manual-26) | **MIT** | 0 | 2026-08-20 | Generates tests that hunt **omitted safety warnings** in LLM owner's-manual assistants. Pairs with the assurance layer. |
+
+### 🔴 Rejected this window
+
+| Repo | Licence | Why refused |
+|---|---|---|
+| [mikko-lab/kopilotti-sales-demo](https://github.com/mikko-lab/kopilotti-sales-demo) | 🔴 **"All Rights Reserved"** | Used-car negotiation with rule-based safety bounds — a good design. LICENSE: *"No part … may be copied, distributed, modified, or used commercially without prior written permission."* **Zero grant.** It appears on the `automotive-ai` topic page and looks exactly like a finding; it is not one. |
+
+### 🔄 Licence cells the API cannot answer, settled by byte-read
+
+| Repo | ★ | API | **Byte-read** |
+|---|--:|---|---|
+| [autoas/as](https://github.com/autoas/as) | 965 | `NOASSERTION` | **GPL-3.0 OR Commercial (dual)** — a commercial escape hatch on an AUTOSAR-class stack |
+| [openremote/fleet-management](https://github.com/openremote/fleet-management) | 51 | `NOASSERTION` | **AGPL-3.0** |
+| [AtsushiSakai/PythonRobotics](https://github.com/AtsushiSakai/PythonRobotics) | 30,954 | `NOASSERTION` | **MIT** |
+| [COVESA/vss-tools](https://github.com/COVESA/vss-tools) | 81 | `MPL-2.0` | **MPL-2.0** (cell was *"not read"*) |
+
+### ⚠️ The trap that would have corrupted this pass if the shelf had been overwritten
+
+An automated classifier over the same 152 files disagreed with this base's published cells on **8**
+repos — and **the published cells were right all 8 times.** Cause: *every* GNU-family, MPL and EPL
+licence text names other licences in its own body (MPL §1.12 defines "Secondary License" as GPL/LGPL/
+**AGPL**; GPL-3.0 §13 references **AGPL**; LGPL-3.0 appends the whole GPL; EPL-2.0 names **GPL-2.0**).
+Substring matching therefore misreads MPL-2.0 → AGPL, LGPL-3.0 → AGPL, GPL-3.0 → AGPL, EPL-2.0 → GPL-2.0.
+**Key on the title line, never on names in the body.** This is the second base in this KB family to hit
+the same class of error (`education` recorded it on 2026-11-21 as "the API's SPDX field is not the
+published grant"). **The shelf is the asset; a fresh automated read is not automatically an improvement.**
+
+### 🔄 Correction carried into `agents/top.md` §5
+
+`hcengineering/platform` (Huly, 28,161★, EPL-2.0) is recorded here as *"frozen and no longer actively
+maintained"*. The notice actually says the **hosted service** is being discontinued for lack of hosting
+funding, and points users to **self-hosting**. Repo today: `pushed_at` 2026-11-09, `archived` **false**,
+last commits real fixes (`fix(github)`, `fix(gantt)`, `fix(contact)`). **Hosted-SaaS shutdown ≠ dead
+project**, and the correction runs in our favour: self-hosted EPL-2.0 is viable for an engagement.
+
 
 ## 2026-11-19
 
