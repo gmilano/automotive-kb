@@ -8,6 +8,84 @@ updated: 2026-11-24
 
 > **APPEND-ONLY.** Newest dated section on top; history preserved below. Never rewrite earlier sections.
 
+## 2026-11-24 (third pass) — data spaces: Catena-X / Tractus-X / EDC / AAS, plus Lanelet2
+
+**Window:** 2026-11-24 ~02:00Z, the **third pass of today**. The second pass (charging interface) and the
+first pass are preserved below unchanged, with all earlier history.
+**Channel:** stars/SPDX/`pushed_at` from `gh api -X GET search/repositories`; **licences byte-read** from
+`raw.githubusercontent.com`, 8 filenames × (default branch via `git ls-remote --symref HEAD`, `main`,
+`master`); liveness via `git ls-remote --exit-code`; **control: fabricated slug = DEAD**.
+
+### Why this plane: a measured blind spot, not a hunch
+
+| Control grep across all 9 files | Hits before this pass |
+|---|---|
+| `Catena-X`, `Tractus-X`, `dataspace`, `data space` | **0** |
+| `battery passport` | **0** |
+| `Lanelet2` | **0** (while `HD map` appeared in 11 lines of prose) |
+| `intrusion detection`, `UBI`, `insurance telematics` | **0** |
+
+### 31 new addresses this pass, every licence byte-read
+
+**Short queries only** — `catena-x`, `tractus-x`, `org:eclipse-tractusx`, `org:eclipse-edc`,
+`org:eclipse-basyx`, `dataspace connector`, `asset administration shell`, `aas submodel`, `aas llm`,
+`battery passport`, `digital-product-passport`, `topic:catena-x`, `edc mcp`, `lanelet2`.
+**Measured: `org:eclipse-tractusx` = 83 repositories.**
+
+| Repo | ★ | Licence (byte-read) | Served from | Layer |
+|---|---|---|---|---|
+| [fzi-forschungszentrum-informatik/Lanelet2](https://github.com/fzi-forschungszentrum-informatik/Lanelet2) | **979** | ✅ BSD-3-Clause (1,476 B) | `master/LICENSE` | HD map format (Autoware's) |
+| [eclipse-edc/Connector](https://github.com/eclipse-edc/Connector) | **429** | ✅ Apache-2.0 (10,172 B) | `main/LICENSE` | Dataspace Protocol reference impl |
+| [admin-shell-io/aasx-package-explorer](https://github.com/admin-shell-io/aasx-package-explorer) | 139 | ✅ Apache-2.0 (**75,733 B**) | `main/LICENSE.txt` | AAS authoring tool |
+| [eclipse-basyx/basyx-python-sdk](https://github.com/eclipse-basyx/basyx-python-sdk) | 108 | ✅ MIT (1,086 B) | `main/LICENSE` | AAS SDK |
+| [FraunhoferISST/DataspaceConnector](https://github.com/FraunhoferISST/DataspaceConnector) | 106 | ✅ Apache-2.0 (10,796 B) | `main/LICENSE` | IDS connector (⏸ stale 2022) |
+| [eclipse-tractusx/tractusx-edc](https://github.com/eclipse-tractusx/tractusx-edc) | 96 | ✅ Apache-2.0 (11,356 B) | `main/LICENSE` | **Automotive EDC distribution** |
+| [admin-shell-io/submodel-templates](https://github.com/admin-shell-io/submodel-templates) | 95 | 📄 CC-BY-4.0 (18,649 B) | `main/LICENSE.txt` | AAS submodel templates |
+| [FraunhoferIOSB/FAAAST-Service](https://github.com/FraunhoferIOSB/FAAAST-Service) | 94 | ✅ Apache-2.0 (11,356 B) | `main/LICENSE` | FA³ST AAS runtime |
+| [eclipse-edc/Samples](https://github.com/eclipse-edc/Samples) | 86 | ✅ Apache-2.0 (10,172 B) | `main/LICENSE` | EDC on-ramp |
+| [eclipse-basyx/basyx-java-server-sdk](https://github.com/eclipse-basyx/basyx-java-server-sdk) | 84 | ✅ MIT (1,024 B) | `main/LICENSE` | AAS server |
+| [admin-shell-io/aas-specs-metamodel](https://github.com/admin-shell-io/aas-specs-metamodel) | 78 | 📄 CC-BY-4.0 (18,650 B) | `master/LICENSE.txt` | AAS metamodel spec |
+| [FIWARE/data-space-connector](https://github.com/FIWARE/data-space-connector) | 61 | ✅ Apache-2.0 (11,356 B) | `main/LICENSE` | Connector (FIWARE lineage) |
+| [eclipse-tractusx/sldt-semantic-models](https://github.com/eclipse-tractusx/sldt-semantic-models) | 58 | 📄 CC-BY-4.0 (16,677 B) | `main/LICENSE` | Catena-X semantic models |
+| [eclipse-tractusx/digital-product-pass](https://github.com/eclipse-tractusx/digital-product-pass) | 50 | ✅ Apache-2.0 (11,504 B) | `main/LICENSE` | **DPP / battery passport viewer** |
+| [eclipse-edc/IdentityHub](https://github.com/eclipse-edc/IdentityHub) | 46 | ✅ Apache-2.0 (10,172 B) | `main/LICENSE` | DCP identity / VC wallet |
+| [eclipse-basyx/basyx-aas-web-ui](https://github.com/eclipse-basyx/basyx-aas-web-ui) | 35 | ✅ MIT (1,081 B) | `main/LICENSE` | Twin browser UI |
+| [admin-shell-io/aas-test-engines](https://github.com/admin-shell-io/aas-test-engines) | 30 | ✅ Apache-2.0 (11,356 B) | `main/LICENSE` | AAS conformance tests |
+| [eclipse-tractusx/tractus-x-umbrella](https://github.com/eclipse-tractusx/tractus-x-umbrella) | 27 | ✅ Apache-2.0 (11,357 B) | `main/LICENSE` | **Whole dataspace in one Helm chart** |
+| [eclipse-tractusx/industry-core-hub](https://github.com/eclipse-tractusx/industry-core-hub) | 26 | ✅ Apache-2.0 (11,559 B) | `main/LICENSE` | Provision/consumption orchestrator |
+| [eclipse-tractusx/puris](https://github.com/eclipse-tractusx/puris) | 21 | ✅ Apache-2.0 (11,532 B) | `main/LICENSE` | Demand & capacity mgmt (7 CX standards) |
+| [eclipse-tractusx/sldt-digital-twin-registry](https://github.com/eclipse-tractusx/sldt-digital-twin-registry) | 19 | ✅ Apache-2.0 (11,357 B) | `main/LICENSE` | Digital Twin Registry |
+| [eclipse-tractusx/traceability-foss](https://github.com/eclipse-tractusx/traceability-foss) | 17 | ✅ Apache-2.0 (11,356 B) | `main/LICENSE` | Parts traceability / recall |
+| [eclipse-basyx/basyx-pdf-to-aas](https://github.com/eclipse-basyx/basyx-pdf-to-aas) | 17 | ✅ MIT (1,081 B) | `main/LICENSE.txt` | **PDF datasheet → AAS via LLM** |
+| [Prometheus-X-association/dataspace-connector](https://github.com/Prometheus-X-association/dataspace-connector) | 17 | ✅ MIT (1,059 B) | `main/LICENSE.md` | Connector (non-EDC lineage) |
+| [eclipse-tractusx/tractusx-sdk](https://github.com/eclipse-tractusx/tractusx-sdk) | 15 | ✅ Apache-2.0 (11,559 B) | `main/LICENSE` | Python SDK (PyPI) |
+| [lorenzo9uerra/CAN-IDSs-on-the-ROAD](https://github.com/lorenzo9uerra/CAN-IDSs-on-the-ROAD) | 12 | ✅ MIT (1,070 B) | `main/LICENSE` | **Only permissive CAN-IDS repo** |
+| [eclipse-edc/FederatedCatalog](https://github.com/eclipse-edc/FederatedCatalog) | 12 | ✅ Apache-2.0 (10,172 B) | `main/LICENSE` | Federated catalogue |
+| [awslabs/dataspace-connector-on-aws](https://github.com/awslabs/dataspace-connector-on-aws) | 11 | ✅ Apache-2.0 (10,141 B) | `main/LICENSE` | AWS reference deployment |
+| [awslabs/minimum-viable-dataspace-on-aws](https://github.com/awslabs/minimum-viable-dataspace-on-aws) | 11 | ✅ **MIT-0** (945 B) | `main/LICENSE` | MVD on AWS, **no attribution condition** |
+| [Mobility-Data-Space/mds-edc](https://github.com/Mobility-Data-Space/mds-edc) | 8 | ✅ Apache-2.0 (11,356 B) | `main/LICENSE` | Mobility Data Space EDC |
+| [SAP/ssi-dim-middle-layer](https://github.com/SAP/ssi-dim-middle-layer) | 5 | ✅ Apache-2.0 (11,356 B) | `main/LICENSE` | SSI middle layer for onboarding |
+
+*(Agent-tier rows — `SAP/aas-mcp-server`, the two `edc-mcp`s, `pythia-edc`, `dppvalidator`,
+`aas-ai-editor`, `tractusx-rag-mcp` — are logged in `agents/trending.md` for the same window.)*
+
+### 🔴 Two licence-detector facts from this pass
+
+1. **A short file that *names* a long licence is a pointer.** `sovity/edc-ce` = 439 B naming Apache-2.0,
+   **granting Elastic License 2.0 by default.** Canonical Apache-2.0 measured at **10,141–11,559 B** here.
+   **Rule: any licence file under ~2 KB naming Apache/GPL/MPL/EPL must be read as prose.** Only
+   MIT/BSD/MIT-0 are legitimately ~0.9–1.5 KB.
+2. **A very long file is the mirror image and is usually benign.** `aasx-package-explorer` =
+   **75,733 B** Apache-2.0 (API: `NOASSERTION`) because it bundles third-party notices. **Long ⇒ read the
+   head; short ⇒ read the whole thing.**
+
+### Addresses that did **not** earn a row
+
+`FraunhoferISST/DataspaceConnector` (106★) and `admin-shell-io/aasx-package-explorer` (139★) are both
+**live and permissive but stale** (last pushes 2022-03-31 and 2024-04-16). They are recorded with ⏸ in
+`repos/foundations.md` rather than recommended as starting points — **stars are not maintenance**, the
+standing rule from the 2026-11-24 first pass.
+
 ## 2026-11-24 (second pass) — charging interface: OCPP / OCPI / ISO 15118
 
 **Window:** 2026-11-24 00:56Z → 01:3xZ, the **second pass of today**. The first pass's section is

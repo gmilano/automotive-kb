@@ -8,6 +8,65 @@ updated: 2026-11-24
 
 > **APPEND-ONLY.** Newest dated section on top; history preserved below. Never rewrite earlier sections.
 
+## 2026-11-24 (third pass) — the data-space / supply-chain agent plane
+
+**Window:** 2026-11-24 ~02:00Z. **Third pass of today**; the second pass (charging interface) and the
+first pass are preserved immediately below, unchanged, as is all earlier history.
+**Why a third plane:** control grep across all 9 files = **0 mentions** of `Catena-X`, `Tractus-X`,
+`dataspace`, `data space`, `battery passport`, `Lanelet2`, `intrusion detection`, `UBI`,
+`insurance telematics`. Virgin ground, and it is where the **18 Feb 2027 battery-passport duty** lands.
+**Channel:** `gh api -X GET search/repositories` for stars/SPDX/`pushed_at`; **every licence byte-read**
+from `raw.githubusercontent.com` (8 filenames × default-branch-resolved + `main` + `master`); liveness
+via `git ls-remote --exit-code`; **control: a fabricated slug returned DEAD.**
+
+### 🔴 Headline — the most-starred EDC distribution is *not open source*, and a correct byte-read said it was
+
+`sovity/edc-ce` (96★, top hit for `topic:catena-x`) byte-reads at **439 B** and defaults to
+**Elastic License 2.0**, naming Apache-2.0 only as an alternative for header-marked files. The grep
+matched `Apache License` and mislabelled it. **New standing rule: compare the licence file's size to the
+canonical length of the licence it names** — canonical Apache-2.0 measured at **10,141–11,559 B** this
+pass, so **439 B naming Apache is a pointer, not a grant.** Any sub-2 KB file naming Apache/GPL/MPL/EPL
+must be read as prose. Full write-up at `agents/top.md` **T1**.
+
+### Agent tier, measured rather than described
+
+**`catena-x agent` → 4 repositories total**, top result 1★, two unrelated. **There is no Catena-X-native
+agent framework.** The adapter tier over AAS and EDC is what exists:
+
+| Repo | ★ | Licence (byte-read) | Note |
+|---|---|---|---|
+| [SAP/aas-mcp-server](https://github.com/SAP/aas-mcp-server) | 9 | ✅ Apache-2.0 (11,356 B) | OpenAPI→MCP bridge for AAS APIs; backend-agnostic (SAP BNAC / BaSyx / FA³ST). **Vendor-maintained — the strongest row here.** |
+| [eclipse-basyx/basyx-pdf-to-aas](https://github.com/eclipse-basyx/basyx-pdf-to-aas) | 17 | ✅ MIT (1,081 B) | PDF datasheet → AAS submodel via LLM + ECLASS. Attacks the costliest manual step in onboarding. |
+| [artamrj/tractusx-rag-mcp](https://github.com/artamrj/tractusx-rag-mcp) | 1 | ✅ Apache-2.0 (11,357 B) | Tractus-X docs RAG + MCP. **Publishes a 60-question eval: 100 % Hit@8, 98 % faithfulness, 80 % correctness.** |
+| [artiso-ai/dppvalidator](https://github.com/artiso-ai/dppvalidator) | 10 | ✅ MIT (1,065 B) | Digital Product Passport validator. |
+| [hadijannat/aas-ai-editor](https://github.com/hadijannat/aas-ai-editor) | 3 | ✅ MIT (1,083 B) | LLM-assisted AAS editing. |
+| [soofi-project/edc-mcp](https://github.com/soofi-project/edc-mcp) | 3 | ✅ MIT (1,065 B) | MCP over EDC. |
+| [Pareo-AI/pythia-edc](https://github.com/Pareo-AI/pythia-edc) | 2 | ✅ MIT (1,079 B) | EDC agent tooling; **pushed 2026-11-23**. |
+| [connected-intelligent-systems/edc-mcp](https://github.com/connected-intelligent-systems/edc-mcp) | 0 | ✅ MIT (1,065 B) | Second independent MIT EDC-MCP — convergence signal. |
+| [dungnotnull/scope3-carbon-emissions-tracking-agent-skill](https://github.com/dungnotnull/scope3-carbon-emissions-tracking-agent-skill) | 4 | ✅ MIT | Scope-3 emissions as an agent skill (the PCF leg of the passport). |
+
+⚠️ **Median of the eight non-SAP rows = 3★.** This tier is pre-product while the platform beneath it is
+production-grade — so the engagement shape is **"build the agent, adopt the platform."**
+
+### Rejected this pass, with the reason
+
+| Repo | ★ | Verdict |
+|---|---|---|
+| [sovity/edc-ce](https://github.com/sovity/edc-ce) | 96 | 🔴 **Elastic License 2.0** by default — not open source. Hard exclusion for hosted delivery. |
+| [Mobile-Telematics/TelematicsApp-Android](https://github.com/Mobile-Telematics/TelematicsApp-Android) | 76 | 🔴 **Proprietary "Damoov Service Terms"** (18,721 B). Top hit for `insurance telematics` is a commercial SDK. |
+| [batterypass/BatteryPassDataModel](https://github.com/batterypass/BatteryPassDataModel) | 70 | 🔴 **No licence file** (8 names × 3 branches) — the data model for a *mandated* passport carries no grant. |
+| [open-dpp/open-dpp](https://github.com/open-dpp/open-dpp) | 35 | ⚠️ **AGPL-3.0** (34,522 B). Most-starred maintained DPP app; self-host only. |
+| [YuchenXia/AASbyLLM](https://github.com/YuchenXia/AASbyLLM) | 21 | ⚠️ **CC-BY-4.0 on code** (no NC/ND verified). Cite, don't vendor. |
+| [EunomiaUPM/ds-agent](https://github.com/EunomiaUPM/ds-agent) | 5 | ⚠️ **AGPL-3.0** (35,148 B). |
+| [quickhdsdc/AAS_LLMAgent_MCP_Server](https://github.com/quickhdsdc/AAS_LLMAgent_MCP_Server) | 1 | 🔴 **Bespoke "Dachuan Shi Non-Commercial Research License 1.0"** (`LicenseRef-Dachuan-Shi-NC-1.0`, 4,789 B). |
+
+### ✅ CC-BY-4.0 inside Tractus-X is the house convention, not a defect
+
+Four CC files byte-read, **all four plain CC-BY-4.0 with zero NonCommercial and zero NoDerivatives**
+(checked by string). `industry-core-hub` carries **both** badges: Apache-2.0 for code, CC-BY-4.0 for
+non-code. So CC-BY on a spec/semantic-model repo here is the rule — **flag it only when the repo ships
+executable code.**
+
 ## 2026-11-24 (second pass) — the charging-interface plane
 
 **Window:** 2026-11-24 00:56Z → 01:3xZ. This is the **second pass of 2026-11-24**; the first pass's

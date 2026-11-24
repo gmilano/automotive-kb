@@ -10,6 +10,26 @@ updated: 2026-11-24
 > Every regulatory date below names its instrument. Where sources conflict, the conflict is shown rather
 > than resolved — and where a date comes from a vendor page rather than a primary register, it says so.
 
+## 🆕 What changed on 2026-11-24 — third pass (data-space plane)
+
+**Third pass of today.** The 00:56Z and 01:56Z passes are preserved below unchanged.
+**Plane:** automotive supply-chain data spaces (Catena-X / Tractus-X / EDC / AAS) + the digital battery
+passport. **Control grep: `Catena-X`, `Tractus-X`, `dataspace`, `data space`, `battery passport` = 0 hits
+across all 9 files before this pass.**
+
+| What moved | Detail |
+|---|---|
+| 🔴 **A 96★ "community edition" connector is not open source** | `sovity/edc-ce` defaults to **Elastic License 2.0** in a 439 B pointer file that *names* Apache-2.0. Hard exclusion for hosted delivery. New fleet-wide rule in `intel/trends.md` **N30**. |
+| ✅ **EMEA's AI Act dates are finally assertable** | **Digital Omnibus on AI = Reg. (EU) 2026/1744**, OJ **24 Jul 2026**, in force **27 Jul 2026**. Annex I embedded products — **where motor vehicles sit** — **2 Aug 2028**; Annex III **2 Dec 2027**; sandboxes 2 Aug 2027; **Art. 50 transparency applied 2 Aug 2026 and was NOT deferred**. Requirements unchanged; only enforcement dates moved. Four passes of "contested/hazardous" now resolved (**N33**). |
+| ✅ **EMEA gains a filing counter** | **Tractus-X Accelerator**: implementation phase began **1 Sep 2026**, runs **2026–2029**, funded by Germany's **BMWE**; partners ARENA2036, Catena-X Automotive Network, Fraunhofer ISST, IDSA. Targets SMEs/mid-caps **not yet in Catena-X**. **Applications close end of December 2026** — five weeks out. See **P36**. |
+| 🗓 **A dated, non-AV regulatory deadline for the whole supply chain** | **Battery passport mandatory 18 Feb 2027** (Art. 77, Reg. (EU) 2023/1542) for EV + LMT + industrial batteries **>2 kWh**. Duty falls on the operator **placing the battery on the EU market**; **no retroactivity**; initial content set is thin. See **P34**. |
+| 🔴 **NA has an enforcement counter after all** | **FTC final order against GM and OnStar, January 2026** — affirmative express consent required before collecting or sharing connected-vehicle data. This KB has recorded NA as "advisory-shaped, no filing counter" for several passes; **data privacy is the exception**. |
+| 🆕 **NA: the dealer tier is where NA AI adoption actually is** | ~**52 %** of dealerships use AI in some form (mostly website chatbots), **predictive AI ≈ 5 %**; **22 %** of AI-using dealers reported sales growth. Kerrigan reports **43 % deploying / 47 % planning** — the 52 / 43 conflict is recorded, not reconciled. |
+| 🆕 **APAC: Korea has a dated horizontal AI statute** | **Korea AI Basic Act in effect January 2026**, with high-impact AI obligations. China = mandatory frameworks with registration and substantial penalties; Japan + parts of ASEAN = voluntary guidelines; Australia and India = hybrid. **Qualcomm: >75 M vehicles** running Snapdragon cockpit/edge AI by early 2026. |
+| 🆕 **LATAM: the region's first AI law, and a measured fragmentation number** | **Peru has passed the region's first AI law**; Colombia has issued principle-setting circulars; Brazil and Chile expected to follow. **Universidad de los Andes (2026): 716 AI-related regulatory instruments, rules and proposals across 23 countries and territories** — fragmentation as a measured figure. **Stellantis and Toyota have committed that new Brazilian-assembled cars ship with at least AEB by 2027**; Latin NCAP five-star protocols are pulling ADAS into volume segments. LATAM captured **$8.2 B of $190 B** global private AI investment in 2025. |
+| 📊 **Adoption figures worth quoting** | Perforce: **71 %** implementing AI in vehicles. Capgemini (carried from cycle 6): **35 % using agentic AI in engineering**, 33 % piloting. |
+| 🔴 **Two gaps closed with reasons, not counts** | **UBI / insurance telematics** = no open-source anchor (top hits are Damoov's proprietary SDK). **CAN intrusion detection** = exactly **one** permissive licensed repo (12★). Both in `repos/foundations.md`. |
+
 ## 🆕 What changed on 2026-11-24
 
 **First pass since 2026-11-21.** Three things moved, and the largest is that **the APAC regulatory gap
@@ -372,6 +392,51 @@ adoption figures instead — they are more consistent and more useful in a sales
 
 ### North America
 
+
+#### 🆕 2026-11-24 (third pass) — the **enforcement** counter NA was missing is a privacy order, not a safety rule
+
+This KB has recorded North America for several passes as *advisory-shaped*: duties without an enumerated
+high-risk list and **no filing counter**. That remains true for *automated driving*, but this pass found
+the exception, and it is in **data**:
+
+- **FTC final order against GM and OnStar, January 2026** — requires **affirmative express consent**
+  before collecting or sharing connected-vehicle data. This is a *final order against named parties*, not
+  guidance: it is the most concrete, dated AI/data obligation in NA automotive today.
+- Federal/state split is unchanged: **NHTSA** owns FMVSS and continues monitoring via the **Standing
+  General Order**; states own most testing and operating rules. The recurring themes in the filings are
+  FMVSS compliance, **minimal-risk behaviour on failure**, and stronger safety evidence for ADS.
+- **Canada** remains thinly documented: the only concrete items reachable were **Quebec bilingual
+  requirements** and **CASL** exposure, and both surfaced in a *dealership-AI* context rather than a
+  vehicle one. **Recorded as unestablished, not as coverage.**
+
+**What this changes commercially.** The connected-vehicle **consent and data-flow audit** is now a
+delivery-shaped NA engagement with a citable enforcement precedent behind it, where ADS work is still
+advisory. Pair it with the data-space work in **P34/P35**: the same twin-and-policy machinery that serves
+an EU passport duty also produces the consent-scoped data lineage an FTC-style order demands.
+
+**Where NA AI adoption actually sits — the dealer tier, not the vehicle:**
+
+| Measure | Figure |
+|---|---|
+| Dealerships using AI in some form | **~52 %** (mostly website chatbots) |
+| Dealerships using **predictive** AI | **~5 %** |
+| AI-using dealers reporting sales growth | **22 %** |
+| Kerrigan Advisors: deploying / planning | **43 % / 47 %** |
+
+⚠️ **The 52 % and 43 % figures come from different surveys and are not reconciled here.** Both are
+self-reported vendor/advisor surveys. The *robust* reading is the **shape**, not the level: broad shallow
+chatbot adoption, **predictive AI in the low single digits**. That gap is the sellable one, and it is
+exactly what **P17** (dealer retail agent layer on a permissive ERP) targets — still relevant because the
+DMS gap is closed-by-nonexistence (8+ confirmations in `verticals/solutions.md`).
+
+**NA players named across reports** (market-research lists, treat as indicative): Aptiv, Ford, GM,
+Mobileye, NVIDIA, Subaru of America, Tesla, Toyota, VW Group, Volvo Cars, Waymo, Zoox. Robotaxi platforms
+shown at **CES 2026**: Lucid, Uber, Waymo. **NVIDIA unveiled Alpamayo (10 B parameters) at CES 2026** —
+already held in this KB's model tier since cycle 2.
+
+**Market-share figures conflict and should not be quoted as one number:** NA share of automotive AI is
+given as **36.8 % (2026)**, **42 %**, and **39.7 % (2025)** by three different reports. Per this KB's
+standing rule — **quote adoption, not size.**
 #### 🆕 2026-11-24 — still no dated obligation, and the exemption route is now the whole story
 
 **Nothing found dated November 2026.** The leg was run (`NHTSA autonomous vehicle exemption framework
@@ -689,6 +754,62 @@ no attribution duty, which makes it unusually clean to lift into a client delive
 
 ### EMEA
 
+
+#### 🆕 2026-11-24 (third pass) — the dates stopped moving, **and EMEA now has a funded entry queue**
+
+Two changes, and together they make EMEA the best-documented region in this KB.
+
+**1. The AI Act timeline is now assertable (see `intel/trends.md` N33).** The **Digital Omnibus on AI** is
+**Regulation (EU) 2026/1744**, published in the OJ on **24 July 2026**, in force **27 July 2026**:
+
+| Obligation | Date | Note |
+|---|---|---|
+| **Art. 50 transparency** | **2 August 2026** | **Applied. NOT deferred.** |
+| National regulatory sandboxes | 2 August 2027 | |
+| Annex III stand-alone high-risk | 2 December 2027 | |
+| **Annex I embedded products — motor vehicles** | **2 August 2028** | The automotive track |
+
+**The requirements themselves did not change — only enforcement dates.** So this KB's standing advice
+("scope against duties, not dates") is **upgraded, not overturned**: the duties are still the deliverable,
+but a roadmap can now carry a defensible date. Motor vehicles sit in **Annex I Section B**, where
+**vehicle-sector type-approval law carries most of the AI requirements** — which is why not every
+automotive AI feature is automatically high-risk, and why the **boundary inventory of P20 remains the
+billable artefact.** Role allocation is the stable part and the right basis for a SOW: **OEM = provider**,
+**Tier-1 = provider of the AI subsystem it supplies**, **fleet operator = deployer**.
+⚠️ One source still describes the Omnibus as a *provisional agreement*. The OJ reading is carried because
+it is corroborated by more independent sources and matches the `Reg-EU-2026/1744` reference this KB
+already held. **Flagged, not hidden.**
+
+**Also dated, and often missed:** the **EU General Safety Regulation** — from **7 July 2026**, newly
+registered passenger cars and vans must carry **advanced driver-distraction warning** and enhanced
+automated safety functions *(secondary source — verify against the GSR implementing acts before quoting
+in a proposal)*. That is a **DMS obligation**, and this KB has measured the DMS supply side as a real gap
+(cycle 5: 408 repos surveyed, no viable permissive driver-monitoring anchor). **Duty with no open supply
+= the N18 position.**
+
+**2. EMEA finally has a filing counter: the Tractus-X Accelerator.** Implementation phase began
+**1 September 2026**; runs **2026–2029**; funded by the **German Federal Ministry for Economic Affairs and
+Energy (BMWE)**; partners **ARENA2036, Catena-X Automotive Network, Fraunhofer ISST, IDSA**. It explicitly
+targets **SMEs and mid-caps in automotive and adjacent sectors (incl. machine building) not yet active in
+Catena-X**, and **applications close at the end of December 2026.** Full play at **P36**.
+
+**3. The platform under all of it is EMEA-origin and permissive — which answers the sovereignty question
+directly.** Measured this pass: **`org:eclipse-tractusx` = 83 repositories**, Apache-2.0 code /
+CC-BY-4.0 non-code, quarterly `R26.06`-style releases; >330 contributors (IDSA, secondary); implements
+**DSP** and **DCP**. Tractus-X's scope has officially widened beyond automotive — the July 2026 Community
+Days covered **Construct-X, Semiconductor-X and Chem-X** under the Manufacturing-X umbrella, so a
+Catena-X capability built now resells into adjacent EMEA industries.
+
+**4. The battery passport is EMEA's hardest supply-chain date: 18 Feb 2027** (Art. 77, Reg. (EU)
+2023/1542), EV + LMT + industrial >2 kWh. See **P34**.
+
+**EMEA demand signals:** compliance is now the **top** AI concern — **49 %** cite emerging AI law and
+regulation, narrowly ahead of **liability allocation at 48 %**. European strength is reported as
+**safety-critical and explainable AI** (German OEMs, EU startups) while Chinese OEMs lead on agentic
+cockpit AI. **Talent is called the most underreported constraint** — which is the staffing argument for a
+studio engagement rather than a tool sale. **CLEPA's anti-duplication argument** (carried from cycle 6)
+remains the single most sellable EMEA deliverable: *which AI Act duty is already discharged by existing
+ISO 26262 / 21448 / R155 evidence.*
 #### 🆕 2026-11-24 — the dates moved again; the *role allocation* is the stable part, so sell against roles
 
 **The AI Act timeline is still the most hazardous thing in this KB to write down.** Current reading:
@@ -1023,6 +1144,42 @@ wire-analysis and lab tooling is copyleft or worse (`dsV2Gshark` MIT-**and**-GPL
 
 ### APAC
 
+
+#### 🆕 2026-11-24 (third pass) — APAC's regulation gap **partially closes**: Korea has a dated statute
+
+Cycle 6 recorded APAC regulation as *"the admitted gap: zero country-level rule text reachable."* This
+pass improves that to a **documented spectrum**, though still from secondary sources:
+
+| Jurisdiction | Posture | Dated anchor |
+|---|---|---|
+| **South Korea** | **Horizontal statute** | **AI Basic Act in effect January 2026**, with obligations for **high-impact AI systems**; roughly a year of preparation runway was given |
+| **China** | **Mandatory**, the strictest in the region | Strict **registration** requirements and **substantial penalties** for non-compliance (plus the OTA/public-beta controls this KB already holds) |
+| **Japan**, parts of **ASEAN** | **Voluntary guidelines** | — (Japan's remote-monitoring requirement for all L4 is carried from cycle 5) |
+| **Australia**, **India** | **Hybrid models**, still developing | — |
+
+**The regulatory inversion recorded in N22 therefore still holds, but with a correction:** APAC is no
+longer *only* concrete on driving behaviour — **Korea now has a horizontal, dated AI statute in force
+ahead of the EU's deferred high-risk regime** (2 Dec 2027 / 2 Aug 2028). An APAC engagement can be scoped
+against a live statute today where an EMEA one is scoped against 2028.
+
+**Adoption, and the one hard number in the region:** **Qualcomm reports more than 75 million vehicles**
+running Snapdragon-powered edge-AI and digital-cockpit technology by **early 2026**. That is a
+*deployed-fleet* figure from a supplier, which makes it far more useful than regional market sizing — and
+it tells you where the cockpit-agent work is: **on Snapdragon, on-device**, which is exactly **P16**
+(on-device cockpit agent, no cloud fallback) and **P18** (graded against China's C1–C5 scale).
+
+**Compute/platform players recurring across reports:** NVIDIA, Qualcomm, Mobileye, Horizon Robotics,
+NXP, Intel, plus Baidu Apollo. OEM/cloud lists differ by report (Toyota, Hyundai, AWS, IBM, Microsoft) —
+**the "players" list depends entirely on how each report defines the market**, so it is recorded as a
+vocabulary signal, not a ranking.
+
+**Data-space note for APAC, and it is a real gap:** the Catena-X/Tractus-X stack is EMEA-governed, and
+this pass found **no APAC-origin automotive data-space implementation** — the only non-EMEA deployments
+located were AWS's reference stacks (`awslabs/*`). **Recorded as a measured absence.** Practically, an
+APAC supplier selling into EU OEMs still inherits the **18 Feb 2027** passport duty through its customer,
+so the P34/P35 work is sellable in APAC **as an export-compliance obligation** rather than a domestic one.
+⚠️ APAC market-size figures remain irreconcilable (one report gives 2025 as **US$2.7 B**, another gives
+**$1,900 M for 2026**). **Quote adoption, not size.**
 #### 🆕 2026-11-24 — 🔴 **THE GAP IS CLOSED.** Country-level rule text obtained, and APAC is now the most precisely dated regime in this KB
 
 **On 2026-11-21 this KB recorded: *"APAC REGULATION IS THE ADMITTED GAP: zero country-level rule text
@@ -1361,6 +1518,56 @@ for how to structure it.
 
 ### LATAM
 
+
+#### 🆕 2026-11-24 (third pass) — **Peru has the region's first AI law**, and LATAM fragmentation now has a number
+
+The LATAM fact pattern improves materially this pass, and for once it is not about AV rules.
+
+**1. The region's first AI statute exists.** **Peru has passed Latin America's first AI law**; **Colombia**
+has issued regulatory circulars setting out AI principles; **Brazil and Chile are expected to follow.** The
+most active jurisdictions are **Peru, Brazil, Chile and Colombia.**
+
+**2. Fragmentation is now measured, not asserted.** A **2026 Universidad de los Andes study counted 716
+AI-related regulatory instruments, rules and legislative proposals across 23 countries and territories**,
+with the authors warning this produces **uncertainty rather than governance**. This KB has argued for
+several passes that LATAM's binding constraint is **LGPD + trade law, not AI law**; 716 instruments across
+23 jurisdictions is the quantitative version of that argument, and it is the strongest single number this
+KB has ever carried for the region. **It also reframes the deliverable:** in LATAM the billable artefact is
+a **jurisdictional applicability map**, because no client can read 716 instruments.
+
+**3. For autonomous driving specifically, the gap is confirmed with a reason.** **Most LatAm jurisdictions
+lack a specific, comprehensive AV framework**, so ADS falls under general motor-vehicle rules plus traffic
+law, product liability, consumer protection, cybersecurity, insurance and AI-governance regimes. **Peru's
+rules for electric and hybrid vehicles are reported as paving the way** for specific regulation. The cycle-6
+findings stand: **Colombia regulates ADS circulation up to SAE L3** (an enumerated ceiling — scope that
+cuts in the client's favour), and **Brazil's pending AI bill would classify AVs high-risk while proposing
+controlled testing spaces.**
+
+**4. A dated, enforceable ADAS commitment — the region's first delivery-shaped AI safety driver.**
+**Stellantis and Toyota have committed that new Brazilian-assembled cars will ship with at least automatic
+emergency braking by 2027**, and **Latin NCAP five-star protocols are pulling ADAS-equipped models into
+volume segments for the first time.** This is an **OEM commitment plus a rating protocol**, not a statute —
+which in practice is a *better* engagement trigger, because it carries a product date instead of a
+consultation period.
+
+**5. The investment constraint, stated plainly.** **LATAM captured $8.2 B of the $190 B** allocated to
+private AI opportunities globally in **2025**. Regional AI adoption is reported in **fleet management,
+manufacturing productivity and connected services**, with **Brazil** the key market for **telematics,
+flex-fuel analytics, logistics optimisation and fleet safety**. No Latin-American automotive **AI vendors**
+were named in any source reached.
+
+**6. Data spaces — the honest LATAM read, and it is an inherited duty.** This pass found **no LATAM-origin
+automotive data-space repository or deployment**, consistent with (but distinct from) the supply-side gap
+recorded in earlier passes. **That does not make P34/P35 irrelevant here — it makes them export work:**
+a Mexican or Brazilian cell, pack or component supplier selling into an EU OEM sits inside its customer's
+**18 Feb 2027** battery-passport duty, because the obligation attaches to **the economic operator placing
+the battery on the EU market**. The supplier must furnish the data even though no LATAM law requires it.
+**Combined with the USMCA rules-of-origin traceability work in P8, this is the same AAS/twin plumbing sold
+twice into one Bajío or ABC-region client — once for EU passport compliance, once for USMCA origin.**
+That is the most concrete LATAM data-space position this KB has held.
+
+⚠️ **Not re-verified this pass** (carried from cycle 5/6, labelled): telematics 197.4 M → 374.9 M (2028),
+CONTRAN 962, ANATEL homologation, PL 2338 pending, Mexico has no horizontal AI law.
 #### 🆕 2026-11-24 — 🔴 the "zero LATAM-origin supply" finding is **WITHDRAWN**, and what replaces it is a sellable problem
 
 **For six passes this KB recorded zero LATAM-origin automotive repositories across 11 queries and
@@ -1785,6 +1992,47 @@ charging-protocol queries run this pass, which were in English.** A Spanish/Port
 
 ### Global
 
+
+#### 🆕 2026-11-24 (third pass) — the supply-chain plane is **globally governed from EMEA**, and one adoption figure is worth more than the sizing models
+
+**The structural fact.** Automotive supply-chain data exchange has converged on **one permissive stack**:
+the **Dataspace Protocol (DSP)** and **Decentralized Claims Protocol (DCP)**, implemented by
+**`eclipse-edc/Connector`** (429★, Apache-2.0) and distributed for automotive as
+**`eclipse-tractusx/tractusx-edc`** (Apache-2.0). Measured: **83 repositories in `org:eclipse-tractusx`**;
+Apache-2.0 for code, CC-BY-4.0 for non-code, quarterly release train. **There is no competing automotive
+data-space stack with comparable backing.** For a global studio this is unusually good news: **one
+platform decision serves every region**, and the regional variation is in *duties*, not *technology*.
+
+**The scope is widening beyond automotive**, which affects how the capability is positioned: Tractus-X now
+spans **Construct-X, Semiconductor-X and Chem-X** under Manufacturing-X (July 2026 Community Days). A
+Catena-X capability built for an automotive client is **resellable into construction, semiconductor and
+chemical supply chains** without relearning the protocol layer.
+
+**Adoption figures worth carrying (all self-reported surveys — quote the shape, not the decimal):**
+
+| Source | Figure |
+|---|---|
+| Perforce | **71 %** of respondents implementing AI **in their vehicles** |
+| Capgemini (n=800, Jul 2026, carried) | **35 %** using agentic AI **in engineering**, 33 % piloting |
+| PwC (carried) | **47 % → 72 %** of companies by 2030 |
+| Kerrigan Advisors (NA dealers) | **43 %** deploying / **47 %** planning |
+
+**The cross-industry pattern this KB keeps rediscovering holds again:** KPMG's finding that AI scales
+poorly when data is fragmented across supply-chain players is *precisely* the problem the data-space stack
+exists to solve. **Catena-X is the first production data space reported to reach scale in manufacturing** —
+so the data-space plane is not a parallel topic to automotive AI adoption, it is **the precondition for
+it**. That reframes P34–P36 from compliance projects into **enablement projects whose business case is the
+AI programme the client already funded.**
+
+**Market sizing — the spread is now 10× and should be refused as a single number.** Figures reached this
+pass: Grand View **$4.29 B (2024) → $14.92 B (2030)**; Precedence **$58.99 B by 2035**; plus the
+cycle-4/5 spread for 2026 alone (**$5.80 B / $6.52 B / $9.13 B / $27.33 B**). **Standing rule reconfirmed:
+quote adoption and dated obligations, never a market size.**
+
+**Instrument note.** GitHub remains reachable three non-equivalent ways and this pass used all three:
+`raw.githubusercontent.com` = byte-read licence; `gh api search/repositories` = SPDX + stars + `pushed_at`;
+`git ls-remote` = liveness + default-branch resolution. **A fabricated slug returned DEAD (control).**
+`huggingface.co` was not probed this pass, so **no model-weight licence claim is made.**
 #### 🆕 2026-11-24 — the agents are still in the V-cycle, and the assurance tier just became buildable
 
 **The single most load-bearing cross-region fact in this KB is unchanged and was re-confirmed this

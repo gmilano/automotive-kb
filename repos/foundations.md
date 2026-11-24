@@ -23,6 +23,116 @@ updated: 2026-11-24
 > 🆕 = added 2026-11-13. 🔄 = licence/stars re-read today. ⏸ = URL re-probed, figures carried forward.
 > ⚪ = URL live, licence/stars deliberately left blank rather than guessed.
 
+## 🆕 Added 2026-11-24 (third pass) — **Layer L: the data-space / digital-twin plane**, 30 repos, and it was a total blind spot
+
+A control grep for `Catena-X`, `Tractus-X`, `dataspace`, `data space` and `battery passport` returned
+**0 hits across all nine files** before this pass. This is the layer the EU's **battery passport
+(18 Feb 2027)** and supply-chain due-diligence duties physically land on, and it is **overwhelmingly
+Apache-2.0 / MIT** — the most permissive layer this KB has yet measured.
+
+**All licences below byte-read from `raw.githubusercontent.com`; all addresses live via `git ls-remote`
+(control: fabricated slug = DEAD).**
+
+### 🆕 Layer L1 — Dataspace connectors (the Dataspace Protocol plane)
+
+| Repo | ★ | Licence (byte-read) | Role |
+|---|---|---|---|
+| [eclipse-edc/Connector](https://github.com/eclipse-edc/Connector) | **429** | ✅ Apache-2.0 (10,172 B) | **The anchor.** Eclipse Dataspace Components — reference implementation of the Dataspace Protocol (DSP) and Decentralized Claims Protocol (DCP). Pushed 2026-11-23. |
+| [FraunhoferISST/DataspaceConnector](https://github.com/FraunhoferISST/DataspaceConnector) | 106 | ✅ Apache-2.0 (10,796 B) | The original IDS connector. ⏸ **Stale — last push 2022-03-31.** Historically important, superseded by EDC. Do not start here. |
+| [eclipse-tractusx/tractusx-edc](https://github.com/eclipse-tractusx/tractusx-edc) | 96 | ✅ Apache-2.0 (11,356 B) | **The automotive distribution of EDC** — EDC plus Catena-X policy/identity extensions. This, not plain EDC, is the automotive starting point. |
+| [FIWARE/data-space-connector](https://github.com/FIWARE/data-space-connector) | 61 | ✅ Apache-2.0 (11,356 B) | FIWARE's connector; the alternative lineage. Pushed 2026-11-23. |
+| [eclipse-edc/IdentityHub](https://github.com/eclipse-edc/IdentityHub) | 46 | ✅ Apache-2.0 (10,172 B) | Verifiable-credential wallet / DCP identity. |
+| [eclipse-edc/Samples](https://github.com/eclipse-edc/Samples) | 86 | ✅ Apache-2.0 (10,172 B) | Runnable EDC samples — the actual on-ramp for an engineer. |
+| [eclipse-edc/FederatedCatalog](https://github.com/eclipse-edc/FederatedCatalog) | 12 | ✅ Apache-2.0 (10,172 B) | Cross-participant catalogue crawling. |
+| [Prometheus-X-association/dataspace-connector](https://github.com/Prometheus-X-association/dataspace-connector) | 17 | ✅ **MIT** (1,059 B) | Non-EDC lineage, MIT. Pushed 2026-11-23. |
+| [Mobility-Data-Space/mds-edc](https://github.com/Mobility-Data-Space/mds-edc) | 8 | ✅ Apache-2.0 (11,356 B) | **Mobility Data Space** EDC build — the mobility-sector sibling of Catena-X. |
+| [awslabs/dataspace-connector-on-aws](https://github.com/awslabs/dataspace-connector-on-aws) | 11 | ✅ Apache-2.0 (10,141 B) | AWS reference deployment. Pushed 2026-11-21. |
+| [awslabs/minimum-viable-dataspace-on-aws](https://github.com/awslabs/minimum-viable-dataspace-on-aws) | 11 | ✅ **MIT-0** (945 B) | **Minimum viable dataspace** on AWS — MIT-0 means *no attribution condition at all*. The cheapest legitimate way to stand up a demo. |
+
+### 🆕 Layer L2 — Catena-X / Tractus-X business applications (Eclipse Tractus-X)
+
+**Measured today: `org:eclipse-tractusx` = 83 repositories.** Secondary (IDSA): >330 active contributors,
+quarterly releases. Release train naming is `R26.06`-style (read from `puris`'s dependency table).
+
+| Repo | ★ | Licence (byte-read) | Role |
+|---|---|---|---|
+| [eclipse-tractusx/sldt-semantic-models](https://github.com/eclipse-tractusx/sldt-semantic-models) | 58 | 📄 CC-BY-4.0 (16,677 B, **no NC/ND**) | The Catena-X semantic models. Non-code → CC-BY is the **house convention**, not a risk. |
+| [eclipse-tractusx/digital-product-pass](https://github.com/eclipse-tractusx/digital-product-pass) | 50 | ✅ Apache-2.0 (11,504 B) | **Digital Product Passport / battery passport viewer.** The direct open-source answer to the 2027 duty. ⏸ last push 2025-09-18 — verify currency before quoting. |
+| [eclipse-tractusx/tractus-x-umbrella](https://github.com/eclipse-tractusx/tractus-x-umbrella) | 27 | ✅ Apache-2.0 (11,357 B) | **Umbrella Helm chart — the whole dataspace in one `helm install`.** Start demos here. Pushed 2026-11-20. |
+| [eclipse-tractusx/industry-core-hub](https://github.com/eclipse-tractusx/industry-core-hub) | 26 | ✅ Apache-2.0 (11,559 B) | Data provision/consumption orchestrator; its own pitch is **"onboarding to first data exchange in days, not months"**. The highest-leverage repo for a supplier-onboarding engagement. |
+| [eclipse-tractusx/puris](https://github.com/eclipse-tractusx/puris) | 21 | ✅ Apache-2.0 (11,532 B) | **PURIS** — short-term demand & capacity management. Declares compliance against named standards: **CX-0118, CX-0120, CX-0121, CX-0122, CX-0145, CX-0146, CX-0018**. Pushed 2026-11-23. |
+| [eclipse-tractusx/sldt-digital-twin-registry](https://github.com/eclipse-tractusx/sldt-digital-twin-registry) | 19 | ✅ Apache-2.0 (11,357 B) | Digital Twin Registry (AAS discovery). |
+| [eclipse-tractusx/traceability-foss](https://github.com/eclipse-tractusx/traceability-foss) | 17 | ✅ Apache-2.0 (11,356 B) | **Parts traceability / quality notifications** — the recall-and-defect use case. |
+| [eclipse-tractusx/tractusx-sdk](https://github.com/eclipse-tractusx/tractusx-sdk) | 15 | ✅ Apache-2.0 (11,559 B) | Python SDK, published on PyPI. **The integration surface an agent should call.** Pushed 2026-11-20. |
+| [SAP/ssi-dim-middle-layer](https://github.com/SAP/ssi-dim-middle-layer) | 5 | ✅ Apache-2.0 (11,356 B) | SAP's self-sovereign-identity middle layer for the Catena-X onboarding flow. |
+
+### 🆕 Layer L3 — Asset Administration Shell (the digital-twin standard, IDTA)
+
+The AAS is **the** industrial digital-twin metamodel, and this sub-layer is **MIT-dominant**:
+
+| Repo | ★ | Licence (byte-read) | Role |
+|---|---|---|---|
+| [admin-shell-io/aasx-package-explorer](https://github.com/admin-shell-io/aasx-package-explorer) | **139** | ✅ Apache-2.0 (**75,733 B**) | The reference AAS authoring tool. API said `NOASSERTION`; the file is a 75 KB **bundled-dependency notice** — a *long* file is the mirror image of the `sovity` trap. ⏸ last push 2024-04-16. |
+| [eclipse-basyx/basyx-python-sdk](https://github.com/eclipse-basyx/basyx-python-sdk) | 108 | ✅ **MIT** (1,086 B) | Eclipse BaSyx Python SDK. Pushed 2026-11-23. |
+| [admin-shell-io/submodel-templates](https://github.com/admin-shell-io/submodel-templates) | 95 | 📄 CC-BY-4.0 (18,649 B, no NC/ND) | The official submodel templates. Pushed 2026-11-20. |
+| [FraunhoferIOSB/FAAAST-Service](https://github.com/FraunhoferIOSB/FAAAST-Service) | 94 | ✅ Apache-2.0 (11,356 B) | **FA³ST** AAS runtime — the Java server alternative to BaSyx. Pushed 2026-11-23. |
+| [eclipse-basyx/basyx-java-server-sdk](https://github.com/eclipse-basyx/basyx-java-server-sdk) | 84 | ✅ **MIT** (1,024 B) | The AAS server most deployments actually run. Pushed 2026-11-23. |
+| [admin-shell-io/aas-specs-metamodel](https://github.com/admin-shell-io/aas-specs-metamodel) | 78 | 📄 CC-BY-4.0 (18,650 B, no NC/ND) | The metamodel specification itself. |
+| [eclipse-basyx/basyx-aas-web-ui](https://github.com/eclipse-basyx/basyx-aas-web-ui) | 35 | ✅ **MIT** (1,081 B) | Web UI for browsing twins. Pushed 2026-11-23. |
+| [admin-shell-io/aas-test-engines](https://github.com/admin-shell-io/aas-test-engines) | 30 | ✅ Apache-2.0 (11,356 B) | **Conformance test engines** — turns "we support AAS" into a test report. |
+| [admin-shell-io/aas-specs-api](https://github.com/admin-shell-io/aas-specs-api) | — | 📄 CC-BY-4.0 (18,650 B, no NC/ND) | The IDTA **Part 2 API** specs; the required input for `SAP/aas-mcp-server` (tag `v3.2.0`). |
+
+### 🆕 Layer M — one genuine foundational gap closed: the **map format**
+
+| Repo | ★ | Licence (byte-read) | Role |
+|---|---|---|---|
+| [fzi-forschungszentrum-informatik/Lanelet2](https://github.com/fzi-forschungszentrum-informatik/Lanelet2) | **979** | ✅ **BSD-3-Clause** (1,476 B) | **Lanelet2** — the HD-map library and format that **Autoware consumes**. This KB has carried Autoware since cycle 2 and `HD map` appeared in 11 lines of prose, yet **`Lanelet2` had 0 mentions**: the map layer under the AV stack was never named. BSD-3 (default branch `master`). |
+
+> **Method note on how this was missed for 9 passes:** the gap was not a supply gap, it was a
+> **vocabulary** gap. The KB searched for `HD map` (a *description*) and never for `Lanelet2` (the
+> *artefact name*). Same failure shape as the `automotive`-word finding (**N16**) and the `CarDash`
+> finding — **search the name of the thing, not the category it belongs to.**
+
+### 🔴 Layer N — the CAN **intrusion-detection** layer: measured, and it has essentially no permissive anchor
+
+`automotive intrusion detection` → 114 repos; the **entire** top tier by stars is 12★ and below, and
+licence-bearing rows are almost absent:
+
+| Repo | ★ | Licence (byte-read) | Verdict |
+|---|---|---|---|
+| [lorenzo9uerra/CAN-IDSs-on-the-ROAD](https://github.com/lorenzo9uerra/CAN-IDSs-on-the-ROAD) | 12 | ✅ **MIT** (1,070 B) | **The only permissive, licensed CAN-IDS repo found.** Benchmarks CAN IDSs on the ROAD dataset. Pushed 2026-09-30. |
+| `sececter/CAN-control` | 6 | ⚠️ GPL-3.0 | Copyleft, and stale since 2017. |
+| 4 further CAN-IDS repos at 3–6★ | — | 🔴 **no licence** | `dankimh/…LSTM`, `Mostafa-Noshy/CAN_intrusion`, `Zhou-CyberSecurity-AI/CAN-BERTtoDNN`, `AlCodes808/CAN-Bus-Sentinel-IDS`. |
+
+**This extends this KB's layered-licence-risk finding to a third layer.** Diagnostics = permissive
+throughout; V2X/C-ITS = no permissive anchor (later corrected, see `agents/top.md` W1); **intrusion
+detection = one MIT repo at 12★ and nothing else.** R155 requires a CSMS and detection capability, so
+**the IDS layer must be quoted as build-from-scratch or commercial-licensed — never as "build on open source."**
+
+### 🔴 The insurance-telematics / UBI layer: **no open-source anchor exists**
+
+`usage based insurance` and `insurance telematics` both return **Damoov's commercial SDK wrappers** as the
+top results (`Mobile-Telematics/TelematicsApp-Android` 76★, iOS 40★, Flutter 25★) — byte-read as
+**"Damoov Service Terms"**, a commercial agreement, not a licence. Everything else in the top tier is
+Kaggle-competition code (2016) or unlicensed student work. **Declared gap, with the reason: the UBI layer
+is a commercial-SDK market, not an open-source one.**
+
+### ✅ Fairness re-probe — and the short-query rule holds for a **third** time
+
+Per the standing rule that *"a 0-repos cell is a claim about the instrument until a short query has been
+tried"*, this pass deliberately re-probed its own negative:
+
+| Query | Terms | Result |
+|---|---|---|
+| `manufacturing quality inspection license:apache-2.0` | 4 | **2 repos**, both 1★ |
+| `defect detection license:apache-2.0` | 3 | **210 repos** |
+| `visual inspection license:mit` | 3 | **398 repos** |
+| `anomaly detection license:apache-2.0` | 3 | **1,525 repos** — top row [open-edge-platform/anomalib](https://github.com/open-edge-platform/anomalib) at **6,420★**, Apache-2.0, pushed 2026-11-21 |
+
+**Had this pass written its 4-term result down, it would have published a fabricated gap** over a layer
+whose anchor has 6,420 stars and was already in this KB (Layer G). Third confirmation; the rule is now
+load-bearing and should be applied to every `0-repos` cell in this fleet.
+
 ## 🆕 Added 2026-11-24 — the EV/battery gap is CLOSED, and it was the **industry word** again (third instance)
 
 **This KB has carried `EV / battery AI = 0 repos` since 2026-11-19.** It is not a gap. The anchors are

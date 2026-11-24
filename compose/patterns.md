@@ -1515,3 +1515,128 @@ OCPP 1.6 or higher.**
 interoperability regulation across its search legs; Mexico's **CRE A/108/2024** reached us only through a
 *Chilean* parliamentary document (secondary). Neither is a basis for a fixed-scope registration project
 yet. **Chile is the only LATAM country in this plane with a quotable compliance deliverable today.**
+
+---
+
+## P34 🆕 — Battery-passport readiness on Tractus-X, with the 18 Feb 2027 date as the scope boundary (EMEA-first, global supply)
+
+**The duty, stated precisely.** Art. 77 of **Reg. (EU) 2023/1542** requires a digital battery passport
+from **18 February 2027** for **EV batteries, LMT batteries and industrial batteries above 2 kWh**. The
+responsible party is **the economic operator that places the battery on the EU market or puts it into
+service** — so a Mexican or Brazilian cell/pack supplier selling into an EU OEM is inside the scope of
+its customer's duty even though the regulation does not bind it directly. Two facts bound the work
+usefully: there is **no retroactivity** (a battery placed on the market before 18 Feb 2027 never needs a
+passport), and the **initial 2027 content set is thin** — identification, type, model and key technical
+characteristics, with delegated acts to expand it later. Commission guidance **v3.2** currently marks
+certain information groups *not to be filled in* at launch, pending the Omnibus provisions.
+
+**Why that shape is commercially attractive:** the deadline is hard, the first-wave data requirement is
+small, and the expansion is guaranteed. That is a **phase-1 fixed-price, phase-2 retainer**.
+
+**The stack — every row byte-read Apache-2.0 or MIT:**
+
+| Layer | Repo | Licence |
+|---|---|---|
+| Dataspace connector | [`eclipse-tractusx/tractusx-edc`](https://github.com/eclipse-tractusx/tractusx-edc) | Apache-2.0 |
+| Whole-stack install | [`eclipse-tractusx/tractus-x-umbrella`](https://github.com/eclipse-tractusx/tractus-x-umbrella) | Apache-2.0 |
+| Passport app | [`eclipse-tractusx/digital-product-pass`](https://github.com/eclipse-tractusx/digital-product-pass) | Apache-2.0 |
+| Twin registry | [`eclipse-tractusx/sldt-digital-twin-registry`](https://github.com/eclipse-tractusx/sldt-digital-twin-registry) | Apache-2.0 |
+| Semantic models | [`eclipse-tractusx/sldt-semantic-models`](https://github.com/eclipse-tractusx/sldt-semantic-models) | CC-BY-4.0 (non-code, house rule) |
+| AAS runtime | [`eclipse-basyx/basyx-java-server-sdk`](https://github.com/eclipse-basyx/basyx-java-server-sdk) | MIT |
+| Conformance proof | [`admin-shell-io/aas-test-engines`](https://github.com/admin-shell-io/aas-test-engines) | Apache-2.0 |
+| Passport validation | [`artiso-ai/dppvalidator`](https://github.com/artiso-ai/dppvalidator) | MIT |
+| Integration surface | [`tractusx-sdk`](https://github.com/eclipse-tractusx/tractusx-sdk) (PyPI) | Apache-2.0 |
+
+**Wiring.**
+1. `helm install` the **umbrella** chart → a working connector + registry + portal in one namespace. This
+   is the demo environment; do not hand-assemble it.
+2. Model the battery as an **AAS submodel** using `sldt-semantic-models` + `admin-shell-io/submodel-templates`.
+   Register the twin in the **Digital Twin Registry**.
+3. Expose it through `tractusx-edc` under a Catena-X policy; consume it in `digital-product-pass`.
+4. **Gate the pipeline on `aas-test-engines` + `dppvalidator` in CI** — this is the P26 "compliance as CI
+   output" principle applied to a passport: the client's evidence is a regenerated test report, not a
+   consultant's memo.
+5. The **state-of-health** field is where this stops being a data-modelling job: SoH must be computed and
+   refreshed over life. Reuse Layer H (`foxBMS`, EV/battery modelling) from `repos/foundations.md` for the
+   estimator and feed it in as a dynamic submodel property.
+
+**Two risks to put in the SOW in writing.**
+- `digital-product-pass` was **last pushed 2025-09-18**. Verify it against the current release train
+  (`R26.06`-style) before committing to a fixed scope; budget an upgrade spike.
+- **Do not build on `sovity/edc-ce`** (96★, the most obvious "community edition"). Its default grant is
+  **Elastic License 2.0**, which forbids offering the software to third parties as a managed service — a
+  direct breach for a Globant-hosted deployment. Use `tractusx-edc`. See `agents/top.md` **T1**.
+
+---
+
+## P35 🆕 — Supplier-onboarding agent: PDF datasheet → AAS submodel → dataspace (the only agent row in this plane with real leverage)
+
+**The problem, in the client's words.** Tier-2 and Tier-3 suppliers hold their part data in **PDF
+datasheets and spreadsheets**. Catena-X needs it as typed AAS submodels. Today that conversion is manual,
+and it is the single largest cost line in every onboarding programme —
+`industry-core-hub`'s own pitch is *"onboarding to first data exchange in days, not months,"* which is an
+admission that months is the status quo.
+
+**The stack:**
+
+| Role | Repo | ★ | Licence |
+|---|---|---|---|
+| PDF → AAS extraction | [`eclipse-basyx/basyx-pdf-to-aas`](https://github.com/eclipse-basyx/basyx-pdf-to-aas) | 17 | ✅ MIT |
+| AAS tool surface for the agent | [`SAP/aas-mcp-server`](https://github.com/SAP/aas-mcp-server) | 9 | ✅ Apache-2.0 |
+| AAS API specs (required input) | [`admin-shell-io/aas-specs-api`](https://github.com/admin-shell-io/aas-specs-api) `v3.2.0` | — | 📄 CC-BY-4.0 |
+| AAS backend | [`basyx-java-server-sdk`](https://github.com/eclipse-basyx/basyx-java-server-sdk) or [`FA³ST`](https://github.com/FraunhoferIOSB/FAAAST-Service) | 84 / 94 | ✅ MIT / Apache-2.0 |
+| Orchestration into the dataspace | [`industry-core-hub`](https://github.com/eclipse-tractusx/industry-core-hub) + [`tractusx-sdk`](https://github.com/eclipse-tractusx/tractusx-sdk) | 26 / 15 | ✅ Apache-2.0 |
+| Human review UI | [`basyx-aas-web-ui`](https://github.com/eclipse-basyx/basyx-aas-web-ui) | 35 | ✅ MIT |
+| Docs retrieval for the build team | [`artamrj/tractusx-rag-mcp`](https://github.com/artamrj/tractusx-rag-mcp) | 1 | ✅ Apache-2.0 |
+
+**Wiring.**
+1. `pdf2aas.convert('datasheet.pdf', eclass_id, 'submodel.json')` — pypdfium2 preprocessing, **ECLASS**
+   dictionary for the property vocabulary, `PropertyLLMSearch` extractor, Technical Data submodel
+   generator. Swap its default OpenAI client for the engagement's model.
+2. Build the **AAS MCP server** from the IDTA Part 2 specs at tag `v3.2.0` (bundle one file per API) and
+   point it at the AAS backend. The agent now reads and writes twins **through a standard API**, not a
+   bespoke integration.
+3. **Mandatory human gate.** Extracted properties land in `basyx-aas-web-ui` for supplier sign-off before
+   publication. An extraction error here propagates into every consumer in the dataspace — treat it like
+   P10's technician gate, not like a chatbot.
+4. Publish via `industry-core-hub`; assert conformance with `aas-test-engines` in CI.
+
+**Why this is the defensible bit.** The platform is settled and free; **this conversion step is where the
+margin is**, and the agent tier here has a median of 3★ (see **N32**) — there is nothing to buy. Scope it
+per-supplier-per-part-family with a measured extraction-accuracy SLA, since `pdf-to-aas` gives a testable
+output and `tractusx-rag-mcp` demonstrates the norm of publishing an eval (100 % Hit@8, 98 % faithfulness,
+80 % correctness on 60 questions) — **hold your own extraction agent to a published number too.**
+
+---
+
+## P36 🆕 — Tractus-X Accelerator: a funded, dated entry route for SMEs (EMEA, and it is a genuine filing counter)
+
+**The opportunity, with dates.** The **Tractus-X Accelerator** entered its implementation phase on
+**1 September 2026** and runs **2026–2029**, funded by the **German Federal Ministry for Economic Affairs
+and Energy (BMWE)**, with **ARENA2036, Catena-X Automotive Network, Fraunhofer ISST and IDSA** as
+partners. Its explicit target is **SMEs and mid-caps in automotive and adjacent sectors (including machine
+building) that are not yet active in Catena-X**, and **applications are due by the end of December 2026.**
+
+**Why this matters more than a market-size figure.** This KB's standing complaint about EMEA is that the
+AI Act gives **duties without a filing counter** — nothing with a date and a queue to join. The
+Accelerator *is* that counter: a named programme, a named funder, a closing date **five weeks out**, and a
+cohort of exactly the companies that need integration help and cannot staff it. Pair it with **N33**'s now-dated
+AI Act timeline and EMEA has, for the first time in this KB, both a duty calendar and an entry queue.
+
+**The deliverable Globant can quote this quarter:** a **two-week Catena-X readiness assessment** producing
+(a) the client's data-sharing use case mapped to a named CX standard — `puris` demonstrates the
+vocabulary: *CX-0118, CX-0120, CX-0121, CX-0122, CX-0145, CX-0146, CX-0018*; (b) a running **umbrella**
+deployment as proof of technical feasibility; (c) the gap list between their PLM/ERP data and the required
+AAS submodels — i.e. the P35 backlog, priced.
+
+**Demo environment, cheapest legitimate route:**
+[`awslabs/minimum-viable-dataspace-on-aws`](https://github.com/awslabs/minimum-viable-dataspace-on-aws)
+(**MIT-0** — *no attribution condition at all*, 945 B) or
+[`awslabs/dataspace-connector-on-aws`](https://github.com/awslabs/dataspace-connector-on-aws)
+(Apache-2.0, pushed 2026-11-21). For a non-automotive mobility variant, the same protocol stack runs under
+[`Mobility-Data-Space/mds-edc`](https://github.com/Mobility-Data-Space/mds-edc) (Apache-2.0).
+
+**Honest limits.** Catena-X's own scale figures — *21 KITs and >40 certified services* — are **as of
+12/2025** and come from a partner presentation; **no independent 2026 data on how many companies are
+actively exchanging data was reachable this pass.** Quote the programme's dates (primary, specific) and the
+repository counts (measured: 83 repos in `org:eclipse-tractusx`), **not** the ecosystem adoption claims.

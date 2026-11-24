@@ -26,6 +26,96 @@ updated: 2026-11-24
 > 🆕 = new this pass. 🔄 = licence/stars re-read today. ⏸ = URL re-probed, figures carried from an
 > earlier pass and labelled rather than silently refreshed. **No row is a placeholder.**
 
+## 🆕 What changed on 2026-11-24 — third pass: the **data-space / supply-chain** plane, and a 96★ connector that is **not open source**
+
+**Window:** 2026-11-24 ~02:00Z. This is the **third pass of 2026-11-24** (00:56Z charging-interface work
+and the 01:56Z pass are both preserved below, unchanged). **Why a third plane rather than a re-read:**
+a control grep across all nine files returned **0 mentions** of `Catena-X`, `Tractus-X`, `dataspace`,
+`data space`, `battery passport`, `Lanelet2`, `intrusion detection`, `UBI` or `insurance telematics`.
+The automotive **supply-chain data-space** layer — the one the EU's battery-passport and
+due-diligence duties actually land on — was absent from this KB entirely.
+
+**Channel:** stars/SPDX/`pushed_at` from `gh api -X GET search/repositories`; **every licence byte-read**
+from `raw.githubusercontent.com`, 8 filenames × (default branch resolved by `git ls-remote --symref HEAD`,
+`main`, `master`); liveness from `git ls-remote --exit-code`. **Control: a fabricated slug returned DEAD**,
+so the probe discriminates.
+
+### 🔴 T1. THE FINDING OF THIS PASS — a licence file that *names* Apache-2.0 while *granting* Elastic License 2.0
+
+`sovity/edc-ce` is the **most-starred third-party EDC distribution** (96★, pushed 2026-10-16) and the top
+hit for `topic:catena-x`. The GitHub API reports `NOASSERTION`. Its `LICENSE` byte-reads at **439 B** and
+says, verbatim:
+
+> *"Source code in this repository is either licensed under (i) the "Elastic License 2.0" or (ii) an
+> "Apache License 2.0" … The **default throughout the repository is the "Elastic License 2.0"**, unless
+> the header or NOTICE file specifies another license."*
+
+**Elastic License 2.0 is not an open-source licence** — it forbids providing the software to third
+parties as a managed service and forbids circumventing its licence-key functions. For Globant that is a
+**hard exclusion** wherever a client would host it for others, which is the normal data-space deployment.
+
+**This defeated this pass's own detector.** The grep matched the string `Apache License` and returned
+"Apache-2.0" — the byte-read was performed correctly and *still* produced the wrong verdict, because the
+file is a **pointer**, not a grant.
+
+> **🔴 NEW RULE, CARRY IT TO EVERY KB IN THIS FLEET — compare the licence file's byte size to the
+> canonical length of the licence it names.** Measured canonical Apache-2.0 in this pass: **10,141 –
+> 11,559 B** (the spread is appendix/notice variation; `eclipse-edc/*` = 10,172 B, `tractusx-*` =
+> 11,356–11,559 B). A file of **439 B that names Apache-2.0 is a routing statement about other files**,
+> and the grant is whatever those files say. Any licence file **under ~2 KB that names Apache, GPL, MPL
+> or EPL** must be read as prose before it is recorded. Short-and-permissive is only safe for MIT/BSD/MIT-0,
+> whose canonical texts genuinely are ~0.9–1.5 KB.
+
+This is the **third** sighting-class of "the SPDX field under-declares" in this KB and the first where
+the *under-declaration was the honest answer* — `NOASSERTION` was correct and the byte-read was misleading.
+
+### 🆕 T2. Agent tier of this plane — nine rows, and the honest headline is that **the big ones are vendor-shaped and the rest are tiny**
+
+`catena-x agent` returns **4 repositories in total** (top result 1★, and two are unrelated). There is **no
+Catena-X-native agent framework.** What exists is an adapter tier over the Asset Administration Shell and
+the EDC, and it is where the real work is:
+
+| Agent / tool | ★ | Licence (byte-read) | What it actually is |
+|---|---|---|---|
+| [SAP/aas-mcp-server](https://github.com/SAP/aas-mcp-server) | 9 | ✅ Apache-2.0 (11,356 B) | **OpenAPI→MCP bridge for Asset Administration Shell APIs.** Exposes any AAS-compliant backend as MCP tools; needs the IDTA Part 2 specs from `admin-shell-io/aas-specs-api` (tag `v3.2.0`). Backend-agnostic: SAP BNAC, Eclipse BaSyx or FA³ST. **Vendor-maintained, permissive, and the single most useful row in this plane.** |
+| [eclipse-basyx/basyx-pdf-to-aas](https://github.com/eclipse-basyx/basyx-pdf-to-aas) | 17 | ✅ MIT (1,081 B) | **PDF datasheet → AAS submodel via LLM.** `pdf2aas.convert('datasheet.pdf', eclass_id, 'submodel.json')`. pypdfium2 + ECLASS dictionary + `PropertyLLMSearch` + Technical Data submodel generator. This is **supplier data onboarding**, the costliest manual step in a data-space project. |
+| [artamrj/tractusx-rag-mcp](https://github.com/artamrj/tractusx-rag-mcp) | 1 | ✅ Apache-2.0 (11,357 B) | Tractus-X documentation RAG **+ MCP server** (3 read-only tools). Java 21 / Spring Boot 4.1 / LangChain4j / pgvector HNSW + Postgres FTS, weighted RRF; reads 330 doc pages without cloning; Helm chart, Prometheus, Grafana. **Publishes a 60-question test set: 100 % Hit@8, 98 % faithfulness, 80 % correctness** — a measured retrieval claim, which is rare at 1★. |
+| [artiso-ai/dppvalidator](https://github.com/artiso-ai/dppvalidator) | 10 | ✅ MIT (1,065 B) | Digital-Product-Passport validator. |
+| [hadijannat/aas-ai-editor](https://github.com/hadijannat/aas-ai-editor) | 3 | ✅ MIT (1,083 B) | LLM-assisted AAS editing. |
+| [soofi-project/edc-mcp](https://github.com/soofi-project/edc-mcp) | 3 | ✅ MIT (1,065 B) | MCP server over an EDC connector. |
+| [Pareo-AI/pythia-edc](https://github.com/Pareo-AI/pythia-edc) | 2 | ✅ MIT (1,079 B) | EDC agent tooling; pushed 2026-11-23 (**active today**). |
+| [connected-intelligent-systems/edc-mcp](https://github.com/connected-intelligent-systems/edc-mcp) | 0 | ✅ MIT (1,065 B) | Second independent EDC MCP server. Recorded because **two independent MIT implementations of the same adapter** is a signal the interface is stabilising. |
+| [dungnotnull/scope3-carbon-emissions-tracking-agent-skill](https://github.com/dungnotnull/scope3-carbon-emissions-tracking-agent-skill) | 4 | ✅ MIT (byte-read) | Scope-3 emissions tracking as an agent **skill** — the PCF side of the passport duty. |
+
+**Stated plainly to a client:** median star count of the eight non-SAP rows is **3**. This plane's agent
+tier is **pre-product**. The *platform* tier under it (**T3**, `repos/foundations.md`) is production-grade
+and carries nine-figure industrial backing. **The billable shape here is therefore "build the agent, adopt
+the platform" — not "adopt an agent".**
+
+### ⚠️ T3. Research-tier rows rejected on licence — and one is a *bespoke* non-commercial licence
+
+| Repo | ★ | Verdict |
+|---|---|---|
+| [sovity/edc-ce](https://github.com/sovity/edc-ce) | 96 | 🔴 **Elastic License 2.0 by default** (439 B pointer file, see **T1**). Not open source. Hard exclusion for hosted delivery. |
+| [quickhdsdc/AAS_LLMAgent_MCP_Server](https://github.com/quickhdsdc/AAS_LLMAgent_MCP_Server) | 1 | 🔴 **"Dachuan Shi Non-Commercial Research License 1.0"**, `SPDX-License-Identifier: LicenseRef-Dachuan-Shi-NC-1.0`, 4,789 B, effective 2026-10-20. Grants non-commercial research/teaching only. A **bespoke, author-named** NC licence — 3rd bespoke-NC class in this KB. |
+| [EunomiaUPM/ds-agent](https://github.com/EunomiaUPM/ds-agent) | 5 | ⚠️ **AGPL-3.0** (35,148 B). The only repo literally named "dataspace agent". Network-copyleft: excluded from hosted delivery. |
+| [open-dpp/open-dpp](https://github.com/open-dpp/open-dpp) | 35 | ⚠️ **AGPL-3.0** (34,522 B). The most-starred *maintained* DPP application (pushed 2026-11-23). Usable only as a self-hosted client deployment, never as Globant-hosted multi-tenant. |
+| [YuchenXia/AASbyLLM](https://github.com/YuchenXia/AASbyLLM) | 21 | ⚠️ **CC-BY-4.0 on code** (18,655 B; verified **no** NonCommercial, **no** NoDerivatives). A content licence applied to software: no patent grant, no warranty disclaimer tuned for code. Cite it, don't vendor it. |
+| [Mobile-Telematics/TelematicsApp-Android](https://github.com/Mobile-Telematics/TelematicsApp-Android) | 76 | 🔴 **Proprietary — "Damoov Service Terms"** (18,721 B), an agreement with Damoov Pte. Ltd (Singapore), not a licence grant. Also iOS (40★, 19,393 B) and the Flutter demo (25★). **This is the #1 hit for `insurance telematics` and it is a commercial SDK wrapper.** Recorded so it is not re-found as open source. |
+| [batterypass/BatteryPassDataModel](https://github.com/batterypass/BatteryPassDataModel) | 70 | 🔴 **No licence file** (8 filenames × 3 branches). See **N31** in `intel/trends.md`: the data model for a *legally mandated* passport carries no grant. |
+
+### ✅ T4. The CC-BY-4.0 readings in Tractus-X are the **documented convention**, not a defect
+
+Four CC files were byte-read and **all four are plain CC-BY-4.0 — zero NonCommercial, zero NoDerivatives**
+(checked by string, not by SPDX): `eclipse-tractusx/sldt-semantic-models` (16,677 B),
+`admin-shell-io/aas-specs-metamodel` (18,650 B), `admin-shell-io/submodel-templates` (18,649 B),
+`admin-shell-io/aas-specs-api` (18,650 B).
+
+`eclipse-tractusx/industry-core-hub` carries **both** badges — *Apache 2.0 License* for code and
+*CC-BY-4.0* for non-code. So in this ecosystem **CC-BY-4.0 on a semantic-model or specification repo is
+the house rule**, and flagging it as a licence risk would be a false positive. **Flag it only when the
+repo ships executable code** (which is exactly why `AASbyLLM` above *is* flagged).
+
 ## 🆕 What changed on 2026-11-24 — the V2X licence verdict reverses, and the model tier gains four permissive rows
 
 **Window:** 2026-11-21 14:52Z → 2026-11-24. First pass since the four same-day passes of 2026-11-21.

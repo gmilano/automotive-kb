@@ -9,6 +9,96 @@ updated: 2026-11-24
 > Current trends, updated 2026-11-24. Project and vendor self-reported performance figures are labelled
 > as such. Dates name their instrument.
 
+## 🆕 New on 2026-11-24 (third pass) — four trends from the data-space plane, and one is a method rule for the whole fleet
+
+### N30 — 🔴 A licence file that **names** a permissive licence can **grant** a proprietary one, and the byte-read will not save you
+
+This KB's strongest discipline — never trust the API's SPDX field, always byte-read `LICENSE` — produced a
+**wrong answer** this pass. `sovity/edc-ce` (96★, the most-starred third-party EDC distribution) has a
+**439 B** `LICENSE` that reads: *"The default throughout the repository is the 'Elastic License 2.0',
+unless the header or NOTICE file specifies another license"*, mentioning Apache-2.0 only as the
+alternative. A string match on `Apache License` labelled it Apache-2.0. Elastic License 2.0 **is not
+open source** — it forbids providing the software to third parties as a managed service.
+
+**The generalisable rule, and it belongs in every KB in this fleet:**
+
+> **Compare the licence file's byte size against the canonical length of the licence it names.**
+> Measured canonical lengths this pass: **Apache-2.0 = 10,141–11,559 B** (appendix/notice variation),
+> **GPL-3.0 ≈ 35,148 B**, **AGPL-3.0 ≈ 34,522 B**, **CC-BY-4.0 ≈ 16,677–18,655 B**, **MIT ≈ 1,024–1,086 B**,
+> **MIT-0 = 945 B**, **BSD-3 = 1,476 B**.
+> A file of **439 B naming Apache-2.0 is a routing statement about other files**, not a grant. **Any
+> licence file under ~2 KB that names Apache, GPL, LGPL, AGPL, MPL or EPL must be read as prose before a
+> verdict is recorded.** Short-and-permissive is only trustworthy for MIT / BSD / MIT-0 / ISC.
+
+This is the **third distinct detector bug** this KB has recorded (after LGPL-contains-"GPL" and
+GPL-vs-AGPL) and the first where **`NOASSERTION` was the honest answer and the byte-read was the
+misleading one**. The mirror case is benign and worth knowing: `aasx-package-explorer` byte-reads
+**75,733 B** of Apache-2.0 (also `NOASSERTION` at the API) purely because it bundles third-party notices.
+**Short ⇒ read the whole file. Long ⇒ read the head.**
+
+### N31 — A **legally mandated** artefact can have a mandated *schema* and no licensed *implementation* — the second sighting, now in a different plane
+
+The 2026-11-24 second pass found that OCPI, a protocol named in regulation, ships **with no licence file
+at all**. The same shape recurs here, independently: the EU battery passport becomes mandatory on
+**18 Feb 2027** (Art. 77, Reg. (EU) 2023/1542), and:
+
+- [`batterypass/BatteryPassDataModel`](https://github.com/batterypass/BatteryPassDataModel) — **70★, the
+  most-starred battery-passport data model, NO LICENCE FILE** (8 filenames × 3 branches).
+- [`open-dpp/open-dpp`](https://github.com/open-dpp/open-dpp) — 35★, **AGPL-3.0**: the most-starred
+  *maintained* DPP application is network-copyleft, so unusable as a Globant-hosted multi-tenant service.
+- [`eclipse-tractusx/digital-product-pass`](https://github.com/eclipse-tractusx/digital-product-pass) —
+  50★, **Apache-2.0** and therefore the *only* clean base — but ⏸ **last pushed 2025-09-18**, 14 months
+  before the duty bites.
+
+**The pattern is now a thesis, not an observation: in automotive, the closer a layer sits to a legal
+mandate, the worse its open-source licensing gets.** Charging protocols, battery passports — both
+mandated, both licence-poor. And per **N18**, that is a *stronger* sales position than a healthy commons:
+the client cannot simply adopt their way out of the duty.
+
+### N32 — The agent tier and the platform tier of this plane are **two orders of magnitude apart in maturity**, and that fixes the engagement shape
+
+Measured, same hour, same instrument:
+
+| Tier | Representative | ★ |
+|---|---|---|
+| Platform | `eclipse-edc/Connector` | **429** |
+| Platform | `eclipse-tractusx/tractusx-edc` | 96 |
+| Platform | `eclipse-basyx/basyx-python-sdk` | 108 |
+| Agent | `SAP/aas-mcp-server` | **9** |
+| Agent | `eclipse-basyx/basyx-pdf-to-aas` | 17 |
+| Agent | median of the other seven agent rows | **3** |
+
+`catena-x agent` returns **4 repositories in total**. There is **no Catena-X-native agent framework**, and
+the only vendor-maintained agent row in the plane is SAP's 9★ MCP bridge.
+
+**Consequence for how Globant sells this:** the data-space platform decision is *settled* — Tractus-X,
+Apache-2.0, 83 repos, quarterly releases — so there is no platform-selection study to sell. **The
+differentiated work is the agent layer on top, which does not exist yet.** That is the inverse of the
+AV-stack plane (where the models are strong and the integration is commodity) and it is a cleaner story:
+*adopt the platform, build the agent.* See **P34–P36**.
+
+### N33 — EMEA's AI Act dates have **stopped moving**, and this KB can finally state them
+
+For four passes this KB recorded the AI Act timeline as "contested" and "hazardous — scope against duties,
+not dates." That caution is now **resolvable**: the **Digital Omnibus on AI is Regulation (EU) 2026/1744**,
+published in the Official Journal on **24 July 2026** and in force **27 July 2026**. Multiple independent
+secondary sources agree on the same structure:
+
+| Obligation | Date |
+|---|---|
+| Art. 50 transparency | **2 August 2026 — applied, NOT deferred** |
+| National regulatory sandboxes | 2 August 2027 |
+| Annex III stand-alone high-risk | 2 December 2027 |
+| **Annex I embedded products — where motor vehicles sit** | **2 August 2028** |
+
+**Two things are both true and must be said together:** the *enforcement dates* moved, and the
+*requirements did not change at all*. So the prior guidance ("sell against duties, not dates") was right
+in substance and is now **upgraded rather than overturned** — the duties are the deliverable, and there is
+now a defensible date to put in a roadmap. **One dissenting source still describes the Omnibus as a
+provisional agreement**; the OJ-publication reading is carried here because it is corroborated by the
+larger number of independent sources *and* reproduces a reference this KB already held from cycle 5
+(`Reg-EU-2026/1744`). Flagged, not hidden.
+
 ## 🆕 New on 2026-11-24 (second pass) — six trends from the charging-interface plane
 
 > Plane opened with 0 prior mentions in this KB. **N26 is a defect in this pass's own instrument**, published

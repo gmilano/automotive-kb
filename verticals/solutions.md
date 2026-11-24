@@ -15,6 +15,70 @@ updated: 2026-11-24
 > this session's proxy, re-tested today, so licences and stars are read from the rendered repository page;
 > 🆕 = new this pass, 🔄 = licence/stars re-read today, ⏸ = carried forward and labelled).
 
+## 🆕 2026-11-24 (third pass) — the **data-space platform** category, and it is the strongest "Odoo-shaped" base this file has
+
+This file's test is *"a real system that can be customised with AI on top."* **Eclipse Tractus-X is the
+best fit in the whole automotive KB** — it is to automotive supply chains what Odoo is to ERP: a
+production, standards-governed, permissively licensed platform with a release train, a Helm chart and a
+named compliance surface. It was entirely absent from this KB before today (`Catena-X` = 0 mentions in
+9 files).
+
+### 🆕 Category: automotive data space — **Eclipse Tractus-X** (the Catena-X reference implementation)
+
+| Property | Measured value |
+|---|---|
+| Repositories in `org:eclipse-tractusx` | **83** (`gh api search/repositories`, 2026-11-24) |
+| Licence (code) | ✅ **Apache-2.0** — byte-read on 9 repos, 11,356–11,559 B |
+| Licence (non-code) | 📄 **CC-BY-4.0** — byte-read, **no NonCommercial, no NoDerivatives** |
+| Release train | `R26.06`-style quarterly releases (read from `puris`'s pinned dependency table) |
+| Community (secondary, IDSA) | >330 active contributors; implements **DSP** + **DCP** |
+| Install path | [`tractus-x-umbrella`](https://github.com/eclipse-tractusx/tractus-x-umbrella) — **the whole dataspace as one Helm chart** |
+
+**The customisable components, ranked by how much client work sits on each:**
+
+| Component | ★ | Licence | What a client actually buys |
+|---|---|---|---|
+| [industry-core-hub](https://github.com/eclipse-tractusx/industry-core-hub) | 26 | ✅ Apache-2.0 | Data provision/consumption orchestrator. Its own claim: **"onboarding to first data exchange in days, not months."** The supplier-onboarding engagement lives here. |
+| [tractusx-edc](https://github.com/eclipse-tractusx/tractusx-edc) | 96 | ✅ Apache-2.0 | The connector, with Catena-X policy + identity extensions. **Start here, not at plain `eclipse-edc/Connector`.** |
+| [digital-product-pass](https://github.com/eclipse-tractusx/digital-product-pass) | 50 | ✅ Apache-2.0 | DPP / **battery passport** viewer — the open answer to the 18 Feb 2027 duty. ⏸ last push 2025-09-18: **check currency before quoting a fixed scope.** |
+| [traceability-foss](https://github.com/eclipse-tractusx/traceability-foss) | 17 | ✅ Apache-2.0 | Parts traceability + quality notifications — recall and defect propagation. |
+| [puris](https://github.com/eclipse-tractusx/puris) | 21 | ✅ Apache-2.0 | Short-term demand & capacity. Declares compliance to **CX-0118 / 0120 / 0121 / 0122 / 0145 / 0146 / 0018** — a named, auditable surface. |
+| [sldt-digital-twin-registry](https://github.com/eclipse-tractusx/sldt-digital-twin-registry) | 19 | ✅ Apache-2.0 | Twin discovery. |
+| [tractusx-sdk](https://github.com/eclipse-tractusx/tractusx-sdk) | 15 | ✅ Apache-2.0 | Python SDK on PyPI — **the surface an agent calls.** |
+
+> **Why the `puris` standards list matters commercially:** it converts "we integrated with Catena-X" into
+> *"compliant with CX-0122 Item Stock Exchange 2.0.0."* That is a **testable acceptance criterion**, which
+> is what lets this be fixed-price instead of time-and-materials.
+
+### 🆕 Category: industrial digital twin — **Eclipse BaSyx / FA³ST** (Asset Administration Shell)
+
+The AAS is the IDTA digital-twin metamodel that Catena-X twins are expressed in. **This sub-layer is
+MIT-dominant**, which is unusually friendly:
+
+| Platform | ★ | Licence (byte-read) | Note |
+|---|---|---|---|
+| [eclipse-basyx/basyx-java-server-sdk](https://github.com/eclipse-basyx/basyx-java-server-sdk) | 84 | ✅ **MIT** (1,024 B) | The AAS server most deployments run. Pushed 2026-11-23. |
+| [eclipse-basyx/basyx-python-sdk](https://github.com/eclipse-basyx/basyx-python-sdk) | 108 | ✅ **MIT** (1,086 B) | Python SDK. Pushed 2026-11-23. |
+| [FraunhoferIOSB/FAAAST-Service](https://github.com/FraunhoferIOSB/FAAAST-Service) | 94 | ✅ Apache-2.0 | FA³ST — the alternative runtime. Having **two** maintained permissive runtimes is real optionality. |
+| [eclipse-basyx/basyx-aas-web-ui](https://github.com/eclipse-basyx/basyx-aas-web-ui) | 35 | ✅ **MIT** | Ready-made twin browser — skip building a UI. |
+| [admin-shell-io/aas-test-engines](https://github.com/admin-shell-io/aas-test-engines) | 30 | ✅ Apache-2.0 | **Conformance test engines** — turns a claim into a report. |
+
+### 🔴 A platform-shaped trap to refuse by name: **sovity EDC-CE**
+
+`sovity/edc-ce` (96★) presents as the friendly, packaged "community edition" connector and is the top hit
+for `topic:catena-x`. Its 439 B `LICENSE` makes **Elastic License 2.0 the repository default**, which
+forbids offering the software to third parties as a managed service. **A Globant-hosted data-space
+deployment on this base would breach the licence.** Use `eclipse-tractusx/tractusx-edc` (Apache-2.0)
+instead — same protocol, same ecosystem, clean grant. Full detail at `agents/top.md` **T1**.
+
+### 🔴 And one to refuse in the telematics category: **Damoov**
+
+`Mobile-Telematics/TelematicsApp-Android` (76★) / `-iOS` (40★) are the top results for
+`insurance telematics` and look like open-source reference apps. The `LICENSE` byte-reads as
+**"Damoov Service Terms"** — a commercial agreement with Damoov Pte. Ltd (Singapore) covering a
+proprietary SDK and SaaS "DATA HUB". **There is no open-source UBI/insurance-telematics platform**; that
+category is a commercial-SDK market. Declared, with the reason.
+
 ## 🆕 2026-11-24 — two new customisable platform categories, and the automotive-specific ERP question is answered properly
 
 ### 🆕 Category: the battery platform — `foxBMS 2` is a real customisable base, and it is the first hardware-and-software one in this file
