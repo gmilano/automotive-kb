@@ -917,3 +917,75 @@ recommendation; the other two are recorded because a 2026 listicle presents them
   suitability, not only licence**: *"nag killer, FSD region unlock"* defeats manufacturer restrictions
   and driver-attention monitoring. **Not appropriate for a client engagement whatever its grant.**
   Recorded so a later pass does not surface it as a find.
+
+---
+
+## 🔌 New on 2026-11-24 (second pass) — the charging-interface plane, and why its agent tier is empty
+
+**Plane opened this pass.** Control before searching: `OCPP`, `OCPI`, `EVerest`, `SteVe` and
+`charging station` returned **0 mentions across all 9 files** of this KB. The charging interface is
+virgin ground here, and it sits inside this KB's own charter (*"EV ecosistema"*).
+
+### The finding that shapes the whole plane: a 765× asymmetry, and the agent tier is keyword collisions
+
+One instrument (`gh api -X GET search/repositories`, 2026-11-24) across both layers:
+
+| Query | Repos | Top repo by stars | What the top repo actually is |
+|---|---|---|---|
+| `ocpp` | 1,863 | **7,654★** `evcc-io/evcc` | Real. Smart-charging daemon, MIT. |
+| `ocpi` | 437 | 602★ `ocpi/ocpi` | Real — but it is the *specification*, not software. |
+| `iso15118` | 85 | 250★ `ecog-io/iso15118` | Real. Protocol implementation, Apache-2.0. |
+| `csms ev charging` | 48 | 1,154★ `steve-community/steve` | Real. CSMS, **GPL-3.0**. |
+| `ev charging agent` | 224 | 538★ `AndyShaman/BYDMate` | ❌ **Collision** — a BYD DiLink head-unit app, no licence. |
+| `ev charging llm` | 33 | 32★ `NERVsystems/osmmcp` | ❌ **Collision** — an OpenStreetMap MCP; EV charging is one tool among many. |
+| `ocpp agent` | 10 | 48★ `shiv3/ocpp-cp-simulator` | Partly — a *simulator for testing* agents, not an agent. |
+| `charging station copilot` | 3 | 229★ `danderfer/Comp_Sci_Sem_2` | ❌ **Collision** — a university coursework repo. |
+| `charging station agent license:apache-2.0` | **0** | — | — |
+
+**Say it precisely:** it is not that the operator-side charging agent is rare. It is that the category
+does not exist, and the search index fills the hole with collisions — a map server, a phone app, a
+student's coursework. `7,654★` of protocol software against a best honest agent-tier figure of `10★`
+is **765×**. The licence-filtered probe closes it: `charging station agent license:apache-2.0` = **0**
+means *one does not exist*, not *we did not find one*.
+
+### What the agent tier really contains: driver-side MCP servers, single-author, byte-read MIT
+
+All eight licences below were **byte-read** from `raw.githubusercontent.com`; none came from the API field.
+
+| Repo | ★ | Licence (byte-read) | What it does |
+|---|---|---|---|
+| [shiv3/ocpp-cp-simulator](https://github.com/shiv3/ocpp-cp-simulator) | 48 | ✅ Apache-2.0 (11,356 B, `main/LICENSE`) | OCPP charge-point simulator **explicitly for AI-agent testing** + CSMS development. The test harness, not the agent. |
+| [Casperjuel/abrp-mcp](https://github.com/Casperjuel/abrp-mcp) | 10 | ✅ MIT (1,067 B, `main/LICENSE`) | MCP server for A Better Route Planner (Iternio) — charging-stop routing. |
+| [mattoddie/bluelink-mcp](https://github.com/mattoddie/bluelink-mcp) | 3 | ✅ MIT (1,066 B) | MCP for Hyundai Bluelink / Kia Connect — charge state. |
+| [holger1411/unofficialzaptecMCP](https://github.com/holger1411/unofficialzaptecMCP) | 2 | ✅ MIT (1,072 B) | MCP for Zaptec chargers (status, history). |
+| [Zenotech-bv/teslafi-mcp](https://github.com/Zenotech-bv/teslafi-mcp) | 2 | ✅ MIT (1,068 B) | MCP over the TeslaFi API. |
+| [stuchapin909/open-charge-finder](https://github.com/stuchapin909/open-charge-finder) | 1 | ✅ MIT (1,069 B) | MCP giving agents charging-station location data. |
+| [mahrukhzulfiqar/gridwise](https://github.com/mahrukhzulfiqar/gridwise) | 1 | ✅ MIT (1,063 B) | Cheapest/greenest time to charge, Denmark. |
+| [winsparking/chargingnearme-mcp](https://github.com/winsparking/chargingnearme-mcp) | 0 | ✅ MIT (1,073 B) | Hosted MCP, US public stations. |
+| [javierojan/askacharge-mcp](https://github.com/javierojan/askacharge-mcp) | 0 | ✅ MIT (1,091 B) | MCP to let an agent **operate** a network of chargers. |
+
+**Every one is driver-side.** They answer *where do I charge* and *what is my car doing*. **Not one is
+operator-side** — nothing prices a session, dispatches a technician, or clears a roaming dispute.
+Median 1★, max 10★, all single-author. Treat them as **interface references, never as dependencies**.
+
+### The optimization tier is real — and it is RL/MPC, not LLM
+
+This is where the plane's genuine intelligence lives. Calling these "agents" without the caveat would
+misdescribe the ecosystem, so the caveat is the point: **they decide setpoints by optimization, and no
+language model is in the loop.**
+
+| Repo | ★ | Licence (byte-read) | Role |
+|---|---|---|---|
+| [StavrosOrf/EV2Gym](https://github.com/StavrosOrf/EV2Gym) | 250 | ✅ MIT (1,076 B, `main/LICENSE`) | V2G simulation environment for **large-scale EV charging optimization**; multi-agent RL gym. The anchor of this tier. |
+| [StavrosOrf/EV-GNN](https://github.com/StavrosOrf/EV-GNN) | 34 | ✅ MIT (1,076 B) | Graph neural nets to make RL scale in optimal charging. |
+| [StavrosOrf/DT4EVs](https://github.com/StavrosOrf/DT4EVs) | 23 | ✅ MIT (1,076 B) | Decision Transformer, **offline** RL for charging problems. |
+| [TUMFTM/REVOL-E-TION](https://github.com/TUMFTM/REVOL-E-TION) | 17 | ✅ Apache-2.0 (11,364 B) | Site-level energy-system optimization toolbox including EV fleets (TU München). |
+
+One author (`StavrosOrf`) holds three of the four. **Single-maintainer concentration risk, stated.**
+
+### ⛔ Excluded this pass, with the reason
+
+| Repo | ★ | Licence (byte-read) | Why excluded |
+|---|---|---|---|
+| [nader0913/ocpp-rag](https://github.com/nader0913/ocpp-rag) | 48 | 🔴 **PolyForm Noncommercial 1.0.0** (4,712 B, `main/LICENSE`) | The **most-starred OCPP knowledge/RAG/MCP repo there is** — and it is non-commercial. API field says `NOASSERTION`, so nothing warns you. **Hard exclusion for a consultancy.** Second PolyForm-NC sighting in this fleet (first: `squid-protocol/gitgalaxy`, technology plane). |
+| [AndyShaman/BYDMate](https://github.com/AndyShaman/BYDMate) | 538 | 🔴 No licence field | Not an agent framework — a BYD DiLink head-unit app with a voice feature. Keyword collision; recorded so the next pass does not re-find it. |

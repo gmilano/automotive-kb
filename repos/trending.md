@@ -8,6 +8,89 @@ updated: 2026-11-24
 
 > **APPEND-ONLY.** Newest dated section on top; history preserved below. Never rewrite earlier sections.
 
+## 2026-11-24 (second pass) — charging interface: OCPP / OCPI / ISO 15118
+
+**Window:** 2026-11-24 00:56Z → 01:3xZ, the **second pass of today**. The first pass's section is
+preserved below unchanged, with all earlier history.
+**Channel:** stars/SPDX/`pushed_at` from `gh api -X GET search/repositories`; **licences byte-read** from
+`raw.githubusercontent.com`, 12 filenames × (resolved default branch, `main`, `master`); default branch
+from `git ls-remote --symref HEAD`; liveness from `git ls-remote --exit-code`.
+
+### Independent re-audit of the pre-existing base (not a re-run of the first pass)
+
+| Metric | Measured |
+|---|---|
+| Slugs extracted from all 9 files | 275 |
+| Live via `git ls-remote` | **272** |
+| Dead | **3** — `RobertSloan22/tars-car-mcp`, `luca1234413/MotionBastard`, `vaisakhvenugopal/Deconstructing-BYD-s-Technology-Architecture` |
+| New dead addresses | **0** — the 3 are *exactly* the 3 already published as dead in this file. Redirect/exclusion tables reproduce. |
+| Control | A fabricated slug returned DEAD, so the probe discriminates. |
+
+### 53 new addresses this pass, every licence byte-read
+
+**Short queries only.** The 2026-11-21 finding that long `search/repositories` queries return a literal
+zero held again: every probe here was 1–3 terms (`ocpp`, `ocpi`, `iso15118`, `evse`, `topic:ev-charging`,
+`topic:smart-charging`, `v2g stars:>30`).
+
+| Repo | ★ | Licence (byte-read) | Served from | Layer |
+|---|---|---|---|---|
+| [evcc-io/evcc](https://github.com/evcc-io/evcc) | **7,654** | ✅ MIT (1,089 B) | `master/LICENSE` | Smart charging / device abstraction |
+| [steve-community/steve](https://github.com/steve-community/steve) | 1,154 | ⚠️ GPL-3.0 (35,146 B) | `master/LICENSE.txt` | CSMS |
+| [mobilityhouse/ocpp](https://github.com/mobilityhouse/ocpp) | 1,052 | ✅ MIT (1,074 B) | `master/LICENSE` | OCPP (Python) |
+| [ocpi/ocpi](https://github.com/ocpi/ocpi) | 602 | 🔴 **no licence file (36 paths)** | **`2.3.0/release/core`** | OCPI specification |
+| [matth-x/MicroOcpp](https://github.com/matth-x/MicroOcpp) | 547 | ✅ MIT (1,081 B) | `main/LICENSE` | OCPP (embedded) |
+| [ChargeTimeEU/Java-OCA-OCPP](https://github.com/ChargeTimeEU/Java-OCA-OCPP) | 380 | ✅ MIT (1,074 B) | `master/LICENSE` | OCPP (Java) |
+| [lorenzodonini/ocpp-go](https://github.com/lorenzodonini/ocpp-go) | 376 | ✅ MIT (1,056 B) | `master/LICENSE` | OCPP (Go) |
+| [citrineos/citrineos-core](https://github.com/citrineos/citrineos-core) | 311 | ✅ Apache-2.0 (11,338 B) | `main/LICENSE` | CSMS — **the permissive one** |
+| [dallmann-consulting/OCPP.Core](https://github.com/dallmann-consulting/OCPP.Core) | 304 | ⚠️ GPL-3.0 (35,148 B) | `main/LICENSE` | CSMS (.NET) |
+| [EVerest/EVerest](https://github.com/EVerest/EVerest) | 299 | ✅ Apache-2.0 (11,356 B) | `main/LICENSE` | Station stack (LF Energy) |
+| [EVerest/everest-core](https://github.com/EVerest/everest-core) | *n/a — 422* | ✅ Apache-2.0 (11,356 B) | `main/LICENSE` | Station runtime |
+| [SwitchEV/RISE-V2G](https://github.com/SwitchEV/RISE-V2G) | 260 | ✅ MIT (1,096 B) | `master/LICENSE.txt` | ISO 15118 reference |
+| [StavrosOrf/EV2Gym](https://github.com/StavrosOrf/EV2Gym) | 250 | ✅ MIT (1,076 B) | `main/LICENSE` | Optimization / RL |
+| [ecog-io/iso15118](https://github.com/ecog-io/iso15118) | 250 | ✅ Apache-2.0 (11,356 B) | `main/LICENSE` | ISO 15118 -2/-20/-8 |
+| [uhi22/pyPLC](https://github.com/uhi22/pyPLC) | 242 | ⚠️ GPL-3.0 (35,148 B) | `master/LICENSE.md` | CCS lab tooling |
+| [SmartEVSE/SmartEVSE-3](https://github.com/SmartEVSE/SmartEVSE-3) | 240 | ✅ MIT (1,065 B) | `master/LICENSE` | EVSE hardware/firmware |
+| [SAP/e-mobility-charging-stations-simulator](https://github.com/SAP/e-mobility-charging-stations-simulator) | 231 | ✅ Apache-2.0 (11,369 B) | `main/LICENSE` | Simulation |
+| [monta-app/ocpp-emulator](https://github.com/monta-app/ocpp-emulator) | 182 | ✅ Apache-2.0 (11,356 B) | `main/LICENSE` | Emulation |
+| [c-jimenez/open-ocpp](https://github.com/c-jimenez/open-ocpp) | 174 | ⚠️ LGPL-2.1 (26,529 B) | **`develop`**`/LICENSE` | OCPP (C++) |
+| [ecog-io/josev](https://github.com/ecog-io/josev) | 164 | ✅ Apache-2.0 (11,356 B) | `main/LICENSE` | V2G stack |
+| [uhi22/ccs32clara](https://github.com/uhi22/ccs32clara) | 118 | ⚠️ GPL-3.0 (35,148 B) | `main/LICENSE` | CCS controller |
+| [dspace-group/dsV2Gshark](https://github.com/dspace-group/dsV2Gshark) | 115 | 🔴 **MIT + GPL-2.0 by directory** (19,512 B) | `main/LICENSE` | Wire analysis |
+| [aws-solutions-library-samples/guidance-for-modernizing-electric-vehicle-charging-on-aws](https://github.com/aws-solutions-library-samples/guidance-for-modernizing-electric-vehicle-charging-on-aws) | 94 | ✅ MIT-0 (945 B) | `main/LICENSE` | Reference architecture |
+| [Sevenstax/FreeV2G](https://github.com/Sevenstax/FreeV2G) | 71 | ✅ **MIT (1,181 B)** *(API: `NOASSERTION`)* | `master/LICENSE.txt` | V2G host app — **rescue** |
+| [ChargePoint/wireshark-v2g](https://github.com/ChargePoint/wireshark-v2g) | 65 | 🔴 **by reference → `openv2g`** (18,308 B) | `main/LICENSE` | Wire analysis |
+| [TECHS-Technological-Solutions/ocpi](https://github.com/TECHS-Technological-Solutions/ocpi) | 64 | ✅ MIT (1,085 B) | `master/LICENSE` | OCPI (Python) |
+| [ecog-io/pyslac](https://github.com/ecog-io/pyslac) | 56 | ✅ Apache-2.0 (11,356 B) | `main/LICENSE` | SLAC / ISO 15118-3 |
+| [shiv3/ocpp-cp-simulator](https://github.com/shiv3/ocpp-cp-simulator) | 48 | ✅ Apache-2.0 (11,356 B) | `main/LICENSE` | Agent test harness |
+| [tandemdrive/ocpi-tariffs](https://github.com/tandemdrive/ocpi-tariffs) | 40 | 🔴 **UNRESOLVED** | *none* | OCPI tariffs — **do not use** |
+| [IZIVIA/ocpi-toolkit](https://github.com/IZIVIA/ocpi-toolkit) | 39 | ✅ MIT (1,049 B) | `main/LICENSE` | OCPI (Kotlin) |
+| [StavrosOrf/EV-GNN](https://github.com/StavrosOrf/EV-GNN) | 34 | ✅ MIT (1,076 B) | `main/LICENSE` | Optimization |
+| [ocpi/ocpi-tool](https://github.com/ocpi/ocpi-tool) | 33 | ✅ MIT (1,060 B) | `main/LICENSE` | OCPI export |
+| [OpenChargingCloud/WWCP_OCPI](https://github.com/OpenChargingCloud/WWCP_OCPI) | 29 | ⚠️ **AGPL-3.0 (34,519 B)** | `master/LICENSE` | OCPI bridge — the plane's *genuine* AGPL |
+| [BitzArt/OCPI.Net](https://github.com/BitzArt/OCPI.Net) | 27 | ✅ MIT (1,063 B) | `main/LICENSE` | OCPI (.NET) |
+| [Ecognize/openv2g](https://github.com/Ecognize/openv2g) | 26 | ⚠️ LGPL-3.0 (7,650 B) | **`trunk`**`/LICENSE.txt` | Load-bearing for the trap above |
+| [StavrosOrf/DT4EVs](https://github.com/StavrosOrf/DT4EVs) | 23 | ✅ MIT (1,076 B) | `main/LICENSE` | Optimization |
+| [citrineos/citrineos-ocpi](https://github.com/citrineos/citrineos-ocpi) | 23 | ✅ Apache-2.0 (11,356 B) | `main/LICENSE` | OCPI on CitrineOS |
+| [pazzk-labs/evse](https://github.com/pazzk-labs/evse) | 22 | ⚠️ **GPL-3.0 declared, no file** | *none* | EVSE firmware, dual-licensed |
+| [solidstudiosh/ocpi-schema](https://github.com/solidstudiosh/ocpi-schema) | 20 | ✅ Apache-2.0 (11,356 B) | `main/LICENSE` | OCPI schema gate |
+| [EVerest/libslac](https://github.com/EVerest/libslac) | 19 | ✅ Apache-2.0 (11,356 B) | `main/LICENSE` | SLAC |
+| [TUMFTM/REVOL-E-TION](https://github.com/TUMFTM/REVOL-E-TION) | 17 | ✅ Apache-2.0 (11,364 B) | `main/LICENSE` | Site energy optimization |
+| [tux-evse/iso15118-encoders](https://github.com/tux-evse/iso15118-encoders) | 11 | ✅ Apache-2.0 (11,356 B) | `main/LICENSE` | EXI encoders |
+
+**Degraded, not promoted:** `juherr/awesome-ev-charging` (185★, CC0-1.0, 6,477 B) — an awesome-list, so a
+pointer rather than a foundation, consistent with how this KB treats awesome-lists.
+
+### Gaps closed and gaps opened
+
+| Question | Probe | Result |
+|---|---|---|
+| Is there a permissive operator-side charging agent? | `charging station agent license:apache-2.0` | **0 — one does not exist.** Closed. |
+| Is there a permissive OCPP/CSMS base at all? | `ocpp license:mit` / `csms license:apache-2.0` | **357 / 110.** Richly yes. |
+| Is there a permissive ISO 15118 base? | `iso15118 license:apache-2.0` | **26.** Yes. |
+| Is there a permissive OCPI base? | `ocpi license:apache-2.0` | **27.** Yes. |
+| Brazil charging interoperability regulation | WebSearch, ES/PT terms | **0 usable results — declared gap**, needs an ANEEL/MME-specific leg. |
+| APAC NEVI-equivalent funding rule | WebSearch | **Not found. Recorded as unestablished, not as absence.** |
+
 ## 2026-11-24
 
 **Window:** 2026-11-21 14:52Z → 2026-11-24 (first pass since the four same-day passes of 2026-11-21;

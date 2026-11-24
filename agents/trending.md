@@ -8,6 +8,64 @@ updated: 2026-11-24
 
 > **APPEND-ONLY.** Newest dated section on top; history preserved below. Never rewrite earlier sections.
 
+## 2026-11-24 (second pass) — the charging-interface plane
+
+**Window:** 2026-11-24 00:56Z → 01:3xZ. This is the **second pass of 2026-11-24**; the first pass's
+section is preserved immediately below, unchanged, as is all earlier history.
+**Why a new plane and not a rewrite:** the first pass of today had already swept this KB's 277 addresses
+47 min earlier. Re-verified independently rather than re-run (**272 live / 3 dead of 275 extracted
+slugs, and the 3 dead are exactly the 3 this KB already publishes as dead** at `repos/trending.md`
+— address hygiene confirmed, 0 new dead). So this pass opened virgin ground instead: control grep for
+`OCPP`/`OCPI`/`EVerest`/`SteVe`/`charging station` = **0 mentions in all 9 files**.
+**Channel:** `gh api -X GET search/repositories` for stars/SPDX/`pushed_at`; **every licence byte-read**
+from `raw.githubusercontent.com` with the **default branch resolved by `git ls-remote --symref HEAD`**;
+liveness via `git ls-remote --exit-code` (control: a fabricated slug returned DEAD).
+
+### The agent tier of this plane, measured rather than described
+
+**`charging station agent license:apache-2.0` → 0 repos.** The operator-side charging agent does not
+exist. What exists is nine **driver-side** MCP servers, median 1★, max 10★, all single-author, and
+**all nine byte-read MIT**:
+
+| Repo | ★ | Licence (byte-read) | Note |
+|---|---|---|---|
+| [shiv3/ocpp-cp-simulator](https://github.com/shiv3/ocpp-cp-simulator) | 48 | ✅ Apache-2.0 (11,356 B) | Simulator built *for AI-agent testing* — the harness, not the agent |
+| [Casperjuel/abrp-mcp](https://github.com/Casperjuel/abrp-mcp) | 10 | ✅ MIT (1,067 B) | A Better Route Planner |
+| [mattoddie/bluelink-mcp](https://github.com/mattoddie/bluelink-mcp) | 3 | ✅ MIT (1,066 B) | Hyundai/Kia charge state |
+| [holger1411/unofficialzaptecMCP](https://github.com/holger1411/unofficialzaptecMCP) | 2 | ✅ MIT (1,072 B) | Zaptec chargers |
+| [Zenotech-bv/teslafi-mcp](https://github.com/Zenotech-bv/teslafi-mcp) | 2 | ✅ MIT (1,068 B) | TeslaFi API |
+| [stuchapin909/open-charge-finder](https://github.com/stuchapin909/open-charge-finder) | 1 | ✅ MIT (1,069 B) | Station location data |
+| [mahrukhzulfiqar/gridwise](https://github.com/mahrukhzulfiqar/gridwise) | 1 | ✅ MIT (1,063 B) | Cheapest/greenest charge window, Denmark |
+| [winsparking/chargingnearme-mcp](https://github.com/winsparking/chargingnearme-mcp) | 0 | ✅ MIT (1,073 B) | US public stations |
+| [javierojan/askacharge-mcp](https://github.com/javierojan/askacharge-mcp) | 0 | ✅ MIT (1,091 B) | The only one that *operates* chargers |
+
+### Optimization tier — real, and deliberately not called "LLM agents"
+
+| Repo | ★ | Licence (byte-read) | Note |
+|---|---|---|---|
+| [StavrosOrf/EV2Gym](https://github.com/StavrosOrf/EV2Gym) | 250 | ✅ MIT (1,076 B) | V2G env for large-scale charging optimization; multi-agent RL |
+| [StavrosOrf/EV-GNN](https://github.com/StavrosOrf/EV-GNN) | 34 | ✅ MIT (1,076 B) | GNNs to scale RL |
+| [StavrosOrf/DT4EVs](https://github.com/StavrosOrf/DT4EVs) | 23 | ✅ MIT (1,076 B) | Decision Transformer, offline RL |
+| [TUMFTM/REVOL-E-TION](https://github.com/TUMFTM/REVOL-E-TION) | 17 | ✅ Apache-2.0 (11,364 B) | Site-level energy optimization (TU München) |
+
+⚠️ **Three of these four share one maintainer** (`StavrosOrf`) — concentration risk, stated.
+
+### Rejected this pass, with the reason
+
+| Repo | ★ | Verdict |
+|---|---|---|
+| [nader0913/ocpp-rag](https://github.com/nader0913/ocpp-rag) | 48 | 🔴 **PolyForm Noncommercial 1.0.0** (byte-read, 4,712 B). The most-starred OCPP RAG/MCP repo; API says `NOASSERTION`. Hard exclusion. 2nd PolyForm-NC sighting in this fleet. |
+| [AndyShaman/BYDMate](https://github.com/AndyShaman/BYDMate) | 538 | 🔴 No licence, and **not an agent** — a BYD DiLink head-unit app. Keyword collision; recorded so it is not re-found. |
+| [NERVsystems/osmmcp](https://github.com/NERVsystems/osmmcp) | 32 | ⚪ MIT but **out of plane** — an OpenStreetMap MCP where EV charging is one tool. The top hit for `ev charging llm`, which is the measurement, not a recommendation. |
+
+### 🔴 Correction to this pass's own instrument (detail as N26 in `intel/trends.md`)
+
+An earlier draft labelled **SteVe, OCPP.Core, pyPLC and ccs32clara as AGPL-3.0**. All four are
+**GPL-3.0**. Cause: **GPL-3.0 §13 contains the string "GNU Affero General Public License"**, so a
+detector that matches `AFFERO` before `GENERAL PUBLIC` inverts them — the exact mirror of the
+`LGPL`→`GPL` bug this KB recorded on 2026-11-21. **Ordering body-text matches has no correct answer;
+anchor on the title line.** Corrected before commit; 0 wrong licences published.
+
 ## 2026-11-24
 
 **Window:** 2026-11-21 14:52Z → 2026-11-24. The four sections below are preserved unchanged.

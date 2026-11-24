@@ -581,3 +581,40 @@ test bench**, where the commercial incumbents (Vector CANoe/CAPL, ETAS) run five
 reported plain "GPL". **LGPL's own text contains the string "GNU GENERAL PUBLIC LICENSE"**, so a naive
 grep mislabels LGPL as GPL — and the difference decides whether a client can link against it. Match
 `LESSER` first. Re-read: **TSMaster = LGPL-2.1**, **`autoas/as` = GPL-3.0** (*"Version 3, 29 June 2007"*).
+
+---
+
+## 🔌 New on 2026-11-24 (second pass) — CSMS: the charging platforms you can actually customise
+
+> A **CSMS** (Charging Station Management System) is this plane's equivalent of Odoo or OpenMRS: a real,
+> running system a studio starts from and puts an AI layer on. Three exist as credible open source.
+> Licences **byte-read** from `raw.githubusercontent.com`; stars from `gh api search/repositories`,
+> 2026-11-24.
+
+| Platform | ★ | Licence (byte-read) | Served from | Verdict for a studio |
+|---|---|---|---|---|
+| [citrineos/citrineos-core](https://github.com/citrineos/citrineos-core) | 311 | ✅ **Apache-2.0** (11,338 B) | `main/LICENSE` | **The recommended starting point.** OCPP 2.0.1-native CSMS, **LF Energy** governed, OCPP 1.6 added in 1.6.0. Permissive, so a client fork can stay closed. |
+| [citrineos/citrineos-ocpi](https://github.com/citrineos/citrineos-ocpi) | 23 | ✅ **Apache-2.0** (11,356 B) | `main/LICENSE` | The OCPI module on top of CitrineOS — i.e. the piece that discharges the **23 CFR 680.108** roaming duty. Small, but it is the one that maps to a regulation. |
+| [EVerest/EVerest](https://github.com/EVerest/EVerest) | 299 | ✅ **Apache-2.0** (11,356 B) | `main/LICENSE` | **LF Energy**, station-side rather than back-office. Pionix reports EVerest is the first pre-certified stack for **Plug & Charge** on OCPP 1.6 *and* 2.0.1, AC and DC; the `2026.02.0` release moved the project to ~6-month stable releases and fixed 15 security issues across OCPP and ISO 15118 handling *(project/vendor-reported — not independently verified here)*. |
+| [steve-community/steve](https://github.com/steve-community/steve) | **1,154** | ⚠️ **GPL-3.0** (35,146 B) | `master/LICENSE.txt` | **The most-starred dedicated CSMS — and the one you most likely cannot ship.** Java, OCPP 1.6, mature, widely deployed. GPL-3.0 means a distributed derivative must carry the same terms. Fine as an operated internal tool or a reference; a trap in a product SOW. |
+| [dallmann-consulting/OCPP.Core](https://github.com/dallmann-consulting/OCPP.Core) | 304 | ⚠️ **GPL-3.0** (35,148 B) | `main/LICENSE` | .NET CSMS + management UI. Same copyleft constraint as SteVe. |
+| [evcc-io/evcc](https://github.com/evcc-io/evcc) | **7,654** | ✅ **MIT** (1,089 B) | `master/LICENSE` | Not a CSMS — a **smart-charging daemon with the plane's broadest device abstraction** (wallboxes, inverters, meters, vehicles). For a site/depot engagement this is often the faster base than a CSMS, and MIT. |
+
+### 🧭 The build-vs-buy line this plane actually draws
+
+**Stars point the wrong way here.** Ranked by stars, the dedicated CSMS answer is SteVe (1,154★). Ranked
+by *what a studio can put in a client product*, the answer is **CitrineOS (311★, Apache-2.0)** — a third
+the stars, and the only governed, permissive, OCPP-2.0.1-native CSMS in the set. The two most-starred
+CSMS projects (SteVe 1,154★, OCPP.Core 304★ — 1,458★ combined) are **both GPL-3.0**, against
+**334★ of permissive CSMS** (CitrineOS core + OCPI). *Popularity in this plane is concentrated in the
+licences a consultancy cannot ship* — the same shape the technology plane found in its COBOL layer,
+and worth saying out loud before a client picks on GitHub stars.
+
+### ⚠️ Correction to a claim this pass nearly published
+
+An earlier draft of this section stated that **SteVe is AGPL-3.0**. It is **GPL-3.0** — confirmed by
+byte-read (`master/LICENSE.txt`, 35,146 B, title line *"GNU GENERAL PUBLIC LICENSE Version 3"*), in
+agreement with the API's SPDX field. The error was in this pass's own detector, not in the source; the
+mechanism is recorded as **N26** in `intel/trends.md`. The distinction is not academic for a CSMS —
+AGPL §13 would reach network operation of a hosted charging back-office, which is exactly how a CSMS is
+used — so the wrong label would have changed a client's build-vs-buy answer. Caught before commit.

@@ -9,6 +9,114 @@ updated: 2026-11-24
 > Current trends, updated 2026-11-24. Project and vendor self-reported performance figures are labelled
 > as such. Dates name their instrument.
 
+## 🆕 New on 2026-11-24 (second pass) — six trends from the charging-interface plane
+
+> Plane opened with 0 prior mentions in this KB. **N26 is a defect in this pass's own instrument**, published
+> because the next pass will otherwise repeat it.
+
+### N24 — In the charging plane the protocol layer is mature and permissive; the operator-side agent does not exist
+
+Measured on one instrument (`gh api search/repositories`, 2026-11-24): `ocpp` → **1,863 repos, top
+7,654★** (`evcc-io/evcc`, MIT); `csms ev charging` → 48, top 1,154★; `ocpi` → 437; `iso15118` → 85.
+Against that: `charging station agent license:apache-2.0` → **0**. `ocpp agent` → 10, and its top hit is
+a *simulator*. `ev charging llm` → 33, top hit **32★ and a keyword collision** (an OpenStreetMap MCP
+server). `charging station copilot` → 3, top hit a **university coursework repo** (229★).
+
+The agent tier that does exist is **nine byte-read-MIT MCP servers, every one driver-side**, median 1★,
+max 10★, all single-author. They answer *where do I charge*. **None prices a session, dispatches a
+technician, or clears a roaming dispute.** The honest ratio is **7,654 : 10 = 765×**.
+
+**Why it matters commercially:** this is a plane where the studio's value is *not* composing existing
+agents — there are none to compose. It is **building the operator-side agent on top of a protocol layer
+that is already solid and already permissive.** That is a better engagement shape than it sounds: the
+hard, un-ownable part (protocol conformance) is free and Apache-2.0, and the ownable part is unbuilt.
+
+### N25 — A legally mandated specification can have no open licence at all
+
+**23 CFR 680.108** requires US charging networks to be *capable of communicating with other charging
+networks in accordance with OCPI 2.2.1*. The OCPI specification repository, `ocpi/ocpi` (602★), carries
+**no LICENSE file in 12 filenames × 3 branches = 36 paths**, and its README states that development of
+the next version happens in `ocpi/ocpi-3`, *"only accessible to Contributors of the EV Roaming
+Foundation"* — membership-gated.
+
+So: conformance is compelled by federal regulation; the normative document is published without an open
+grant; and the successor is behind a membership. **Generalises beyond this plane:** *"it is a public
+standard"* and *"the specification is openly licensed"* are different claims, and in regulated verticals
+the gap between them is where legal review belongs. Compare the travel plane's finding that official EU
+e-invoicing artefacts are **copyleft** (EUPL-1.2) — standards bodies' own licensing is a distinct risk
+axis from software licensing, and this KB has now seen it break in two opposite directions.
+
+### N26 — 🔴 A detector bug in this pass: fixing the LGPL/GPL confusion creates the GPL/AGPL one
+
+The automotive plane already recorded (2026-11-21) that *"LGPL's own text CONTAINS the string 'GNU
+GENERAL PUBLIC LICENSE', so a naive grep mislabels LGPL as GPL — match LESSER first."* This pass applied
+that fix and thereby introduced its **exact mirror image**:
+
+**GPL-3.0's section 13 contains the string "GNU Affero General Public License"** (the clause permitting
+combination with AGPL-3.0 work). A detector that matches `AFFERO` first therefore reports **GPL-3.0 as
+AGPL-3.0**. It mislabelled four repos in this plane — `steve-community/steve`, `dallmann-consulting/OCPP.Core`,
+`uhi22/pyPLC`, `uhi22/ccs32clara` — and an AGPL label on **SteVe**, a networked CSMS, was one edit from
+being published, where AGPL §13 would have been the decisive clause.
+
+**The general lesson, which supersedes the "match LESSER first" rule rather than extending it:** licence
+texts quote each other, so *any* ordering of body-text matches has an inverse failure. Ordering is not a
+fix. **Anchor on the licence's title — the first few non-empty lines — never on an occurrence anywhere in
+the body.** Byte length is a good second check: GPL-3.0 ≈ **35,148 B**, AGPL-3.0 ≈ **34,519 B**
+(counter-intuitively, *GPL is the longer file*), and this plane contains a genuine AGPL-3.0 repo at
+34,519 B (`OpenChargingCloud/WWCP_OCPI`) to calibrate against.
+
+### N27 — The API's SPDX field under-declares, and this plane adds two new shapes of "other"
+
+Of 53 repos byte-read this pass, the GitHub API's `license.spdx_id` disagreed with the file in **5 cases,
+all under-declarations, zero over-declarations** — reproducing the travel plane's 5/5 result in a
+completely different vertical. The two new shapes are both in the wire-analysis layer:
+
+- **Licence partitioned by directory** — `dspace-group/dsV2Gshark` (115★): one file declaring MIT for the
+  project, **GPL-2.0 for everything under `Wireshark/`**, and "their own licenses" for a third-party
+  directory. The shippable artefact is the GPL-2.0 part.
+- **Licence by reference to another repository** — `ChargePoint/wireshark-v2g` (65★): *"Part II: Reference
+  the openv2g license"*, which resolves to `Ecognize/openv2g`, **LGPL-3.0, on the `trunk` branch**.
+
+Plus one **rescue** in the other direction: `Sevenstax/FreeV2G` (71★) reads `NOASSERTION` in the API and
+**MIT (1,181 B)** in the file. **Rule unchanged and now doubly evidenced: never take the licence from the
+API field, and never take it from one file without asking whether that file points somewhere else.**
+
+### N28 — Three more default branches that are not `main` or `master`, and one is version-pinned by design
+
+`ls-remote --symref HEAD` on this plane's repos returned: `c-jimenez/open-ocpp` → **`develop`**;
+`Ecognize/openv2g` → **`trunk`**; and `ocpi/ocpi` → **`2.3.0/release/core`**.
+
+The last is the serious one, and it is the **second sighting of a class first measured in the education
+plane** (`edu-sharing` defaulting to `maven/fixes/10.0`): a **slash-bearing, version-pinned release
+branch as the default**. Here it is worse because it is *announced policy* — the README states the
+`2.3.0/release/*` branches *"replace `master` as the reference for the current release."* Consequence: a
+hardcoded `raw.githubusercontent.com/ocpi/ocpi/master/...` URL **still returns 200 and still serves
+superseded specification text**, and will keep doing so when 2.4 or 3.0 lands. **The address never dies;
+the content silently goes stale.** Resolve the default branch at read time; never hardcode `master`.
+
+Also recorded: `EVerest/everest-core` returns **HTTP 422** from `search/repositories` while `ls-remote`
+and `raw` both serve it normally — a **false-absence** from the search index, third observation of this
+class in the fleet. Its star count is left **blank rather than filled from another instrument.**
+
+### N29 — Regulation in this plane names protocols *by version*, which is what makes it billable
+
+Unusually, charging regulation does not say "ensure interoperability" — it names artefacts:
+
+| Instrument | What it names | Date |
+|---|---|---|
+| 23 CFR **680.116** (NA) | **>97% average annual uptime** per charging port | in force |
+| 23 CFR **680.108** (NA) | networks interoperable per **OCPI 2.2.1** | by 2024-02-28 |
+| California **CEC** | networked chargers installed on/after **2026-09-28** must report via **OCPP 2.0.1** | 2026-09-28 |
+| **AFIR** (EMEA) | ≥50 kW points must accept **payment cards**; retroactive to all ≥50 kW fast chargers | 2027-01-01 |
+| **ISO 15118-20** (EMEA, via AFIR) | mandatory implementation — **contested** (CharIN position paper, Aug 2026) | 2027-01-01 |
+| Chile **Pliego Técnico 15 / DS 12** | communication protocol must be **OCPP 1.6 or higher** | in force |
+| China **GB/T 34657.1-2025** | cross-manufacturer interoperability — *date unverified against an official source* | 2026-03-01 |
+
+A named protocol version and a numeric uptime target are **testable**, and therefore quotable as a fixed
+deliverable: a conformance-and-evidence engagement rather than an advisory one. Contrast the ADAS/AI side
+of this KB, where NA work is advisory-shaped because no enumerated duty exists. **Same industry, opposite
+engagement shape, because the charging layer got specific regulation and the autonomy layer did not.**
+
 ## 🆕 New on 2026-11-24 — five trends. The first two are corrections of this KB's own published claims.
 
 ### N19 — A `0-repos` gap has three shapes, and calling them all "a gap" has been costing accuracy

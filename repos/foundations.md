@@ -696,3 +696,98 @@ engagement in EMEA is a copyleft-compliance conversation from day one, not a lic
 The one permissive, current, policy-side asset is
 [openmobilityfoundation/mobility-data-specification](https://github.com/openmobilityfoundation/mobility-data-specification)
 — **CC-BY-4.0** (14,527 b), a *data specification* for right-of-way regulation and geofencing, 754★.
+
+---
+
+## 🔌 New on 2026-11-24 (second pass) — the charging stack, in five layers
+
+> Opened as a virgin plane (0 prior mentions of `OCPP`/`OCPI`/`EVerest`/`SteVe`/`charging station` in
+> this KB). **Every licence below is byte-read** from `raw.githubusercontent.com`; the branch each grant
+> was actually served from is named, because in this plane **three repos do not default to `main` or
+> `master`**. Stars from `gh api -X GET search/repositories`, 2026-11-24, one instrument throughout.
+
+### Layer 1 — The station-side stack (what runs on or beside the charger)
+
+| Repo | ★ | Licence (byte-read) | Served from | Role |
+|---|---|---|---|---|
+| [EVerest/EVerest](https://github.com/EVerest/EVerest) | 299 | ✅ Apache-2.0 (11,356 B) | `main/LICENSE` | LF Energy's **EV charging software stack**. Umbrella/meta repo. The permissive anchor of the whole plane. |
+| [EVerest/everest-core](https://github.com/EVerest/everest-core) | *n/a* | ✅ Apache-2.0 (11,356 B) | `main/LICENSE` | The actual modular runtime. **★ deliberately blank: `search/repositories` returns HTTP 422 on this slug** while `ls-remote` and `raw` both serve it — a false-absence, and cross-writing a star count from another instrument is forbidden here. |
+| [SmartEVSE/SmartEVSE-3](https://github.com/SmartEVSE/SmartEVSE-3) | 240 | ✅ MIT (1,065 B) | `master/LICENSE` | Open charging-station hardware + firmware, load balancing. |
+| [pazzk-labs/evse](https://github.com/pazzk-labs/evse) | 22 | ⚠️ **GPL-3.0 declared, not byte-read** | *no file on 36 paths* | README states a **dual-licence model** (GPLv3 OSS + paid commercial firmware licence) and the line `License: GNU GPLv3` — but there is no LICENSE file in 12 filenames × 3 branches. A metadata-only grant: record as *declared*. |
+
+### Layer 2 — OCPP: the charger↔back-office protocol (the mandated layer)
+
+| Repo | ★ | Licence (byte-read) | Served from | Role |
+|---|---|---|---|---|
+| [evcc-io/evcc](https://github.com/evcc-io/evcc) | **7,654** | ✅ MIT (1,089 B) | `master/LICENSE` | The largest repo in this plane by an order of magnitude. Smart charging + an enormous **vendor/device abstraction** across wallboxes, inverters and meters. Its real value to a studio is that abstraction layer. |
+| [mobilityhouse/ocpp](https://github.com/mobilityhouse/ocpp) | 1,052 | ✅ MIT (1,074 B) | `master/LICENSE` | Reference **Python** OCPP 1.6 / 2.0.1 implementation. |
+| [matth-x/MicroOcpp](https://github.com/matth-x/MicroOcpp) | 547 | ✅ MIT (1,081 B) | `main/LICENSE` | OCPP 1.6 / 2.0.1 client **for microcontrollers** — the embedded path. |
+| [ChargeTimeEU/Java-OCA-OCPP](https://github.com/ChargeTimeEU/Java-OCA-OCPP) | 380 | ✅ MIT (1,074 B) | `master/LICENSE` | Java client **and** server library. |
+| [lorenzodonini/ocpp-go](https://github.com/lorenzodonini/ocpp-go) | 376 | ✅ MIT (1,056 B) | `master/LICENSE` | Go implementation. |
+| [c-jimenez/open-ocpp](https://github.com/c-jimenez/open-ocpp) | 174 | ⚠️ LGPL-2.1 (26,529 B) | **`develop`**`/LICENSE` | C++ OCPP 1.6/2.0.1. **Defaults to `develop`, not `main`/`master`** — and LGPL-2.1, so dynamic linking only. |
+
+### Layer 3 — ISO 15118 / V2G: the vehicle↔charger protocol (Plug & Charge)
+
+| Repo | ★ | Licence (byte-read) | Served from | Role |
+|---|---|---|---|---|
+| [SwitchEV/RISE-V2G](https://github.com/SwitchEV/RISE-V2G) | 260 | ✅ MIT (1,096 B) | `master/LICENSE.txt` | The long-standing **V2G reference implementation** (ISO 15118-2). |
+| [ecog-io/iso15118](https://github.com/ecog-io/iso15118) | 250 | ✅ Apache-2.0 (11,356 B) | `main/LICENSE` | ISO 15118 **-2, -20 and -8**. The -20 coverage is what the EMEA 2027 duty turns on. |
+| [ecog-io/josev](https://github.com/ecog-io/josev) | 164 | ✅ Apache-2.0 (11,356 B) | `main/LICENSE` | Josev community edition — "an operating system for the V2G charging stack". |
+| [ecog-io/pyslac](https://github.com/ecog-io/pyslac) | 56 | ✅ Apache-2.0 (11,356 B) | `main/LICENSE` | **SLAC** (ISO 15118-3) — the PLC link-layer pairing step. |
+| [EVerest/libslac](https://github.com/EVerest/libslac) | 19 | ✅ Apache-2.0 (11,356 B) | `main/LICENSE` | EVerest's own SLAC implementation. |
+| [tux-evse/iso15118-encoders](https://github.com/tux-evse/iso15118-encoders) | 11 | ✅ Apache-2.0 (11,356 B) | `main/LICENSE` | EXI encoders/decoders for the V2G message set. |
+| [Ecognize/openv2g](https://github.com/Ecognize/openv2g) | 26 | ⚠️ LGPL-3.0 (7,650 B) | **`trunk`**`/LICENSE.txt` | Dormant, but **load-bearing**: another repo's grant resolves *to this file* (see Layer 5). **Defaults to `trunk`.** |
+
+### Layer 4 — OCPI: roaming between networks (the layer US federal law names)
+
+| Repo | ★ | Licence (byte-read) | Served from | Role |
+|---|---|---|---|---|
+| [ocpi/ocpi](https://github.com/ocpi/ocpi) | 602 | 🔴 **NO LICENCE FILE** | *none on 36 paths* | **The OCPI specification itself** — and see the warning below. Defaults to **`2.3.0/release/core`**. |
+| [TECHS-Technological-Solutions/ocpi](https://github.com/TECHS-Technological-Solutions/ocpi) | 64 | ✅ MIT (1,085 B) | `master/LICENSE` | Python OCPI implementation. |
+| [IZIVIA/ocpi-toolkit](https://github.com/IZIVIA/ocpi-toolkit) | 39 | ✅ MIT (1,049 B) | `main/LICENSE` | Kotlin OCPI library. Self-declares *not* affiliated with the EVRoaming Foundation. |
+| [ocpi/ocpi-tool](https://github.com/ocpi/ocpi-tool) | 33 | ✅ MIT (1,060 B) | `main/LICENSE` | Data export from OCPI platforms. |
+| [BitzArt/OCPI.Net](https://github.com/BitzArt/OCPI.Net) | 27 | ✅ MIT (1,063 B) | `main/LICENSE` | .NET OCPI implementation. |
+| [solidstudiosh/ocpi-schema](https://github.com/solidstudiosh/ocpi-schema) | 20 | ✅ Apache-2.0 (11,356 B) | `main/LICENSE` | JSON-Schema generator for OCPI 2.1.1+. Useful as a **conformance gate in CI**. |
+| [tandemdrive/ocpi-tariffs](https://github.com/tandemdrive/ocpi-tariffs) | 40 | 🔴 **UNRESOLVED** | *none* | OCPI tariff calculation — i.e. *the money*. No LICENSE on 36 paths, no licence line in README, root `Cargo.toml` **404**. Repo is live; the grant is not establishable from the served bytes. **Do not use pending clarification.** |
+| [OpenChargingCloud/WWCP_OCPI](https://github.com/OpenChargingCloud/WWCP_OCPI) | 29 | ⚠️ AGPL-3.0 (34,519 B) | `master/LICENSE` | WWCP↔OCPI bridge. **Genuine AGPL** (34,519 B) — contrast with the GPL-3.0 repos at 35,148 B. |
+
+> ### 🔴 The mandated specification has no open grant
+> `ocpi/ocpi` carries **no LICENSE file in 12 filenames × 3 branches (36 paths)**, and its README states
+> that development of the next version lives in `ocpi/ocpi-3`, *"only accessible to Contributors of the
+> EV Roaming Foundation"* — i.e. **membership-gated**. Meanwhile **23 CFR 680.108 requires US charging
+> networks to interoperate in accordance with OCPI 2.2.1.** A specification that federal law compels you
+> to conform to, published without an open licence, with a membership-gated successor. This is a
+> procurement and legal-review line item, not a footnote — and it is the strongest argument in this plane
+> for buying the *conformance evidence* as a deliverable.
+
+### Layer 5 — Test, simulation and wire analysis (where the billable evidence is produced)
+
+| Repo | ★ | Licence (byte-read) | Served from | Role |
+|---|---|---|---|---|
+| [SAP/e-mobility-charging-stations-simulator](https://github.com/SAP/e-mobility-charging-stations-simulator) | 231 | ✅ Apache-2.0 (11,369 B) | `main/LICENSE` | OCPP-J charging-station simulator, **SAP-maintained**. Load-generates the fleet you do not own. |
+| [monta-app/ocpp-emulator](https://github.com/monta-app/ocpp-emulator) | 182 | ✅ Apache-2.0 (11,356 B) | `main/LICENSE` | Kotlin Multiplatform charge-point emulator, vendor-backed. |
+| [shiv3/ocpp-cp-simulator](https://github.com/shiv3/ocpp-cp-simulator) | 48 | ✅ Apache-2.0 (11,356 B) | `main/LICENSE` | Simulator written **for AI-agent testing** + CSMS development. |
+| [aws-solutions-library-samples/guidance-for-modernizing-electric-vehicle-charging-on-aws](https://github.com/aws-solutions-library-samples/guidance-for-modernizing-electric-vehicle-charging-on-aws) | 94 | ✅ **MIT-0** (945 B) | `main/LICENSE` | OCPP gateway as a proxy, reference architecture. MIT-0 = no attribution duty. |
+| [Sevenstax/FreeV2G](https://github.com/Sevenstax/FreeV2G) | 71 | ✅ **MIT (1,181 B)** — *API said `NOASSERTION`* | `master/LICENSE.txt` | Host application for WHITE-BEET V2G modules. **A permissive grant the API hid** — a rescue, not a trap. |
+| [uhi22/pyPLC](https://github.com/uhi22/pyPLC) | 242 | ⚠️ GPL-3.0 (35,148 B) | `master/LICENSE.md` | CCS charging investigation in Python. Excellent for lab work, copyleft for product. |
+| [uhi22/ccs32clara](https://github.com/uhi22/ccs32clara) | 118 | ⚠️ GPL-3.0 (35,148 B) | `main/LICENSE` | STM32 + QCA7005 CCS charge controller. |
+| [dspace-group/dsV2Gshark](https://github.com/dspace-group/dsV2Gshark) | 115 | 🔴 **MIT *and* GPL-2.0, split by directory** (19,512 B) | `main/LICENSE` | See the trap note below. |
+| [ChargePoint/wireshark-v2g](https://github.com/ChargePoint/wireshark-v2g) | 65 | 🔴 **Licence by reference** (18,308 B) | `main/LICENSE` | See the trap note below. |
+
+> ### 🔴 Two licence traps new to this KB, both in the wire-analysis layer, both `NOASSERTION` in the API
+>
+> **1. The directory-scoped licence map — `dsV2Gshark` (115★).** A single 19,512 B LICENSE file opens:
+> *"The project is licensed under the MIT licence. Files that involve the Wireshark API are licensed
+> under the GPL-2.0. This applies to all files in `Wireshark/`. Files in
+> `V2G_Libraries/Third_Party/` have their own licenses, as described therein."* So the repo is MIT **and**
+> GPL-2.0 **and** an unenumerated third-party set — **partitioned by directory**. The sting: the
+> *deliverable* is the Wireshark dissector, which is the **GPL-2.0** part. "dsV2Gshark is MIT" is true of
+> the repo and false of the thing you would ship. Stronger than the concatenated-licences trap
+> (`InvoicePlane`, travel plane): here the answer depends on **which directory you copy from**.
+>
+> **2. Licence by reference to another project — `ChargePoint/wireshark-v2g` (65★).** Its LICENSE reads,
+> in full at the top: *"This license consists of two parts / Part I: Distribution of this wireshark
+> dissector / Part II: Reference the openv2g license."* The grant is **not self-contained**: resolving it
+> means opening `Ecognize/openv2g` → **LGPL-3.0, 7,650 B, on the `trunk` branch**. A licence whose terms
+> live in a third repository, on a non-default branch name, in a dormant project. **New rule: a LICENSE
+> file that cites another project's licence is unresolved until that other file has been byte-read too.**

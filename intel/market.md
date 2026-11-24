@@ -653,6 +653,40 @@ suits an advisory-shaped market.
   hesitating to pay extra. A connected-vehicle feature that can show data never leaves the device by
   default answers the objection that kills the upsell. **MIT, so it can be shown to the client as code.**
 
+
+### 🔌 Charging interface — North America (added 2026-11-24, second pass)
+
+**This is the region where the duty is numeric, and that changes the engagement shape.**
+
+| Instrument | Duty | Status |
+|---|---|---|
+| **23 CFR 680.116** | Each charging port must average **>97% annual uptime** | In force |
+| **23 CFR 680.108** | Networks must be **capable of communicating with other networks per OCPI 2.2.1** (by 2024-02-28) | In force |
+| **23 CFR 680.114** | OCPP-side requirements cross-referenced | In force |
+| **California CEC** | Networked chargers installed **on/after 2026-09-28** must report via **OCPP 2.0.1** | Dated, state-level |
+| **Oklahoma** (contractor spec) | **OCPP 2.0.1 or higher** | State above the federal floor |
+
+**Opportunity.** A **97% uptime figure and a named protocol version are testable**, so NA charging work
+quotes as a **conformance-and-evidence deliverable** (→ `compose/patterns.md` **P31**) rather than the
+advisory shape this KB records for NA autonomy work. *Same country, same industry, opposite engagement
+shape — because the charging layer got enumerated duties and the autonomy layer did not.* The state
+layer is where the near-term revenue is: California and Oklahoma already exceed the federal floor, so
+**multi-state operators have a per-state conformance matrix problem**, which is a recurring deliverable.
+
+**The procurement risk to raise early.** 680.108 compels conformance to **OCPI 2.2.1**, but the OCPI
+specification repository (`ocpi/ocpi`, 602★) carries **no licence file on 36 paths** and its successor
+work is gated behind EV Roaming Foundation membership (**N25**). Federal law requires conformance to a
+document that is not openly licensed. Flag it in legal review; it is also the best argument for selling
+the **evidence pack** rather than a re-implementation.
+
+**Measured gap.** This pass found **no 2026 federal NEVI revision** and did not verify 23 CFR Part 680
+against the current text — the figures above come from the Federal Register/CFR via secondary retrieval.
+Confirm against the primary text before contracting.
+
+**Supply note.** `aws-solutions-library-samples/guidance-for-modernizing-electric-vehicle-charging-on-aws`
+(**MIT-0**, 945 B, 94★) is the only hyperscaler reference architecture in this plane — and MIT-0 carries
+no attribution duty, which makes it unusually clean to lift into a client deliverable.
+
 ### EMEA
 
 #### 🆕 2026-11-24 — the dates moved again; the *role allocation* is the stable part, so sell against roles
@@ -949,6 +983,43 @@ V2X messaging, battery management, calibration, requirements traceability, SDV s
   `eclipse-mosaic/mosaic` EPL-2.0, `sommer/veins` GPL-2.0. **So an EMEA V2X engagement opens with a
   copyleft-compliance conversation, not a build-on-open-source plan.** Budget legal review in the SOW.
   See `repos/foundations.md` → Layer H exclusions.
+
+
+### 🔌 Charging interface — EMEA (added 2026-11-24, second pass)
+
+**AFIR is the instrument, and its 2027 date is contested — so scope against duties, not dates.**
+
+| Duty | Detail | Date |
+|---|---|---|
+| Ad-hoc card payment | Publicly accessible points **≥50 kW** installed since **2024-04-13** must accept payment cards via a reader (or a device reading cards embedded in **mobile wallets** — per the Commission's Q&A) | In force |
+| Sub-50 kW points | A web-based route is acceptable, typically **QR → payment page** | In force |
+| **Retroactive** card payment | Applies to **all** fast chargers **≥50 kW regardless of installation date**, and along the TEN-T network and secured parking | **2027-01-01** |
+| **EN ISO 15118-20** | Mandatory implementation | **2027-01-01 — contested** |
+
+**The contested date is itself the sellable work.** CharIN's position paper (**2026-08-03**, v2 of an
+April 2026 paper) argues the 2027-01-01 ISO 15118-20 deadline *"does not fully reflect the current
+maturity of the e-mobility ecosystem."* A studio should **not** price a project on that date holding.
+Price the **duty**: ISO 15118-20 capability in the stack, with the switch-on decoupled from the
+regulatory date. `ecog-io/iso15118` (Apache-2.0, 250★) covers **-2, -20 and -8**, which is precisely the
+scope the duty names (→ **P31**).
+
+**Opportunity — Plug & Charge pre-certification as a differentiator.** Pionix reports **EVerest** is the
+first pre-certified software stack for **Plug & Charge** on OCPP 1.6 *and* 2.0.1, AC and DC, with Hubject
+certifying the resulting stations *(vendor-reported, Dec 2025, not independently verified here)*. EVerest
+is **Apache-2.0** and **LF Energy**-governed — an EMEA-origin, permissive, pre-certified base answers both
+the compliance question and the sovereignty question in one artefact, which is the same argument this KB
+already records for EMEA ADAS stacks.
+
+**Enforcement is the gap, and it is material to pricing.** AFIR enforcement sits with **member states**;
+this pass found **no national penalty amounts and no 2026 enforcement cases** across its search legs.
+So the business case is *"discharge a named duty"*, not *"avoid a quantified fine"* — do not build a
+client ROI model on penalty avoidance.
+
+**Licence posture note.** The EMEA-origin tooling in this plane splits sharply: the protocol
+implementations are permissive (EVerest Apache-2.0, `ecog-io/*` Apache-2.0), while the German/EU
+wire-analysis and lab tooling is copyleft or worse (`dsV2Gshark` MIT-**and**-GPL-2.0 by directory,
+`ChargePoint/wireshark-v2g` → LGPL-3.0 by reference, `pyPLC`/`ccs32clara` GPL-3.0, `open-ocpp` LGPL-2.1).
+**Product work quotes as build-on-open-source; lab work needs the copyleft boundary drawn in the SOW.**
 
 ### APAC
 
@@ -1248,6 +1319,45 @@ supply picture above is a **floor, not a measurement**. Next APAC pass must run 
   as non-APAC entrants. **APEC held an automotive dialogue on advanced driving technologies in Shanghai
   on 2026-05-12**, with Yinwang Intelligent Industry and Tesla participating. PwC's ASEAN snapshot
   reports **ASEAN-4 truck sales down ~3.4% in 2025** — softer freight demand in those markets.
+
+
+### 🔌 Charging interface — APAC (added 2026-11-24, second pass)
+
+**China sets its own protocol stack, and that is the strategic fact.** APAC charging does not run on
+OCPP/ISO 15118 the way NA and EMEA do; it runs on the **GB/T** family. A studio treating this plane as
+globally uniform will mis-scope every China engagement.
+
+| Instrument | What it does | Status / caveat |
+|---|---|---|
+| **GB/T 27930.2-2024** | Charger↔vehicle communication; adds **bidirectional charging** and **plug-and-charge**, backward compatible with existing interfaces | Dated Dec 2024 per secondary guides |
+| **GB/T 34657.1-2025** | **Cross-manufacturer interoperability** | Effective **2026-03-01** — ⚠️ **could not be confirmed against an official Chinese source** |
+| **GB/T 20234** | Physical connector family | Established |
+| **NEA** interoperability framework | Defines **three levels**: physical interface, communication protocol, service information exchange | Policy guidance (2023 guidelines) |
+
+**⚠️ Unresolved conflict, recorded and not resolved.** On **ChaoJi**, two sources disagree: one reports
+**IEC TS 62196-7 published February 2026**, formally bringing ChaoJi into the international standards
+framework; a China-market review states ChaoJi is **not yet in the vehicle type-approval system and no
+automaker has announced a ChaoJi-compatible model.** These are not strictly contradictory (a published
+IEC spec with no type-approval path), but they support opposite commercial conclusions, so **neither is
+adopted here.** Both sources are secondary.
+
+**Opportunity.** The **bidirectional + plug-and-charge** additions in GB/T 27930.2-2024 are the same
+functional ground that ISO 15118-20 covers in EMEA. A studio that has built the -20 capability for an
+EMEA client holds **transferable domain knowledge but no transferable code** — the protocol differs.
+That makes **protocol-abstraction work** (one business logic, two wire protocols) the characteristic
+APAC deliverable, and `evcc-io/evcc`'s (MIT, 7,654★) vendor-abstraction layer the closest existing model
+for how to structure it.
+
+**🔴 Declared gaps — recorded as unestablished, not as coverage.**
+- **No APAC NEVI-equivalent funding/reliability rule was found** for any country in the region. This is
+  an admitted gap, not a finding of absence.
+- **No GB/T effective date was verified against a primary Chinese source** (NEA / SAC). Every date above
+  is secondary.
+- **Japan and Korea: nothing reached** this pass on charging interoperability rules. The KB already
+  records Japan's remote-monitoring rule for L4 and Korea's accident-ethics guidelines on the autonomy
+  side; the charging side is blank and should be a named leg of the next APAC pass (METI / CHAdeMO).
+- **Zero APAC-origin repositories** appeared in this plane's supply across all short queries — the
+  permissive charging supply measured here is European and North American.
 
 ### LATAM
 
@@ -1620,6 +1730,59 @@ being a blocker the moment the engagement is about the plant floor.**
   no analytics. Under **LGPD** that architecture removes most of the consent surface before the legal
   review starts, and it can be shown to a Brazilian client **as working MIT code**, not as a diagram.
 
+
+### 🔌 Charging interface — LATAM (added 2026-11-24, second pass)
+
+**⭐ In this plane LATAM has the hardest fact pattern of the four regions — the inverse of the usual
+shape in this KB.** Chile does not merely have a policy direction: it has a **named protocol mandate, a
+registration platform, and a dated 2026 instructivo.** That is a quotable compliance deliverable today.
+
+#### Chile — the only LATAM country in this plane with a fixed-scope engagement available
+
+| Instrument | What it establishes |
+|---|---|
+| **Ley 21.305** (energy efficiency) | Empowers the Ministry of Energy to **regulate charging interoperability** and to require the information needed for it |
+| **Reglamento de Interoperabilidad, DS 12** (Diario Oficial, **May 2023**) | Creates the interoperability platform. **Private-access chargers may not be used to provide charging service, nor be registered on the platform** |
+| **SEC Resolución 27547 EXENTA** (**Oct 2024**) | First interoperability instructivo |
+| **SEC Resolución Exenta N°41458** (**2026**) | Current instructivo — how to register and integrate |
+| **Pliego Técnico 15 / DS 12** | **Communication protocol must be OCPP 1.6 or higher** |
+| National roadmap (BCN, **July 2026**) | Target of **≥6,500 public charge points**, 2026–2030 |
+
+**Why this is a good first engagement.** The platform requires current charge-point data — **operating
+status, hours, payment means, tariffs, available connectors**. That is a deterministic OCPP→registry
+adapter, not an AI problem, and it has a **named protocol floor of OCPP 1.6** that every MIT library in
+this KB clears (`mobilityhouse/ocpp` 1,052★, `ChargeTimeEU/Java-OCA-OCPP` 380★, `lorenzodonini/ocpp-go`
+376★). Full recipe: `compose/patterns.md` **P33**.
+
+**The scoping lever.** The **private-charger exclusion** in DS 12 bounds which of a client's sites must
+be registered at all. Establishing public-access scope *first* is usually the single largest determinant
+of project size, and it cuts in the client's favour.
+
+#### Mexico — present but thinly sourced
+
+**CRE rules A/108/2024** are reported to set technical norms for charging infrastructure, with
+interoperability norms **in development**. ⚠️ **This reached us only via a Chilean parliamentary document
+(BCN, July 2026) — a secondary source describing another country's law.** Not a basis for fixed scope
+until read against CRE's own text. Recorded as attributed-unverified.
+
+#### 🔴 Brazil — declared gap, and an important one
+
+This pass ran its LATAM leg in Spanish/Portuguese terms and found **zero usable results on Brazilian
+charging or interoperability regulation.** Given that Brazil is the region's largest vehicle market and
+that this KB's travel plane found Brazil to have LATAM's *strongest* open-source fiscal layer (because it
+has mandated e-invoicing since 2008), the absence here is more likely a **search-leg failure than a
+regulatory vacuum.** **Next pass must run a dedicated leg against ANEEL and MME sources in Portuguese**
+before anyone concludes Brazil has no charging interoperability rule.
+
+#### Supply side
+
+**Zero LATAM-origin repositories** surfaced in this plane. Note this is consistent with — and should be
+read alongside — the first pass of 2026-11-24, which **refuted** this KB's older "zero LATAM-origin
+repos" claim as an English-only-search artefact (`automotriz` → 2,458 repos, of which 95 of the first 100
+carry no licence at all). **So the correct statement is narrow: no LATAM-origin repo appeared in the
+charging-protocol queries run this pass, which were in English.** A Spanish/Portuguese leg
+(`cargador`, `electromovilidad`, `recarga`) has **not** been run on this plane and is a named follow-up.
+
 ### Global
 
 #### 🆕 2026-11-24 — the agents are still in the V-cycle, and the assurance tier just became buildable
@@ -1839,6 +2002,63 @@ subsection at all.
   (**Apache-2.0**, 966★) targets exactly that: *"agents that run 100% on-device, sub-100 ms latency on
   Qualcomm NPU, zero cloud dependency."* **Not automotive-labelled, which is why earlier passes missed
   it** — but Qualcomm NPUs are the dominant in-cabin compute and "works in a tunnel" is the requirement.
+
+
+### 🔌 Charging interface — Global (added 2026-11-24, second pass)
+
+#### Market size: a 3.5× spread for the same year, recorded without averaging
+
+Five publishers, one market, 2026:
+
+| Publisher | 2026 | Later horizon | CAGR |
+|---|---|---|---|
+| **MarkWide Research** | **$1.4B** | $8.2B (2035) | — |
+| IMARC | $1.97B (2025 base) | $22.87B (2034) | 30.35% |
+| Spherical Insights | $2.058B (2025 base) | $29.93B (2035) | — |
+| Meticulous Research | $2.35B (2026, broader "EV charging software") | $14.25B (2036) | — |
+| Grand View Research | **$4.3B** | $31.5B (2035) | ~24.8% |
+| Stratistics MRC | **$4.9B** | $20.2B (2034) | 19.4% |
+
+**Spread for 2026: $1.4B → $4.9B = 3.5×.** For the 2030s horizon: $8.2B → $31.5B = **3.8×**. Cause is
+definitional — "CSMS", "charging management software platform" and "EV charging software" are three
+different scopes sold under similar titles.
+
+**This reproduces, in a new plane, this KB's standing rule** (recorded against a 4× spread for automotive
+AI in 2026): **quote adoption, not size.** Do not average these; do not put a single number in a client
+deck. If a number is required, give the range and name the publisher. The one segment claim worth
+carrying is Meticulous's: **Charge Point Operators hold the largest share in 2026** — which is also the
+segment with no agent supply (**N24**), and that pairing is the actual commercial signal.
+
+#### The structural picture of global supply
+
+| Layer | Permissive anchor | Scale |
+|---|---|---|
+| Device abstraction / smart charging | `evcc-io/evcc` — **MIT** | **7,654★** |
+| OCPP libraries | `mobilityhouse/ocpp` (MIT), `MicroOcpp` (MIT), `ocpp-go` (MIT), `Java-OCA-OCPP` (MIT) | 1,052 / 547 / 376 / 380★ |
+| CSMS | `citrineos/citrineos-core` — **Apache-2.0**, LF Energy | 311★ |
+| Station stack | `EVerest/EVerest` — **Apache-2.0**, LF Energy | 299★ |
+| ISO 15118 / V2G | `ecog-io/iso15118`, `josev`, `pyslac` — **Apache-2.0**; `RISE-V2G` — MIT | 250 / 164 / 56 / 260★ |
+| OCPI | `citrineos-ocpi` (Apache-2.0), `ocpi-toolkit` (MIT), `OCPI.Net` (MIT) | 23 / 39 / 27★ |
+| **Operator-side agent** | **none — `charging station agent license:apache-2.0` = 0** | **—** |
+
+**Two governed, permissive anchors (CitrineOS and EVerest, both LF Energy, both Apache-2.0) is an
+unusually healthy position** compared with most planes in this KB — foundation governance usually comes
+with copyleft (as the education plane found, where the licence *is* the governance). Here it does not,
+and that is the single most important supply fact for a studio.
+
+**But popularity points the wrong way.** The two most-starred dedicated CSMS projects — SteVe (1,154★)
+and OCPP.Core (304★), **1,458★ combined** — are **both GPL-3.0**, against **334★** of permissive CSMS.
+A client choosing on GitHub stars will choose the licence a consultancy cannot ship. Raise this in the
+first architecture conversation, not the third.
+
+#### Licence posture by layer (planning input)
+
+- **Protocol implementations: permissive nearly throughout.** OCPP and ISO 15118 libraries are MIT or
+  Apache-2.0 with almost no exceptions. Quote as build-on-open-source.
+- **CSMS: split.** Permissive (CitrineOS) exists but is smaller than the copyleft incumbents.
+- **Wire analysis / lab tooling: copyleft or unresolved**, including the two new trap classes in
+  **N27**. Keep outside the deliverable boundary.
+- **The specification layer itself: no grant.** `ocpi/ocpi` has no licence file (**N25**).
 
 ## Globant positioning
 

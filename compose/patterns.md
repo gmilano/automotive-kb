@@ -1398,3 +1398,120 @@ deliverable.
 
 **Regions:** **LATAM** primarily. The *method* is global (**P13**), but the 95%-unlicensed statistic is
 what makes it a door-opener specifically here.
+
+---
+
+## P31 🆕 — Charging conformance-and-evidence factory (NA + EMEA)
+
+**Why this is the first recipe in the plane.** The regulation names protocol versions and a numeric uptime
+target (**N29**), so the deliverable is not firmware — it is **a reproducible evidence file** that a named
+duty is met. That is quotable as fixed scope.
+
+**The duties this discharges.** 23 CFR 680.108 (**OCPI 2.2.1** network-to-network), 23 CFR 680.116
+(**>97% average annual uptime** per port), California CEC (**OCPP 2.0.1** reporting for ports installed
+on/after 2026-09-28), AFIR (**ISO 15118-20** by 2027-01-01, contested — scope against the duty, not the date).
+
+**Wiring — all Apache-2.0, all byte-read (see `repos/foundations.md`):**
+
+1. **Station side** — `EVerest/everest-core` (Apache-2.0, 11,356 B). The modular runtime. *Note its star
+   count is unavailable: `search/repositories` 422s on this slug. Do not let that read as "small".*
+2. **ISO 15118 -2/-20/-8** — `ecog-io/iso15118` (Apache-2.0, 250★) and SLAC via `ecog-io/pyslac`
+   (Apache-2.0, 56★) or `EVerest/libslac` (Apache-2.0, 19★). **-20 is the piece the EMEA 2027 duty turns on.**
+3. **Back office** — `citrineos/citrineos-core` (Apache-2.0, 311★), OCPP 2.0.1-native, LF Energy governed.
+4. **Roaming duty** — `citrineos/citrineos-ocpi` (Apache-2.0, 23★). Small repo, but it is the one that
+   maps onto 680.108.
+5. **Schema gate in CI** — `solidstudiosh/ocpi-schema` (Apache-2.0, 20★) generates JSON-Schema for
+   OCPI 2.1.1+. Fail the build on a non-conforming payload; the CI log *is* the evidence.
+6. **Fleet you do not own** — `SAP/e-mobility-charging-stations-simulator` (Apache-2.0, 231★) and
+   `monta-app/ocpp-emulator` (Apache-2.0, 182★) to generate load and uptime series at scale.
+7. **Wire-level proof** — read the V2G exchange with `Sevenstax/FreeV2G` (**MIT**, 1,181 B — the API hides
+   this grant). ⚠️ **Do not ship the Wireshark dissectors in the product**: `dsV2Gshark`'s `Wireshark/`
+   directory is **GPL-2.0** and `ChargePoint/wireshark-v2g` resolves to **LGPL-3.0** via `openv2g`. Use
+   them as **engineers' desk tools**, outside the deliverable boundary.
+
+**Explicitly excluded from the fork.** `steve-community/steve` (GPL-3.0, 1,154★) and
+`dallmann-consulting/OCPP.Core` (GPL-3.0, 304★). If a client already operates SteVe, integrate it
+**across a process boundary** and do not derive from it.
+
+**Deliverable.** A signed evidence pack: protocol-version conformance matrix, OCPI schema CI run,
+simulated-fleet uptime series against the 97% line, and a duty→artefact mapping table. **Not** a charger.
+
+**Stated assumption.** AFIR enforcement is per member state and this pass found **no national penalty
+amounts and no 2026 enforcement cases**; price the evidence pack on the duty text, not on an expected fine.
+
+---
+
+## P32 🆕 — The operator-side charging agent (build, because it does not exist)
+
+**This recipe exists because of a measurement, not a hunch.** `charging station agent license:apache-2.0`
+returns **0**. The nine real MCP servers in this plane are all **driver-side**, median 1★ (**N24**). There
+is nothing to compose on the operator side — so this is a build, on top of a protocol layer that is
+already permissive and already solid.
+
+**Wiring:**
+
+1. **Device abstraction** — `evcc-io/evcc` (**MIT**, 7,654★). The single most valuable artefact in the
+   plane for this purpose: it already normalises wallboxes, inverters, meters and vehicles across vendors.
+   Do not rebuild this.
+2. **Protocol spine** — `citrineos/citrineos-core` (Apache-2.0) for OCPP 2.0.1, or a language-matched
+   library: `mobilityhouse/ocpp` (MIT, 1,052★, Python), `lorenzodonini/ocpp-go` (MIT, 376★, Go),
+   `ChargeTimeEU/Java-OCA-OCPP` (MIT, 380★, Java), `matth-x/MicroOcpp` (MIT, 547★, embedded).
+   ⚠️ `c-jimenez/open-ocpp` is **LGPL-2.1 on branch `develop`** — dynamic linking only.
+3. **The decision core is NOT a language model.** Setpoints come from the optimization tier:
+   `StavrosOrf/EV2Gym` (MIT, 250★) for the V2G/large-scale environment, `StavrosOrf/DT4EVs` (MIT, 23★)
+   for offline RL, `StavrosOrf/EV-GNN` (MIT, 34★) for scaling, `TUMFTM/REVOL-E-TION` (Apache-2.0, 17★)
+   for site-level energy optimization. **The model never chooses a current or a price**; it explains,
+   drafts and routes. This follows the KB's standing rule that every credible automotive agent design has
+   a human gate — here the gate is on **anything that moves power or money**.
+4. **Agent surface** — model the MCP tool boundary on the nine byte-read-MIT driver-side servers
+   (`javierojan/askacharge-mcp` is the only one that *operates* chargers rather than reading them).
+   Treat them as **interface references, not dependencies** — single-author, median 1★.
+5. **Test harness** — `shiv3/ocpp-cp-simulator` (Apache-2.0, 48★), written for exactly this: testing AI
+   agents against OCPP. Build the eval before the agent.
+
+**Hard exclusion.** `nader0913/ocpp-rag` (48★) is the most-starred OCPP knowledge/RAG/MCP repo and is
+**PolyForm Noncommercial 1.0.0** — the API reports `NOASSERTION`, so nothing warns you. If the client's
+team has already vendored it, that is a remediation finding.
+
+**Risk to state in the SOW.** Three of the four optimization repos have the **same single maintainer**.
+Fork-and-own them at the start of the engagement; do not treat them as an upstream.
+
+---
+
+## P33 🆕 — Chile interoperability registration, as a LATAM entry engagement
+
+**Why Chile and why now.** LATAM is usually the advisory-shaped region in this KB. In *this* plane it is
+the opposite: Chile has a **named protocol mandate, a registration platform and a dated 2026 instructivo**
+— the hardest fact pattern of the four regions (**see `intel/market.md` → LATAM**).
+
+**The instruments.** Ley 21.305 empowers the Ministry of Energy to regulate charging interoperability.
+**Reglamento de Interoperabilidad DS 12** (Diario Oficial, May 2023) establishes the platform and rules
+that **private-access chargers may not be used to provide charging service, nor be registered**. SEC's
+instructivo — **Resolución 27547 EXENTA** (Oct 2024), superseded by **Resolución Exenta N°41458** (2026) —
+fixes how to register and integrate. **Pliego Técnico 15 requires the communication protocol to be
+OCPP 1.6 or higher.**
+
+**Wiring:**
+
+1. **Protocol floor is 1.6, not 2.0.1** — so `ChargeTimeEU/Java-OCA-OCPP` (MIT, 380★),
+   `mobilityhouse/ocpp` (MIT, 1,052★) or `lorenzodonini/ocpp-go` (MIT, 376★) all clear the bar.
+   `citrineos/citrineos-core` (Apache-2.0, 311★) clears it too and leaves 2.0.1 headroom —
+   **recommended** where the client expects to grow into California-style 2.0.1 reporting.
+2. **The platform feed** — DS 12 requires current charge-point information: operating status, hours,
+   payment means, tariffs and available connectors. That is an OCPP→registry adapter plus a
+   status/tariff projection, not an AI problem. Build it deterministically.
+3. **Scoping rule that cuts in the client's favour** — the **private-charger exclusion** bounds the
+   estate that must be registered. Establish which of the client's sites are public-access *first*; it
+   is usually the single biggest lever on project size.
+4. **AI layer, where it earns its place** — tariff/status reconciliation across sites, and a Spanish-language
+   operator assistant over the registry. ⚠️ Note the fleet-wide finding that Spanish-language repo supply
+   is persistently near zero: **choose embeddings by the language of the operator's own data**, not by
+   benchmark rank.
+
+**Deliverable.** A registration dossier against Resolución Exenta N°41458 + the conforming data feed.
+**Target context:** the national roadmap targets **≥6,500 public charge points** (BCN, July 2026).
+
+**Declared gap, stated to the client up front.** For **Brazil**, this pass found **zero** charging
+interoperability regulation across its search legs; Mexico's **CRE A/108/2024** reached us only through a
+*Chilean* parliamentary document (secondary). Neither is a basis for a fixed-scope registration project
+yet. **Chile is the only LATAM country in this plane with a quotable compliance deliverable today.**
