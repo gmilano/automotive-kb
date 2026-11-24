@@ -1,13 +1,125 @@
 ---
 industry: automotive
 region: Global
-updated: 2026-11-21
+updated: 2026-11-24
 ---
 
 # 📡 Trends — Automotive
 
-> Current trends, updated 2026-10-31. Project and vendor self-reported performance figures are labelled
+> Current trends, updated 2026-11-24. Project and vendor self-reported performance figures are labelled
 > as such. Dates name their instrument.
+
+## 🆕 New on 2026-11-24 — five trends. The first two are corrections of this KB's own published claims.
+
+### N19 — A `0-repos` gap has three shapes, and calling them all "a gap" has been costing accuracy
+
+**N16 (2026-11-21) established that a gap can be a vocabulary artefact. This pass measured all three
+standing gaps and found that only *one* was an artefact — the other two were real, but real in
+different ways.** The distinction is not pedantry; each shape leads to a different sentence in a
+proposal:
+
+| Shape | Measurement signature | The sentence it licenses |
+|---|---|---|
+| ⚫ **ABSENT** | A **licence-filtered** query returns ~nothing. *Purpose-built automotive plant-floor inspection: `automotive manufacturing defect license:apache-2.0` → **1 repo, 1★**.* | *"One does not exist."* **Assertable in writing.** |
+| 🟡 **UNMAINTAINED LONG TAIL** | Many repos, **all 0–2★**. *`battery state of health license:mit` → **98 repos**, top ten all 0–2★.* | *"Supply exists and none of it is maintained."* **Budget to build.** |
+| 🔴 **ARTEFACT** | A short or re-worded query surfaces a mature anchor. *EV/battery: `PyBaMM` **BSD-3, 1,742★**; `foxBMS` **BSD-3, 512★**.* | *"There is a base. We start from it."* |
+
+**The long tail is the dangerous shape**, because two opposite wrong answers both come out of it: a repo
+count says *"98 options"* and a gap label says *"nothing exists."* Neither is true.
+
+**Carry this into every KB in the fleet.** Any file still reading `0 repos` is making one of three very
+different claims and does not yet know which.
+
+### N20 — 🔴 This KB's six-pass "zero LATAM-origin repos" finding was an artefact of **searching in English**
+
+**Withdrawn as stated.** `automotriz` returns **2,458 repositories**. Every prior leg across six passes
+used English terms against an index that matches name, description and topics — so a repository called
+`TallerAutomotriz` or `GestorVeicular`, described in Spanish or Portuguese, **was unreachable by
+construction.**
+
+**What survives, and it is sharper than what it replaces.** Licence distribution of the first 100
+`automotriz` repositories, measured directly: **95 carry no licence file at all**, 4 MIT, 1 NOASSERTION.
+No licence means **all rights reserved** — *legally less usable than GPL*, which at least grants rights.
+Hand-inspected, the population is coursework, workshop-management MVPs and agency demo sites.
+
+**The regional constraint was never developer supply. It is licensing hygiene** — and unlike an absence,
+that is a billable problem (licence remediation, a regional permissive baseline). See `intel/market.md`
+→ **LATAM** and `repos/trending.md` → 2026-11-24.
+
+**The general lesson, which applies to every non-Anglophone region in all twelve KBs:** 🔴 **a discovery
+leg run only in English cannot support a claim about regional authorship.** APAC is the next suspect —
+Chinese-language queries have never been run here either, and this KB holds several APAC-origin rows
+found only because their authors wrote English descriptions.
+
+### N21 — Automotive compliance evidence is becoming **CI output** instead of a consultant's assertion
+
+`topic:iso26262` — 73 repositories, a query this KB had never run — surfaced a permissive tool tier that
+did not previously appear in any pass:
+**[github/codeql-coding-standards](https://github.com/github/codeql-coding-standards) — MIT, 235★,
+MISRA C/C++ and AUTOSAR C++14 implemented as CodeQL queries and maintained by GitHub itself**, plus
+`useblocks/sphinx-needs` (MIT, 329★) for requirement↔code↔test traceability as docs-as-code,
+`QuantumLeaps/spexygen` (MIT, 43★), and `WinterLabsHQ/maisha` (MIT, 8★, explicitly *"the vendor-neutral
+alternative"* for MISRA C / CERT C / BARR-C).
+
+**Why this is a trend and not a tool list:** the automotive assurance market is built on **paid static
+analysers**, and the MISRA/AUTOSAR check has been the licence that anchors the engagement. A permissive
+checker maintained by the host of the world's code moves that check into the pipeline. The deliverable
+stops being *"we assessed your compliance"* and becomes *"your compliance is now a build artefact that
+regenerates on every commit."*
+
+**Direction to watch:** whether the paid analysers respond on **certification evidence** (tool
+qualification per ISO 26262-8, which CodeQL does *not* have) — that is the moat, and it is a real one.
+A qualified tool's output is admissible to an assessor; an unqualified tool's output is engineering
+evidence that still needs a qualification argument. **Do not promise a client that an open checker
+discharges a tool-qualification duty.**
+
+### N22 — The regulatory inversion: **APAC now has the world's most concrete AI-driving obligations**, while NA is advisory and EMEA's dates are contested
+
+For several passes this KB treated APAC regulation as unreachable and EMEA as the regime that drives
+compliance work. **Both halves of that are now wrong.** Ranked by *how precisely a duty can be dated*:
+
+1. **APAC — dated, mandatory, national.** China's **GB 44721-2026**, a *mandatory* national standard for
+   L3/L4 automated-driving safety, **takes effect 1 July 2027**; **GB 47955-2026** for combined driver
+   assistance (L0–L2) **applies from 1 January 2027**. First L3 conditional approvals already issued
+   (**Changan/Deepal, BAIC/Arcfox**, designated roads in Beijing and Chongqing); MIIT says a second batch
+   is in progress. **Korea's AI Basic Act takes effect January 2026.**
+2. **EMEA — real duties, disputed dates.** AI Act Article 50 transparency has applied since
+   **2 August 2026**, but the Digital Omnibus (**Reg. (EU) 2026/1744**) moved Annex III high-risk to
+   **2 December 2027** and Annex I product-embedded — *where motor vehicles sit, Section B* — to
+   **2 August 2028**. For vehicles the sectoral legislation carries the AI requirements, so **not every
+   automotive AI feature is a high-risk system under the Act.**
+3. **NA — no dated obligation at all.** AV STEP **withdrawn** (June 2026); exemptions granted
+   case-by-case under **49 CFR § 555** (Zoox first); a domestic exemption pathway is *beginning*
+   rulemaking. There is **no enumerated high-risk list and no filing counter.**
+
+**The commercial consequence, and it reverses the usual assumption:** a client asking *"what must we
+comply with, and by when?"* gets a **precise, dated answer in China**, a **duty-shaped but
+date-contested** answer in Europe, and **"it depends on your exemption"** in the United States. **Scope
+APAC work against dated standards, EMEA work against duties rather than dates, and NA work as
+advisory.** Full citations per region in `intel/market.md`.
+
+### N23 — The incumbents, not the startups, are opening the automotive tool layer
+
+Four of this pass's strongest permissive finds come from organisations with every commercial reason not
+to publish:
+
+| Publisher | Repo | Grant (byte-read) |
+|---|---|---|
+| **Vector Informatik GmbH** (Tier-1 measurement/calibration tool vendor) | `vectorgrp/XCPlite` — ASAM XCP on Ethernet, 271★ | **MIT**, *"Copyright (c) 2026 Vector Informatik GmbH"* |
+| **GitHub** | `github/codeql-coding-standards` — MISRA/AUTOSAR C++14, 235★ | **MIT** |
+| **Fraunhofer IISB** | `foxBMS/foxbms-2` — automotive BMS hardware + software, 512★ | **BSD-3-Clause** (software) + CC-BY-4.0 (docs) |
+| **IBM** | `IBM/AssetOpsBench` — Industry 4.0 agent benchmark, 2,483★ | **Apache-2.0** |
+| **Toyota Connected North America** *(held)* | `toyota-connected/ivi-homescreen` — automotive display embedder, 404★ | **Apache-2.0** |
+
+**The pattern:** incumbents are opening the **protocol, standard and benchmark** layers while keeping
+the **qualified tool, the certification and the integration** proprietary. That is a rational and stable
+split, and it tells a studio exactly where the margin is: **not in reimplementing XCP or MISRA — those
+are now free from the people who own them — but in qualification, integration and evidence.**
+
+**Contrast with the model tier**, where the publishers are universities and the grant is Apache-2.0 by
+convention (4 of 4 new rows this pass). **Two different open-source economies in one industry:**
+incumbent-opened infrastructure, and academy-published research weights whose *data* grant is usually
+the binding one (**N17**).
 
 ## 🆕 New on 2026-11-21 (third pass, 13:40Z) — three trends, and the first one is about how this KB searches
 

@@ -1,7 +1,7 @@
 ---
 industry: automotive
 region: Global
-updated: 2026-11-21
+updated: 2026-11-24
 ---
 
 # 🏭 Vertical platforms — Automotive
@@ -14,6 +14,89 @@ updated: 2026-11-21
 > *Superseded note —* verified 2026-11-13 (`curl -sI` on `github.com` and `api.github.com` both return **HTTP 403** through
 > this session's proxy, re-tested today, so licences and stars are read from the rendered repository page;
 > 🆕 = new this pass, 🔄 = licence/stars re-read today, ⏸ = carried forward and labelled).
+
+## 🆕 2026-11-24 — two new customisable platform categories, and the automotive-specific ERP question is answered properly
+
+### 🆕 Category: the battery platform — `foxBMS 2` is a real customisable base, and it is the first hardware-and-software one in this file
+
+Every platform in this file until now has been software. **[foxBMS/foxbms-2](https://github.com/foxBMS/foxbms-2)**
+is a **free, open and flexible battery-management-system platform — hardware *and* software — from
+Fraunhofer IISB** (Erlangen, Germany). 512★, pushed 2026-10-08.
+
+| Property | Value |
+|---|---|
+| **Software grant** | **BSD-3-Clause** — byte-read `LICENSE.md`, 1,185 B |
+| **Hardware + documentation grant** | **CC-BY-4.0** — attribution required |
+| **Trademark line** | *"We **kindly request**…"* — ⚠️ **a request, not a licence condition** |
+| **Customisable with AI on top?** | **Yes, and this is the point** — SOC/SOH estimation, thermal prediction and fault classification are exactly the layers a BMS exposes |
+
+**How to add the AI layer** (and this is the Odoo/OpenMRS/Moodle shape applied to batteries): take
+foxBMS as the **embedded platform**, use **[PyBaMM](https://github.com/pybamm-team/PyBaMM)** (BSD-3,
+1,742★) as the **physics-based simulator** to generate degradation and thermal training data, and fit
+the estimator against it. **See P28** for the wiring. The protocol corpora in
+`patman15/BMS_BLE-HA` (Apache-2.0, ~20 vendors) and `fl4p/batmon-ha` (MIT) cover the
+read-from-an-existing-pack case where the client is not building the BMS.
+
+⚠️ **The gap inside this category:** the **estimator** layer is 🟡 **unmaintained long tail** —
+`battery state of health license:mit` returns **98 repositories and every one of the top ten has 0–2
+stars.** The platform and the simulator are free and mature; **the model is the build.** Price it that
+way (trend **N19**).
+
+### 🆕 Category: plant-floor asset operations — a benchmark-and-framework base, not an application
+
+**[IBM/AssetOpsBench](https://github.com/IBM/AssetOpsBench)** — **Apache-2.0** (byte-read 11,357 B),
+**2,483★**, pushed 2026-11-21 — is an **Industry 4.0 benchmark *and* framework for building,
+orchestrating and evaluating agents for asset operations.** It belongs in this file because it is the
+*customisable base* for the plant-floor agent layer the way Odoo is for ERP: you bring the assets,
+the failure modes and the work-order integration; it brings the orchestration and, critically, the
+**evaluation**.
+
+Pair it with **`open-edge-platform/anomalib`** (Apache-2.0, 6,414★, already held) for the vision half
+and **`kokikwbt/predictive-maintenance`** (MIT, 177★) for datasets. **See P27.**
+
+### 🆕 Fleet platform — the Traccar deployment is **two** repositories
+
+| Repo | Licence (byte-read) | ★ | Role |
+|---|---|--:|---|
+| [traccar/traccar](https://github.com/traccar/traccar) *(held)* | Apache-2.0 | 8,179 | Server, 200+ device protocols |
+| 🆕 [traccar/traccar-web](https://github.com/traccar/traccar-web) | **Apache-2.0** — `LICENSE.txt`, 11,358 B | **1,207** | Web dashboard |
+
+**Recorded because a deployment plan that clones one repository is incomplete.** **P5** updated.
+
+### 🔴 The automotive-specific ERP/CRM question — asked directly, and the answer is a clean negative
+
+The leg `open source platform automotive ERP CRM MIT Apache` was run against the general market. Result:
+**there is no automotive-specific ERP or CRM under MIT or Apache.** What exists:
+
+| Candidate | Grant | Verdict for an automotive engagement |
+|---|---|---|
+| **ERPNext** — markets an *"automotive ERP"* page for automotive manufacturers | **GPLv3** | ⚠️ **The closest thing to an automotive-specific open ERP, and it is copyleft.** Its automotive positioning is marketing on a general ERP, not an automotive module set. Usable, but the grant drives the deployment model. |
+| **Odoo** | GPL/LGPL (byte-confirmed earlier pass) | Held — viable, grant understood |
+| **Huly Platform** | **Apache-2.0** | Held — moved to *viable* on 2026-11-21, still the best permissive base |
+| **Krayin CRM** | **MIT** | Permissive CRM; general-purpose, no automotive model |
+| **Apache OFBiz** | Apache-2.0 *(held)* | Permissive, general ERP |
+| **Tekion, and the rest of the "open source automotive software" listicle entries** | **Proprietary** | ⛔ Aggregator pages label proprietary products "open source". **Verify, always.** |
+
+**So the finding stands and is now properly evidenced: the automotive vertical has no permissive
+vertical ERP, and the DMS gap (closed as ⚫ ABSENT on 2026-11-21 with a licence-filtered query) is the
+sharpest instance of it.** The approach remains **P17** — a dealer/aftersales agent layer on a
+permissive *general* ERP — and the permissive base to use is **Huly or OFBiz**, not an automotive one,
+because there isn't one.
+
+### 🔴 A platform-shaped trap to refuse by name: Serial Studio
+
+**[Serial-Studio/Serial-Studio](https://github.com/Serial-Studio/Serial-Studio)** — **7,335★**,
+telemetry dashboard supporting UART, BLE, MQTT, Modbus **and CAN**. It looks exactly like the
+vehicle-bench dashboard a client wants, and at 7,335★ **they will propose it.**
+
+**Its licensing is per-file and the SPDX header is authoritative:** files marked
+`GPL-3.0-or-later OR LicenseRef-SerialStudio-Commercial` are dual; files marked
+`LicenseRef-SerialStudio-Commercial` **alone are proprietary** ("Pro modules", source published for
+transparency only); the default `BUILD_GPL3=ON` build is **GPLv3**; and the **official binaries ship
+under an EULA, not the GPL**. ⛔ **Not usable as a permissive base. Per-file licence determination is
+required before any use — budget it explicitly or decline.** *The general lesson for this file: a
+repository can be "open source" and still require a file-by-file grant analysis before you can say what
+you are allowed to ship.*
 
 ## 🆕 2026-11-21 (third pass, 13:40Z) — the manufacturing / plant-floor gap is CLOSED, and the DMS gap is confirmed an eighth time
 

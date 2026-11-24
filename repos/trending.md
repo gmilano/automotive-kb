@@ -1,12 +1,114 @@
 ---
 industry: automotive
 region: Global
-updated: 2026-11-21
+updated: 2026-11-24
 ---
 
 # 📈 Trending repos — Automotive
 
 > **APPEND-ONLY.** Newest dated section on top; history preserved below. Never rewrite earlier sections.
+
+## 2026-11-24
+
+**Window:** 2026-11-21 14:52Z → 2026-11-24 (first pass since the four same-day passes of 2026-11-21;
+those four sections are preserved below, unchanged). **Channel:** `gh api -X GET search/repositories`
+(stars/forks/SPDX/`pushed_at`), licences **byte-read** from `raw.githubusercontent.com`, liveness via
+`git ls-remote`. **47 new addresses probed → 47 live, 0 dead.**
+
+### 🆕 The big measurement: a `0-repos` gap has **two different shapes**, and this KB has been conflating them
+
+The 2026-11-21 pass established that a long `gh` query returns a false zero and that short queries
+recover the world. Running short queries at this KB's three standing gaps produced a result that is
+**not** "the gaps were fake" — it is more useful than that. **Two of the three gaps were real absences;
+one was a long tail of unusable code.** Those need different words, because they lead to different
+client conversations:
+
+| Gap | Short-query measurement | Shape | What you tell a client |
+|---|---|---|---|
+| **EV / battery AI** | `topic:battery-management-system stars:>50` → **23**; `pybamm` → **301** | 🔴 **WAS AN ARTEFACT.** `PyBaMM` **BSD-3, 1,742★**; `foxBMS/foxbms-2` **BSD-3, 512★** | "There is a mature permissive base. We start from PyBaMM." |
+| **Battery state-of-health ML** | `battery state of health license:mit` → **98 repos**, and **every one of the top ten is 0–2★** | 🟡 **UNMAINTAINED LONG TAIL** | "Ninety-eight permissive repos exist and not one is maintained. Budget to build the SOH model; the *simulator* is free." |
+| **Purpose-built automotive plant-floor inspection** | `automotive manufacturing defect license:apache-2.0` → **1 repo**, `BaronTrump/AutoPartVision`, **1★** | ⚫ **GENUINELY ABSENT** | "Nothing purpose-built exists. `anomalib` as a base is not a convenience, it is the only option." |
+
+**Adopt this vocabulary across the fleet.** "0 repos" is three claims wearing one label:
+
+- ⚫ **ABSENT** — a licence-filtered query returns ~nothing. *Assertable in writing: "one does not exist."*
+- 🟡 **UNMAINTAINED LONG TAIL** — many repos, all 0–2★, mostly dissertation code. *The dangerous one: a
+  naive count says "98 options available" and a naive gap says "nothing exists." Both mislead. The
+  honest sentence is "supply exists and none of it is maintained."*
+- 🔴 **ARTEFACT** — a mature anchor exists and was missed by query vocabulary. *Always re-probe before
+  publishing a gap.*
+
+### 🔴 THE INSTRUMENT DEFECT OF THIS PASS: **the discovery legs are monolingual, and that is what manufactured the LATAM-origin gap**
+
+This KB has recorded, across **six passes**, *"ZERO LATAM-origin repos across 11 queries"* and treated it
+as a claim about **authorship** that survived the N16 vocabulary correction. **It does not survive a
+change of language.**
+
+| Query (Spanish / Portuguese) | Total repos |
+|---|--:|
+| `automotriz` | **2,458** |
+| `vehiculos diagnostico` | 41 |
+| `veicular diagnostico` | 6 |
+| `carro obd brasil` | 0 |
+
+**Two thousand four hundred and fifty-eight.** Every previous leg searched in English — `automotive`,
+`vehicle`, `fleet`, `dealership` — against an index that matches **name, description and topics**. A
+Brazilian or Mexican developer naming a repo `TallerAutomotriz` or `GestorVeicular` and describing it in
+Spanish or Portuguese **cannot be found by an English query**, no matter how short it is.
+
+**So the authorship claim as written was an artefact of query language, and must be withdrawn.**
+
+### ✅ …and the *usable-supply* claim survives, now with a hard number instead of an absence
+
+The refined finding is sharper and more sellable than the old one. Licence distribution of the **first
+100 `automotriz` repos**, measured directly:
+
+| Licence | Count |
+|---|--:|
+| **None at all** | **95** |
+| MIT | 4 |
+| NOASSERTION | 1 |
+
+**95% of Hispanophone automotive repositories carry no licence file whatsoever.** Under the Berne
+Convention that is **all rights reserved** — *legally less usable than GPL*, because copyleft at least
+grants rights. Hand-inspected, the population is coursework, workshop-management MVPs, and agency demo
+sites (`TallerCairoAutomotriz`, `Sistema_control_flota_automotriz`, `AutoTallerPro`, `sistema-experto-vehiculos`).
+
+The two permissive LATAM-origin repos located, both verified live and byte-read:
+
+| Repo | Licence (byte-read) | ★ | Pushed | Note |
+|---|---|--:|---|---|
+| [marcelo-redua/ruidcar-agendamento-veicular](https://github.com/marcelo-redua/ruidcar-agendamento-veicular) | **MIT** — `LICENSE`, 1,071 B, *"Copyright (c) 2025 Marcelo Rédua"* | 0 | ⏸ 2025-05-08 | Workshop↔driver diagnostic-scheduling platform. **PT-BR, LATAM-origin, permissive — and 0★/18 months stale.** |
+| [pauloromano3738/my-car-scan](https://github.com/pauloromano3738/my-car-scan) | **MIT** — `LICENSE`, 1,069 B, *"Copyright (c) 2025 Paulo Romano"* | 0 | ⏸ 2025-03-24 | ELM327 vehicle diagnostics in Java. Same shape. |
+| [Demacaco/sentinela-veicular](https://github.com/Demacaco/sentinela-veicular) | **GPL-3.0** — `LICENSE`, 35,149 B | 0 | 2026-10-31 | ⛔ Copyleft. Noted because the subject — **malware auditing of aftermarket infotainment head units** — is a real LATAM-specific problem nobody else in this KB addresses. |
+
+**The corrected sentence for a client:** *"LATAM-origin automotive open source exists in volume —
+thousands of repositories — but 95% of it is unlicensed and effectively none of it is maintained. The
+regional constraint is **licensing hygiene**, not developer supply."* That is a **services opportunity**
+(licence remediation, a regional permissive baseline) where the old sentence was just a hole. See
+`intel/market.md` → **LATAM**.
+
+**⚠️ Instrument limit found while testing this:** `gh api users/{login}` returns **HTTP 403** in this
+environment — *"sessions are bound to their configured repositories."* **Author location and affiliation
+cannot be verified first-hand here.** Every "origin" attribution in this KB is therefore *inferred* from
+repository language, description and institution name. Labelled as inferred wherever it appears this pass.
+
+### 🆕 Short-query discovery yield
+
+Twelve short queries → **49 genuinely new addresses** against a 233-address KB (previous pass: 202).
+Queries that paid: `autosar stars:>50`, `topic:adas stars:>50`, `topic:v2x stars:>50`,
+`topic:obd2 stars:>50`, `topic:canbus stars:>100`, `topic:iso26262`, `topic:battery-management-system stars:>50`,
+`pybamm`, `topic:predictive-maintenance stars:>100`, `topic:fleet-management stars:>100`,
+`driving vla license:apache-2.0 stars:>100`, `automotriz`.
+
+**`topic:iso26262` (73 repos) was the single highest-value query of the pass** and had never been run.
+It surfaced the whole of **Layer I** — the permissive assurance-tool tier that **P14** had been missing.
+*Lesson: query the **standard number**, not the capability. `topic:iso26262`, `topic:autosar`,
+`topic:v2x` are how this industry self-labels.*
+
+**Two queries returned a true zero and are recorded as such:** `cockpit assistant vehicle license:apache-2.0`
+→ **0**, and `carro obd brasil` → **0**. Both are short, so these are informed zeros, not instrument
+artefacts — the in-cabin-assistant layer has no permissive Apache-2.0 anchor under that name.
 
 ## 2026-11-21 — fourth pass (14:50Z)
 

@@ -1,7 +1,7 @@
 ---
 industry: automotive
 region: Global
-updated: 2026-11-21
+updated: 2026-11-24
 ---
 
 # 🧩 Composition patterns — Automotive
@@ -1214,3 +1214,187 @@ built entirely from MIT + Apache + MPL parts.
 ⚠️ **Scope honestly:** `cogu/autosar` is an ARXML *library*, not an AUTOSAR authoring tool. It will not
 replace DaVinci or EB tresos. **Position it as the automation and verification layer beside the
 client's existing toolchain** — which is also why it is adoptable without displacing a vendor.
+
+---
+
+# 🆕 Added 2026-11-24
+
+> Five patterns. **P26** is the one to read first: it is the pattern the 2026-11-24 supply findings most
+> directly enable, and it changes an ISO 26262 engagement from assertion to pipeline.
+
+## P26 🆕 — Compliance as CI output: MISRA/AUTOSAR evidence that regenerates on every commit
+
+**The problem.** A client's ISO 26262 coding-standard compliance is today an **assertion** — a report
+produced periodically by a paid static analyser, stale the moment it is written, and re-bought every
+audit cycle. **P14** generates the *documents* via agent skills but never checks the *code*.
+
+**What's new that makes this buildable:** a permissive MISRA/AUTOSAR checker maintained by GitHub.
+
+**The stack, all byte-read permissive:**
+
+| Role | Component | Grant |
+|---|---|---|
+| **Standard checking** | [github/codeql-coding-standards](https://github.com/github/codeql-coding-standards) — MISRA C/C++ **and AUTOSAR C++14** as CodeQL queries, 235★ | **MIT** |
+| **MISRA C second opinion** | [WinterLabsHQ/maisha](https://github.com/WinterLabsHQ/maisha) — MISRA C / CERT C / BARR-C, 8★ ⚠️ young | **MIT** |
+| **Requirement↔code↔test traceability** | [useblocks/sphinx-needs](https://github.com/useblocks/sphinx-needs) — 329★ | **MIT** |
+| **Doxygen-native alternative** | [QuantumLeaps/spexygen](https://github.com/QuantumLeaps/spexygen) — 43★ | **MIT** |
+| **Document generation** | `jherrodthomas/automotive-skills-suite` (76 builder/reviewer pairs) — **P14** | MIT |
+
+**How to wire it:**
+
+1. **Run CodeQL's coding-standards pack in the client's CI** against the ECU codebase. Output: a
+   per-rule, per-file deviation set — machine-readable, regenerated per commit.
+2. **Model requirements as `sphinx-needs` objects** in the repo. Each requirement gets an ID; each
+   links to the code symbols implementing it and the tests covering it.
+3. **Join the two.** A deviation now resolves to *which requirement it endangers*, which is the
+   question an assessor actually asks — not "how many MISRA violations" but "which safety requirement
+   is unevidenced."
+4. **Hand the join to the P14 skill pair** to draft the deviation justification and the safety-case
+   fragment. **A named human engineer signs each one** — the P14 rule is unchanged and non-negotiable.
+5. **Publish the traceability matrix as a build artefact.** It regenerates; it does not get re-bought.
+
+🔴 **The boundary you must state in the SOW, because it is where this pattern can mislead a client:**
+**CodeQL is not a qualified tool under ISO 26262-8.** A qualified analyser's output is admissible to an
+assessor on the strength of its qualification; CodeQL's output is **engineering evidence that still
+needs a tool-qualification argument**, or confirmation by a qualified tool at the gate. **Sell this as
+continuous evidence generation that collapses the cost of the qualified run — never as a replacement for
+it.** Promising otherwise is the one way this pattern fails an audit (**N21**).
+
+**Regions:** every region. **Strongest in EMEA**, where it feeds the **P20** duty map directly (an
+automated MISRA/AUTOSAR evidence stream is exactly the "already discharged by existing evidence"
+argument CLEPA makes), and in **APAC**, where GB 44721-2026's dated effect makes a regenerating
+evidence pipeline worth more than a one-off report.
+
+## P27 🆕 — Plant-floor asset-ops agent, bought as a harness
+
+**The problem.** Plant-floor AI pilots stall because nobody can say whether the agent is *good*. **P22**
+builds VDA-5-qualified inspection; it does not evaluate an agent that *acts* on inspection output.
+
+**The stack:**
+
+| Role | Component | Grant |
+|---|---|---|
+| **Agent harness + benchmark** | [IBM/AssetOpsBench](https://github.com/IBM/AssetOpsBench) — Industry 4.0 agent orchestration **and evaluation**, 2,483★ | **Apache-2.0** |
+| **Vision / anomaly detection** | `open-edge-platform/anomalib` — 20+ algorithms, OpenVINO export, 6,414★ | Apache-2.0 |
+| **Condition-monitoring tool surface** | [LGDiMaggio/predictive-maintenance-mcp](https://github.com/LGDiMaggio/predictive-maintenance-mcp) — MCP server, 118★ | **MIT** |
+| **Datasets** | [kokikwbt/predictive-maintenance](https://github.com/kokikwbt/predictive-maintenance) — 177★ | **MIT** |
+
+**How to wire it:** expose the client's historian, work-order system and `anomalib` inference endpoint
+as **MCP tools** (the `predictive-maintenance-mcp` server is the reference shape). Run the agent inside
+**AssetOpsBench**'s orchestration so that every proposed action — raise a work order, flag a batch, stop
+a line — is **scored against the benchmark before it is wired to anything that acts.** Ship the
+evaluation report as the pilot's deliverable, not a demo.
+
+⚠️ **Two warnings.** First, **the line-stop action must be confirmation-gated** — the **P16** rule
+applies on the plant floor exactly as in the cockpit: the agent's reasoning must not reach the actuator.
+Second, **the dataset grant is a separate axis** (**N17**): check the licence of any benchmark data
+before it touches a client deliverable.
+
+**Regions:** **every region, and this is the one pattern that is equally sellable in all five** —
+manufacturing is where the non-AV automotive money is, and LATAM has the installed base without the
+regulatory overhead.
+
+## P28 🆕 — Permissive EV battery estimator, simulator-trained
+
+**The problem.** A client wants SOC/SOH/RUL estimation. The ML layer is 🟡 an **unmaintained long tail**
+— 98 permissive repositories, none maintained (**N19**) — so there is nothing to adopt. But the
+*expensive* parts, the physics and the embedded platform, are free.
+
+**The stack:**
+
+| Role | Component | Grant |
+|---|---|---|
+| **Physics simulator (training-data generator)** | [pybamm-team/PyBaMM](https://github.com/pybamm-team/PyBaMM) — DFN/P2D, SPM, SPMe, 1,742★ | **BSD-3-Clause** |
+| **Embedded BMS platform** | [foxBMS/foxbms-2](https://github.com/foxBMS/foxbms-2) — Fraunhofer IISB, hw+sw, 512★ | **BSD-3** (sw) + CC-BY-4.0 (docs) |
+| **Pack protocol corpus (brownfield)** | [patman15/BMS_BLE-HA](https://github.com/patman15/BMS_BLE-HA) ~20 vendors, 380★ · [fl4p/batmon-ha](https://github.com/fl4p/batmon-ha) 536★ | Apache-2.0 · MIT |
+| **EV PID maps / field telemetry** | [nickn17/evDash](https://github.com/nickn17/evDash) — Hyundai/Kia/Renault EV, 186★ | **MIT** |
+| **Model selection reference** | [FrankSuperG/electrochemical-battery-model-atlas](https://github.com/FrankSuperG/electrochemical-battery-model-atlas) | CC-BY-4.0 ⚠️ docs grant |
+
+**How to wire it:**
+
+1. **Parameterise a PyBaMM cell model** to the client's chemistry and form factor.
+2. **Sweep it** — temperature, C-rate, depth-of-discharge, ageing — to synthesise a labelled degradation
+   corpus. *This is the step that replaces the field data the client does not have, and it is the
+   reason the long-tail gap is survivable.*
+3. **Fit the estimator** on synthetic data; **calibrate on whatever real cycling data exists** (field
+   data via `evDash`-style OBD/CAN logging, or the pack's own BMS via the protocol corpora).
+4. **Deploy either greenfield on foxBMS** (BSD-3, so the estimator ships inside the BMS firmware) **or
+   brownfield as a read-only estimator** alongside the incumbent BMS using the vendor protocol corpus.
+5. **Validate against held-out real cycles, never against the simulator.** A simulator-trained
+   estimator validated on simulator output measures nothing.
+
+⚠️ **Quote this as a build, not an integration.** The simulator and platform are free and mature; the
+estimator is bespoke work. **Say the split in the proposal** — it is the difference between a credible
+estimate and a surprised client.
+
+**Regions:** **EMEA first** — both anchors are EMEA-origin (Fraunhofer IISB; PyBaMM's community is
+UK-centred), which answers a sovereignty question before it is asked. **APAC** second, where the
+battery supply chain is.
+
+## P29 🆕 — C-ITS message-layer deliverable, with the copyleft boundary drawn on purpose
+
+**The problem.** This KB told you three days ago that all V2X work needs legal review in the SOW. That
+was wrong (**`agents/top.md` W1**) and it was over-pricing a clean deliverable.
+
+**The permissive core:**
+
+| Role | Component | Grant |
+|---|---|---|
+| **ETSI ITS message encode/decode (CAM, DENM, CPM, VAM)** | [ika-rwth-aachen/etsi_its_messages](https://github.com/ika-rwth-aachen/etsi_its_messages) — ROS 2, RWTH Aachen **ika**, 83★ | **MIT** |
+| **Cooperative-perception validation data** | [VjiaLi/V2U4Real](https://github.com/VjiaLi/V2U4Real) — CVPR 2026, vehicle-to-UAV, 75★ | **MIT** |
+| **Standards-conformance agent surface** | [Nemeson/C-ITS-Expert](https://github.com/Nemeson/C-ITS-Expert) — validator, CLI + MCP, ⚠️ 1★ | **MIT** |
+| **Transport** | `nanomq/nanomq` — MQTT for edge/SDV, 2,667★ *(held)* | MIT |
+
+**How to wire it:** build the client's **message handling, validation and cooperative-perception fusion**
+on `etsi_its_messages` inside ROS 2, transport over `nanomq`, validate against `V2U4Real`, and use
+`C-ITS-Expert`'s validator **as a design reference for conformance checks you implement yourself** (1★
+— do not take it as a dependency).
+
+🔴 **Draw the boundary explicitly in the SOW, and put it in the architecture diagram:**
+
+- ✅ **Message, validation, fusion, transport — MIT/permissive.** No legal review. Quote as
+  build-on-open-source.
+- ⛔ **Protocol stack — `vanetza` is CC-BY-NC.** Non-commercial. **Not a review item, a prohibition.**
+  If the client needs a full ETSI stack, it is a commercial licence or a clean-room implementation, and
+  that is a different project with a different price.
+- ⚠️ **Simulation — `artery`, `veins`, `VaN3Twin` GPL-2.0; `mosaic` EPL-2.0.** Copyleft, but these are
+  **tools, not shipped product**. Internal validation use is normally fine; **shipping or hosting a
+  derivative is not.** This is the only part that needs legal review, and it is the cheap part.
+
+**Regions:** **EMEA first** — ETSI C-ITS is the European standard and the anchor is a German
+institute's, so the whole permissive core is EMEA-authored. Useful in **APAC** where China's V2X
+deployment is large, with the caveat that Chinese C-V2X message sets differ from ETSI's.
+
+## P30 🆕 — Licence remediation as a LATAM entry engagement
+
+**The problem, measured.** **95 of the first 100 Hispanophone `automotriz` repositories carry no licence
+file at all** (**N20**). No licence means **all rights reserved** — legally *less* usable than GPL. The
+same statistic almost certainly describes a LATAM client's **internal** repositories, because it
+describes the regional development culture, not just its public output.
+
+**Why this is the right first engagement in the region:** it needs no regulatory trigger (LATAM has no
+dated AI obligation — see `intel/market.md` → LATAM), it is cheap, it is fast, and it produces a finding
+the client cannot dismiss: *their own code cannot be lawfully reused inside their own group.*
+
+**The stack — the method is already built as P13, which this reuses rather than reinventing:**
+
+| Step | Instrument | Note |
+|---|---|---|
+| **1. Enumerate** | `gh api -X GET search/repositories` + the client's own forges | 🔴 **Query in Spanish and Portuguese.** English-only enumeration is what hid 2,458 repositories from this KB for six passes. |
+| **2. Liveness** | `git ls-remote --symref` | Returns the **default branch**, which step 3 needs |
+| **3. Byte-read the grant** | `raw.githubusercontent.com/<o>/<r>/<branch>/<file>` | Probe `LICENSE`, `LICENSE.md`, `LICENSE.txt`, **`LICENCE`**, `COPYING`, **`LICENSE-MIT`**. ⚠️ **The British spelling and the Rust convention are both real and both produce false "no licence" verdicts.** |
+| **4. Classify** | **none / permissive / weak copyleft / strong copyleft / non-commercial / dual-per-file** | ⚠️ Match **LESSER first** — LGPL's own text contains the string "GNU GENERAL PUBLIC LICENSE". ⚠️ A metadata-only grant (`package.json` with no LICENSE file) is **"declared", not "byte-read"** |
+| **5. Remediate** | Add grants with author consent; quarantine what cannot be cleared | The deliverable |
+
+**The deliverable:** a per-repository grant register, a remediation plan, and a **permissive baseline
+policy** for new work. **Then the diligence relationship is in place before the AV/ADAS conversation
+starts** — which, given Brazil's PL 2338/2023 will not be in force before 2027–2029, is the realistic
+sequence.
+
+⚠️ **Honest limit:** `gh api users/{login}` is **403** in this environment, so **author
+location/affiliation cannot be verified programmatically here**. Origin is inferred from language and
+institution. For a real engagement the client supplies the authorship facts — do not infer them in a
+deliverable.
+
+**Regions:** **LATAM** primarily. The *method* is global (**P13**), but the 95%-unlicensed statistic is
+what makes it a door-opener specifically here.

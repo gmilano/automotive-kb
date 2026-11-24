@@ -1,7 +1,7 @@
 ---
 industry: automotive
 region: Global
-updated: 2026-11-21
+updated: 2026-11-24
 ---
 
 # 🏗️ Foundational repos — Automotive
@@ -22,6 +22,113 @@ updated: 2026-11-21
 > 🔴 **`huggingface.co` still does not resolve from this session**, so no model-weight licence was verified.
 > 🆕 = added 2026-11-13. 🔄 = licence/stars re-read today. ⏸ = URL re-probed, figures carried forward.
 > ⚪ = URL live, licence/stars deliberately left blank rather than guessed.
+
+## 🆕 Added 2026-11-24 — the EV/battery gap is CLOSED, and it was the **industry word** again (third instance)
+
+**This KB has carried `EV / battery AI = 0 repos` since 2026-11-19.** It is not a gap. The anchors are
+mature, permissive, maintained — and **neither of them says "automotive" anywhere in its pitch**, which
+is exactly the failure mode trend **N16** named for the plant floor. *That makes three: plant-floor
+inspection (N16), EV/battery (here), and the assurance tool tier (Layer I below). The industry word is
+this KB's single biggest discovery defect.*
+
+### 🆕 Layer H — EV / battery modelling and management
+
+| Repo | Licence (byte-read) | ★ | Pushed | Why it is here |
+|---|---|--:|---|---|
+| [pybamm-team/PyBaMM](https://github.com/pybamm-team/PyBaMM) | **BSD-3-Clause** — `LICENSE.txt`, 1,494 B, *"Copyright (c) 2018, the PyBaMM team"* | **1,742** | **2026-11-23** | **The anchor of this layer.** Fast, flexible **physics-based** battery models (DFN/P2D, SPM, SPMe) in Python. Permissive, actively maintained, the de-facto standard in battery simulation. For range, degradation, thermal and fast-charge work this is the base — **do not start from a dissertation notebook.** |
+| [foxBMS/foxbms-2](https://github.com/foxBMS/foxbms-2) | **BSD-3-Clause (software)** + **CC-BY-4.0 (hardware & docs)** — split grant, byte-read `LICENSE.md`, 1,185 B | **512** | 2026-10-08 | **The only automotive-grade open BMS platform found.** From **Fraunhofer IISB (Erlangen, Germany)** — free, open, flexible BMS *hardware and software* platform. EMEA-origin. See the split-grant note below before quoting it. |
+| [patman15/BMS_BLE-HA](https://github.com/patman15/BMS_BLE-HA) | **Apache-2.0** — index-reported | 380 | 2026-11-22 | Monitors BLE battery-management systems from ~20 vendors. **Not automotive-grade** — a Home Assistant integration — but it is the broadest open **BMS protocol corpus** in existence, which is the expensive part of any pack-diagnostics build. |
+| [fl4p/batmon-ha](https://github.com/fl4p/batmon-ha) | **MIT** — index-reported | 536 | 2026-11-23 | Same shape: JK, JBD, Daly, ANT, SOK, Supervolt BMS over Bluetooth. Pair with the row above as a **protocol reference**, not a product base. |
+| [FrankSuperG/electrochemical-battery-model-atlas](https://github.com/FrankSuperG/electrochemical-battery-model-atlas) | **CC-BY-4.0** — index-reported ⚠️ *docs licence, not a software grant* | 51 | 2026-09-23 | Curated index of open electrochemical battery models with reproducibility notes. Use it to **choose** a model; it is not code you ship. |
+
+#### 🔴 foxBMS is a **split grant**, and one line in it is a *request*, not a condition
+
+Its `LICENSE.md` is three distinct things and a client diligence report must separate them:
+
+1. **Software → BSD-3-Clause.** Permissive. Ship it.
+2. **Hardware & documentation → CC-BY-4.0.** Attribution required; fine for schematics and docs.
+3. **A trademark courtesy:** *"We kindly request you to use one or more of the following phrases…
+   'This product uses parts of foxBMS®'."* **This is a request, not a licence condition** — it sits
+   under *"Further Information"*, outside both grants, and uses "kindly request".
+
+**New rule for this KB: distinguish an obligation from a request when reading a grant file.** Writing
+foxBMS up as "BSD-3 with an attribution requirement" would over-constrain a client for no legal reason.
+Writing it up as plain BSD-3 would miss that the docs are CC-BY. Both halves have to be said.
+
+### 🆕 Layer I — The assurance / V-cycle tool tier (what **P14** was missing)
+
+**P14 (the assurance artefact factory) has until now rested entirely on agent skill suites.** Skills
+generate documents; they do not *check* code against a standard. These four do, they are all permissive,
+and none of them markets itself as automotive:
+
+| Repo | Licence (byte-read) | ★ | Pushed | Why it is here |
+|---|---|--:|---|---|
+| [github/codeql-coding-standards](https://github.com/github/codeql-coding-standards) | **MIT** — `LICENSE.md`, 1,062 B, *"Copyright (c) 2022 GitHub"* | **235** | 2026-11-20 | **The highest-value row in this section.** CodeQL queries and libraries implementing **MISRA C/C++ and AUTOSAR C++14** coding standards — maintained by **GitHub itself**. This turns "we comply with MISRA" from a consultant's assertion into **CI output**. Drops straight into **P14** as the automated-evidence leg. |
+| [useblocks/sphinx-needs](https://github.com/useblocks/sphinx-needs) | **MIT** — `LICENSE`, 1,076 B, *"useblocks GmbH"* | **329** | 2026-11-23 | Requirements, specifications and **traceability links** as Sphinx objects — docs-as-code for the ISO 26262 work-product chain. The traceability matrix an auditor asks for, generated from the repo. EMEA-origin (Germany). |
+| [QuantumLeaps/spexygen](https://github.com/QuantumLeaps/spexygen) | **MIT** — `LICENSE`, 1,160 B | 43 | 2026-11-19 | Traceable specifications via Doxygen — bidirectional requirement↔code↔test links. The lighter-weight alternative to the row above when the codebase is C/C++ and already Doxygen'd. |
+| [WinterLabsHQ/maisha](https://github.com/WinterLabsHQ/maisha) | **MIT** — `LICENSE`, 1,392 B | 8 | 2026-11-20 | **MISRA C / CERT C / BARR-C compliance for embedded C — explicitly "the vendor-neutral alternative."** ⚠️ **8★ and a month old.** Recorded because the *category* (open MISRA checking) was previously empty except for the GitHub row; watch it. |
+
+**Why this tier is strategically interesting:** the automotive assurance-tool market is dominated by
+paid static analysers. A **permissive MISRA/AUTOSAR checker maintained by GitHub** changes the quote for
+every ISO 26262 engagement — the evidence pipeline becomes a configuration deliverable rather than a
+licence resale.
+
+### 🆕 Layer J additions — AUTOSAR/ARXML and diagnostics, and a Tier-1 tool vendor shipping MIT
+
+| Repo | Licence (byte-read) | ★ | Pushed | Why it is here |
+|---|---|--:|---|---|
+| [vectorgrp/XCPlite](https://github.com/vectorgrp/XCPlite) | **MIT** — `LICENSE`, 1,082 B, *"Copyright (c) 2026 **Vector Informatik GmbH**"* | **271** | 2026-11-21 | **The notable one.** ASAM **XCP** on Ethernet, published under MIT by **Vector Informatik** — the Tier-1 measurement/calibration tool vendor. The calibration layer was assumed vendor-locked (`TSMaster` is LGPL-2.1 and gated). It is not: the protocol implementation is MIT from the incumbent itself. |
+| [mdabrowski1990/uds](https://github.com/mdabrowski1990/uds) | **MIT** — `LICENSE`, 1,074 B | 154 | 2026-11-23 | **UDS (ISO 14229)** in Python with a common API across transports. Joins `python-udsoncan` as a second permissive UDS implementation — **P23**'s fully-permissive diagnostics bench now has a choice, which matters for a client that must avoid a single-maintainer dependency. |
+| [girishchandranc/autosarfactory](https://github.com/girishchandranc/autosarfactory) | **MIT** — `LICENSE`, 1,097 B | 132 | 2026-11-12 | Python package to **read/create/modify AUTOSAR ARXML** as objects. Direct input to **P25** (ARXML as data). |
+| [DanielT/autosar-data](https://github.com/DanielT/autosar-data) | **MIT** — `LICENSE-MIT`, 1,080 B ⚠️ *filename is `LICENSE-MIT`, Rust dual-licence convention — check for a parallel `LICENSE-APACHE`* | 70 | 2026-11-15 | Rust crate for ARXML. The performant option for **P25** when the ARXML set is large enough that Python object graphs stop being viable. |
+| [I-CAN-hack/automotive](https://github.com/I-CAN-hack/automotive) | **MIT** — `LICENSE`, 1,067 B | 109 | 2026-11-17 | Rust crate with **Python bindings** — CAN communication, UDS, diagnostics. The bridge row: Rust performance with a Python surface for the agent layer. |
+| [AKJ7/CANExplorer](https://github.com/AKJ7/CANExplorer) | **MIT** — `LICENSE.md`, 1,060 B | 223 | 2026-11-22 | CAN bus GUI and toolkit, actively maintained. |
+| [CANnectivity/cannectivity](https://github.com/CANnectivity/cannectivity) | **Apache-2.0** — `LICENSE`, 11,357 B | 206 | **2026-11-23** | Hardware-agnostic **USB-to-CAN adapter firmware** (Zephyr-based). Closes the last proprietary link in **P23**: the interface *hardware firmware* is now permissive too, so the bench is open end to end — host library, protocol, and dongle. |
+| [nickn17/evDash](https://github.com/nickn17/evDash) | **MIT** — `LICENSE`, 1,065 B | 186 | 2026-11-17 | **EV** dashboard for dev boards over OBD2-BLE4 or CAN — Hyundai/Kia/Renault EV PIDs. The EV-specific counterpart to Layer J's ICE-oriented tools, and a rare source of **real pack-level PID maps**. |
+| [nopnop2002/Arduino-STM32-CAN](https://github.com/nopnop2002/Arduino-STM32-CAN) | **MIT** — index-reported | 282 | 2026-11-23 | CAN examples for Arduino STM32 cores. Bench-rig plumbing. |
+
+### 🆕 Layer K — Plant-floor asset operations (extends Layer G)
+
+| Repo | Licence (byte-read) | ★ | Pushed | Why it is here |
+|---|---|--:|---|---|
+| [IBM/AssetOpsBench](https://github.com/IBM/AssetOpsBench) | **Apache-2.0** — `LICENSE`, 11,357 B | **2,483** | 2026-11-21 | **Industry 4.0 benchmark *and* framework for building, orchestrating and evaluating agents for asset operations** — IBM-maintained, 2,483★. This is **P15**'s "buy the harness, not the model" argument applied to the plant floor instead of the vehicle. Pairs with `anomalib` (Layer G) as the evaluation half. |
+| [kokikwbt/predictive-maintenance](https://github.com/kokikwbt/predictive-maintenance) | **MIT** — index-reported | 177 | 2026-11-10 | Curated **datasets** for predictive maintenance. The data half of the above — and see **N17**'s warning: a dataset grant is a separate axis from the code grant. |
+| [BaronTrump/AutoPartVision](https://github.com/BaronTrump/AutoPartVision) | **Apache-2.0** — index-reported | **1** | ⏸ 2026-06-17 | ⚠️ **1★.** Real-time defect inspection for **auto-parts lines** (RF-DETR/YOLOX + instance segmentation + ByteTrack). Listed **only** to document that it is the *entire* purpose-built population — see the licence-filtered measurement in `repos/trending.md`. **The finding is the count, not the repo.** |
+
+### 🆕 Fleet — one addition
+
+| Repo | Licence (byte-read) | ★ | Pushed | Why it is here |
+|---|---|--:|---|---|
+| [traccar/traccar-web](https://github.com/traccar/traccar-web) | **Apache-2.0** — `LICENSE.txt`, 11,358 B | **1,207** | **2026-11-23** | The web dashboard for Traccar (8,179★, Apache-2.0, 200+ device protocols — already held). Recorded separately because **the server and the UI are different repositories with different clone targets**, and **P5** deploys both. Takes the fleet-telematics layer from 2 repos to 3. |
+
+### 🔴 Licence rejections this pass — five, and the biggest one is the most dangerous
+
+| Repo | ★ | Licence (byte-read) | Verdict |
+|---|--:|---|---|
+| [Serial-Studio/Serial-Studio](https://github.com/Serial-Studio/Serial-Studio) | **7,335** | **Dual: `GPL-3.0-or-later` OR `LicenseRef-SerialStudio-Commercial`**, `LICENSE.md` 2,332 B | ⛔ **Not permissive, and the trap is the structure.** Telemetry dashboard (UART/BLE/MQTT/Modbus/**CAN**) — exactly what a vehicle-bench dashboard needs, and 7,335★ means clients *will* raise it. **The SPDX header of each individual file is authoritative**, declared per-file or via `REUSE.toml`. Default build (`BUILD_GPL3=ON`) is **GPLv3**. "Pro module" files are **proprietary-only** and the published binaries ship under an EULA, not the GPL. **Per-file licence determination required — budget it or decline it.** |
+| [stuartpittaway/diyBMSv4](https://github.com/stuartpittaway/diyBMSv4) | **1,145** | **CC-BY-NC-SA-2.0-UK**, `LICENSE` 1,431 B | ⛔ **Non-commercial.** The most-starred DIY BMS. 1,145★ makes it a likely client suggestion for Layer H; it cannot be used commercially at all. |
+| [openremote/core](https://github.com/openremote/core) | **2,185** | **AGPL-3.0**, `LICENSE.txt` **172,958 B** | ⛔ IoT platform pitched as "100% open-source"; the grant is **AGPL** — network copyleft. Excluded from the fleet layer. *(Note the 172 KB file: it is the licence plus a bundled third-party notices appendix — size alone does not identify a grant, read the opening lines.)* |
+| [iUnreallx/ReDrive](https://github.com/iUnreallx/ReDrive) | 158 | **GPL-3.0**, `LICENSE` 682 B | ⛔ Open-source OBD2 dashboard, actively pushed. Copyleft — excluded from **P23**/**P24**. |
+| [Lularible/from-sand-to-ruts](https://github.com/Lularible/from-sand-to-ruts) | 96 | **CC-BY-NC-ND-4.0**, `LICENSE` 19,121 B | ⛔ **The worst grant shape in this KB: non-commercial *and* no-derivatives.** A 33-chapter panorama of automotive embedded computing — genuinely good onboarding material that **cannot be excerpted, adapted or used commercially**. Link to it; never copy from it. |
+
+#### 🔴 Two licence-detector facts learned this pass
+
+1. **A grant file may be spelled `LICENCE`.** [Lyric0620/ETSAuto](https://github.com/Lyric0620/ETSAuto)
+   (184★) is **MIT** — byte-read from `LICENCE`, 1,067 B, British spelling. A probe list of
+   `LICENSE / LICENSE.md / LICENSE.txt / COPYING` reports **"no licence"** on an MIT repo. **`LICENCE`
+   is now in this KB's probe list** (as is `LICENSE-MIT`, per `autosar-data` above).
+2. **Licence is per-repository, not per-author.** `christoph2/pyxcp` is **LGPL-3.0** (283★) while
+   `christoph2/pyA2L` is **GPL-2.0** (179★) — same maintainer, same ASAM domain, two different
+   copyleft grants, neither usable. Never infer one repo's licence from a sibling's.
+
+#### ⏸ Two MIT repos that are live, permissive and **stale** — stars are not maintenance
+
+[vietanhdev/open-adas](https://github.com/vietanhdev/open-adas) — **MIT** (`LICENSE`, 1,073 B), **509★**,
+pushed **2023-10-24**. [Lyric0620/ETSAuto](https://github.com/Lyric0620/ETSAuto) — **MIT**, 184★, pushed
+**2024-03-12**. Both are live and permissively licensed; both have been untouched for 2–3 years. They
+belong in a KB as *reference architectures* and nowhere near a proposal as a base. **This is the same
+freshness trap recorded on 2026-11-21 for VIA-AI, arriving through a different door: there the listicle's
+year misled, here the star count does.**
 
 ## 🆕 Added 2026-11-21 (third pass, 13:40Z) — Layer G: the plant floor, a gap this KB has carried at **zero repos for five passes**
 

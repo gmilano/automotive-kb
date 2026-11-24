@@ -1,12 +1,101 @@
 ---
 industry: automotive
 region: Global
-updated: 2026-11-21
+updated: 2026-11-24
 ---
 
 # 📈 Trending AI agents & models — Automotive
 
 > **APPEND-ONLY.** Newest dated section on top; history preserved below. Never rewrite earlier sections.
+
+## 2026-11-24
+
+**Window:** 2026-11-21 14:52Z → 2026-11-24. The four sections below are preserved unchanged.
+**Channel:** `gh api -X GET search/repositories` for metadata; **every licence byte-read** from
+`raw.githubusercontent.com`; liveness via `git ls-remote --exit-code`. **47 new addresses → 47 live.**
+
+### 🔴 THE CORRECTION OF THIS PASS: this KB published a wrong layer-wide licence verdict three days ago
+
+On 2026-11-21 this KB wrote, as finding (7) and as a **planning input for pricing**, that *"the V2X/C-ITS
+layer has **NO PERMISSIVE ANCHOR AT ALL**"*, concluding: *"V2X work must quote legal review in the SOW."*
+
+**One short query (`topic:v2x stars:>50`) falsified it:**
+[ika-rwth-aachen/etsi_its_messages](https://github.com/ika-rwth-aachen/etsi_its_messages) — **MIT**,
+byte-read `LICENSE` 1,117 bytes, *"Institute for Automotive Engineering (ika), RWTH Aachen University"*,
+83★, pushed 2026-10-28. ROS 2 support for ETSI ITS messages. Plus
+[VjiaLi/V2U4Real](https://github.com/VjiaLi/V2U4Real) — **MIT**, 75★, CVPR 2026.
+
+**How the error was produced, because the mechanism is reusable and will recur:** the 2026-11-21 verdict
+was assembled from the rows *that pass happened to touch* — `vanetza`, `artery`, `mosaic`, `veins`,
+`OpenCDA` — all of which are stack-and-simulation projects, and all of which are non-permissive. The
+sample was real; the **quantifier** was invented. "Every row I looked at is copyleft" became "the layer
+has no permissive anchor."
+
+**The rule this KB now carries:** 🔴 **never write a layer-wide licence quantifier from a sample.** A
+statement of the form *"layer X has no permissive option"* requires a **licence-filtered query that
+returns ~nothing** — `topic:v2x license:mit` — exactly the instrument that closed the DMS question
+honestly on 2026-11-21. That pass had the right tool in its hand for one gap and asserted from a sample
+on another, in the same hour. **The corrected, layered verdict is in `agents/top.md` → W1.** It is also
+commercially better news: the message layer is clean, so only simulation carries legal review.
+
+### 🔴 Second defect: the discovery legs are **monolingual**, and six passes of "zero LATAM-origin repos" was its output
+
+`automotriz` → **2,458 repositories.** Every prior leg searched in English. Full write-up, licence
+distribution (**95 of the first 100 carry no licence at all**) and the corrected client sentence are in
+`repos/trending.md` → this date. Recorded here because it is the **same class of error as the V2X one**:
+a confident negative produced by an instrument that could not have found a positive.
+
+**Both defects this pass, and the four from 2026-11-21, are one failure mode:** this KB is reliable when
+it *measures* and unreliable when it *generalises from what it measured*. The measurements have all held
+up under re-test. The quantifiers around them keep breaking.
+
+### 🆕 New agent-tier rows — six, and only one has a community
+
+Full table with licences in `agents/top.md` → W3. Summary: **`LGDiMaggio/predictive-maintenance-mcp`**
+(MIT, **118★**, pushed 2026-11-23) is the only one with traction — an MCP server for condition
+monitoring, and the first maintained MCP on the *plant-floor* side of automotive.
+`Nemeson/C-ITS-Expert` (MIT, 1★) is a V2X/C-ITS validator as CLI+MCP. `decionis/kervix` (Apache-2.0,
+**0★, created 2026-11-21**) puts agent execution authority **in the QNX kernel** — *"agents propose; QNX
+decides"* — which is architecturally the thing **P16** argues for and the first repo to implement it
+below user space. `eric-rolph/beamng-mcp` (MIT, 2★) is a second sim-behind-MCP after
+`drivingbench_harness_code`. `dsdtsolutionsllc/manus-automotive-skills-suite` (MIT, 2★) ports the
+152-skill suite to another agent runtime. `SrinivasReddyMudem/automotive-lifecycle-agents` (MIT, 0★).
+
+**The honest headline is the distribution, not the count:** one repo at 118★, five at 0–2★. The
+automotive agent layer is still *shapes being tried*, not a market. Said plainly so that a later pass
+does not read six rows as six options.
+
+### 🆕 The agent-layer gap that moved: **the assurance tier now has tools, not just skills**
+
+`topic:iso26262` — a query never run before in this KB — returned 73 repositories and with them the
+answer to a standing weakness in **P14**. Until today, the assurance-artefact factory rested entirely on
+**skill suites that write documents**. It now has four permissive tools that **check code against a
+standard**, led by **[github/codeql-coding-standards](https://github.com/github/codeql-coding-standards)
+— MIT, 235★, MISRA C/C++ and AUTOSAR C++14 as CodeQL queries, maintained by GitHub.**
+
+This changes the shape of an ISO 26262 engagement: compliance evidence becomes **CI output** rather than
+a consultant's assertion or a static-analyser licence resale. Full tier in
+`repos/foundations.md` → Layer I; the pattern rewrite is **P26**.
+
+### 🔄 Anchor check — one instrument, and the standing no-cross-write rule honoured
+
+`gh api search/repositories`, 2026-11-24: **openpilot 64,220★** (⬆ from ~63,000) / 11,407 forks / MIT /
+pushed **today**; carla 14,692★; autoware 12,275★; vision_pilot 929★; **teslamate-mcp 142★ — still the
+largest automotive MCP**, verified by enumerating the field (next largest 5★, then 2★, 0★, 0★).
+
+⚠️ **`jherrodthomas/automotive-skills-suite` reads 2,878★ from the search index today.** The KB's
+standing figure is **2,907★ page-rendered (p941)**. Per the rule recorded on 2026-11-21 —
+**never refresh a star count with a different instrument than the one that set it** — the 2,907 figure
+**is left standing** and the index reading is recorded here, labelled, as a separate observation. The
+~29-count difference is index lag, not a decline. *This is the second pass to confirm the gap and the
+direction, which is now enough to call it a stable property of the two channels rather than a one-off.*
+
+### ⏸ Verified-and-stale, because stars are not maintenance
+
+[vietanhdev/open-adas](https://github.com/vietanhdev/open-adas) — MIT, **509★**, pushed **2023-10-24**.
+[Lyric0620/ETSAuto](https://github.com/Lyric0620/ETSAuto) — MIT, 184★, pushed **2024-03-12**; its grant
+file is spelled **`LICENCE`**, so a probe list without the British spelling reports "no licence" on an
+MIT repo. Both now carry ⏸ in `repos/foundations.md`.
 
 ## 2026-11-21 — fourth pass (14:50Z)
 

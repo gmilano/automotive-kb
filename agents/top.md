@@ -1,7 +1,7 @@
 ---
 industry: automotive
 region: Global
-updated: 2026-11-21
+updated: 2026-11-24
 ---
 
 # 🎯 AI agents & models — Automotive
@@ -25,6 +25,84 @@ updated: 2026-11-21
 >
 > 🆕 = new this pass. 🔄 = licence/stars re-read today. ⏸ = URL re-probed, figures carried from an
 > earlier pass and labelled rather than silently refreshed. **No row is a placeholder.**
+
+## 🆕 What changed on 2026-11-24 — the V2X licence verdict reverses, and the model tier gains four permissive rows
+
+**Window:** 2026-11-21 14:52Z → 2026-11-24. First pass since the four same-day passes of 2026-11-21.
+**Channel:** `gh api -X GET search/repositories` for stars/forks/SPDX/`pushed_at`; every licence below
+**byte-read** from `raw.githubusercontent.com`; every address probed with `git ls-remote`
+(**47 new addresses probed, 47 live, 0 dead**).
+
+### ⚠️ W1. 🔴 CORRECTION TO THIS KB — "the V2X/C-ITS layer has no permissive anchor at all" is **false**
+
+The 2026-11-21 pass wrote, as a planning input, that the V2X layer *"has NO PERMISSIVE ANCHOR AT ALL"*
+and that V2X work must therefore quote legal review in the SOW. **That is wrong as stated.**
+
+[ika-rwth-aachen/etsi_its_messages](https://github.com/ika-rwth-aachen/etsi_its_messages) is **MIT**
+— byte-read, `LICENSE`, 1,117 bytes, *"Copyright (c) Institute for Automotive Engineering (ika), RWTH
+Aachen University"* — 83★, pushed 2026-10-28. It is ROS 2 support for **ETSI ITS messages** (CAM, DENM,
+CPM, VAM): the encode/decode layer of the C-ITS stack, from a named automotive-engineering institute.
+
+**The accurate claim is layered, not blanket:**
+
+| C-ITS sub-layer | Licence reality (byte-read) | How to quote it |
+|---|---|---|
+| **Message / encoding** | **Permissive.** `etsi_its_messages` **MIT**; [VjiaLi/V2U4Real](https://github.com/VjiaLi/V2U4Real) **MIT** (75★, CVPR 2026 V2X-UAV dataset) | Build-on-open-source. No legal review needed for the message layer. |
+| **Protocol stack** | **Non-commercial.** `riebl/vanetza` **CC-BY-NC** (231★) | Hard exclusion. Not a licence question, a prohibition. |
+| **Simulation** | **Copyleft throughout.** `riebl/artery` GPL-2.0 (234★); `sommer/veins` GPL-2.0 (331★); 🆕 `DriveX-devs/VaN3Twin` **GPL-2.0** (167★, byte-read 17,987 B); `eclipse-mosaic/mosaic` EPL-2.0 (118★) | Legal review in the SOW — but for *simulation*, which is a tool, not shipped product. |
+
+**Why the error mattered:** the blanket version priced legal review into every V2X engagement. The
+layered version says a C-ITS **message-handling** deliverable is clean, and only the simulation and
+stack layers carry the cost. *General lesson: a layer-wide licence verdict is only as good as the
+sub-layer with the most rows — re-check it when any new row lands in that layer.*
+
+### 🆕 W2. Model tier — four permissive driving-model rows, all byte-read Apache-2.0
+
+| Repo | Licence (byte-read) | ★ | Pushed | What it is |
+|---|---|--:|---|---|
+| [fudan-generative-vision/WAM-Flow](https://github.com/fudan-generative-vision/WAM-Flow) | **Apache-2.0** — `LICENSE`, 11,357 B, canonical | 376 | 2026-09-03 | **CVPR 2026.** Parallel coarse-to-fine motion planning via discrete flow matching. The planner tier, not the perception tier. APAC-origin (Fudan). |
+| [RenzKa/simlingo](https://github.com/RenzKa/simlingo) | **Apache-2.0** — `LICENSE`, 11,380 B | 480 | ⏸ 2025-08-25 | **CVPR 2025 Spotlight.** SimLingo/CarLLaVA — vision-only *closed-loop* driving with language. Closed-loop is the part that matters: most VLA repos are open-loop benchmarks. ⚠️ 15 months since last push. |
+| [AutoLab-SAI-SJTU/GE2EAD](https://github.com/AutoLab-SAI-SJTU/GE2EAD) | **Apache-2.0** — `LICENSE`, 11,357 B | 218 | 2026-10-29 | Curated corpus of E2E / VLM / VLA / hybrid driving papers with organised taxonomy. A survey index, **not** runnable code — use it to pick a teacher model for **P6**, not as a base. |
+| [fudan-generative-vision/WAM-Diff2](https://github.com/fudan-generative-vision/WAM-Diff2) | **Apache-2.0** — `LICENSE`, 11,357 B | 105 | 2026-08-19 | Hierarchical AR-to-diffusion distillation for efficient driving VLA. The *distillation* step of **P6** published as code. |
+
+**The Apache-2.0-by-convention pattern holds for a third consecutive pass:** 4 of 4 new model rows are
+Apache-2.0. The research tier of this industry is licence-safe by convention — but see the standing
+caveat: **the weights are a separate grant and `huggingface.co` still does not resolve from this
+session**, so no weights claim below is first-hand.
+
+### 🆕 W3. Agent / skill tier — five new rows, and the honest note is that four of them are tiny
+
+| Repo | Licence (byte-read) | ★ | Pushed | What it is, and what it is worth |
+|---|---|--:|---|---|
+| [LGDiMaggio/predictive-maintenance-mcp](https://github.com/LGDiMaggio/predictive-maintenance-mcp) | **MIT** — `LICENSE`, 1,080 B | **118** | 2026-11-23 | **The real one.** MCP server turning an LLM into a condition-monitoring assistant for reliability engineers. Pushed yesterday. First maintained MCP server for the *plant-floor* side of automotive — see **P27**. |
+| [Nemeson/C-ITS-Expert](https://github.com/Nemeson/C-ITS-Expert) | **MIT** — `LICENSE`, 1,069 B | 1 | 2026-10-10 | V2X / C-ITS protocol-engineering skill suite **and validator** (CLI + MCP). ⚠️ **1★.** Recorded because it is the only agent-shaped artefact in the C-ITS layer and it pairs with `etsi_its_messages` (W1) — read it as a design reference, not a dependency. |
+| [dsdtsolutionsllc/manus-automotive-skills-suite](https://github.com/dsdtsolutionsllc/manus-automotive-skills-suite) | **MIT** — index-reported | 2 | 2026-08-15 | Manus-compatible conversion of the **152 skills (76 builder/reviewer pairs)** of `jherrodthomas/automotive-skills-suite`. Useful as evidence the skills-suite format is being **ported across agent runtimes**; no new content of its own. |
+| [eric-rolph/beamng-mcp](https://github.com/eric-rolph/beamng-mcp) | **MIT** — index-reported | 2 | 2026-11-23 | Local-first MCP server for **BeamNG.drive** via BeamNGpy. ⚠️ 2★. Relevant only because it is a *second* sim-behind-MCP design after `drivingbench_harness_code`, which is the pattern **P15** rests on. |
+| [SrinivasReddyMudem/automotive-lifecycle-agents](https://github.com/SrinivasReddyMudem/automotive-lifecycle-agents) | **MIT** — index-reported | 0 | 2026-10-21 | Agents for automotive SW engineering roles (developer, tester, integrator, project lead). ⚠️ **0★.** Recorded as a shape, not a recommendation. |
+| [decionis/kervix](https://github.com/decionis/kervix) | **Apache-2.0** — `LICENSE`, 11,358 B | 0 | 2026-11-21 | **Kernel-enforced execution authority for AI agents on QNX 8.0** — *"agents propose; QNX decides."* ⚠️ **0★, created three days ago.** Recorded because the **architecture** is the one **P16** argues for (the reason never reaches the controller) and this is the first repo to put it in the kernel. Watch, do not adopt. |
+
+**Say the quiet part out loud:** one of these six has a community (118★). The other five are 0–2★. They
+are recorded because *the shapes* are the finding — an MCP-wrapped simulator, a kernel-gated agent, a
+ported skill suite — and shapes are what a studio reuses. **Do not put a 0★ repo in a client proposal
+as a dependency.**
+
+### 🔄 W4. Anchor re-measurement — one instrument only, and openpilot moved
+
+All four read from `gh api search/repositories` on 2026-11-24 (**not** page-rendered — see the standing
+rule in `intel/trends.md` **N15** about never refreshing a count with a different instrument):
+
+| Anchor | ★ (search index) | Forks | Licence | Pushed |
+|---|--:|--:|---|---|
+| [commaai/openpilot](https://github.com/commaai/openpilot) | **64,220** ⬆ from ~63,000 | 11,407 | MIT | **2026-11-24** (today) |
+| [carla-simulator/carla](https://github.com/carla-simulator/carla) | 14,692 | 4,753 | MIT | 2026-11-23 |
+| [autowarefoundation/autoware](https://github.com/autowarefoundation/autoware) | 12,275 | 3,753 | Apache-2.0 | 2026-11-20 |
+| [autowarefoundation/vision_pilot](https://github.com/autowarefoundation/vision_pilot) | 929 | 198 | Apache-2.0 | 2026-11-23 |
+
+**[cobanov/teslamate-mcp](https://github.com/cobanov/teslamate-mcp) holds its title: 142★, MIT, pushed
+2026-11-14 — still the largest automotive MCP server by an order of magnitude.** Verified by enumerating
+the field rather than asserting it: `MyTeslaMate/mcp-tesla` 5★, `lodordev/mcp-teslamate-fleet` 2★,
+`xalc/teslamate-mcp` 0★, `volspan-deployments/teslamateapi-mcp` 0★ (NOASSERTION). **The automotive MCP
+ecosystem is one repo and a tail.**
 
 ## 🆕 What changed on 2026-11-21 — third pass (13:40Z)
 
