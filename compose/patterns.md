@@ -1,7 +1,7 @@
 ---
 industry: automotive
 region: Global
-updated: 2026-11-24
+updated: 2026-11-28
 ---
 
 # 🧩 Composition patterns — Automotive
@@ -1640,3 +1640,155 @@ AAS submodels — i.e. the P35 backlog, priced.
 12/2025** and come from a partner presentation; **no independent 2026 data on how many companies are
 actively exchanging data was reachable this pass.** Quote the programme's dates (primary, specific) and the
 repository counts (measured: 83 repos in `org:eclipse-tractusx`), **not** the ecosystem adoption claims.
+
+---
+
+## P37 🆕 — SOVD diagnostic-access gateway: one API over a mixed-age fleet, with the legal boundary enforced in code
+
+**Who it is for.** An OEM, a Tier-1 with a service obligation, or an independent-aftermarket group that
+needs diagnostic access across vehicles spanning legacy UDS ECUs and new SDV platforms. **EMEA framing:**
+exercising a live entitlement. **APAC framing:** matching what Geely/SAIC/BYD/Chery are reported to be
+shipping. **NA framing:** mapping what is actually reachable.
+
+**Why it is an adopt-not-build.** ASAM SOVD is reported in transfer to **ISO** (cited **ISO 17978**) and the
+reference implementation is Apache-2.0 and pushed this week — see **N34** on why a *standard* yields
+permissive supply where a *duty* does not.
+
+**Wiring, in dependency order:**
+
+1. **Core.** [`eclipse-opensovd/opensovd-core`](https://github.com/eclipse-opensovd/opensovd-core)
+   (Apache-2.0, 22★, Rust) — SOVD server, client and gateway. Transport security from
+   [`eclipse-opensovd/mbedtls-rs`](https://github.com/eclipse-opensovd/mbedtls-rs) (Apache-2.0).
+2. **Make the legacy fleet addressable.**
+   [`eclipse-opensovd/classic-diagnostic-adapter`](https://github.com/eclipse-opensovd/classic-diagnostic-adapter)
+   (Apache-2.0, 31★) fronts existing **UDS** ECUs with a SOVD interface. For in-flight migration, add
+   [`eclipse-opensovd/uds2sovd-proxy`](https://github.com/eclipse-opensovd/uds2sovd-proxy) (Apache-2.0).
+   **This step is the integration revenue** — one API over an inhomogeneous fleet is the thing the client
+   cannot buy.
+3. **Reuse the diagnostic data the client already owns.**
+   [`eclipse-opensovd/odx-converter`](https://github.com/eclipse-opensovd/odx-converter) (Apache-2.0, Kotlin)
+   converts the OEM's **existing ODX** to MDD. **Estimate this first: it decides whether the project is
+   affordable.** Re-authoring diagnostic descriptions is the cost that kills these programmes.
+4. **Faults and observability.** [`eclipse-opensovd/fault-lib`](https://github.com/eclipse-opensovd/fault-lib)
+   plus [`eclipse-opensovd/dlt-tracing-lib`](https://github.com/eclipse-opensovd/dlt-tracing-lib) (both Apache-2.0).
+5. **Agent layer.** [`eclipse-opensovd/mdd-ui`](https://github.com/eclipse-opensovd/mdd-ui) (Apache-2.0)
+   is a viewer **and MCP server** for MDD — it gives the model the *diagnostic schema*, so the agent knows
+   what an ECU can be asked instead of guessing. Pattern the adapter on
+   [`selfpatch/ros2_medkit_mcp`](https://github.com/selfpatch/ros2_medkit_mcp) (Apache-2.0), the reference
+   LLM↔SOVD-REST bridge; [`selfpatch/ros2_medkit`](https://github.com/selfpatch/ros2_medkit) (**291★**) is
+   the most-starred SOVD implementation in existence and worth reading before writing any of this.
+6. **Conformance fixture.** [`MauroCerrato/sovd-lab`](https://github.com/MauroCerrato/sovd-lab)
+   (Apache-2.0 **by reference** — 810 B short-form header, see `agents/top.md` **A3**) ships capability
+   descriptions and OpenAPI specs to test a gateway against.
+
+🔴 **The gate, and it is a legal boundary that maps exactly onto a code boundary:**
+
+> **The EU Data Act grants access to vehicle *data*, not to vehicle *functions or resources*.**
+> So the gateway exposes **read** operations to the agent and **refuses actuation**, structurally — not by
+> prompt instruction. A data-access entitlement is never an actuation entitlement. Put the refusal in the
+> gateway's route table so that it survives a model swap.
+
+**Scope limits to write into the SOW.** Data "on the edge" that is immediately deleted is out of scope, and
+inferred data is outside the Commission guidance's scope; **primary and pre-processed data are in**. Users
+get access at no cost; recipients (parts distributors, service providers) on **FRAND** terms. Where access
+runs through the **OBD-II port**, the user may not be required to buy a specialised tool or to have advanced
+technical skills — which constrains the client's product design, not just its data policy.
+
+**Staffing warning to give before the client discovers it.** The stack is **Rust**. This is a different
+hiring problem from a Java/Python data-space engagement, and the EMEA talent constraint this KB already
+records bites harder here.
+
+**Billable artefacts:** (a) the ODX→MDD conversion feasibility estimate; (b) the mixed-fleet access map;
+(c) an **MVBER/SERMI access-conformance report**; (d) for EMEA, the evidence pack for a filing into the
+**MVBER impact assessment opened 29 Oct 2026** (regime expires 31 May 2028).
+
+**What this pattern must not claim.** No EU primary legal text was reachable this pass
+(`eur-lex.europa.eu` and `competition-policy.ec.europa.eu` do not resolve here), so **every date above is
+secondary-sourced.** Re-verify against the OJ before putting a date in a client-facing compliance opinion.
+
+---
+
+## P38 🆕 — Warranty-claim pre-submission auditor: arithmetic first, model second, administrator signs
+
+**Why this is a build and not an adopt — stated plainly because the KB's own trends file implies otherwise.**
+`intel/trends.md` **T7** has called aftersales/warranty the commercial beachhead three times. Measured
+supply for it: **`warranty claim` returns 830 repos whose top hits are terms-of-service text spam, and there
+is no open-source warranty-claim anchor at any star level.** The beachhead has **zero** adoptable software.
+Quote it as a build. (See **N39**.)
+
+**Wiring:**
+
+1. **Deterministic arithmetic gate, before any model touches the claim.**
+   [`PerryLink/dsh-repair-order-qc`](https://github.com/PerryLink/dsh-repair-order-qc) (Apache-2.0, 3★,
+   pushed 2026-11-22) checks that a work order's **line amounts, parts + labour totals and settlement total
+   are arithmetically self-consistent**. There is no model in it. A claim that fails arithmetic is rejected
+   *before* inference — cheaper, fully explainable, and it removes the largest class of denial without
+   touching an LLM.
+2. **Capture, built for a bay with no connectivity.**
+   [`9081-ux/jobcard-ai`](https://github.com/9081-ux/jobcard-ai) (Apache-2.0) is offline-first, hybrid
+   on-device. The right shape; dealership-SaaS demos routinely assume a network the bay does not have.
+3. **Evidence retrieval.** [`aon082910/repair-hub`](https://github.com/aon082910/repair-hub) (MIT) for
+   DTC lookup and wiring-diagram reference; fault/live-data evidence pulled through the **P37** gateway so
+   the claim narrative cites machine-read values rather than typed ones.
+4. **Only now the model**, for OEM-rule narrative matching: does the documented cause/correction text
+   satisfy this OEM's policy for this operation code.
+
+🔴 **Hard gates — all three are contractual, not stylistic:**
+
+> 1. **The agent pre-checks; a warranty administrator attests and submits.** Attestation is the chargeback
+>    boundary — the OEM recovers against that signature, so the agent must never hold it.
+> 2. **Safety recalls are routed human-only, and the agent never drafts recall correspondence.**
+> 3. **No denial-rate improvement is quoted to the client.** Every such figure traced back to a vendor with
+>    a stake; **no independent denial-rate data exists.** Promise the arithmetic gate and the audit trail,
+>    which are verifiable, and promise nothing about denial rates, which are not.
+
+**Where it sells.** NA first — Cox Automotive's tracker shows AI use in service/fixed ops going **33%→39%
+in a single quarter of 2026**, and warranty is the most mature application there. **Do not** lead with this
+in LATAM, where the binding constraint is technicians rather than claim throughput (see **P39**).
+
+---
+
+## P39 🆕 — ADAS calibration triage: an agent whose job is to decide whether the shop can take the job
+
+**Built against a measured number, not a forecast.** Roland Berger, *Aftermarket Pulse 2026*: **69% of
+workshops with limited ADAS capability have already had to turn away repairs.** `ADAS calibration` had
+**0 mentions** in this KB before 2026-11-28. This is revenue that **already walked out of the door**, which
+is why the pattern targets a routing decision rather than a capability upgrade.
+
+**The inversion that makes it work.** A shop that cannot calibrate cannot be sold a calibration agent. So
+the agent does **not** perform or verify calibration. It answers one question, in the service drive, in
+seconds:
+
+> **"Can this shop complete this job today — and if not, where does it go, and what does the referral earn?"**
+
+**Wiring:**
+
+1. **Identify.** VIN decode → model/year/trim → **required-calibration determination** for the operations
+   on the order. VIN decode supply is already held by this KB.
+2. **Read the vehicle.** Fault and readiness data via the **P37** SOVD gateway where available, else
+   OBD-II: [`oxibus/automotive_diag`](https://github.com/oxibus/automotive_diag) (Apache-2.0, 106★ — UDS,
+   KWP2000, OBD-II; already held) or
+   [`ETSoftwareStudio/obd-scanner-android`](https://github.com/ETSoftwareStudio/obd-scanner-android)
+   (Apache-2.0, Kotlin/Compose) for a bay-floor Android tool.
+3. **Retrieve the procedure.** [`aon082910/repair-hub`](https://github.com/aon082910/repair-hub) (MIT) for
+   DTC/wiring reference; the shop's own equipment inventory and bay geometry as structured facts, **not**
+   as prose in a prompt — static calibration needs target distance and floor space, and that is a lookup.
+4. **Decide and route.** Three outcomes only: **do it here**, **refer out** (with the partner and the fee),
+   or **decline with a reason**. Log every decision — the log becomes the capability-investment business
+   case at the next review.
+
+🔴 **The agent caps its own ambition, and this is the whole safety argument:**
+
+> It **never issues a calibration-complete attestation** and never asserts that an ADAS function is
+> correctly aligned. Those are safety claims with liability attached. The agent's output is a **routing
+> decision plus the evidence for it** — a commercial judgement, which is exactly what a service advisor is
+> already authorised to make.
+
+**Regional fit, and it is the strongest in this KB for LATAM.** The constraint there is arithmetic: **fewer
+than 1,500 qualified EV technicians against 8,000–10,000 projected demand by 2035**, with Brazil roughly
+**50/50** independent vs official. Software that lets an **existing** technician complete work outside their
+training, or route it correctly when they cannot, beats software that optimises a technician who does not
+exist. Pair it with the Tier-1 training programmes already funding this channel — **ZF [pro]Tech and
+MultiScan into Mexico** — as a partner motion rather than a competitive one. In EMEA the same artefact is
+the evidence base for an **MVBER impact-assessment** filing: a shop-level record of access-driven turn-aways
+is exactly the independent-operator harm the Commission's own evaluation says it lacks data on.

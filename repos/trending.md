@@ -1,12 +1,70 @@
 ---
 industry: automotive
 region: Global
-updated: 2026-11-24
+updated: 2026-11-28
 ---
 
 # 📈 Trending repos — Automotive
 
 > **APPEND-ONLY.** Newest dated section on top; history preserved below. Never rewrite earlier sections.
+
+## 2026-11-28 — SOVD / diagnostic access: Eclipse OpenSOVD, ros2_medkit, OpenXC, and a fleet-wide licence exclusion
+
+**Window:** 2026-11-28 ~14:40Z. **Section 13 of 13** in this append-only log; the twelve earlier dated
+sections are preserved below, unchanged.
+**Why this plane:** control grep across all 9 files returned **0** for `SOVD`, `ISO 17978`, `openxc`,
+`ros2_medkit`, `MDD`, `right to repair`, `SERMI`, `MVBER`, `Data Act`, `TecDoc`, `ADAS calibration`.
+**Channel:** `gh api -X GET search/repositories`; **every licence byte-read** from
+`raw.githubusercontent.com`; liveness via `git ls-remote`. **34 slugs probed, 34 live, 0 dead.**
+
+### Trending: the Eclipse OpenSOVD stack (Apache-2.0, Rust, pushed this week)
+
+| Repo | ★ | Licence (byte-read) | Last push |
+|---|---|---|---|
+| [eclipse-opensovd/opensovd](https://github.com/eclipse-opensovd/opensovd) | 50 | ✅ Apache-2.0 (9,792 B) | 2026-11-24 |
+| [eclipse-opensovd/classic-diagnostic-adapter](https://github.com/eclipse-opensovd/classic-diagnostic-adapter) | 31 | ✅ Apache-2.0 (10,279 B) | **2026-11-28** |
+| [eclipse-opensovd/opensovd-core](https://github.com/eclipse-opensovd/opensovd-core) | 22 | ✅ Apache-2.0 (10,176 B) | **2026-11-28** |
+| [eclipse-opensovd/odx-converter](https://github.com/eclipse-opensovd/odx-converter) | 13 | ✅ Apache-2.0 (10,279 B) | 2026-10-10 |
+| [eclipse-opensovd/fault-lib](https://github.com/eclipse-opensovd/fault-lib) | 9 | ✅ Apache-2.0 (9,792 B) | 2026-11-13 |
+| [eclipse-opensovd/uds2sovd-proxy](https://github.com/eclipse-opensovd/uds2sovd-proxy) | 5 | ✅ Apache-2.0 (11,356 B) | 2026-06-24 |
+| [eclipse-opensovd/mbedtls-rs](https://github.com/eclipse-opensovd/mbedtls-rs) | 0 | ✅ Apache-2.0 (10,259 B) | 2026-11-27 |
+
+🔴 5 of the org's 17 repos have **no `LICENSE` file**, including two code repos pushed within three weeks
+(`cpp-bindings`, `cand-relay`). Eclipse clearance is **per repo**.
+
+### Trending: the SOVD implementation that outranks the automotive one
+
+| Repo | ★ | Licence (byte-read) | Last push |
+|---|---|---|---|
+| [selfpatch/ros2_medkit](https://github.com/selfpatch/ros2_medkit) | **291** | ✅ Apache-2.0 (11,356 B) | **2026-11-28** |
+| [selfpatch/ros2_medkit_web_ui](https://github.com/selfpatch/ros2_medkit_web_ui) | 9 | ✅ Apache-2.0 (11,356 B) | 2026-11-02 |
+| [selfpatch/ros2_medkit_mcp](https://github.com/selfpatch/ros2_medkit_mcp) | 6 | ✅ Apache-2.0 (11,356 B) | 2026-09-02 |
+
+### Re-measured: the OpenXC family (BSD-3-Clause, Ford, 2012) — and two of the five are badly stale
+
+| Repo | ★ | Licence (byte-read) | Last push | State |
+|---|---|---|---|---|
+| [openxc/openxc-android](https://github.com/openxc/openxc-android) | 248 | ✅ BSD-3-Clause (1,503 B) | 2026-08-08 | maintained |
+| [openxc/vi-firmware](https://github.com/openxc/vi-firmware) | 211 | ✅ BSD-3-Clause (1,503 B) | 2026-03-27 | maintained |
+| [openxc/openxc-python](https://github.com/openxc/openxc-python) | 119 | ✅ BSD-3-Clause (1,503 B) | **2022-03-24** | ⚠️ ~4.7 yrs stale |
+| [openxc/openxc-message-format](https://github.com/openxc/openxc-message-format) | 107 | ✅ BSD-3-Clause (1,503 B) | 2026-02-05 | maintained |
+| [openxc/openxc-vehicle-simulator](https://github.com/openxc/openxc-vehicle-simulator) | 71 | ✅ BSD-3-Clause (1,503 B) | **2021-03-19** | ⚠️ ~5.7 yrs stale |
+
+**Licence-detector blind spot #5, found here:** none of these five files contains the string `BSD`. A
+name-based detector reports nothing; the three clauses are present verbatim. **Match clause text, not
+family name.**
+
+### 🔴 Fleet-wide exclusion established this pass
+
+[`databricks-industry-solutions`](https://github.com/databricks-industry-solutions/parts-demand-forecasting)
+is **not an open-source org**. Byte-read `LICENSE` (3,432 B): usable only *"in connection with the
+Licensee's use of the Databricks Platform Services"*, constitutes *"Databricks Confidential Information"*,
+**no derivative works**, auto-terminating. Confirmed org-wide against
+[`digital-twin`](https://github.com/databricks-industry-solutions/digital-twin) (3,416 B, same clauses).
+It publishes accelerators for **every vertical this fleet covers** and ranks top for ordinary queries.
+**Exclude in all 12 industry KBs.** Side observation: 2 of 3 slugs probed in that org were **dead**
+(`dash-mfg-defect-detection`, `iot-multimodal-predictive-maintenance`) — the org churns repos, so a
+citation to it also rots.
 
 ## 2026-11-24 (third pass) — data spaces: Catena-X / Tractus-X / EDC / AAS, plus Lanelet2
 

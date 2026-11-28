@@ -1,12 +1,62 @@
 ---
 industry: automotive
 region: Global
-updated: 2026-11-24
+updated: 2026-11-28
 ---
 
 # 📈 Trending AI agents & models — Automotive
 
 > **APPEND-ONLY.** Newest dated section on top; history preserved below. Never rewrite earlier sections.
+
+## 2026-11-28 — the diagnostic-access / aftermarket agent plane (SOVD, warranty, ADAS triage)
+
+**Window:** 2026-11-28 ~14:40Z. **Section 13 of 13** in this append-only log; all twelve earlier dated
+sections are preserved below, unchanged.
+**Why this plane:** control grep across all 9 files = **0 mentions** of `SOVD`, `ISO 17978`,
+`right to repair`, `SERMI`, `MVBER`, `Data Act`, `FRAND`, `TecDoc`, `odometer`, `ADAS calibration`,
+`openxc`, `ros2_medkit`. Virgin ground — and it sits directly under `T7`, this KB's own
+three-times-repeated claim that **aftersales/warranty is the commercial beachhead**.
+**Channel:** `gh api -X GET search/repositories` for stars/SPDX/`pushed_at`; **every licence byte-read**
+from `raw.githubusercontent.com` (7 filenames × default branch via `git ls-remote --symref HEAD`);
+liveness via `git ls-remote`. **34 slugs probed, 34 live, 0 dead.**
+🔴 **Instrument note:** `eur-lex.europa.eu` and `competition-policy.ec.europa.eu` **do not resolve in this
+session** — no EU primary legal text was reachable, so every regulatory date this pass is secondary-sourced
+and labelled. `curl -sI` remains useless here (403/000), as **W2** recorded on 2026-11-21.
+
+### New agent rows this pass
+
+| Agent / tool | ★ | Licence (byte-read) | Why it trended into this KB |
+|---|---|---|---|
+| [selfpatch/ros2_medkit_mcp](https://github.com/selfpatch/ros2_medkit_mcp) | 6 | ✅ Apache-2.0 (11,356 B) | MCP server bridging **LLM agents to a SOVD REST API**. The reference adapter for agent-driven vehicle diagnostics. |
+| [eclipse-opensovd/mdd-ui](https://github.com/eclipse-opensovd/mdd-ui) | 2 | ✅ Apache-2.0 (10,764 B) | Viewer **+ MCP server** for MDD diagnostic-description files. Lets an agent read *what an ECU can be asked*, not just what it answered. Pushed 2026-11-24. |
+| [PerryLink/dsh-repair-order-qc](https://github.com/PerryLink/dsh-repair-order-qc) | 3 | ✅ Apache-2.0 (11,338 B) | Repair-order **settlement arithmetic check** — no model at all. This KB's deterministic-before-the-model rule, shipped by a third party. Pushed 2026-11-22. |
+| [9081-ux/jobcard-ai](https://github.com/9081-ux/jobcard-ai) | 1 | ✅ Apache-2.0 (11,346 B) | **Offline-first** field-repair work-order notebook, hybrid on-device. Right connectivity assumption for a service bay. Pushed 2026-11-25. |
+| [aon082910/repair-hub](https://github.com/aon082910/repair-hub) | 3 | ✅ MIT (1,065 B) | DTC lookup + wiring diagrams + estimates. The retrieval corpus shape for a diagnostic triage agent. Pushed 2026-11-16. |
+| [Joost-vanAndel/OBDvis](https://github.com/Joost-vanAndel/OBDvis) | 2 | ✅ Apache-2.0 (10,377 B) | Read-only OBD-II monitoring with DTCs and self-described "explainable" diagnostics (author's claim, unmeasured). Pushed 2026-11-16. |
+
+**Median of the six new agent rows: 2.5★.** The platform beneath them is 291★/50★/31★/22★.
+**Third consecutive plane where the platform decision is settled and the agent layer does not exist yet.**
+
+### Rejected this pass, with reasons
+
+| Repo | ★ | Verdict |
+|---|---|---|
+| [databricks-industry-solutions/parts-demand-forecasting](https://github.com/databricks-industry-solutions/parts-demand-forecasting) | 10 | 🔴 **Proprietary, Databricks-platform-locked** (3,432 B: no derivative works, Confidential Information, auto-terminating). **Org-wide** — confirmed on `digital-twin` (3,416 B). **Fleet-wide exclusion, all 12 industries.** |
+| [ClassicMiniDIY/UltraLog](https://github.com/ClassicMiniDIY/UltraLog) | 50 | ⚠️ **AGPL-3.0** (34,502 B). Excluded from hosted delivery; fine internally. |
+| [himanshupradeep/Test-Automation-Framework-for-SOVD-UDS-Diagnostics](https://github.com/himanshupradeep/Test-Automation-Framework-for-SOVD-UDS-Diagnostics) | 4 | 🔴 **No licence file** — and it is the only SOVD/UDS conformance-test framework found. Exactly the component a conformance engagement wants, and it cannot be vendored. |
+| [joshmsmith/temporal-multi-agent-order-repair](https://github.com/joshmsmith/temporal-multi-agent-order-repair) | 27 | 🔴 **Vocabulary collision, not automotive.** "Order repair" = fixing broken *purchase orders*. Rejected on inspection; recorded so a later pass does not re-find it. |
+
+### Method finding carried out of this pass
+
+**Short-query rule, 4th confirmation — and it nearly produced a fabricated gap.**
+`sovd automotive diagnostics` → **4 repos**. `sovd` → **115**. `org:eclipse-opensovd` → **17 Apache-2.0
+repos pushed this week**. A four-term query would have supported the sentence *"SOVD has no open-source
+supply"*, which is the opposite of the truth.
+
+**And a new one: search the standard's name *outside* the industry.** The most-starred SOVD implementation
+on GitHub is [selfpatch/ros2_medkit](https://github.com/selfpatch/ros2_medkit) (**291★**, Apache-2.0) — a
+**ROS 2 robotics** diagnostics gateway, which already ships an MCP bridge. When an automotive layer looks
+agent-less, the agent may exist under the same standard in another vertical.
 
 ## 2026-11-24 (third pass) — the data-space / supply-chain agent plane
 

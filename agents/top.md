@@ -1,7 +1,7 @@
 ---
 industry: automotive
 region: Global
-updated: 2026-11-24
+updated: 2026-11-28
 ---
 
 # 🎯 AI agents & models — Automotive
@@ -25,6 +25,137 @@ updated: 2026-11-24
 >
 > 🆕 = new this pass. 🔄 = licence/stars re-read today. ⏸ = URL re-probed, figures carried from an
 > earlier pass and labelled rather than silently refreshed. **No row is a placeholder.**
+
+## 🆕 What changed on 2026-11-28 — the **diagnostic-access / aftermarket** plane, and it is the first counter-example to this KB's own N18 thesis
+
+**Window:** 2026-11-28 ~14:40Z. Fourth plane of this KB's automotive line, and **virgin ground**: a control
+grep across all nine files returned **0 mentions** of `SOVD`, `ISO 17978`, `right to repair`, `SERMI`,
+`MVBER`, `Data Act`, `2023/2854`, `FRAND`, `data recipient`, `ADPA`, `FIGIEFA`, `TecDoc`, `odometer`,
+`ADAS calibration`, `openxc` or `ros2_medkit`. This matters because **this file's own `T7` has said three
+times that "aftersales and warranty remains the commercial beachhead, and it is agentic"** — and the KB had
+never once researched the data-access regime or the workshop-side supply that the beachhead rests on.
+
+**Channel:** stars/SPDX/`pushed_at`/`archived` from `gh api -X GET search/repositories`; **every licence
+byte-read** from `raw.githubusercontent.com` (7 filenames × default branch resolved by
+`git ls-remote --symref HEAD`); liveness from `git ls-remote`. **34 candidate slugs probed, 34 live, 0 dead.**
+
+> 🔴 **Instrument blackout to record, and it is new.** `eur-lex.europa.eu` and
+> `competition-policy.ec.europa.eu` **do not resolve in this session** (`getaddrinfo ENOTFOUND` — outside
+> the allowed network domains). So **no EU primary legal text was reachable this pass.** Every Data Act,
+> MVBER and Right-to-Repair date in this pass comes from a **reachable secondary** and is labelled as such.
+> This is the first EMEA primary-register blackout in this KB — previous passes read the OJ directly.
+> `curl -sI` remains useless here (403/000 against live hosts), exactly as **W2** recorded on 2026-11-21.
+
+### 🆕 A1. The plane's anchor — **Eclipse OpenSOVD**, 17 repos, Apache-2.0, pushed this week
+
+ASAM **SOVD** (Service-Oriented Vehicle Diagnostics) is the REST/HTTP successor to UDS for
+software-defined vehicles, and it is the mechanism by which an independent workshop gets diagnostic
+access to an SDV at all. ASAM states SOVD is **being transferred to ISO** (cited as **ISO 17978**) "for
+adoption in future international regulations"; **SOVD 1.2.0** kicked off November 2025 with release
+scheduled **March 2028** (ASAM conference material, secondary).
+
+| Agent / tool | ★ | Licence (byte-read) | What it actually is |
+|---|---|---|---|
+| [selfpatch/ros2_medkit_mcp](https://github.com/selfpatch/ros2_medkit_mcp) | 6 | ✅ Apache-2.0 (11,356 B) | **MCP server bridging LLM agents to a SOVD REST API.** The reference implementation for "let an agent read faults and live data over SOVD". Built for ROS 2, but the surface it speaks is the automotive standard — the adapter is the transferable part. |
+| [eclipse-opensovd/mdd-ui](https://github.com/eclipse-opensovd/mdd-ui) | 2 | ✅ Apache-2.0 (10,764 B) | **Viewer *and MCP server* for MDD files** (Rust). MDD is OpenSOVD's compiled diagnostic-description format. This is the row that lets an agent read *what a given ECU can be asked*, rather than guessing — i.e. the diagnostic schema, not just the responses. |
+| [PerryLink/dsh-repair-order-qc](https://github.com/PerryLink/dsh-repair-order-qc) | 3 | ✅ Apache-2.0 (11,338 B) | **Repair-order settlement check**, Chinese independent aftermarket. Verifies that a work order's line amounts, parts + labour totals and settlement total are **arithmetically self-consistent**. No model anywhere in it. This is **this KB's own deterministic-before-the-model house rule, shipped by somebody else** — and it is the cheapest possible first component of a warranty agent. |
+| [9081-ux/jobcard-ai](https://github.com/9081-ux/jobcard-ai) | 1 | ✅ Apache-2.0 (11,346 B) | Offline-first field-repair **work-order notebook**, hybrid on-device + Firebase AI Logic. Tiny, but it is the correct *shape* for a workshop bay: the connectivity assumption is "none", which is the one assumption dealership-SaaS demos always get wrong. |
+| [aon082910/repair-hub](https://github.com/aon082910/repair-hub) | 3 | ✅ MIT (1,065 B) | Self-hosted repair-reference app: vehicles, **DTC lookup, wiring diagrams**, estimates. The reference-data shape an ADAS/diagnostic triage agent retrieves against. |
+| [Joost-vanAndel/OBDvis](https://github.com/Joost-vanAndel/OBDvis) | 2 | ✅ Apache-2.0 (10,377 B) | Android OBD-II monitoring with charts, DTCs and **explainable** vehicle diagnostics. The "explainable" claim is the author's, unmeasured — but the read-only framing is right. |
+
+**Honest headline for this tier, and it repeats the data-space finding exactly:** the platform under these
+agents is substantial (OpenSOVD core 50★/31★/22★, `ros2_medkit` **291★**) while **the median of the six
+agent rows above is 2.5★**. Adopt the platform, build the agent — for the third plane running.
+
+### 🔴 A2. **The counter-example to N18**, and it bounds a thesis this KB has asserted twice
+
+**N18 holds that "in automotive, the closer a layer sits to a legal mandate, the worse its open-source
+licensing gets"** — evidenced by OCPI (charging) and the battery passport (unlicensed data model, AGPL app,
+stale Apache base). **The diagnostic-access layer breaks it.** SOVD is heading *into* regulatory reference
+(ISO transfer, explicitly "for adoption in future international regulations"), and its open-source
+implementation is **clean Apache-2.0 across 12 of 17 repos, Eclipse-governed, and pushed this week**.
+
+**The distinction, which is the actually useful form of N18:**
+
+> A layer converging on a **standard** produces permissive reference implementations, because standards
+> bodies need adoption. A layer converging on a **duty** produces proprietary compliance products, because
+> duty-bearers buy indemnity. **Ask which one the client's deadline comes from.** Battery passport = duty →
+> expect to buy or build. SOVD = standard → expect to adopt.
+
+N18 is **bounded, not overturned**: both prior sightings were duties, and both verdicts stand.
+
+### 🔴 A3. Licence-detector findings **4 and 5** — and one of them clears a repo the N30 rule flagged
+
+**N30** (2026-11-24) established: *compare the licence file's byte size against the canonical length of the
+licence it names; anything under ~2 KB naming Apache/GPL/LGPL/AGPL/MPL/EPL is a pointer.* Two new cases:
+
+**4th finding — short-and-named can be a *real* grant. `MauroCerrato/sovd-lab`: `LICENSE` = 810 B, names
+"Apache License".** The N30 rule flags it, and GitHub's classifier returns `NOASSERTION`. Reading it as
+prose: it is the **Apache-2.0 short-form header notice**, carrying the canonical incorporation clause
+*"Licensed under the Apache License, Version 2.0 … You may obtain a copy of the License at
+http://www.apache.org/licenses/LICENSE-2.0"* — **and no carve-out of any kind.** That is a genuine
+Apache-2.0 grant by reference. So N30 needs its second step stated:
+
+> **Short does not mean fake. Short means unresolved — read it.** If the short file *incorporates* the named
+> licence by reference (`Licensed under … You may obtain a copy at <canonical URL>`) and carves nothing out,
+> **the grant is real**. If it says *"the default throughout the repository is X, unless…"*, it is a pointer
+> to something else — the `sovity/edc-ce` case. The discriminator is **incorporation vs. default-setting**,
+> not length.
+
+**5th finding — a BSD-3-Clause licence file does not contain the string `BSD`.** All five `openxc/*`
+`LICENSE` files are **1,503 B** and are genuine BSD-3-Clause (*"Copyright (c) 2012 Ford Motor Company"*,
+all three clauses verbatim) — yet a name-grep across `Apache License|GNU …|MIT License|BSD|Mozilla|Eclipse|
+Elastic|Creative Commons` returned **empty** for every one of them. Any detector keyed on licence *names*
+silently misses BSD-family grants. Match the **clause text** (`Redistributions of source code must retain`),
+not the family name. *(Side note, cosmetic only: openxc never filled in the `<organization>` and
+`<COPYRIGHT HOLDER>` template placeholders. Not a licensing defect.)*
+
+### 🔴 A4. **FLEET-WIDE EXCLUSION — the whole `databricks-industry-solutions` org is proprietary**
+
+This belongs in **every KB in this fleet**, not just automotive. `databricks-industry-solutions/parts-demand-forecasting`
+(10★) is the top-ranked result for `parts demand forecasting` and looks like an adoptable accelerator.
+Its `LICENSE` is **3,432 B** and reads, byte-read:
+
+> *"This library (the "Software") **may not be used except in connection with the Licensee's use of the
+> Databricks Platform Services** … the Software constitutes **Databricks Confidential Information** …
+> **you may not make derivative works** of Software … This license **terminates automatically** upon the
+> termination of the Agreement."*
+
+**That is not open source.** Confirmed **org-wide**, not per-repo: `databricks-industry-solutions/digital-twin`
+carries the same instrument (**3,416 B**, same two restrictive clauses). The org publishes dozens of
+industry "solution accelerators" across every vertical this fleet covers, under a licence that permits
+viewing and compiling but **no derivative works and no use off the Databricks platform**.
+
+| Repo | ★ | Verdict |
+|---|---|---|
+| [databricks-industry-solutions/parts-demand-forecasting](https://github.com/databricks-industry-solutions/parts-demand-forecasting) | 10 | 🔴 **Proprietary, Databricks-platform-locked** (3,432 B). No derivative works; auto-terminating; Confidential Information. Hard exclusion — and it is the **top hit** for its query, so it will be found again. |
+| [databricks-industry-solutions/digital-twin](https://github.com/databricks-industry-solutions/digital-twin) | — | 🔴 Same licence (3,416 B). Probed only to establish the org-wide rule. **Assume the whole org.** |
+| [ClassicMiniDIY/UltraLog](https://github.com/ClassicMiniDIY/UltraLog) | 50 | ⚠️ **AGPL-3.0** (34,502 B, byte-read). The most-starred aftermarket-ECU log viewer. Network copyleft: excluded from hosted delivery, fine as an internal tool. |
+| [himanshupradeep/Test-Automation-Framework-for-SOVD-UDS-Diagnostics](https://github.com/himanshupradeep/Test-Automation-Framework-for-SOVD-UDS-Diagnostics) | 4 | 🔴 **No licence file.** The only SOVD/UDS *test-automation* framework found. Cannot be vendored — and it is precisely the component a conformance engagement would want. |
+
+**Also flagged, inside the anchor org itself:** 5 of the 17 `eclipse-opensovd` repos carry **no `LICENSE`
+file** — `cpp-bindings`, `cand-relay` (both code, both pushed within the last three weeks), `cda-addons`,
+`.github`, `.eclipsefdn`. An Eclipse project's house convention is Apache-2.0, but **IP clearance is
+per-repo**. Do not assume the org's licence covers the repo you actually vendor.
+
+### 🔴 A5. Declared gaps 2026-11-28 — searched, measured, found nothing, recorded
+
+An informed gap is information; silence looks exactly like coverage.
+
+| Cell searched | Result | Verdict |
+|---|---|---|
+| `warranty claim` | 830 repos; **top hits are terms-of-service text spam**, not software | 🔴 **No open-source warranty-claim anchor at any star level.** This KB's own declared beachhead (`T7`) has **zero** adoptable supply. It is a **build**, not an adopt — see **P38**. |
+| `odometer fraud detection` | **0 repos** | 🔴 No open anchor for mileage integrity. |
+| `odometer` (short-query re-probe) | 1,601 repos — and they are **animated number counters** (`HubSpot/odometer` 7,284★, `barvian/number-flow` 7,842★) and **visual-odometry SLAM** | 🔴 **Vocabulary collision, 4th in this KB.** In open source `odometer` never means mileage. Gap stands *because* the re-probe was done. |
+| `sermi` | 201 repos, all substring noise (`serminal`, `sermilik`…) | 🔴 **Zero open-source SERMI tooling.** The EU's security-related-repair accreditation scheme has no open implementation. |
+| `tecdoc parts catalog` | 4 repos, **all 0★, all no-licence**, several RapidAPI scrapers of a commercial catalogue | 🔴 Parts-identification data is a **commercial-licence market** (TecAlliance) — same verdict shape as Damoov/telematics. Note TecAlliance is *acquiring* AI diagnostics (Autotecnic), i.e. consolidating, not opening. |
+| `parts demand forecasting` | 133 repos; best is **proprietary** (above), remainder are student projects ≤14★ | 🔴 Thin-to-absent. No permissive anchor worth naming. |
+
+**Short-query rule confirmed a 4th time, and it was the finding of this pass.**
+`sovd automotive diagnostics` (4 terms) returned **4 repos** and would have supported a fabricated
+"SOVD has no open-source supply" claim. `sovd` alone returned **115**, and `org:eclipse-opensovd` returned
+**17 Apache-2.0 repos pushed this week**. **Re-probe every thin cell with the shortest possible query
+before writing a gap.**
 
 ## 🆕 What changed on 2026-11-24 — third pass: the **data-space / supply-chain** plane, and a 96★ connector that is **not open source**
 

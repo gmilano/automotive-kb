@@ -1,7 +1,7 @@
 ---
 industry: automotive
 region: Global
-updated: 2026-11-24
+updated: 2026-11-28
 ---
 
 # 🏭 Vertical platforms — Automotive
@@ -14,6 +14,76 @@ updated: 2026-11-24
 > *Superseded note —* verified 2026-11-13 (`curl -sI` on `github.com` and `api.github.com` both return **HTTP 403** through
 > this session's proxy, re-tested today, so licences and stars are read from the rendered repository page;
 > 🆕 = new this pass, 🔄 = licence/stars re-read today, ⏸ = carried forward and labelled).
+
+## 🆕 2026-11-28 — the **diagnostic-access platform** category, and an honest negative on workshop management
+
+### 🆕 Category: vehicle diagnostic access — **Eclipse OpenSOVD** (the ASAM SOVD reference implementation)
+
+**This is the strongest new "start from something that already works" base in this file since Tractus-X**,
+and it is the one that applies to *every* vehicle a client already has in service rather than only to new
+programmes.
+
+| Property | Value |
+|---|---|
+| What it is | Open implementation of **ASAM SOVD** — the REST/HTTP successor to UDS for software-defined vehicles |
+| Entry repo | [eclipse-opensovd/opensovd](https://github.com/eclipse-opensovd/opensovd) (50★) |
+| Licence | **Apache-2.0**, byte-read on 12 of 17 repos (9,792–11,356 B). 5 repos carry **no licence file** — check per repo |
+| Language | **Rust** (core, adapter, proxy, fault-lib), Kotlin (ODX converter, demos) |
+| Governance | Eclipse Foundation project |
+| Liveness | `classic-diagnostic-adapter` and `opensovd-core` both pushed **2026-11-28** |
+| Standards path | ASAM reports transfer to **ISO** (cited **ISO 17978**); SOVD 1.2.0 kickoff Nov 2025, release **Mar 2028** *(secondary: ASAM conference material)* |
+| Runnable today | [eclipse-opensovd/demo](https://github.com/eclipse-opensovd/demo) covers all subprojects |
+
+**Why it is Odoo-shaped.** It is a *platform with a standard API that an AI layer sits on top of*, not an
+application. The three customisation seams are explicit:
+
+1. **`classic-diagnostic-adapter`** — front the client's **existing legacy UDS ECUs** with a SOVD
+   interface. A mixed-age fleet becomes one API. This is where the integration revenue is.
+2. **`odx-converter`** — convert the OEM's **existing ODX** diagnostic data to MDD. Decides project cost:
+   reuse the diagnostic description the client already owns rather than re-authoring it.
+3. **`mdd-ui`** — ships a **viewer *and MCP server*** for MDD. The agent layer is already anticipated by
+   the platform, which is rare.
+
+**The caveat that belongs in the proposal.** The whole stack is **Rust**. Staffing a Rust automotive
+diagnostics engagement is a different hiring problem from staffing a Java/Python data-space one, and the
+EMEA talent constraint this KB already records (*"the most underreported constraint"*) bites harder here.
+Say so before the client discovers it.
+
+### 🔴 The workshop-management question, asked directly — and the answer is a **qualified negative**
+
+This file already answers the automotive ERP/CRM question with a clean negative. The workshop/garage
+management question is **worse**, and it needs recording because the search results look encouraging and
+are not.
+
+| Candidate | ★ | Licence (byte-read) | Verdict |
+|---|---|---|---|
+| [dimitar-grigorov/GarageBuddy](https://github.com/dimitar-grigorov/GarageBuddy) | 52 | MIT | ⚠️ **Most-starred open garage system — last push 2024-01-10, ~2.9 years stale.** Already held by this KB; re-probed, still stale. |
+| [ChanMeng666/automotive-repair-management-system](https://github.com/ChanMeng666/automotive-repair-management-system) | 33 | MIT | ⚠️ Already held. Web-based, maintained to 2026-06. Reads as a portfolio project, not a shop system. |
+| [srmming/repairnote-open-source](https://github.com/srmming/repairnote-open-source) | 4 | ✅ MIT (1,079 B) | 🆕 Next.js + Prisma. **Smallest credible modern base.** |
+| [aon082910/repair-hub](https://github.com/aon082910/repair-hub) | 3 | ✅ MIT (1,065 B) | 🆕 Self-hosted; DTC lookup + wiring diagrams. **Strongest *reference-data* shape.** |
+| [winterautollc/OpenAutoCore](https://github.com/winterautollc/OpenAutoCore) | — | — | Already held. Python/PyQt6/MySQL **desktop** app. |
+
+**The verdict, stated so it cannot be mistaken for coverage:**
+
+> **There is no Odoo of the independent workshop.** The best-starred option is three years stale; the
+> maintained ones are single-developer projects in the 3–4★ range. Unlike healthcare (OpenMRS), education
+> (Moodle) or ERP (Odoo), **the automotive service bay has no mature open-source system of record.**
+> A workshop engagement therefore starts from the client's incumbent commercial DMS and adds an
+> agent layer **beside** it — it does not start from an open platform. Quote it that way.
+
+**The adjacent commercial reality to name in the same breath:** parts-identification data is a
+**commercial-licence market** — `tecdoc parts catalog` returns 4 repos, all 0★ and unlicensed, several of
+them RapidAPI scrapers of a paid catalogue. **TecAlliance** owns that layer and is *acquiring* AI
+diagnostics capability (Autotecnic, a Spanish AI-diagnostics and workshop-training provider). The data
+layer under any parts agent is **bought, not adopted** — the same verdict shape as Damoov in telematics.
+
+### 🔴 A platform-shaped trap to refuse by name: the **`databricks-industry-solutions` org** (fleet-wide)
+
+It presents as a library of industry accelerators and ranks top for queries like `parts demand forecasting`.
+Byte-read `LICENSE` (3,432 B): *"may not be used except in connection with the Licensee's use of the
+Databricks Platform Services"*, *"Databricks Confidential Information"*, *"you may not make derivative
+works"*, auto-terminating. **Not open source, platform-locked, and org-wide** (confirmed on a second repo,
+`digital-twin`, 3,416 B). Refuse it in every industry, not just this one.
 
 ## 🆕 2026-11-24 (third pass) — the **data-space platform** category, and it is the strongest "Odoo-shaped" base this file has
 

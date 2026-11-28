@@ -1,7 +1,7 @@
 ---
 industry: automotive
 region: Global
-updated: 2026-11-24
+updated: 2026-11-28
 ---
 
 # 🏗️ Foundational repos — Automotive
@@ -22,6 +22,86 @@ updated: 2026-11-24
 > 🔴 **`huggingface.co` still does not resolve from this session**, so no model-weight licence was verified.
 > 🆕 = added 2026-11-13. 🔄 = licence/stars re-read today. ⏸ = URL re-probed, figures carried forward.
 > ⚪ = URL live, licence/stars deliberately left blank rather than guessed.
+
+## 🆕 Added 2026-11-28 — **Layer O: the diagnostic-access plane (SOVD)**, 20 repos, and it was the gap under this KB's own beachhead
+
+**Why this layer.** Layers A–N cover the AV stack, the SDV core, charging, data spaces and digital twins.
+None of them covers **how a service bay talks to a software-defined vehicle**. Control grep across all
+nine files: `SOVD` 0, `ISO 17978` 0, `openxc` 0, `ros2_medkit` 0, `MDD` 0. Meanwhile `intel/trends.md`
+`T7` has asserted three times that aftersales is the commercial beachhead. **This layer is the plumbing
+that beachhead stands on**, and it was absent.
+
+**All 20 slugs below: `git ls-remote` live, licence byte-read from `raw.githubusercontent.com`. 0 dead.**
+
+### 🆕 Layer O1 — Eclipse OpenSOVD (the SOVD reference stack, Rust-dominant)
+
+ASAM SOVD is the REST/HTTP successor to UDS for SDVs; ASAM reports it is **being transferred to ISO**
+(cited as **ISO 17978**) and that **SOVD 1.2.0** kicked off Nov 2025 for a **March 2028** release
+(secondary: ASAM conference material). Eclipse OpenSOVD is its open implementation.
+
+| Repo | ★ | Licence (byte-read) | Lang | Role in the stack |
+|---|---|---|---|---|
+| [eclipse-opensovd/opensovd](https://github.com/eclipse-opensovd/opensovd) | 50 | ✅ Apache-2.0 (9,792 B) | — | Umbrella / entry point. Start reading here. |
+| [eclipse-opensovd/classic-diagnostic-adapter](https://github.com/eclipse-opensovd/classic-diagnostic-adapter) | 31 | ✅ Apache-2.0 (10,279 B) | Rust | **The commercially important one.** Fronts *legacy UDS ECUs* with a SOVD interface — i.e. it makes a mixed-age fleet addressable by one API. Pushed **2026-11-28**. |
+| [eclipse-opensovd/opensovd-core](https://github.com/eclipse-opensovd/opensovd-core) | 22 | ✅ Apache-2.0 (10,176 B) | Rust | Server, client and gateway. Pushed 2026-11-28. |
+| [eclipse-opensovd/odx-converter](https://github.com/eclipse-opensovd/odx-converter) | 13 | ✅ Apache-2.0 (10,279 B) | Kotlin | **ODX → MDD converter.** Decides whether a project is affordable: it reuses the OEM's *existing* ODX diagnostic data instead of re-authoring it. |
+| [eclipse-opensovd/fault-lib](https://github.com/eclipse-opensovd/fault-lib) | 9 | ✅ Apache-2.0 (9,792 B) | Rust | Fault library. |
+| [eclipse-opensovd/uds2sovd-proxy](https://github.com/eclipse-opensovd/uds2sovd-proxy) | 5 | ✅ Apache-2.0 (11,356 B) | Rust | Maps UDS requests onto SOVD ones. The migration component. |
+| [eclipse-opensovd/mdd-ui](https://github.com/eclipse-opensovd/mdd-ui) | 2 | ✅ Apache-2.0 (10,764 B) | Rust | Viewer **and MCP server** for MDD files. The agent-facing surface — see `agents/top.md` **A1**. |
+| [eclipse-opensovd/dlt-tracing-lib](https://github.com/eclipse-opensovd/dlt-tracing-lib) | 2 | ✅ Apache-2.0 (10,279 B) | Rust | DLT (AUTOSAR diagnostic log & trace) appender. |
+| [eclipse-opensovd/mbedtls-rs](https://github.com/eclipse-opensovd/mbedtls-rs) | 0 | ✅ Apache-2.0 (10,259 B) | Rust | Patched Mbed TLS + Rust bindings. The transport-security dependency. |
+| [eclipse-opensovd/demo](https://github.com/eclipse-opensovd/demo) | 1 | ✅ Apache-2.0 (10,279 B) | Kotlin | Runnable demos for all subprojects. The fastest honest estimate of effort. |
+| [eclipse-opensovd/cicd-workflows](https://github.com/eclipse-opensovd/cicd-workflows) | 0 | ✅ Apache-2.0 (10,279 B) | Python | Reusable GitHub Actions workflows. |
+
+🔴 **Per-repo IP clearance caveat.** 5 of the org's 17 repos carry **no `LICENSE` file**:
+`cpp-bindings`, `cand-relay` (both **code**, both pushed within three weeks), `cda-addons`, `.github`,
+`.eclipsefdn`. Eclipse's house convention is Apache-2.0 but clearance is per-repo — **check the repo you
+vendor, not the org you found it in.**
+
+### 🆕 Layer O2 — the most-starred SOVD implementation is **not automotive**
+
+| Repo | ★ | Licence (byte-read) | Why it is here |
+|---|---|---|---|
+| [selfpatch/ros2_medkit](https://github.com/selfpatch/ros2_medkit) | 291 | ✅ Apache-2.0 (11,356 B) | **SOVD diagnostics gateway for ROS 2 robots** — faults, live data, operations, scripts. Pushed 2026-11-28. At 291★ it is **~6× the stars of the automotive reference stack's umbrella repo**. |
+| [selfpatch/ros2_medkit_web_ui](https://github.com/selfpatch/ros2_medkit_web_ui) | 9 | ✅ Apache-2.0 (11,356 B) | SOVD web UI: discovery and entity hierarchies as an SPA. |
+| [selfpatch/ros2_medkit_mcp](https://github.com/selfpatch/ros2_medkit_mcp) | 6 | ✅ Apache-2.0 (11,356 B) | MCP server bridging LLM agents to the SOVD REST API. |
+| [MauroCerrato/sovd-lab](https://github.com/MauroCerrato/sovd-lab) | 3 | ✅ Apache-2.0 **by reference** (810 B short-form header — see `agents/top.md` **A3**) | YAML/JSON capability descriptions, `/docs` endpoint, OpenAPI specs. Useful as a *conformance fixture*. GitHub reports `NOASSERTION`; the prose read says otherwise. |
+
+**The transferable finding:** an automotive standard's best open implementation came out of **robotics**,
+and it arrived with an MCP bridge already attached. When an automotive layer looks like it has no agent
+tier, **search the standard's name outside the industry** before declaring the gap.
+
+### 🆕 Layer O3 — the vehicle-data-interface layer: BSD-3, Ford-originated, and **half of it is stale**
+
+| Repo | ★ | Licence (byte-read) | Last push | Note |
+|---|---|---|---|---|
+| [openxc/openxc-android](https://github.com/openxc/openxc-android) | 248 | ✅ BSD-3-Clause (1,503 B) | 2026-08-08 | Android library for reading vehicle data from an OpenXC interface. **Maintained.** |
+| [openxc/vi-firmware](https://github.com/openxc/vi-firmware) | 211 | ✅ BSD-3-Clause (1,503 B) | 2026-03-27 | Vehicle-interface firmware (PIC32, LPC1768). **Maintained.** |
+| [openxc/openxc-message-format](https://github.com/openxc/openxc-message-format) | 107 | ✅ BSD-3-Clause (1,503 B) | 2026-02-05 | The JSON message-format spec. The piece you actually depend on. |
+| [openxc/openxc-python](https://github.com/openxc/openxc-python) | 119 | ✅ BSD-3-Clause (1,503 B) | **2022-03-24** | ⚠️ **~4.7 years stale.** Do not plan a Python integration on it without budgeting a fork. |
+| [openxc/openxc-vehicle-simulator](https://github.com/openxc/openxc-vehicle-simulator) | 71 | ✅ BSD-3-Clause (1,503 B) | **2021-03-19** | ⚠️ **~5.7 years stale.** |
+
+All five are `Copyright (c) 2012 Ford Motor Company`. **BSD-3-Clause is the most permissive licence family
+in this KB's automotive shelf** — no copyleft, no patent clause to argue about, attribution only.
+See `agents/top.md` **A3** for why a name-based licence detector cannot see any of them.
+
+### 🆕 Layer O4 — workshop / repair-side bases (small, but real and permissive)
+
+| Repo | ★ | Licence (byte-read) | Note |
+|---|---|---|---|
+| [aon082910/repair-hub](https://github.com/aon082910/repair-hub) | 3 | ✅ MIT (1,065 B) | Self-hosted repair reference: vehicles, DTC lookup, wiring diagrams, estimates. Pushed 2026-11-16. |
+| [srmming/repairnote-open-source](https://github.com/srmming/repairnote-open-source) | 4 | ✅ MIT (1,079 B) | Repair-shop management on Next.js + Prisma + MySQL/MariaDB. Pushed 2026-09-18. |
+| [LoganCarter08/Open_CAN_Bus_Hub](https://github.com/LoganCarter08/Open_CAN_Bus_Hub) | 13 | ✅ MIT (1,068 B) | Open-source CAN-bus hub — the aftermarket hardware interface. |
+| [ETSoftwareStudio/obd-scanner-android](https://github.com/ETSoftwareStudio/obd-scanner-android) | 8 | ✅ Apache-2.0 (11,356 B) | Kotlin/Compose/Hilt OBD-II scanner sample. Pushed 2026-11-22. A clean modern starting point. |
+| [tronikos/elm327_obdii](https://github.com/tronikos/elm327_obdii) | 2 | ✅ Apache-2.0 (11,356 B) | Python ELM327 BLE reader. Pushed 2026-11-12. |
+| [Kukun7610/Vehicle_CAN_Diagnostic_tool](https://github.com/Kukun7610/Vehicle_CAN_Diagnostic_tool) | 3 | ✅ Apache-2.0 (11,356 B) | CAN-bus diagnostic + data-logging tool. Pushed 2026-11-27. |
+
+🔴 **What is *not* here, measured.** No permissive anchor exists for: **warranty-claim processing**
+(`warranty claim` = 830 repos, top hits are ToS text spam), **mileage/odometer integrity**
+(`odometer fraud detection` = **0**), **SERMI** accreditation tooling (**0**), or **parts-catalogue data**
+(`tecdoc parts catalog` = 4 repos, all 0★ and unlicensed). Full table in `agents/top.md` **A5**. The
+workshop *application* layer above is genuine but thin — **nothing here is Odoo-shaped**, and
+`verticals/solutions.md` says so plainly.
 
 ## 🆕 Added 2026-11-24 (third pass) — **Layer L: the data-space / digital-twin plane**, 30 repos, and it was a total blind spot
 

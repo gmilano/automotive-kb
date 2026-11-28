@@ -1,7 +1,7 @@
 ---
 industry: automotive
 region: Global
-updated: 2026-11-24
+updated: 2026-11-28
 ---
 
 # 🗺️ Market map — Automotive
@@ -392,6 +392,41 @@ adoption figures instead — they are more consistent and more useful in a sales
 
 ### North America
 
+#### 🆕 2026-11-28 — the **federal telematics mandate died in committee**, and an OEM chose to delete a feature rather than open a channel
+
+**The regulatory counter moved backwards this year, which is itself the finding.**
+
+| Instrument | Status | Date | Source quality |
+|---|---|---|---|
+| REPAIR Act (H.R. 1566 / S. 1379) | Out of subcommittee | **Feb 2026** | secondary |
+| H.R. 7389 *Motor Vehicle Modernization Act* | Committee **set aside the REPAIR Act's full text**, adopted a **narrower** right-to-repair title **48–1**, **telematics access mandate stripped out** | **May 2026** | secondary |
+| Attachment to surface transportation reauthorization | Sought by supporters; **no confirmation it happened** | — | secondary, unresolved |
+| Massachusetts 2020 Question 1 | **Still in litigation.** Automakers **conceded at Feb 2026 oral argument** that members could comply as the district court read the law; AG **declined mediation 25 Feb 2026**; **no ruling as of late Aug 2026** | 2026 | secondary; one source claims a settlement pause, **conflict recorded not reconciled** |
+| FTC final order, **GM and OnStar** | **20-year order**; affirmative express consent before collecting/sharing connected-vehicle data; restricts sharing driver data with **consumer reporting agencies** | **14 Jan 2026** | secondary; refines cycle-7's "January 2026" |
+
+🔴 **The fact that outranks every statute above: Subaru disabled the telematics systems in the vehicles it
+sells in Massachusetts** rather than comply with the access law.
+
+**What that means for an NA engagement.** An OEM will **remove a feature** before opening a data channel.
+So data availability in NA is a **commercial decision, not a legal entitlement** — the inverse of EMEA.
+The deliverable is therefore **per-OEM, per-state data-availability mapping** (what is actually reachable,
+from which OEM, in which state, by which route), not mandate-readiness work. The only
+**delivery**-shaped NA obligation remains the FTC-order-driven consent/data-flow audit recorded in
+cycle 7; right-to-repair work here is **advisory and mapping**.
+
+**Adoption — and this quarter has a hard delta.**
+
+- **Cox Automotive tracker: AI use in dealership service / fixed ops rose from 33% to 39% within a single
+  quarter of 2026.** A tracker delta is worth more than a market size; it is the strongest NA adoption
+  datum in this KB for this plane.
+- **Warranty claim processing is the most mature fixed-ops AI application** (practitioner + vendor
+  consensus): the agent reads repair orders, applies OEM rules, assembles claims.
+- **Human gate, stated contractually:** the agent pre-checks; a **warranty administrator attests and
+  submits**; **safety recalls are human-only**. Attestation is the chargeback boundary.
+- Vendor claims of >50% of dealerships running fixed-ops automation by end-2026 are **unverified vendor
+  marketing** — and **no independent warranty denial-rate data exists**, so **quote no denial-rate
+  improvement**.
+
 
 #### 🆕 2026-11-24 (third pass) — the **enforcement** counter NA was missing is a privacy order, not a safety rule
 
@@ -753,6 +788,46 @@ Confirm against the primary text before contracting.
 no attribution duty, which makes it unusually clean to lift into a client deliverable.
 
 ### EMEA
+
+#### 🆕 2026-11-28 — the vehicle-data entitlement is **live**, and there is an **open consultation** on the regime that replaces MVBER
+
+🔴 **Reachability caveat, and it is a first for EMEA in this KB.** `eur-lex.europa.eu` and
+`competition-policy.ec.europa.eu` **do not resolve in this session**. **No EU primary legal text was
+reachable this pass.** Every date below is from a reachable secondary and is labelled as such; earlier
+EMEA passes read the OJ directly and those readings are unaffected.
+
+| Instrument | What it does | Date | Source |
+|---|---|---|---|
+| **Data Act (Reg (EU) 2023/2854)** | Most obligations in application | **12 Sep 2025** | secondary |
+| Data Act **Art. 3(1)** design obligation | Applies to connected products placed on the market after this date — **already in force today** | **12 Sep 2026** | secondary |
+| Commission **vehicle guidance** on the Data Act | Names data points essential to aftermarket use: **accelerometer, vehicle speed, GNSS location, odometer value**; sets access routes and FRAND terms | 2026 | secondary (primary OJ unreachable) |
+| **MVBER** evaluation, `SWD(2026) 174 final` | Found the regime met its objectives **but names digitalisation, electrification and access to vehicle-generated data as the key challenges for independent operators** | **25 Jun 2026** | secondary |
+| **MVBER** expiry | Safe harbour for qualifying vertical agreements ends | **31 May 2028** | secondary |
+| **MVBER** impact assessment on the future regime | **Open** — options for what replaces it | launched **29 Oct 2026** | secondary, dates internally inconsistent in source |
+| **SERMI** | Security-related repair & maintenance information accreditation; rollout continuing across Member States, more workshops certified | live through 2025–26 | secondary |
+| **Right to Repair Directive (EU) 2024/1799** | National implementing laws apply | **31 Jul 2026** | secondary |
+
+🔴 **Do not oversell the Right to Repair Directive.** It targets **consumer goods** — washing machines,
+vacuum cleaners, phones — and reaches **cars only indirectly**. The automotive repair entitlement comes
+from **MVBER + the Data Act + SERMI**, not from 2024/1799. Naming the wrong instrument in a proposal is
+the fastest way to lose a compliance audience.
+
+**⭐ EMEA has a second filing counter, and this one is a *consultation* rather than a funding call.**
+The MVBER impact assessment opened **29 Oct 2026** and the regime expires **31 May 2028**. Independent-operator
+associations (**ADPA**, **FIGIEFA**) are the organised counterparty, and the Commission's own evaluation
+already concedes that **access to vehicle-generated data** is the unresolved problem. A client with a
+position on SDV data access has a **live, dated channel to file into** — and the evidence base for that
+filing is exactly the technical mapping work in **P37**. This is the second EMEA engagement in this KB
+whose deadline is a *procedural* one rather than a product date.
+
+**Demand side.**
+
+- **69% of workshops with limited ADAS capability have already had to turn away repairs** (Roland Berger,
+  *Aftermarket Pulse 2026*) — see **N36**. Refused revenue, already incurred.
+- **TecAlliance is acquiring Autotecnic**, a Spanish AI-diagnostics and workshop-training provider:
+  the parts-data incumbent is **buying** the AI diagnostics layer, i.e. consolidating rather than opening.
+- Compliance remains the top EMEA AI concern (49%, cycle 7) and the **talent constraint** bites harder on
+  this plane than any prior one, because the OpenSOVD stack is **Rust**.
 
 
 #### 🆕 2026-11-24 (third pass) — the dates stopped moving, **and EMEA now has a funded entry queue**
@@ -1144,6 +1219,54 @@ wire-analysis and lab tooling is copyleft or worse (`dsV2Gshark` MIT-**and**-GPL
 
 ### APAC
 
+#### 🆕 2026-11-28 — APAC is where SOVD is **actually shipping**, and Korea's statute gets a material correction
+
+**⭐ The plane's deployment is here, not in EMEA where the standard was written.**
+A vendor blog reports that **Geely announced in 2026 that all new models will ship with SOVD across the
+entire vehicle lifecycle**, and that **SAIC, BYD and Chery** are developing implementations.
+*(Vendor-authored, not verified against OEM announcements — flagged, not hidden.)* Combined with the
+Eclipse OpenSOVD stack being Apache-2.0 and live, this makes **APAC the first region where a diagnostic-access
+engagement can reference shipping vehicles rather than a standard.**
+
+🔴 **Correction to this KB's cycle-7 reading of South Korea.** Cycle 7 recorded the **AI Basic Act** as
+"in effect January 2026 with high-impact-AI obligations", and concluded APAC "scopes against a statute
+today where EMEA scopes against 2028". That needs a material qualifier: **MSIT has indicated that 2026 is
+effectively a pilot period with limited enforcement, and there is a one-year penalty grace period.**
+
+> The **obligations** are live; the **penalties** are not. So the correct sentence is *"Korea is the one
+> APAC jurisdiction where you can scope against a statute **whose enforcement begins after your project
+> ends**"* — which is a **better** position to sell from, not a worse one: the client can achieve
+> compliance before exposure, which is exactly the argument that unblocks a budget.
+
+**Two more dated APAC instruments, both new to this KB.**
+
+| Jurisdiction | Instrument | Date | Source |
+|---|---|---|---|
+| **Vietnam** | AI Law — identified AI systems must comply with their obligations **by 1 Mar 2027** (except healthcare) | **1 Mar 2027** | secondary |
+| **Australia** | Permit regulations **in force since 15 May 2026** | **15 May 2026** | secondary (AI-compliance vendor) |
+| China | Mandatory; strict registration + substantial penalties | standing | cycle 5–7 |
+| Japan, parts of ASEAN | Voluntary guidelines | standing | cycle 5–7 |
+| India | Hybrid, still developing | standing | cycle 5–7 |
+
+**Aftermarket structure — and it favours the independent channel, unlike NA.**
+
+- **China: independent aftermarket workshops are the largest service channel** once warranties expire,
+  on price, reach and flexibility; **O2O digital platforms are reshaping the sector** (Frost & Sullivan).
+  **AMR Beijing, 13–15 Apr 2026**, features AI diagnostics positioned as a shift *from experience-based to
+  data-driven* repair (DeepNeuro Assess).
+- **India:** market ~**USD 8,700M FY2021 → ~USD 11,800M FY2025**; **digital catalogues and vehicle-ID tools
+  are cutting wrong-part returns** — a concrete, measurable AI target. **Roadzen acquired VehicleCare**, an
+  AI repair/workshop aggregation platform, **valuing its India business at USD 277M**. **Bosch + Autorox**
+  partnered to digitise **25,000+ independent repairers and parts sellers**.
+- **Roland Berger: China is among the strongest markets for consumer AI use in parts buying** (with Turkey,
+  Mexico, Brazil) — see **N35**.
+- One forecast sizes the APAC aftermarket at **USD 172.4B in 2026, 6.80% CAGR**; treat as directional, and
+  note cycle 7's standing instruction to **quote adoption, not size**.
+
+**The engagement shape this produces:** APAC is the one region where **"adopt the platform"** has shipping
+evidence *and* a large independent channel to sell it into. The 25,000-repairer Bosch/Autorox figure is the
+scale reference for a channel-enablement proposal.
+
 
 #### 🆕 2026-11-24 (third pass) — APAC's regulation gap **partially closes**: Korea has a dated statute
 
@@ -1517,6 +1640,54 @@ for how to structure it.
   permissive charging supply measured here is European and North American.
 
 ### LATAM
+
+#### 🆕 2026-11-28 — ⭐ **LATAM leads on demand for once**, and the constraint is technicians rather than law
+
+**This is the first finding in this KB where LATAM is ahead of NA and EMEA on adoption rather than behind
+on regulation.**
+
+**Roland Berger, *Automotive Aftermarket Pulse 2026*: one in three consumers already uses AI at some point
+when buying automotive parts, and take-up is "particularly strong in China, Turkey, **Mexico**, and
+**Brazil**."** Every other plane in this KB places LATAM last on adoption. On the aftermarket it does not.
+*(Consultancy study, methodology unpublished — the cross-regional ordering is the robust part, not the
+exact third.)*
+
+**The binding constraint is skilled labour, and it has numbers.**
+
+| Measure | Value | Source |
+|---|---|---|
+| Qualified **EV technicians** in LATAM, 2026 | **fewer than 1,500** | IndexBox via Latam Mobility |
+| Projected demand by 2035 | **8,000–10,000** | same |
+| Brazil: independent workshops vs official dealerships | roughly a **50/50** split of the business | Porto Digital projection |
+
+**A 5–7× technician shortfall against a known 2035 demand curve is a training-and-tooling market, and it
+is the single most defensible LATAM opportunity in this KB** — because the gap is arithmetic, not forecast.
+It also tells you which product wins: software that lets an *existing* technician complete work outside
+their training beats software that optimises a technician who does not exist.
+
+**Mexico — the concrete entry point.**
+
+- **Chinese brands are gaining share**, and the aftermarket has an **urgent parts-coverage and service-capability
+  gap** for them. Sessions at the **International Aftermarket Summit (Mexico City)** named vehicle data,
+  **digital cataloguing**, connected vehicles, AI and e-commerce as the agenda.
+- **ZF Aftermarket is rolling [pro]Tech training and the MultiScan diagnostic tool into Mexico** at
+  **INA PAACE Automechanika 2026** — i.e. the Tier-1s are funding independent-workshop capability, which is
+  a channel to partner with rather than compete against.
+- Combined with cycle 7's **USMCA rules-of-origin (P8)** and the **export-compliance** reading, a Bajío
+  client can be sold **the same diagnostic/data plumbing twice**: once for domestic service capability,
+  once for the EU-market duty it inherits from its customer.
+
+**Electrification cuts the other way, and the KB should say so.** EVs **reduce** workshop revenue per
+vehicle (fewer wear items, fewer fluids) while **opening a market for specialised services**. So an
+EV-aftermarket pitch that leads with growth is wrong; the honest frame is **revenue mix shift**, and the
+specialised-service capability is what the client is buying.
+
+**Regulatory position is unchanged from cycle 7 and remains secondary to the above:** Peru has the region's
+first AI law; Colombia regulates ADS to SAE L3; Brazil's pending bill would classify AVs high-risk; the
+Universidad de los Andes count of **716 AI-related instruments across 23 countries and territories** stands,
+and with it the conclusion that **the billable artefact is a jurisdictional applicability map**. Nothing
+found this pass creates a LATAM *right-to-repair* or *vehicle-data-access* entitlement — **recorded as
+unestablished, not as coverage.**
 
 
 #### 🆕 2026-11-24 (third pass) — **Peru has the region's first AI law**, and LATAM fragmentation now has a number
@@ -1991,6 +2162,38 @@ charging-protocol queries run this pass, which were in English.** A Spanish/Port
 (`cargador`, `electromovilidad`, `recarga`) has **not** been run on this plane and is a named follow-up.
 
 ### Global
+
+#### 🆕 2026-11-28 — one permissive diagnostic-access stack serves every region, and the regional variation is **who is allowed to use it**
+
+**Structural finding, and it repeats the data-space result exactly.** There is **one** open diagnostic-access
+stack — **Eclipse OpenSOVD**, Apache-2.0, Rust, Eclipse-governed, pushed 2026-11-28 — implementing a standard
+(**ASAM SOVD**, reported in transfer to **ISO**, cited as **ISO 17978**). So **the platform decision is
+global and settled**, and the regional difference is **entitlement**, not technology:
+
+| Region | What varies | Engagement shape |
+|---|---|---|
+| **EMEA** | A **legal entitlement exists** (Data Act Art. 3(1) live since 12 Sep 2026; MVBER to 31 May 2028; SERMI) | **Exercise the entitlement** + file into the open MVBER impact assessment |
+| **North America** | **No federal entitlement** — telematics mandate stripped from H.R. 7389 in May 2026; Subaru disabled telematics in MA | **Map what is commercially reachable** per OEM, per state |
+| **APAC** | **Shipping vehicles** — Geely reported committing all new models to SOVD; SAIC/BYD/Chery developing | **Adopt the platform**, enable the large independent channel |
+| **LATAM** | **No entitlement, highest consumer demand**, 5–7× technician shortfall | **Capability and training**, plus inherited EU duties on exporters |
+| **Global** | The standard, the stack and the licence | One platform decision, four different sales arguments |
+
+**Why this is worth more than any market-size number.** Cycle 7 established that market sizing for
+automotive AI has a **~10× spread** and the standing instruction is to **refuse a single number**. That
+holds. What this pass adds is that on *this* plane the numbers that matter are **structural counts, not
+money**: 69% of ADAS-limited workshops already turning work away; fewer than 1,500 LATAM EV technicians
+against 8,000–10,000 demand; 25,000 independent repairers in one Bosch/Autorox programme; Cox's 33%→39%
+in a quarter. **Each is a count of refused work, missing people, or reachable sites — all of which price a
+proposal, and none of which depends on a forecast.**
+
+**Cross-industry note for the fleet.** Two results from this pass generalise beyond automotive:
+
+1. **The whole `databricks-industry-solutions` GitHub org is proprietary** and platform-locked (byte-read,
+   confirmed on two repos). It publishes accelerators for **every vertical this fleet covers** and ranks top
+   for ordinary queries. **Exclude in all 12 KBs.**
+2. **Search a standard's name outside its home industry.** The most-starred ASAM SOVD implementation on
+   GitHub (**291★**, Apache-2.0) is a **ROS 2 robotics** gateway, and it shipped an MCP bridge before any
+   automotive project did.
 
 
 #### 🆕 2026-11-24 (third pass) — the supply-chain plane is **globally governed from EMEA**, and one adoption figure is worth more than the sizing models

@@ -1,7 +1,7 @@
 ---
 industry: automotive
 region: Global
-updated: 2026-11-24
+updated: 2026-11-28
 ---
 
 # 🚗 Automotive KB
@@ -9,15 +9,34 @@ updated: 2026-11-24
 > Knowledge base de la industria **Automotive** para Globant AI Studios.
 > Connected vehicles, predictive maintenance, dealer agents, EV ecosistema
 
-## Estado (2026-11-24)
+## Estado (2026-11-28)
 
 | Métrica | Valor |
 |---|---|
-| Direcciones GitHub catalogadas | **378** (medido con un solo barrido regex sobre los 9 archivos: 331 preexistentes + **47 nuevas** este pass) |
-| Nuevas este pass (3º del día) | **47 → 47 live, 0 dead** vía `git ls-remote` |
-| Patterns componibles | **P1–P36** |
-| Tendencias registradas | **N1–N33** |
+| Direcciones GitHub catalogadas | **413** (barrido regex sobre los 8 archivos: 378 preexistentes + **35 nuevas** este pass) |
+| Nuevas este pass (2026-11-28) | **38 URLs escritas → 38 live, 0 dead**, re-resueltas con `git ls-remote` **después** de escribirlas; control: slug inventado = DEAD |
+| Patterns componibles | **P1–P39** |
+| Tendencias registradas | **N1–N39** |
 | Licencias verificadas | byte-read desde `raw.githubusercontent.com`, con la **rama por defecto resuelta vía `git ls-remote --symref HEAD`**; control: un slug inventado devuelve DEAD |
+
+## 🔗 Pass del 2026-11-28 — plano de **acceso diagnóstico y aftermarket** (SOVD / Data Act / MVBER)
+
+Plano **virgen**: `SOVD`, `ISO 17978`, `right to repair`, `SERMI`, `MVBER`, `Data Act`, `FRAND`, `TecDoc`,
+`odometer`, `ADAS calibration`, `openxc` y `ros2_medkit` tenían **0 menciones** en los 8 archivos — aunque
+el propio `T7` de este KB afirma **tres veces** que postventa y garantía son la cabeza de playa comercial.
+Se abrió la capa que sostiene esa cabeza de playa. Ningún pass anterior fue reescrito.
+
+| Hallazgo | Detalle |
+|---|---|
+| **Eclipse OpenSOVD** | 17 repos, **Apache-2.0 byte-read en 12**, Rust, `classic-diagnostic-adapter` y `opensovd-core` con push el **2026-11-28**. 5 repos **sin fichero de licencia** (2 de ellos con código): el *clearance* de Eclipse es **por repo**. |
+| **N18 acotada** | Primer contraejemplo a *"más cerca del mandato, peor la licencia"*: una capa que converge en un **estándar** produce implementaciones permisivas; una que converge en un **deber** produce producto propietario. |
+| **Exclusión para toda la flota** | La org **`databricks-industry-solutions`** es **propietaria** (3.432 B: sin obras derivadas, atada a Databricks Platform Services, terminación automática). Confirmado org-wide. **Rechazar en los 12 KBs.** |
+| **Detector de licencias, fallos 4 y 5** | (4) Un fichero **corto** que *incorpora por referencia* Apache-2.0 **sí concede** (`sovd-lab`, 810 B) — corto significa *sin resolver*, no falso. (5) **Un BSD-3-Clause no contiene la cadena `BSD`** (los 5 `openxc/*`, 1.503 B). |
+| **Regla de consulta corta, 4ª vez** | `sovd automotive diagnostics` = **4 repos**; `sovd` = **115**; `org:eclipse-opensovd` = **17**. Habría publicado un hueco inventado. |
+| **Huecos informados** | Sin ancla open source para **garantía** (la cabeza de playa declarada), **integridad de odómetro**, **SERMI** ni **catálogo de piezas** (mercado de licencia comercial: TecAlliance). |
+| **Número duro** | **69 % de los talleres con capacidad ADAS limitada ya han rechazado reparaciones** (Roland Berger, *Aftermarket Pulse 2026*). Ingreso ya perdido, no previsión. |
+| **Inversión regional** | La adopción de IA en aftermarket la lideran **LATAM y APAC** (México, Brasil, China), al revés que todos los demás planos de este KB. |
+| 🔴 **Limitación de instrumento** | `eur-lex.europa.eu` y `competition-policy.ec.europa.eu` **no resuelven** en esta sesión: **ningún texto legal primario de la UE fue alcanzable**. Todas las fechas regulatorias de este pass son **secundarias y están etiquetadas**. |
 
 ## 🔗 Tercer pass del 2026-11-24 — plano de **data spaces** de la cadena de suministro (Catena-X / Tractus-X / EDC / AAS)
 

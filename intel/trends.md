@@ -1,13 +1,129 @@
 ---
 industry: automotive
 region: Global
-updated: 2026-11-24
+updated: 2026-11-28
 ---
 
 # 📡 Trends — Automotive
 
-> Current trends, updated 2026-11-24. Project and vendor self-reported performance figures are labelled
+> Current trends, updated **2026-11-28** (prior banner: "Current trends, updated 2026-11-24"). Project and vendor self-reported performance figures are labelled
 > as such. Dates name their instrument.
+
+## 🆕 New on 2026-11-28 — six trends from the diagnostic-access / aftermarket plane, and two of them bound standing claims of this KB
+
+**Window:** 2026-11-28 ~14:40Z. Virgin plane (control grep = 0 for `SOVD`, `MVBER`, `Data Act`, `SERMI`,
+`right to repair`, `ADAS calibration`, `odometer`, `openxc`). All earlier dated sections below are
+preserved unchanged.
+🔴 **Source-reachability note that constrains everything regulatory in this section:**
+`eur-lex.europa.eu` and `competition-policy.ec.europa.eu` **do not resolve in this session**
+(`getaddrinfo ENOTFOUND`). **No EU primary legal text was reachable.** Every date below is from a
+reachable secondary and is labelled. Previous EMEA passes read the OJ directly; this one could not.
+
+### N34 — 🔴 The thesis "closer to a mandate = worse licensing" has its **first counter-example**, and the corrected form is more useful
+
+**N18** (asserted twice: OCPI, then the battery passport) holds that *in automotive, the closer a layer
+sits to a legal mandate, the worse its open-source licensing gets*. The **diagnostic-access** layer breaks
+it. ASAM **SOVD** is on an explicit path into regulatory reference — ASAM states it is **being transferred
+to ISO** (cited as **ISO 17978**) *"for adoption in future international regulations"* — and its open
+implementation, **Eclipse OpenSOVD**, is **Apache-2.0 across 12 of its 17 repos, Eclipse-governed, and
+pushed this week** (`classic-diagnostic-adapter` and `opensovd-core` both 2026-11-28).
+
+**The corrected rule, which is the sellable form:**
+
+> A layer converging on a **standard** yields permissive reference implementations — standards bodies need
+> adoption. A layer converging on a **duty** yields proprietary compliance products — duty-bearers buy
+> indemnity. **Ask which one the client's deadline comes from.** Battery passport (18 Feb 2027) = duty →
+> buy or build. SOVD = standard → adopt.
+
+N18 is **bounded, not overturned**: both prior sightings were duties and both verdicts stand.
+
+### N35 — 🔴 Aftermarket AI adoption is led by **LATAM and APAC**, inverting this KB's regional ordering
+
+Every other plane in this KB puts NA/EMEA ahead on adoption. The aftermarket does not.
+**Roland Berger, *Automotive Aftermarket Pulse 2026*: one in three consumers already uses AI at some point
+when buying parts, with another third willing to — and take-up is "particularly strong in China, Turkey,
+Mexico, and Brazil."**
+
+Consequence for engagement shaping: the **consumer-facing** parts/service AI story is *more* mature in
+Mexico and Brazil than in Germany or the US, so a LATAM aftermarket pitch does not need an
+adoption-education phase. This is the first finding in this KB where **LATAM leads on demand rather than
+trailing on regulation.** *(Consultancy study, methodology not published — directional, and the
+cross-regional comparison is the robust part, not the exact third.)*
+
+### N36 — 🔴 **69% of ADAS-limited workshops have already turned work away.** That is refused revenue, not a forecast
+
+Same Roland Berger study: **69% of workshops with limited ADAS capability have already had to turn away
+repairs.** `ADAS calibration` had **0 mentions** in this KB before this pass.
+
+Why this number is worth more than any market size in `intel/market.md`: it is **demand that already
+arrived and was declined**. There is no adoption-risk argument to win and no forecast to defend — the
+work exists, the capability does not. It also reframes the deliverable away from "an AI product" toward
+**a routing and capability decision** (see **P39**), because a shop that cannot calibrate cannot be sold
+a calibration agent.
+
+### N37 — The EU's vehicle-data regime is **live now**, and its scoping limit decides what an agent may do
+
+Dates, all from reachable secondaries (EU primary registers unreachable this pass — see the note above):
+
+- **Data Act (Reg (EU) 2023/2854):** most obligations applied from **12 Sep 2025**. The **Art. 3(1) design
+  obligation** applies to connected products placed on the market **after 12 Sep 2026** — i.e. **already in
+  force as of today**.
+- **Access routes:** a data holder either supplies a suitable **access tool with the vehicle at no extra
+  cost**, or serves data from a **remote backend**. Where access is via the **OBD-II port**, the user may
+  **not** be required to buy a specialised tool or to have advanced technical skills.
+- **Commercial terms:** **users** get access at **no cost**; **recipients** — parts distributors, service
+  providers — are offered access on **FRAND** terms.
+- **Data points the Commission's vehicle guidance names as essential to aftermarket use-cases:**
+  accelerometer, vehicle speed, GNSS location, **odometer value**.
+- **Out of scope:** data held "on the edge" and immediately deleted; inferred data (excluded from the
+  guidance's scope). Primary and pre-processed data must be accessible.
+
+🔴 **And the limit that matters most for agent design:**
+
+> **The Data Act gives access to vehicle *data*, not to vehicle *functions or resources*.**
+
+So a data-access entitlement is **never** an actuation entitlement. Enforce that at the gateway, not in a
+prompt — an agent that can read the whole signal set still has no legal basis to *command* anything. This
+is the cleanest architectural boundary this KB has found, because it is a **legal** boundary that maps
+one-to-one onto a code boundary.
+
+### N38 — 🔴 The US **federal telematics mandate died in committee**, so NA data access is won per-state and per-OEM
+
+- **REPAIR Act (H.R. 1566 / S. 1379):** advanced out of subcommittee **Feb 2026**. Then in **May 2026** the
+  full House Energy & Commerce Committee **set aside the REPAIR Act's full text** and adopted a narrower
+  right-to-repair title inside **H.R. 7389 (Motor Vehicle Modernization Act), 48–1** — **with the
+  telematics access mandate stripped out.** Supporters have sought to attach the original to surface
+  transportation reauthorization; **no confirmation that this happened.**
+- **Massachusetts (2020 Question 1):** still in litigation. At **Feb 2026** oral argument the automakers'
+  group **conceded its members could comply** with the law as the district court read it; the AG's office
+  **declined mediation on 25 Feb 2026**, saying the case turns on facial validity. **No ruling as of late
+  Aug 2026.** Sources conflict on whether a settlement pause was agreed — **recorded, not reconciled.**
+- **The fact that outranks all of the above:** **Subaru disabled the telematics systems in the vehicles it
+  sells in Massachusetts** rather than comply.
+
+**Read:** an OEM will **remove a feature** before opening a data channel. So in NA, the deliverable is not
+"prepare for the mandate" — it is **per-OEM, per-state data-availability mapping**, because availability is
+a commercial decision, not a legal one. Contrast EMEA, where the entitlement exists and the work is
+exercising it.
+
+### N39 — Warranty automation is the most mature fixed-ops AI application **and has zero open-source supply**
+
+NA adoption is moving fast and measurably: **Cox Automotive's tracker shows AI use in service / fixed ops
+rising from 33% to 39% within a single quarter of 2026.** Vendor and practitioner sources agree that
+**warranty claim processing is the most mature** fixed-ops application — an agent reads repair orders,
+applies OEM rules, and assembles compliant claims.
+
+**The human gate is specific, and it is contractual rather than advisory:**
+
+> The agent **pre-checks**; a **warranty administrator attests and submits**. **Safety recalls are handled
+> human-only.** Attestation is the billable risk boundary — it is the administrator's signature the OEM
+> charges back against, so the agent must never hold it.
+
+**Measured supply: nothing.** `warranty claim` returns 830 repos whose top hits are terms-of-service text
+spam; there is **no open-source warranty-claim anchor at any star level**. This KB's own `T7` has called
+aftersales/warranty the commercial beachhead three times — **and the beachhead is a build, not an adopt**
+(see **P38**). Note also that **no independent denial-rate data exists**: every "reduces denials" figure
+traced back to a vendor with a stake. **Do not quote a denial-rate improvement to a client.**
 
 ## 🆕 New on 2026-11-24 (third pass) — four trends from the data-space plane, and one is a method rule for the whole fleet
 
